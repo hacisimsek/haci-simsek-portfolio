@@ -9,7 +9,7 @@ export default function About() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">
-            I'm a passionate Java and React developer with extensive experience in building robust backend systems and dynamic frontend applications. With a strong foundation in both technologies, I bring a unique perspective to full-stack development.
+          I am a passionate and skilled Software Engineer with dual degrees in Software Engineering and Electrical & Electronics Engineering from Bahcesehir University, where I graduated with a full scholarship. With a strong expertise in both Java and React, I specialize in building robust backend systems and dynamic frontend applications, offering a full-stack perspective that drives innovation and efficiency. Currently, I am working at SISAL, where I lead the end-to-end development of applications for an international audience. Dedicated to continuous growth, I actively contribute to the tech community by sharing insights and knowledge through professional articles.
           </p>
         </CardContent>
       </Card>
