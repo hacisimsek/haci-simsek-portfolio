@@ -4,13 +4,13 @@ export default function Projects() {
   const projects = [
     { 
       title: "E-commerce Platform", 
-      description: "A full-stack e-commerce solution using Java Spring Boot and React.",
-      endPonint: "https://www.google.com/maps"
+      description: "A full-stack e-commerce solution using Java Spring Boot and Angular.",
+      endPonint: "https://github.com/hacisimsek/springboot-microservice-app"
     },
     { 
       title: "Task Management App", 
       description: "A React-based task management application with a Java backend.",
-      endPonint: "https://www.google.com/maps"
+      endPonint: "https://github.com/hacisimsek/task-management-app"
     },
     { 
       title: "Real-time Chat System", 

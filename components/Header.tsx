@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <header className="flex justify-between items-center mb-8">
-      <h1 className="text-2xl font-bold">HACI SIMSEK</h1>
+      <h1 className="text-2xl font-bold">Haci Simsek</h1>
       <nav className="hidden md:block">
         <ul className="flex space-x-4">
           <li><a href="#about" className="hover:text-primary">About</a></li>
