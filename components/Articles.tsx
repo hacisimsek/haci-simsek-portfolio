@@ -1,10 +1,28 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Articles() {
   const articles = [
-    { title: "Optimizing Java Performance", description: "Tips and tricks for improving Java application performance." },
-    { title: "React Hooks Deep Dive", description: "An in-depth look at React Hooks and their use cases." },
-    { title: "Microservices with Spring Boot", description: "Building scalable microservices architecture using Spring Boot." },
+    {
+      title: "Strangler Fig Pattern",
+      description:
+        "In today’s software world, there are many large, monolithic software projects. These projects can be hard to kee...",
+    },
+    {
+      title: "Centralized Service Registry",
+      description:
+        "The world of microservices is growing and evolving with each passing day. If we were to mention one of the bigge...",
+    },
+    {
+      title: "Understanding Circuit Breaker Pattern in Microservices",
+      description:
+        "Imagine you are in an entertainment venue and sudden power surges threaten your systems. Fortunately, a small dev...",
+    },
   ];
 
   return (
