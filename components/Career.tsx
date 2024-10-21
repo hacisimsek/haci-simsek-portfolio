@@ -26,6 +26,12 @@ export default function Career() {
         "In the vas and messaging department, I made developments in Java using spring boot technology. The company is developing new technologies on 5G technologies.",
       endPoint: "",
     },
+    {
+      title: " Project Manager - BAU AI Society ",
+      description:
+        "I worked voluntarily as a Project Manager at the BAU AI Society, where I was responsible for organizing seminars, meetings, and workshops related to artificial intelligence. These events aimed to provide participants with knowledge and training on AI technologies. I invited expert speakers and arranged various workshops, contributing to the community's understanding of AI.",
+      endPoint: "",
+    },
   ];
 
   return (
