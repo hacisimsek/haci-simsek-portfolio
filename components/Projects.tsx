@@ -15,7 +15,7 @@ export default function Projects() {
     { 
       title: "Real-time Chat System", 
       description: "A scalable chat system using Java WebSockets and React for the frontend.",
-      endPonint: "https://www.google.com/maps"
+      endPonint: "https://github.com/hacisimsek/real-time-chat-app"
     },
   ];
 
