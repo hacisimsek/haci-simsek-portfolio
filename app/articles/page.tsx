@@ -52,11 +52,10 @@ export default function Articles() {
   function findImage(htmlString: string) {
     const regex = /<img.*?src="([^">]*\/([^">]*?))".*?>/g;
     const match = regex.exec(htmlString);
-    return match ?
-      match[1] :
-      "https://cdn-images-1.medium.com/v2/resize:fit:564/0*-BkwD9DCSLszd2ag.jpg";
+    return match
+      ? match[1]
+      : "https://cdn-images-1.medium.com/v2/resize:fit:564/0*-BkwD9DCSLszd2ag.jpg";
   }
-
 
   function extractTextFromHTML(htmlString: string) {
     const parser = new DOMParser();
@@ -70,34 +69,37 @@ export default function Articles() {
       <div className="space-y-4">
         {articles.map((article, index) => (
           <div key={index}>
-            <Card className="flex">
-              <div className="flex-1">
-                <CardHeader>
-                  <a href={article.guid} target="_blank">
-                    <CardTitle>{article.title}</CardTitle>
-                  </a>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>
-                    {article.description.length > 300
-                      ? article.description.slice(0, 300) + "..."
-                      : article.description}
-                  </CardDescription>
-                </CardContent>
-                <CardFooter>
-                  <p className="text-sm text-muted-foreground">
-                    {article.categories?.slice(0, 3)
-                      ?.map((category) => `#${category}`)
-                      .join(" ")}
-                  </p>
-                </CardFooter>
-              </div>
-              <div className="">
-                <img
-                  src={article.thumbnail}
-                  alt={article.title}
-                  className="w-48 h-48 object-cover rounded-lg shadow-lg border border-gray-200 mt-3.5 mr-3"
-                />
+            <Card>
+              <CardHeader>
+                <a href={article.guid} target="_blank">
+                  <CardTitle>{article.title}</CardTitle>
+                </a>
+              </CardHeader>
+              <div className="flex">
+                <div className="flex-1">
+                  <CardContent>
+                    <CardDescription>
+                      {article.description.length > 600
+                        ? article.description.slice(0, 600) + "..."
+                        : article.description}
+                    </CardDescription>
+                  </CardContent>
+                  <CardFooter>
+                    <p className="text-sm text-muted-foreground">
+                      {article.categories
+                        ?.slice(0, 3)
+                        ?.map((category) => `#${category}`)
+                        .join(" ")}
+                    </p>
+                  </CardFooter>
+                </div>
+                <div className="">
+                  <img
+                    src={article.thumbnail}
+                    alt={article.title}
+                    className="w-48 h-48 object-cover rounded-lg shadow-lg border border-gray-200 mb-1 mr-3"
+                  />
+                </div>
               </div>
             </Card>
           </div>
