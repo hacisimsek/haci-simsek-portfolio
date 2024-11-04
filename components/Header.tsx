@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import Link from 'next/link';
 
 export default function Header() {
-  const { setTheme, theme } = useTheme();
+  const { setTheme, theme } = useTheme()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
