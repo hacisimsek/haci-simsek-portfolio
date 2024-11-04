@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="p-4 text-center fixed bottom-0 w-full bg-background">
       <div className="flex justify-between items-center mx-auto max-w-4xl">
-        <div className="text-left">
+        <div className="text-left text-xs">
           <p>&copy; 2024 Haci Simsek. All rights reserved.</p>
           <p>Designed and developed by Haci Simsek.</p>
         </div>
