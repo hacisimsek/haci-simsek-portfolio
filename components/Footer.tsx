@@ -10,7 +10,7 @@ export default function Footer() {
         </div>
         <div className="flex space-x-4">
           <a
-            href="https://github.com/yourusername"
+            href="https://github.com/hacisimsek"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
@@ -18,7 +18,7 @@ export default function Footer() {
             <FaGithub className="text-xl hover:text-gray-700 transition-colors duration-200" />
           </a>
           <a
-            href="https://linkedin.com/in/yourusername"
+            href="https://linkedin.com/in/hacisimsek"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -26,7 +26,7 @@ export default function Footer() {
             <FaLinkedin className="text-xl hover:text-blue-700 transition-colors duration-200" />
           </a>
           <a
-            href="https://twitter.com/yourusername"
+            href="https://x.com/CodeWithHaci"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Twitter"
