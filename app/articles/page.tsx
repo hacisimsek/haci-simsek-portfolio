@@ -93,7 +93,7 @@ export default function Articles() {
                     </p>
                   </CardFooter>
                 </div>
-                <div className="">
+                <div className="hidden md:block">
                   <img
                     src={article.thumbnail}
                     alt={article.title}
