@@ -41,10 +41,10 @@ export default function Header() {
       {isMenuOpen && (
         <nav className="absolute top-16 right-4 bg-background border border-border rounded-md shadow-lg md:hidden">
           <ul className="py-2">
-            <li><a href="#about" className="block px-4 py-2 hover:bg-accent">About</a></li>
-            <li><a href="#projects" className="block px-4 py-2 hover:bg-accent">Projects</a></li>
-            <li><a href="#articles" className="block px-4 py-2 hover:bg-accent">Articles</a></li>
-            <li><a href="#contact" className="block px-4 py-2 hover:bg-accent">Contact</a></li>
+            <li><Link href="/" className="block px-4 py-2 hover:bg-accent">About</Link></li>
+            <li><Link href="/projects" className="block px-4 py-2 hover:bg-accent">Projects</Link></li>
+            <li><Link href="/articles" className="block px-4 py-2 hover:bg-accent">Articles</Link></li>
+            <li><Link href="/contact" className="block px-4 py-2 hover:bg-accent">Contact</Link></li>
           </ul>
         </nav>
       )}
