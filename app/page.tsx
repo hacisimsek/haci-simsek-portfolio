@@ -1,6 +1,4 @@
-import Header from '@/components/Header';
 import About from '@/components/About';
-import Articles from '@/components/Articles';
 import Career from '@/components/Career';
 import Education from '@/components/Education';
 
