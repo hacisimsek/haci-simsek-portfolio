@@ -1,11 +1,7 @@
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardHeader,
-  CardTitle,
   CardText,
-  CardFooter,
 } from "@/components/ui/card";
 
 export default function Education() {

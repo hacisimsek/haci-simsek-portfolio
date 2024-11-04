@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea"
 export default function Contact() {
   return (
     <section id="contact" className="mb-12">
-      <h2 className="text-2xl font-bold mb-4">Contact Me</h2>
+      <h4 className="text-xl font-bold mb-4">Contact Me</h4>
       <form className="space-y-4">
         <Input type="text" placeholder="Your Name" />
         <Input type="email" placeholder="Your Email" />

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
+import Link from 'next/link';
 
 export default function Header() {
   const { setTheme, theme } = useTheme()
@@ -11,13 +12,13 @@ export default function Header() {
 
   return (
     <header className="flex justify-between items-center mb-8">
-      <h1 className="text-2xl font-bold">Haci Simsek</h1>
+      <h1 className="text-2xl font-bold"><Link href="/">Haci Simsek</Link></h1>
       <nav className="hidden md:block">
         <ul className="flex space-x-4">
-          <li><a href="#about" className="hover:text-primary">About</a></li>
-          <li><a href="#projects" className="hover:text-primary">Projects</a></li>
-          <li><a href="#articles" className="hover:text-primary">Articles</a></li>
-          <li><a href="#contact" className="hover:text-primary">Contact</a></li>
+          <li><Link href="/" className="hover:text-primary">About</Link></li>
+          <li><Link href="/projects" className="hover:text-primary">Projects</Link></li>
+          <li><Link href="/articles" className="hover:text-primary">Articles</Link></li>
+          <li><Link href="/contact" className="hover:text-primary">Contact</Link></li>
         </ul>
       </nav>
       <div className="flex items-center space-x-2">
