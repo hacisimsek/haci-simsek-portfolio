@@ -57,7 +57,7 @@ export default function Projects() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {projects.map((project, index) => (
           <Card key={index}>
-            <a href={project.endPonint} target="_blank">
+            <a href={project.endpoint} target="_blank">
               <CardHeader>
                 <CardTitle>{project.title}</CardTitle>
               </CardHeader>
