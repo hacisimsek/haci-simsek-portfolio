@@ -21,7 +21,7 @@ export default function Career() {
       endPoint: "",
     },
     {
-      title: "Software Engineer Intern - Sisal",
+      title: "Software Engineer Intern - Telenity",
       description:
         "In the vas and messaging department, I made developments in Java using spring boot technology. The company is developing new technologies on 5G technologies.",
       endPoint: "",
