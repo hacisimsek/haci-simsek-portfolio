@@ -7,7 +7,7 @@ import {
 export default function Education() {
   return (
     <section className="mb-12">
-      <h2 className="text-2xl font-bold mb-4">Education</h2>
+      <h2 className="text-xl font-bold mb-4">Education</h2>
       <div className="space-y-4">
         <Card>
           <div className="p-4">

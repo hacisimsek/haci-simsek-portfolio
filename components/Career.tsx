@@ -36,7 +36,7 @@ export default function Career() {
 
   return (
     <section id="career" className="mb-12">
-      <h2 className="text-2xl font-bold mb-4">Career</h2>
+      <h2 className="text-xl font-bold mb-4">Career</h2>
       <div className="space-y-4">
         {career.map((career, index) => (
           <div key={index}>
