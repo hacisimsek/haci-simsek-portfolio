@@ -1,10 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { title } from "process";
 
 export default function Projects() {
   const projects = [
     { 
-      title: "Timeless Talk Application", 
+      title: "Timeless Talk App", 
       description: "An AI-powered chat application! Built using modern JavaScript technologies like React, this app allows users to interact with famous historical figures. Leveraging various generative AI APIs, it delivers realistic and educational conversation experiences.",
       endpoint: "https://github.com/hacisimsek/timeless-talks"
     },
@@ -62,7 +61,7 @@ export default function Projects() {
                 <CardTitle>{project.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription>{project.description}</CardDescription>
+                <CardDescription>{project.description.length > 200 ? project.description.slice(0,200) + "..." : project.description}</CardDescription>
               </CardContent>
             </a>
           </Card>
