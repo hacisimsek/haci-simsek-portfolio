@@ -20,6 +20,7 @@ interface Article {
 
 export default function Articles() {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchArticles() {
@@ -43,6 +44,8 @@ export default function Articles() {
         setArticles(formattedArticles);
       } catch (error) {
         console.error("Error fetching articles:", error);
+      } finally {
+        setIsLoading(false); // Stop the loader
       }
     }
 
@@ -66,45 +69,51 @@ export default function Articles() {
   return (
     <section id="articles" className="mb-12">
       <h4 className="text-xl font-bold mb-4">Latest Articles</h4>
-      <div className="space-y-4">
-        {articles.map((article, index) => (
-          <div key={index}>
-            <Card>
-              <CardHeader>
-                <a href={article.guid} target="_blank">
-                  <CardTitle>{article.title}</CardTitle>
-                </a>
-              </CardHeader>
-              <div className="flex">
-                <div className="flex-1">
-                  <CardContent>
-                    <CardDescription>
-                      {article.description.length > 600
-                        ? article.description.slice(0, 600) + "..."
-                        : article.description}
-                    </CardDescription>
-                  </CardContent>
-                  <CardFooter>
-                    <p className="text-sm text-muted-foreground">
-                      {article.categories
-                        ?.slice(0, 3)
-                        ?.map((category) => `#${category}`)
-                        .join(" ")}
-                    </p>
-                  </CardFooter>
+      {isLoading ? (
+        <div className="flex justify-center items-center h-24">
+          <div className="w-8 h-8 border-4 border-gray-200 rounded-full border-t-blue-500 animate-spin"></div>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {articles.map((article, index) => (
+            <div key={index}>
+              <Card>
+                <CardHeader>
+                  <a href={article.guid} target="_blank">
+                    <CardTitle>{article.title}</CardTitle>
+                  </a>
+                </CardHeader>
+                <div className="flex">
+                  <div className="flex-1">
+                    <CardContent>
+                      <CardDescription>
+                        {article.description.length > 600
+                          ? article.description.slice(0, 600) + "..."
+                          : article.description}
+                      </CardDescription>
+                    </CardContent>
+                    <CardFooter>
+                      <p className="text-sm text-muted-foreground">
+                        {article.categories
+                          ?.slice(0, 3)
+                          ?.map((category) => `#${category}`)
+                          .join(" ")}
+                      </p>
+                    </CardFooter>
+                  </div>
+                  <div className="hidden md:block">
+                    <img
+                      src={article.thumbnail}
+                      alt={article.title}
+                      className="w-48 h-48 object-cover rounded-lg shadow-lg border border-gray-200 mb-1 mr-3"
+                    />
+                  </div>
                 </div>
-                <div className="hidden md:block">
-                  <img
-                    src={article.thumbnail}
-                    alt={article.title}
-                    className="w-48 h-48 object-cover rounded-lg shadow-lg border border-gray-200 mb-1 mr-3"
-                  />
-                </div>
-              </div>
-            </Card>
-          </div>
-        ))}
-      </div>
+              </Card>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
