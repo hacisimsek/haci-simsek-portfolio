@@ -70,8 +70,8 @@ export default function Articles() {
     <section id="articles" className="mb-12">
       <h4 className="text-xl font-bold mb-4">Latest Articles</h4>
       {isLoading ? (
-        <div className="flex justify-center items-center h-24">
-          <div className="w-8 h-8 border-4 border-gray-200 rounded-full border-t-blue-500 animate-spin"></div>
+        <div className="flex justify-center items-center h-32">
+          <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
         </div>
       ) : (
         <div className="space-y-4">

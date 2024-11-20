@@ -1,6 +1,11 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+"use client";
+
+import { useState, useEffect } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Projects() {
+  const [isLoading, setIsLoading] = useState(true);
+
   const projects = [
     { 
       title: "Timeless Talk App", 
@@ -48,25 +53,40 @@ export default function Projects() {
       endpoint: "https://github.com/hacisimsek/bff-application"
     }
   ];
-  
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2000); // Simulating data fetching
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <section id="projects" className="mb-12">
       <h4 className="text-xl font-bold mb-4">Projects</h4>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project, index) => (
-          <Card key={index}>
-            <a href={project.endpoint} target="_blank">
-              <CardHeader>
-                <CardTitle>{project.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>{project.description.length > 200 ? project.description.slice(0,200) + "..." : project.description}</CardDescription>
-              </CardContent>
-            </a>
-          </Card>
-        ))}
-      </div>
+
+      {isLoading ? (
+        <div className="flex justify-center items-center h-32">
+          <div className="loader border-t-4 border-blue-500 rounded-full w-12 h-12 animate-spin"></div>
+        </div>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project, index) => (
+            <Card key={index}>
+              <a href={project.endpoint} target="_blank" rel="noopener noreferrer" className="block hover:shadow-lg transition">
+                <CardHeader>
+                  <CardTitle className="text-lg font-semibold">{project.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    {project.description.length > 200
+                      ? project.description.slice(0, 200) + "..."
+                      : project.description}
+                  </CardDescription>
+                </CardContent>
+              </a>
+            </Card>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
