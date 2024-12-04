@@ -10,26 +10,38 @@ export default function Career() {
   const career = [
     {
       title: "Software Engineer - Sisal",
-      description:
-        "I'm part of the Lottery and Terminals team. I am actively using React.js and OSGI technologies in an end-to-end application. I also participate in many international travels and meetings.",
+      description:[
+        "Currently a key member of the Lottery and Terminals team, focusing on end-to-end application development using React.js and OSGi technologies.",
+        "Collaborate on global projects, actively participating in international meetings and business trips to contribute to strategic discussions and decision-making processes.",
+        "Play a vital role in the design, development, and optimization of scalable software solutions for the lottery and gaming industry.",
+      ],
       endPoint: "",
     },
     {
       title: "Software Engineer - Nuevo Software House",
-      description:
-        "I was a member of the Sharepoint Team where we built end-to-end website applications. I actively used React.js and sharepoint technologies. I worked on these projects ; Turk petro , Avivasa, kordSA, Tavuk Dunyasi etc.",
+      description:[
+        "Collaborated as a key member of the SharePoint team, delivering end-to-end web applications for prominent clients such as Turk Petrol, Avivasa, KordSA, and Tavuk Dünyası.",
+        "Developed enterprise-level solutions leveraging React.js and SharePoint technologies, ensuring scalability and seamless user experiences.",
+        "Contributed to the design, implementation, and deployment of tailored applications to meet diverse business requirements across various industries.",
+      ],
       endPoint: "",
     },
     {
       title: "Software Engineer Intern - Telenity",
-      description:
-        "In the vas and messaging department, I made developments in Java using spring boot technology. The company is developing new technologies on 5G technologies.",
+      description:[
+        "Contributed to the VAS and Messaging Department, focusing on feature development with Java and Spring Boot.",
+        "Assisted in advancing the company's innovations in 5G technologies, ensuring alignment with cutting-edge industry trends.",
+        "Gained hands-on experience in designing and implementing scalable solutions in a fast-paced telecommunications environment.",
+      ],
       endPoint: "",
     },
     {
       title: " Project Manager - BAU AI Society ",
-      description:
-        "I worked voluntarily as a Project Manager at the BAU AI Society, where I was responsible for organizing seminars, meetings, and workshops related to artificial intelligence. These events aimed to provide participants with knowledge and training on AI technologies. I invited expert speakers and arranged various workshops, contributing to the community's understanding of AI.",
+      description:[
+        "Actively contributed to the Bahçeşehir University AI Society, organizing AI-focused seminars, workshops, and networking events to foster collaboration and knowledge sharing among students and professionals.",
+        "Played a key role in promoting artificial intelligence technologies through educational initiatives, enhancing awareness and engagement within the academic community.",
+        "Gained valuable experience in project coordination and event management while working in a team-oriented environment.",
+      ],
       endPoint: "",
     },
   ];
