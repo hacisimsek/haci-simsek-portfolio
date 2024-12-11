@@ -16,7 +16,7 @@ export default function Career() {
         "Currently a key member of the Lottery and Terminals team, focusing on end-to-end application development using <Bold>React.js<Bold> and <Bold>OSGi technologies<Bold>.",
         "Collaborate on global projects, actively participating in international meetings and business trips to contribute to strategic discussions and decision-making processes.",
         "Play a vital role in the design, development, and optimization of scalable software solutions for the lottery and gaming industry.",
-        "Designed and implemented the Orion module, building a new authentication infrastructure that seamlessly integrates with our full-stack application. Leveraged React.js, Java, and OSGi to ensure the system's scalability, security, and compatibility with the broader architecture, establishing it as the foundation for future enhancements."
+        "Lead the design and implementation of the Orion module, introducing a secure authentication infrastructure for our full-stack application."
       ],
       endPoint: "",
     },
