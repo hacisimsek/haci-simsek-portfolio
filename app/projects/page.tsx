@@ -55,7 +55,7 @@ export default function Projects() {
   ];
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000); // Simulating data fetching
+    const timer = setTimeout(() => setIsLoading(false), 1000); // Simulating data fetching
     return () => clearTimeout(timer);
   }, []);
 
