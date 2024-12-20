@@ -1,8 +1,4 @@
-import {
-  Card,
-  CardDescription,
-  CardText,
-} from "@/components/ui/card";
+import { Card, CardDescription, CardText } from '@/components/ui/card';
 
 export default function Education() {
   return (

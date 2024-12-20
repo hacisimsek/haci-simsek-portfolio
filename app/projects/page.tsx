@@ -1,7 +1,13 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState, useEffect } from 'react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 interface Project {
   name: string;
@@ -11,10 +17,14 @@ interface Project {
 }
 
 const fetchProjectsData = async () => {
-  const response = await fetch("https://api.github.com/users/hacisimsek/repos");
+  const response = await fetch('https://api.github.com/users/hacisimsek/repos');
   const data = await response.json();
-  return data.filter((project: Project) => project.description !== null)
-             .sort((a: Project, b: Project) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+  return data
+    .filter((project: Project) => project.description !== null)
+    .sort(
+      (a: Project, b: Project) =>
+        new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+    );
 };
 
 export default function Projects() {
@@ -34,7 +44,7 @@ export default function Projects() {
         setProjects(filteredData);
         clearTimeout(timeoutId);
       } catch (error) {
-        console.error("Error fetching projects:", error);
+        console.error('Error fetching projects:', error);
         setHasError(true);
       } finally {
         setIsLoading(false);
@@ -62,14 +72,21 @@ export default function Projects() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <Card key={index}>
-              <a href={project.html_url} target="_blank" rel="noopener noreferrer" className="block hover:shadow-lg transition">
+              <a
+                href={project.html_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block hover:shadow-lg transition"
+              >
                 <CardHeader>
-                  <CardTitle className="text-lg font-semibold">{project.name}</CardTitle>
+                  <CardTitle className="text-lg font-semibold">
+                    {project.name}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription>
                     {project.description && project.description.length > 200
-                      ? project.description.slice(0, 200) + "..."
+                      ? project.description.slice(0, 200) + '...'
                       : project.description}
                   </CardDescription>
                 </CardContent>

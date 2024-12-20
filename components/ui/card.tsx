@@ -82,7 +82,10 @@ const CardText = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn('text-m font-semibold leading-none tracking-tight', className)}
+    className={cn(
+      'text-m font-semibold leading-none tracking-tight',
+      className
+    )}
     {...props}
   />
 ));
@@ -94,5 +97,5 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
-  CardText
+  CardText,
 };

@@ -1,11 +1,11 @@
-"use client"
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useForm, ValidationError } from "@formspree/react";
+'use client';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useForm, ValidationError } from '@formspree/react';
 
 export default function Contact() {
-  const [state, handleSubmit, reset] = useForm("xanyoozp");
+  const [state, handleSubmit, reset] = useForm('xanyoozp');
   if (state.succeeded) {
     return <div>Thank you for signing up!</div>;
   }

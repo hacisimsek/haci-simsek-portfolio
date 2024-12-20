@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
   CardFooter,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 
 interface Article {
   title: string;
@@ -26,11 +26,11 @@ export default function Articles() {
     async function fetchArticles() {
       try {
         const response = await fetch(
-          "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@hacisimsek"
+          'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@hacisimsek'
         );
         const data = await response.json();
         const items = data.items || [];
-        console.log("items", items);
+        console.log('items', items);
 
         const formattedArticles = items.map((item: any) => ({
           title: item.title,
@@ -39,11 +39,11 @@ export default function Articles() {
           categories: item.categories,
           thumbnail: findImage(item.content),
         }));
-        console.log("formattedArticles", formattedArticles);
+        console.log('formattedArticles', formattedArticles);
 
         setArticles(formattedArticles);
       } catch (error) {
-        console.error("Error fetching articles:", error);
+        console.error('Error fetching articles:', error);
       } finally {
         setIsLoading(false); // Stop the loader
       }
@@ -57,13 +57,13 @@ export default function Articles() {
     const match = regex.exec(htmlString);
     return match
       ? match[1]
-      : "https://cdn-images-1.medium.com/v2/resize:fit:564/0*-BkwD9DCSLszd2ag.jpg";
+      : 'https://cdn-images-1.medium.com/v2/resize:fit:564/0*-BkwD9DCSLszd2ag.jpg';
   }
 
   function extractTextFromHTML(htmlString: string) {
     const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlString, "text/html");
-    return doc.body.textContent || "";
+    const doc = parser.parseFromString(htmlString, 'text/html');
+    return doc.body.textContent || '';
   }
 
   return (
@@ -88,7 +88,7 @@ export default function Articles() {
                     <CardContent>
                       <CardDescription>
                         {article.description.length > 600
-                          ? article.description.slice(0, 600) + "..."
+                          ? article.description.slice(0, 600) + '...'
                           : article.description}
                       </CardDescription>
                     </CardContent>
@@ -97,7 +97,7 @@ export default function Articles() {
                         {article.categories
                           ?.slice(0, 3)
                           ?.map((category) => `#${category}`)
-                          .join(" ")}
+                          .join(' ')}
                       </p>
                     </CardFooter>
                   </div>

@@ -1,16 +1,16 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
-import React from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import './globals.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { ThemeProvider } from '@/components/theme-provider';
+import React from 'react';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Haci Simsek",
-  description: "Portfolio of a Java and React developer with many articles",
+  title: 'Haci Simsek',
+  description: 'Portfolio of a Java and React developer with many articles',
 };
 
 export default function RootLayout({

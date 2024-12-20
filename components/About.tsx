@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Bold from "@/components/ui/bold";
-import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Bold from '@/components/ui/bold';
+import Image from 'next/image';
 
 export default function About() {
   return (
@@ -22,7 +22,7 @@ export default function About() {
             </div>
             <div className="ml-4">
               <p className="text-muted-foreground">
-                I am a passionate and skilled <Bold>Software Engineer</Bold>{" "}
+                I am a passionate and skilled <Bold>Software Engineer</Bold>{' '}
                 with dual degrees in Software Engineering and Electrical &
                 Electronics Engineering from Bahcesehir University, where I
                 graduated with a full scholarship. With a strong expertise in
