@@ -18,11 +18,13 @@ export default function Header() {
           <ReactTyped
             strings={[
               'Haci Simsek',
-              'Everytime Learner',
-              'Passionate Java Dev.',
+              'Always Learning',
+              'Passionate Java Dev',
               'Software Eng. @SISAL',
-              'Passionate Java Dev.',
               'Exploring AI',
+              'Clean Code Advocate',
+              'Blogging Tech Insights',
+              'AI & Java Enthusiast',
             ]}
             typeSpeed={40}
             backSpeed={50}
