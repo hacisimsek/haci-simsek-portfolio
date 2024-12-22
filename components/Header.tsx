@@ -14,15 +14,15 @@ export default function Header() {
   return (
     <header className="flex justify-between items-center mb-8">
       <h1 className="text-3xl font-bold">
-        <Link href="/" >
+        <Link href="/">
           <ReactTyped
             strings={[
-              "Haci Simsek",
-              "Everytime Learner",
-              "Passionate Java Dev.",
-              "Software Eng. @SISAL",
+              'Haci Simsek',
+              'Everytime Learner',
               'Passionate Java Dev.',
-              "Exploring AI",
+              'Software Eng. @SISAL',
+              'Passionate Java Dev.',
+              'Exploring AI',
             ]}
             typeSpeed={40}
             backSpeed={50}
