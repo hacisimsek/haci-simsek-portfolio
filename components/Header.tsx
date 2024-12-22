@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
+import { ReactTyped } from 'react-typed';
 import Link from 'next/link';
 
 export default function Header() {
@@ -13,7 +14,23 @@ export default function Header() {
   return (
     <header className="flex justify-between items-center mb-8">
       <h1 className="text-3xl font-bold">
-        <Link href="/">Haci Simsek</Link>
+        <Link href="/" >
+          <ReactTyped
+            strings={[
+              "Haci Simsek",
+              "Everytime Learner",
+              "Passionate Java Dev.",
+              "Software Eng. @SISAL",
+              'Passionate Java Dev.',
+              "Exploring AI",
+            ]}
+            typeSpeed={40}
+            backSpeed={50}
+            loop
+          >
+            <input type="text" />
+          </ReactTyped>
+        </Link>
       </h1>
       <nav className="hidden md:block">
         <ul className="flex space-x-4">
