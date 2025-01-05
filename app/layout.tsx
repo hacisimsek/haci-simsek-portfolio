@@ -6,11 +6,13 @@ import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Haci Simsek',
   description: 'Portfolio of a Java and React developer with many articles',
+  icons: '/images/favicon_io/favicon.ico',
 };
 
 export default function RootLayout({
