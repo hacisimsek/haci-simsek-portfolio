@@ -30,7 +30,7 @@ export default function Header() {
             backSpeed={50}
             loop
           >
-            <input type="text" />
+            <input type="text" className='bg-background' />
           </ReactTyped>
         </Link>
       </h1>
