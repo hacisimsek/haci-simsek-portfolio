@@ -26,6 +26,8 @@ export default function Header() {
               'Clean Code Advocate',
               'Blogging Tech Insights',
               'AI & Java Enthusiast',
+              'Open Source Contributor',
+              'Tech Enthusiast',
             ]}
             typeSpeed={40}
             backSpeed={50}
