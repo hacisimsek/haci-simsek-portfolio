@@ -22,17 +22,23 @@ export default function Footer() {
     {
       href: 'https://github.com/hacisimsek',
       label: 'GitHub',
-      icon: <FaGithub className="text-xl hover:text-gray-700 transition-colors duration-200" />,
+      icon: (
+        <FaGithub className="text-xl hover:text-gray-700 transition-colors duration-200" />
+      ),
     },
     {
       href: 'https://linkedin.com/in/hacisimsek',
       label: 'LinkedIn',
-      icon: <FaLinkedin className="text-xl hover:text-blue-700 transition-colors duration-200" />,
+      icon: (
+        <FaLinkedin className="text-xl hover:text-blue-700 transition-colors duration-200" />
+      ),
     },
     {
       href: 'https://x.com/CodeWithHaci',
       label: 'Twitter',
-      icon: <FaTwitter className="text-xl hover:text-blue-500 transition-colors duration-200" />,
+      icon: (
+        <FaTwitter className="text-xl hover:text-blue-500 transition-colors duration-200" />
+      ),
     },
   ];
 

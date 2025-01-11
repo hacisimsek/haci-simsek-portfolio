@@ -14,7 +14,9 @@ export default function Header() {
   return (
     <header className="flex justify-between items-center mb-8">
       <h1 className="text-3xl font-bold">
-        <Link href="/" className='block md:hidden'>Haci Simsek</Link>
+        <Link href="/" className="block md:hidden">
+          Haci Simsek
+        </Link>
         <Link href="/">
           <ReactTyped
             strings={[
@@ -31,10 +33,10 @@ export default function Header() {
             ]}
             typeSpeed={40}
             backSpeed={50}
-            className='hidden md:block'
+            className="hidden md:block"
             loop
           >
-            <input type="text" className='bg-background' />
+            <input type="text" className="bg-background" />
           </ReactTyped>
         </Link>
       </h1>
