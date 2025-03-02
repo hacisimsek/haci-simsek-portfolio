@@ -9,11 +9,11 @@ export default function Education() {
           <div className="p-4">
             <div className="flex justify-between">
               <CardText>Bahçeşehir University - Istanbul, Turkey</CardText>
-              <CardDescription> 2018 July — 2022 June</CardDescription>
+              <CardDescription> Sep 2019 - Jun 2021</CardDescription>
             </div>
             <div className="mt-4">
               <CardDescription>
-                Master's degree, Software Engineering
+              Bachelor's degree, Software Engineering (Minor)
               </CardDescription>
             </div>
             <div className="border-b-4 text-muted-foreground mt-2" />
@@ -21,23 +21,11 @@ export default function Education() {
           <div className="p-4">
             <div className="flex justify-between">
               <CardText>Bahçeşehir University - Istanbul, Turkey</CardText>
-              <CardDescription> 2018 July — 2022 June</CardDescription>
+              <CardDescription> Sep 2017 - Jun 2021</CardDescription>
             </div>
             <div className="mt-4">
               <CardDescription>
-                Master's degree, Software Engineering
-              </CardDescription>
-            </div>
-            <div className="border-b-4 text-muted-foreground mt-2" />
-          </div>
-          <div className="p-4">
-            <div className="flex justify-between">
-              <CardText>Bahçeşehir University - Istanbul, Turkey</CardText>
-              <CardDescription> 2018 July — 2022 June</CardDescription>
-            </div>
-            <div className="mt-4">
-              <CardDescription>
-                Master's degree, Software Engineering
+              Bachelor's degree, Electrical and Electronics Engineering (Major)
               </CardDescription>
             </div>
             <div className="border-b-4 text-muted-foreground mt-2" />
