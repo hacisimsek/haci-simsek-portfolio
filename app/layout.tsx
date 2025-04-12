@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { notFound } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,7 +31,7 @@ export default function RootLayout({
         >
           <div className="max-w-4xl mx-auto px-4 py-8">
             <Header />
-            <main>{children}</main>
+            <main>{children || notFound()}</main>
           </div>
           <Footer />
         </ThemeProvider>
