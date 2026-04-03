@@ -8,7 +8,7 @@ const socialLinks = [
     icon: Github,
   },
   {
-    href: 'https://linkedin.com/in/hacisimsek',
+    href: 'https://www.linkedin.com/in/haci-simsek/',
     label: 'LinkedIn',
     icon: Linkedin,
   },
