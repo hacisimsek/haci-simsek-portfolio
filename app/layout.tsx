@@ -1,17 +1,26 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { notFound } from 'next/navigation';
 
-const inter = Inter({ subsets: ['latin'] });
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-display',
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+});
 
 export const metadata: Metadata = {
   title: 'Haci Simsek',
-  description: 'Portfolio of a Java and React developer with many articles',
+  description:
+    'Portfolio of Haci Simsek, a software engineer building resilient products with Java, React, and distributed systems.',
   icons: '/images/favicon_io/favicon.ico',
 };
 
@@ -22,18 +31,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={`${spaceGrotesk.variable} ${jetBrainsMono.variable} min-h-screen bg-background text-foreground antialiased`}
+      >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="max-w-4xl mx-auto px-4 py-8">
-            <Header />
-            <main>{children || notFound()}</main>
+          <div className="app-shell">
+            <div className="page-glow page-glow-left" />
+            <div className="page-glow page-glow-right" />
+            <div className="page-grid" />
+            <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-10 pt-6 sm:px-6 lg:px-8">
+              <Header />
+              <main className="flex-1">{children || notFound()}</main>
+              <Footer />
+            </div>
           </div>
-          <Footer />
         </ThemeProvider>
       </body>
     </html>
