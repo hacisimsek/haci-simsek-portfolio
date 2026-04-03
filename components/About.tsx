@@ -11,7 +11,7 @@ const expertise = [
 ];
 
 const highlights = [
-  { label: 'Experience', value: '4+ years in production engineering' },
+  { label: 'Experience', value: '5 years in production engineering' },
   { label: 'Environment', value: 'Regulated, high-traffic systems' },
 ];
 
@@ -27,7 +27,7 @@ export default function About() {
               high-traffic environments.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
-              Software engineer with 4+ years of experience building backend
+              Software engineer with 5 years of experience building backend
               and full-stack solutions across regulated, high-traffic
               environments. Strong in Java, Spring Boot, distributed systems,
               CI/CD, and cloud-native delivery, with additional frontend
