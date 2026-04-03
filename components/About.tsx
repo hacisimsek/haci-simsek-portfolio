@@ -78,7 +78,7 @@ export default function About() {
             <div className="eyebrow mb-4">Currently at Sisal</div>
             <div className="relative overflow-hidden rounded-[2rem] border border-border/70 bg-secondary/40 p-3">
               <Image
-                src="/images/hacisimsek.jpg"
+                src="/images/IMG_0569.JPG"
                 alt="Haci Simsek"
                 width={1200}
                 height={1400}
