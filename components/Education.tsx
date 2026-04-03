@@ -2,7 +2,7 @@ const education = [
   {
     school: 'Bahcesehir University',
     location: 'Istanbul, Turkey',
-    degree: 'BSc, Electrical and Electronics Engineering',
+    degree: 'BSc, Electrical and Electronic Engineering',
     track: 'Major',
     period: 'Sep 2017 - Jun 2021',
   },

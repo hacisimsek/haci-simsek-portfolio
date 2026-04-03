@@ -22,7 +22,7 @@ const featuredAreas = [
   {
     title: 'Current focus',
     description:
-      'Authentication flows, backend resilience, scalable frontend foundations, and cleaner developer experience.',
+      'Authentication platforms, API-driven services, distributed systems, and cloud-ready architectures built for long-term maintainability.',
     href: '/contact',
     icon: Layers3,
   },

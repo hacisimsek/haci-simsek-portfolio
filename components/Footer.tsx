@@ -26,8 +26,8 @@ export default function Footer() {
         <div className="space-y-2">
           <div className="eyebrow">Available for selective collaborations</div>
           <p className="max-w-xl text-sm leading-7 text-muted-foreground">
-            Building robust backend systems, expressive frontend experiences,
-            and clean product flows with a pragmatic engineering mindset.
+            Building robust backend systems, distributed platform capabilities,
+            and architecture that remains operable under real production load.
           </p>
         </div>
 

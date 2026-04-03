@@ -27,7 +27,8 @@ export default function Header() {
             Software Engineer
           </div>
           <p className="hidden text-sm text-muted-foreground sm:block">
-            Java, React, distributed systems, product thinking
+            Senior Specialist @ Sisal · Java, Spring Boot, distributed systems,
+            CI/CD
           </p>
         </Link>
 

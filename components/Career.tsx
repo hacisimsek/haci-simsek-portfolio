@@ -2,25 +2,13 @@ const roles = [
   {
     company: 'Sisal',
     title: 'Software Development Senior Specialist',
-    period: 'Jan 2025 - Present',
+    period: 'Jun 2022 - Present',
     summary:
-      'Owning backend service quality and platform consistency for AreaPrivata flows.',
+      'Building Spring Boot microservices and production-ready backend flows in a regulated digital gaming and payments environment.',
     bullets: [
-      'Designed and optimized registration, profile, and gateway microservices with Java 11 and Spring Boot.',
-      'Pushed resilient communication patterns with RabbitMQ, Redis Sentinel, Kubernetes, and ArgoCD.',
-      'Led an API-driven infrastructure migration and set implementation standards across services.',
-    ],
-  },
-  {
-    company: 'Sisal',
-    title: 'Software Engineer',
-    period: 'Jun 2022 - Jan 2025',
-    summary:
-      'Built authentication and full-stack foundations across React, Java, and OSGi systems.',
-    bullets: [
-      'Designed the Orion module as a new authentication backbone for future product expansion.',
-      'Contributed end-to-end across lottery and terminal applications for global teams.',
-      'Worked at the intersection of scalability, security, and product delivery.',
+      'Worked across authentication, account, session, profile, and content-related domains with a focus on reliability and maintainability.',
+      'Built resilient integrations using messaging, retry strategies, and service-to-service communication patterns for fault-tolerant processing.',
+      'Contributed to CI/CD and cloud-native operations with Kubernetes, ArgoCD, observability tooling, load testing, and performance tuning.',
     ],
   },
   {
@@ -28,11 +16,11 @@ const roles = [
     title: 'Software Engineer',
     period: 'Sep 2021 - Jun 2022',
     summary:
-      'Delivered tailored enterprise web applications for major Turkish brands.',
+      'Delivered end-to-end web applications for enterprise clients across multiple industries.',
     bullets: [
-      'Built end-to-end SharePoint and React solutions with strong attention to usability.',
-      'Translated varied business needs into scalable application flows.',
-      'Worked across multiple client contexts without losing delivery speed.',
+      'Built business-facing interfaces with React.js and SharePoint for clients including Turk Petrol, Avivasa, KordSA, and Tavuk Dunyasi.',
+      'Balanced maintainability, user experience, and client-specific workflows across enterprise implementations.',
+      'Supported implementation and release of tailored solutions in close collaboration with product and delivery teams.',
     ],
   },
   {
@@ -57,9 +45,9 @@ export default function Career() {
             <h2 className="section-title">Experience with visible product impact</h2>
           </div>
           <p className="section-copy">
-            I gravitate toward systems that need both discipline and taste:
-            stable backend services, clean interfaces, and engineering choices
-            that scale without becoming messy six months later.
+            Most of my recent work sits in backend-heavy systems where scale,
+            release confidence, observability, and service reliability matter
+            as much as implementation itself.
           </p>
         </div>
 
@@ -84,7 +72,7 @@ export default function Career() {
                     <h3 className="text-xl font-semibold">{role.title}</h3>
                     <p className="mt-1 text-sm text-accent">{role.company}</p>
                   </div>
-                  <div className="meta-chip w-fit">Full-stack systems</div>
+                  <div className="meta-chip w-fit">Backend and platform engineering</div>
                 </div>
 
                 <p className="mt-4 text-sm leading-7 text-muted-foreground">

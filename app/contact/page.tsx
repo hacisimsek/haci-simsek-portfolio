@@ -28,11 +28,11 @@ export default function Contact() {
     <section className="grid gap-6 pb-6 fade-up lg:grid-cols-[0.9fr_1.1fr]">
       <div className="section-shell">
         <div className="eyebrow mb-4">Contact</div>
-        <h1 className="page-title">Let&apos;s talk about product, platform, or both</h1>
+        <h1 className="page-title">Let&apos;s talk about architecture, platforms, or backend systems</h1>
         <p className="mt-5 page-subtitle">
-          If you are building something that needs solid backend foundations,
-          thoughtful frontend execution, or an engineer who can move across the
-          stack without losing clarity, send a note.
+          If you are working on backend-heavy products, distributed systems,
+          platform evolution, or cloud delivery challenges, send a note. That
+          is where I create the most value.
         </p>
 
         <div className="mt-8 space-y-4">
@@ -40,17 +40,17 @@ export default function Contact() {
             {
               icon: Sparkles,
               title: 'Best fit',
-              text: 'Product engineering, platform work, architecture cleanup, and UI implementation with strong technical judgment.',
+              text: 'Platform engineering, distributed backend systems, architecture cleanup, cloud migration, and production reliability work.',
             },
             {
               icon: MessageSquareText,
               title: 'What helps',
-              text: 'A short summary of the problem, current stack, and the outcome you want to reach.',
+              text: 'A short summary of the problem, the current stack, and whether the challenge is around microservices, cloud readiness, scalability, or architecture evolution.',
             },
             {
               icon: Mail,
               title: 'Direct email',
-              text: 'You can also reach me at hacisimsek@gmail.com.',
+              text: 'You can also reach me at hacisimsek23@gmail.com.',
             },
           ].map(({ icon: Icon, title, text }) => (
             <div

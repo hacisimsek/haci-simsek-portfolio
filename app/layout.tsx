@@ -20,7 +20,7 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Haci Simsek',
   description:
-    'Portfolio of Haci Simsek, a software engineer building resilient products with Java, React, and distributed systems.',
+    'Portfolio of Haci Simsek, a software engineer with 4+ years of experience building Java, Spring Boot, distributed systems, and cloud-native solutions in regulated, high-traffic environments.',
   icons: '/images/favicon_io/favicon.ico',
 };
 
