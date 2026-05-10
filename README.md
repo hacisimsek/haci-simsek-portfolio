@@ -1,115 +1,119 @@
-# Haci Simsek - Kişisel Portfolyo
+# Haci Simsek Portfolio
 
-Profesyonel, hızlı ve erişilebilir bir kişisel portfolyo sitesi. Bu proje, Next.js + TypeScript + Tailwind CSS kullanılarak modern web standartlarına uygun şekilde geliştirilmiştir. Amacı, projelerimi, makalelerimi ve iletişim bilgilerini temiz ve performanslı bir kullanıcı arayüzüyle sergilemektir.
+A personal portfolio website built with Next.js, TypeScript, and Tailwind CSS. The project is designed to present selected work, articles, and contact information through a fast, accessible, and production-oriented interface.
 
-## İçindekiler
+## Table of Contents
 
-- Proje Hakkında
-- Özellikler
-- Teknoloji Yığını
-- Proje Yapısı
-- Kurulum ve Çalıştırma
-- Üretim (Build) ve Dağıtım
-- Katkıda Bulunma
-- Lisans
-- İletişim
+- Overview
+- Features
+- Tech Stack
+- Project Structure
+- Local Development
+- Production Build and Preview
+- Environment Variables
+- Contributing
+- License
+- Contact
 
-## Proje Hakkında
+## Overview
 
-Bu depo, Haci Simsek'in kişisel portfolyo web sitesinin kaynak kodunu içerir. Minimal, performans odaklı ve erişilebilir bir tasarım hedeflenmiştir. Site, içeriklerin (makaleler, projeler, iletişim) kolayca yönetilebilmesi için Next.js uygulaması şeklinde düzenlenmiştir.
+This repository contains the source code for Haci Simsek's personal portfolio website. The project follows a component-based Next.js structure and is optimized for static export, performance, and maintainability.
 
-## Özellikler
+## Features
 
-- Next.js ile sunucu tarafı ve statik üretim desteği
-- TypeScript ile tip güvenliği
-- Tailwind CSS ile hızlı stil geliştirme
-- Bileşen tabanlı, yeniden kullanılabilir UI
-- Erişilebilirlik ve performans optimizasyonları
+- Next.js App Router setup
+- TypeScript for type safety
+- Tailwind CSS for styling
+- Reusable component-driven UI
+- Static export support
+- Accessibility and performance-focused implementation
 
-## Teknoloji Yığını
+## Tech Stack
 
 - Next.js
 - React
 - TypeScript
 - Tailwind CSS
-- Sonner / Custom UI bileşenleri
+- Sonner and custom UI components
 
-## Proje Yapısı (kısa)
+## Project Structure
 
-Öne çıkan klasörler:
+Key directories:
 
-- `app/` — Next.js uygulama dizini (sayfalar, düzen)
-- `components/` — Kullanılan yeniden kullanılabilir bileşenler
-- `public/` — Statik varlıklar (görseller, favicon)
-- `hooks/`, `lib/` — Yardımcı fonksiyonlar ve özel hooklar
+- `app/` - Next.js application routes and layouts
+- `components/` - Reusable UI components
+- `public/` - Static assets such as images and icons
+- `hooks/` and `lib/` - Shared utilities and custom hooks
 
-Tam dosya yapısını depoda inceleyebilirsiniz.
+## Local Development
 
-## Kurulum ve Çalıştırma
+Requirements:
 
-Gereksinimler:
+- Node.js LTS
+- npm
 
-- Node.js (LTS önerilir)
-- npm veya yarn
-
-Yerel geliştirme için adımlar:
+Install dependencies and start the development server:
 
 ```bash
-# Depoyu klonlayın (zaten klonluysa bu adımı atlayın)
 git clone https://github.com/hacisimsek/haci-simsek-portfolio.git
 cd haci-simsek-portfolio
-
-# Bağımlılıkları yükleyin
 npm install
-
-# Geliştirme sunucusunu başlatın
 npm run dev
 ```
 
-Tarayıcıda http://localhost:3000 adresini açın.
+Open [http://localhost:3000](http://localhost:3000) in the browser.
 
-Yaygın npm script'leri (package.json içinde tanımlıdır):
+Available scripts:
 
-- `dev` — Geliştirme sunucusunu başlatır
-- `build` — Üretim için uygulamayı derler
-- `start` — Üretim yapısını çalıştırır
+- `npm run dev` - Start the development server
+- `npm run build` - Create the production build and static export
+- `npm run start` - Starts `next start`, which is not compatible with the current static export configuration
+- `npm run format` - Format the codebase with Prettier
+- `npm run lint` - Run linting
 
-## Üretim (Build) ve Dağıtım
+## Production Build and Preview
 
-Üretim yapısı oluşturmak için:
+This project uses static export:
 
 ```bash
 npm run build
-npm run start
 ```
 
-Bu proje Vercel veya benzeri bir hosting sağlayıcısına kolayca dağıtılabilir. Vercel kullanıyorsanız, repository'i bağlıyorsunuz ve otomatik deploy işlemleri etkinleşiyor.
+The exported site is generated in the `out/` directory.
 
-## Çevresel Değişkenler
+To preview the exported output locally, serve the `out/` directory with a static file server such as:
 
-Bu repoda hassas bilgi gerektiren bir env dosyası yoktur; eğer özel API anahtarı veya benzeri bir yapı eklenirse, `.env.local` dosyasında saklanmalı ve `.gitignore` içine eklenmelidir.
+```bash
+npx serve out
+```
 
-## Katkıda Bulunma
+`npm run start` is not the correct production preview command for this repository because `next.config.js` uses `output: 'export'`.
 
-Katkılar için teşekkürler. Küçük düzeltmeler veya öneriler için pull request açabilirsiniz. Büyük değişikliklerden önce issue ile tartışmak daha hızlı sonuç verir.
+## Environment Variables
 
-Önerilen akış:
+This repository does not currently require a committed environment file. If a future feature needs secrets or private keys, store them in `.env.local` and keep that file out of version control.
 
-1. Fork
-2. Yeni bir branch oluşturun: `git checkout -b feat/özellik-adi`
-3. Değişiklikleri commitleyin
-4. Pull request oluşturun
+## Contributing
 
-## Lisans
+Contributions are welcome for focused fixes and improvements. For larger changes, open an issue or discussion first to align on scope.
 
-Bu proje açık kaynak olarak sunulmuştur — lisans dosyası yoksa varsayılan olarak MIT lisansını kullanabilirsiniz. (Lisansı netleştirmek için repository'ye bir `LICENSE` dosyası ekleyin.)
+Recommended flow:
 
-## İletişim
+1. Create a branch from `main`
+2. Make a focused change
+3. Validate the change locally
+4. Open a pull request
+
+Additional repository workflow notes are documented in [AGENTS.md](AGENTS.md).
+
+## License
+
+No explicit license file is currently included in the repository. If the project is meant to be open source, add a `LICENSE` file and define the intended license clearly.
+
+## Contact
 
 Haci Simsek
 
-- GitHub: https://github.com/hacisimsek
-
----
-
-Eğer README'de özel bilgiler (ör. canlı demo linki, iletişim e-posta adresi, lisans türü) eklememi isterseniz, lütfen bana iletin; README'yi buna göre güncelleyeyim.
+- Website: [https://hacisimsek.com/](https://hacisimsek.com/)
+- GitHub: [https://github.com/hacisimsek](https://github.com/hacisimsek)
+- LinkedIn: [https://www.linkedin.com/in/haci-simsek/](https://www.linkedin.com/in/haci-simsek/)
