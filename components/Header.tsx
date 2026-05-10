@@ -20,16 +20,11 @@ export default function Header() {
 
   return (
     <header className="sticky top-4 z-50 mb-10 fade-up">
-      <div className="surface-card flex items-center justify-between gap-4 px-4 py-3 sm:px-5">
+      <div className="surface-card flex min-h-[88px] items-center justify-between gap-4 px-5 py-4 sm:px-6">
         <Link href="/" className="min-w-0">
-          <div className="eyebrow mb-2 hidden sm:inline-flex">Haci Simsek</div>
-          <div className="text-lg font-semibold tracking-tight sm:text-xl">
-            Software Engineer
+          <div className="text-xl font-semibold tracking-tight sm:text-2xl">
+            Hacı Şimşek
           </div>
-          <p className="hidden text-sm text-muted-foreground sm:block">
-            Senior Specialist @ Sisal · Java, Spring Boot, distributed systems,
-            CI/CD
-          </p>
         </Link>
 
         <nav className="hidden items-center gap-2 md:flex">
