@@ -30,11 +30,12 @@ This repository contains the source code for Haci Simsek's personal portfolio we
 
 ## Tech Stack
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- Sonner and custom UI components
+- Next.js 16 (App Router, Turbopack)
+- React 19
+- TypeScript 6
+- Tailwind CSS 4
+- ESLint 9 and Prettier
+- Vercel
 
 ## Project Structure
 
@@ -43,13 +44,13 @@ Key directories:
 - `app/` - Next.js application routes and layouts
 - `components/` - Reusable UI components
 - `public/` - Static assets such as images and icons
-- `hooks/` and `lib/` - Shared utilities and custom hooks
+- `lib/` - Shared utilities
 
 ## Local Development
 
 Requirements:
 
-- Node.js LTS
+- Node.js 24 (see `.nvmrc`)
 - npm
 
 Install dependencies and start the development server:
@@ -57,7 +58,7 @@ Install dependencies and start the development server:
 ```bash
 git clone https://github.com/hacisimsek/haci-simsek-portfolio.git
 cd haci-simsek-portfolio
-npm install
+npm ci
 npm run dev
 ```
 
@@ -68,8 +69,9 @@ Available scripts:
 - `npm run dev` - Start the development server
 - `npm run build` - Create the production build
 - `npm run start` - Serve the production build locally with `next start`
-- `npm run format` - Format the codebase with Prettier
-- `npm run lint` - Run linting
+- `npm run lint` - Lint with ESLint
+- `npm run typecheck` - Generate Next.js route types and run the TypeScript compiler
+- `npm run format` / `npm run format:check` - Format or check formatting with Prettier
 
 ## Production Build and Preview
 

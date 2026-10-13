@@ -59,8 +59,11 @@ The repository is configured for a squash-merge workflow.
 
 Before opening or merging a PR, prefer running the checks that match the change:
 
+- `npm run lint`
+- `npm run typecheck`
+- `npm run format:check`
 - `npm run build`
-- `npm audit`
+- `npm audit --omit=dev --audit-level=high`
 
 ## Notes For Future Changes
 
