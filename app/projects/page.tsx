@@ -90,7 +90,7 @@ export default function Projects() {
               href={project.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group surface-card flex min-h-[18rem] flex-col p-6 transition hover:-translate-y-1 hover:border-accent/40"
+              className="group surface-card flex min-h-72 flex-col p-6 transition hover:-translate-y-1 hover:border-accent/40"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary text-foreground">

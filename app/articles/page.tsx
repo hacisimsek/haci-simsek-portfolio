@@ -134,7 +134,7 @@ export default function Articles() {
                     <img
                       src={article.thumbnail}
                       alt={article.title}
-                      className="aspect-[4/3] h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+                      className="aspect-4/3 h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
                     />
                   </div>
 

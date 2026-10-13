@@ -55,7 +55,7 @@ export default function Contact() {
           ].map(({ icon: Icon, title, text }) => (
             <div
               key={title}
-              className="rounded-[1.5rem] border border-border/70 bg-background/75 p-5"
+              className="rounded-3xl border border-border/70 bg-background/75 p-5"
             >
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary text-foreground">

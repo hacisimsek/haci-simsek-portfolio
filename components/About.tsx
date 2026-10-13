@@ -27,7 +27,7 @@ export default function About() {
               Software engineer building backend and distributed systems for
               high-traffic environments.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
+            <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg sm:leading-7">
               Software engineer with 5 years of experience building backend
               and full-stack solutions across regulated, high-traffic
               environments. Strong in Java, Spring Boot, distributed systems,
@@ -79,14 +79,14 @@ export default function About() {
         <aside className="section-shell flex flex-col">
           <div>
             <div className="eyebrow mb-4">Currently at Sisal</div>
-            <div className="relative overflow-hidden rounded-[2rem] border border-border/70 bg-secondary/40 p-3">
+            <div className="relative overflow-hidden rounded-4xl border border-border/70 bg-secondary/40 p-3">
               <Image
                 src="/images/IMG_0569.JPG"
                 alt="Haci Simsek"
                 width={1200}
                 height={1400}
                 preload
-                className="aspect-[4/5] w-full rounded-[1.4rem] object-cover"
+                className="aspect-4/5 w-full rounded-[1.4rem] object-cover"
               />
             </div>
           </div>
