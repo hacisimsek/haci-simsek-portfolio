@@ -17,7 +17,7 @@ A personal portfolio website built with Next.js, TypeScript, and Tailwind CSS. T
 
 ## Overview
 
-This repository contains the source code for Haci Simsek's personal portfolio website. The project follows a component-based Next.js structure and is optimized for static export, performance, and maintainability.
+This repository contains the source code for Haci Simsek's personal portfolio website. The project follows a component-based Next.js structure, is deployed on Vercel, and is optimized for performance and maintainability.
 
 ## Features
 
@@ -25,7 +25,7 @@ This repository contains the source code for Haci Simsek's personal portfolio we
 - TypeScript for type safety
 - Tailwind CSS for styling
 - Reusable component-driven UI
-- Static export support
+- Deployed on Vercel with the Next.js runtime
 - Accessibility and performance-focused implementation
 
 ## Tech Stack
@@ -66,28 +66,23 @@ Open [http://localhost:3000](http://localhost:3000) in the browser.
 Available scripts:
 
 - `npm run dev` - Start the development server
-- `npm run build` - Create the production build and static export
-- `npm run start` - Starts `next start`, which is not compatible with the current static export configuration
+- `npm run build` - Create the production build
+- `npm run start` - Serve the production build locally with `next start`
 - `npm run format` - Format the codebase with Prettier
 - `npm run lint` - Run linting
 
 ## Production Build and Preview
 
-This project uses static export:
+Build the site and preview the production output locally:
 
 ```bash
 npm run build
+npm run start
 ```
 
-The exported site is generated in the `out/` directory.
+Open [http://localhost:3000](http://localhost:3000) in the browser.
 
-To preview the exported output locally, serve the `out/` directory with a static file server such as:
-
-```bash
-npx serve out
-```
-
-`npm run start` is not the correct production preview command for this repository because `next.config.js` uses `output: 'export'`.
+The site is deployed on Vercel. Pushes to `main` deploy to production, and every pull request gets a preview deployment.
 
 ## Environment Variables
 

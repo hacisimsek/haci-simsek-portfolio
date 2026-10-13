@@ -64,5 +64,4 @@ Before opening or merging a PR, prefer running the checks that match the change:
 
 ## Notes For Future Changes
 
-- Avoid unnecessary `out/` churn unless the exported output is intentionally being refreshed
 - Keep UI/content changes separate from dependency or GitHub configuration changes when practical
