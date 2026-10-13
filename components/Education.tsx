@@ -21,8 +21,10 @@ export default function Education() {
       <div className="section-shell">
         <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <div className="eyebrow mb-4">Education</div>
-            <h2 className="section-title">Engineering foundation across hardware and software</h2>
+            <div className="mb-4 eyebrow">Education</div>
+            <h2 className="section-title">
+              Engineering foundation across hardware and software
+            </h2>
           </div>
           <p className="section-copy">
             My background combines software systems thinking with electrical and
@@ -39,7 +41,7 @@ export default function Education() {
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className="meta-chip">{item.track}</span>
-                <span className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                <span className="text-xs tracking-[0.22em] text-muted-foreground uppercase">
                   {item.period}
                 </span>
               </div>

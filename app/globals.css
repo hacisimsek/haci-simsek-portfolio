@@ -105,14 +105,14 @@
 }
 
 @utility eyebrow {
-  @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[0.7rem] uppercase tracking-[0.24em] text-muted-foreground;
+  @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[0.7rem] tracking-[0.24em] text-muted-foreground uppercase;
   border-color: hsl(var(--border) / 0.7);
   background-color: hsl(var(--background) / 0.8);
   font-family: var(--font-mono), monospace;
 }
 
 @utility section-shell {
-  @apply surface-card relative overflow-hidden p-6 sm:p-8;
+  @apply relative overflow-hidden surface-card p-6 sm:p-8;
 
   &::after {
     content: '';
@@ -222,8 +222,16 @@
     @apply bg-background text-foreground;
     font-family: var(--font-display), sans-serif;
     background-image:
-      radial-gradient(circle at top left, hsl(var(--accent) / 0.16), transparent 28%),
-      radial-gradient(circle at top right, hsl(var(--primary) / 0.16), transparent 26%),
+      radial-gradient(
+        circle at top left,
+        hsl(var(--accent) / 0.16),
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at top right,
+        hsl(var(--primary) / 0.16),
+        transparent 26%
+      ),
       linear-gradient(180deg, hsl(var(--background)), hsl(var(--background)));
   }
 

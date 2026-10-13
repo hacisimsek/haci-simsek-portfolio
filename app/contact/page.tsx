@@ -13,8 +13,10 @@ export default function Contact() {
     return (
       <section className="fade-up">
         <div className="section-shell max-w-3xl">
-          <div className="eyebrow mb-4">Message received</div>
-          <h1 className="page-title">Thanks, I&apos;ll get back to you soon.</h1>
+          <div className="mb-4 eyebrow">Message received</div>
+          <h1 className="page-title">
+            Thanks, I&apos;ll get back to you soon.
+          </h1>
           <p className="mt-5 page-subtitle">
             If the topic is a good fit, I usually respond with concrete next
             steps instead of a generic placeholder reply.
@@ -25,14 +27,16 @@ export default function Contact() {
   }
 
   return (
-    <section className="grid gap-6 pb-6 fade-up lg:grid-cols-[0.9fr_1.1fr]">
+    <section className="grid fade-up gap-6 pb-6 lg:grid-cols-[0.9fr_1.1fr]">
       <div className="section-shell">
-        <div className="eyebrow mb-4">Contact</div>
-        <h1 className="page-title">Let&apos;s talk about architecture, platforms, or backend systems</h1>
+        <div className="mb-4 eyebrow">Contact</div>
+        <h1 className="page-title">
+          Let&apos;s talk about architecture, platforms, or backend systems
+        </h1>
         <p className="mt-5 page-subtitle">
           If you are working on backend-heavy products, distributed systems,
-          platform evolution, or cloud delivery challenges, send a note. That
-          is where I create the most value.
+          platform evolution, or cloud delivery challenges, send a note. That is
+          where I create the most value.
         </p>
 
         <div className="mt-8 space-y-4">
@@ -73,7 +77,7 @@ export default function Contact() {
 
       <div className="section-shell">
         <div className="mb-6">
-          <div className="eyebrow mb-4">Send a message</div>
+          <div className="mb-4 eyebrow">Send a message</div>
           <h2 className="section-title">A concise brief is enough to start</h2>
         </div>
 

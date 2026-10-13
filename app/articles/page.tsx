@@ -69,16 +69,16 @@ export default function Articles() {
   }, []);
 
   return (
-    <section className="space-y-6 pb-6 fade-up">
+    <section className="fade-up space-y-6 pb-6">
       <div className="section-shell">
-        <div className="eyebrow mb-4">Articles</div>
+        <div className="mb-4 eyebrow">Articles</div>
         <h1 className="page-title">
           Writing where implementation detail meets clear thinking
         </h1>
         <p className="mt-5 page-subtitle">
-          Notes, tutorials, and practical engineering breakdowns. I use
-          writing to clarify tradeoffs, capture lessons, and make complex work
-          easier to reason about.
+          Notes, tutorials, and practical engineering breakdowns. I use writing
+          to clarify tradeoffs, capture lessons, and make complex work easier to
+          reason about.
         </p>
       </div>
 
@@ -87,7 +87,7 @@ export default function Articles() {
           {Array.from({ length: 4 }).map((_, index) => (
             <div
               key={index}
-              className="surface-card h-56 animate-pulse bg-card/70"
+              className="h-56 animate-pulse surface-card bg-card/70"
             />
           ))}
         </div>

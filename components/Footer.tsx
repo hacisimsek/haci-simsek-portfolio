@@ -1,6 +1,10 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, XIcon } from '@/components/icons/brand-icons';
+import {
+  GithubIcon,
+  LinkedinIcon,
+  XIcon,
+} from '@/components/icons/brand-icons';
 
 const socialLinks = [
   {
@@ -23,7 +27,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="mt-16 fade-up">
-      <div className="surface-card flex flex-col gap-6 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-6 surface-card px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
           <div className="eyebrow">Available for selective collaborations</div>
           <p className="max-w-xl text-sm leading-7 text-muted-foreground">
