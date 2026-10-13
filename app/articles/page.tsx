@@ -11,6 +11,29 @@ interface Article {
   thumbnail?: string;
 }
 
+interface FeedItem {
+  title: string;
+  description: string;
+  guid: string;
+  categories?: string[];
+  content: string;
+}
+
+const FALLBACK_THUMBNAIL =
+  'https://cdn-images-1.medium.com/v2/resize:fit:564/0*-BkwD9DCSLszd2ag.jpg';
+
+function findImage(htmlString: string) {
+  const regex = /<img.*?src="([^">]*\/([^">]*?))".*?>/g;
+  const match = regex.exec(htmlString);
+  return match ? match[1] : FALLBACK_THUMBNAIL;
+}
+
+function extractTextFromHTML(htmlString: string) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+  return doc.body.textContent || '';
+}
+
 export default function Articles() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,9 +46,9 @@ export default function Articles() {
           'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@hacisimsek'
         );
         const data = await response.json();
-        const items = data.items || [];
+        const items: FeedItem[] = data.items || [];
 
-        const formattedArticles = items.map((item: any) => ({
+        const formattedArticles = items.map((item) => ({
           title: item.title,
           description: extractTextFromHTML(item.description),
           guid: item.guid,
@@ -44,20 +67,6 @@ export default function Articles() {
 
     fetchArticles();
   }, []);
-
-  function findImage(htmlString: string) {
-    const regex = /<img.*?src="([^">]*\/([^">]*?))".*?>/g;
-    const match = regex.exec(htmlString);
-    return match
-      ? match[1]
-      : 'https://cdn-images-1.medium.com/v2/resize:fit:564/0*-BkwD9DCSLszd2ag.jpg';
-  }
-
-  function extractTextFromHTML(htmlString: string) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlString, 'text/html');
-    return doc.body.textContent || '';
-  }
 
   return (
     <section className="space-y-6 pb-6 fade-up">
