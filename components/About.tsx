@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
+import { GithubIcon, LinkedinIcon } from '@/components/icons/brand-icons';
 import { Button } from '@/components/ui/button';
 
 const expertise = [
@@ -84,7 +85,7 @@ export default function About() {
                 alt="Haci Simsek"
                 width={1200}
                 height={1400}
-                priority
+                preload
                 className="aspect-[4/5] w-full rounded-[1.4rem] object-cover"
               />
             </div>
@@ -110,12 +111,12 @@ export default function About() {
                 {
                   href: 'https://github.com/hacisimsek',
                   label: 'GitHub',
-                  icon: Github,
+                  icon: GithubIcon,
                 },
                 {
                   href: 'https://www.linkedin.com/in/haci-simsek/',
                   label: 'LinkedIn',
-                  icon: Linkedin,
+                  icon: LinkedinIcon,
                 },
               ].map(({ href, label, icon: Icon }) => (
                 <a

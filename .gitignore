@@ -79,3 +79,6 @@ dist
 
 # TernJS port file
 .tern-port
+# Next.js generated types
+next-env.d.ts
+*.tsbuildinfo

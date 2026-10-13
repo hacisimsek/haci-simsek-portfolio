@@ -1,21 +1,22 @@
 import Link from 'next/link';
-import { ArrowUpRight, Github, Linkedin, Twitter } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, XIcon } from '@/components/icons/brand-icons';
 
 const socialLinks = [
   {
     href: 'https://github.com/hacisimsek',
     label: 'GitHub',
-    icon: Github,
+    icon: GithubIcon,
   },
   {
     href: 'https://www.linkedin.com/in/haci-simsek/',
     label: 'LinkedIn',
-    icon: Linkedin,
+    icon: LinkedinIcon,
   },
   {
     href: 'https://x.com/CodeWithHaci',
     label: 'X',
-    icon: Twitter,
+    icon: XIcon,
   },
 ];
 
