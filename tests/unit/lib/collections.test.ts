@@ -64,6 +64,34 @@ describe('filterRepos', () => {
     ).toEqual(['wordly']);
   });
 
+  it('finds and sorts repos by the title people read', () => {
+    const shown = [
+      repo('ecommerce-microservices', 'Java', '2026-02-01T00:00:00Z'),
+      repo('apple', 'Java', '2026-02-01T00:00:00Z'),
+    ];
+    expect(
+      names(
+        filterRepos(shown, {
+          query: 'e-commerce',
+          language: null,
+          sort: 'recent',
+        })
+      )
+    ).toEqual(['ecommerce-microservices']);
+    // By slug "spring-cloud" sorts first; by title "Spring Boot app" does.
+    expect(
+      names(
+        filterRepos(
+          [
+            repo('spring-cloud', null, '2026-01-01T00:00:00Z'),
+            repo('springboot-app', null, '2026-01-01T00:00:00Z'),
+          ],
+          { query: '', language: null, sort: 'name' }
+        )
+      )
+    ).toEqual(['springboot-app', 'spring-cloud']);
+  });
+
   it('filters by language and sorts by recency or name', () => {
     expect(
       names(filterRepos(repos, { query: '', language: 'Java', sort: 'recent' }))
