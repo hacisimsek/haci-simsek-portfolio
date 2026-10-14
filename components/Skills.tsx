@@ -25,7 +25,7 @@ export default function Skills() {
                 {t(category.title, locale)}
               </h3>
               <div className="mt-4 flex flex-wrap gap-2">
-                {category.items.map((item) => (
+                {t(category.items, locale).map((item) => (
                   <span key={item} className="meta-chip">
                     {item}
                   </span>

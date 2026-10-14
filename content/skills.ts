@@ -1,45 +1,74 @@
 import type { SkillCategory } from './types';
 
+// Product and language names stay the same in both locales; generic
+// practices are translated.
 export const skills: SkillCategory[] = [
   {
     id: 'languages',
     title: { en: 'Languages', tr: 'Diller' },
-    items: ['Java', 'JavaScript'],
+    items: {
+      en: ['Java', 'JavaScript'],
+      tr: ['Java', 'JavaScript'],
+    },
   },
   {
     id: 'backend',
     title: { en: 'Backend', tr: 'Backend' },
-    items: ['Spring Boot', 'Maven', 'OSGi', 'REST APIs'],
+    items: {
+      en: ['Spring Boot', 'Maven', 'OSGi', 'REST APIs'],
+      tr: ['Spring Boot', 'Maven', 'OSGi', 'REST API’ler'],
+    },
   },
   {
     id: 'messaging-data',
     title: { en: 'Messaging and data', tr: 'Mesajlaşma ve veri' },
-    items: ['RabbitMQ', 'Kafka', 'Redis', 'PostgreSQL', 'MySQL'],
+    items: {
+      en: ['RabbitMQ', 'Kafka', 'Redis', 'PostgreSQL', 'MySQL'],
+      tr: ['RabbitMQ', 'Kafka', 'Redis', 'PostgreSQL', 'MySQL'],
+    },
   },
   {
     id: 'cloud-devops',
     title: { en: 'Cloud and delivery', tr: 'Bulut ve teslimat' },
-    items: ['Kubernetes', 'ArgoCD', 'Docker', 'CI/CD'],
+    items: {
+      en: ['Kubernetes', 'ArgoCD', 'Docker', 'CI/CD'],
+      tr: ['Kubernetes', 'ArgoCD', 'Docker', 'CI/CD'],
+    },
   },
   {
     id: 'observability',
     title: { en: 'Observability', tr: 'Gözlemlenebilirlik' },
-    items: ['Grafana', 'Prometheus', 'Load testing'],
+    items: {
+      en: ['Grafana', 'Prometheus', 'Load testing'],
+      tr: ['Grafana', 'Prometheus', 'Yük testi'],
+    },
   },
   {
     id: 'frontend',
     title: { en: 'Frontend', tr: 'Frontend' },
-    items: ['React', 'Next.js', 'SharePoint'],
+    items: {
+      en: ['React', 'Next.js', 'SharePoint'],
+      tr: ['React', 'Next.js', 'SharePoint'],
+    },
   },
   {
     id: 'architecture',
     title: { en: 'Architecture', tr: 'Mimari' },
-    items: [
-      'Microservices',
-      'Saga pattern',
-      'Circuit breaker',
-      'Backend for frontend',
-      'Clean architecture',
-    ],
+    items: {
+      en: [
+        'Microservices',
+        'Saga pattern',
+        'Circuit breaker',
+        'Backend for frontend',
+        'Clean architecture',
+      ],
+      tr: [
+        'Mikroservisler',
+        'Saga deseni',
+        'Circuit breaker',
+        'Backend for frontend (BFF)',
+        'Temiz mimari',
+      ],
+    },
   },
 ];

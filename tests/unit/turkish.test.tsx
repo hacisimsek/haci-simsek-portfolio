@@ -42,3 +42,14 @@ describe('Turkish interface', () => {
     ).toBeInTheDocument();
   });
 });
+
+describe('Turkish skills', () => {
+  it('translates generic skill names and keeps product names', async () => {
+    const { default: Skills } = await import('@/components/Skills');
+    renderWithIntl(<Skills />, { locale: 'tr' });
+    expect(screen.getByText('Yük testi')).toBeInTheDocument();
+    expect(screen.getByText('Mikroservisler')).toBeInTheDocument();
+    expect(screen.queryByText('Load testing')).toBeNull();
+    expect(screen.getByText('Kubernetes')).toBeInTheDocument();
+  });
+});

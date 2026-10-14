@@ -46,7 +46,7 @@ export interface EducationItem {
 export interface SkillCategory {
   id: string;
   title: L10n;
-  items: string[];
+  items: L10n<string[]>;
 }
 
 export interface Social {

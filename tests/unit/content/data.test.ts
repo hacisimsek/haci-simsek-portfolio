@@ -58,7 +58,7 @@ describe('education', () => {
 
 describe('skills', () => {
   it('includes the confirmed tools exactly once', () => {
-    const all = skills.flatMap((c) => c.items);
+    const all = skills.flatMap((c) => c.items.en);
     for (const tool of [
       'Java',
       'Spring Boot',
@@ -102,7 +102,7 @@ describe('accuracy guards', () => {
   });
 
   it('lists only skills backed by the CV or confirmed by the owner', () => {
-    const all = skills.flatMap((c) => c.items);
+    const all = skills.flatMap((c) => c.items.en);
     expect(all).not.toContain('TypeScript');
     expect(all).not.toContain('API gateway');
   });

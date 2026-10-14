@@ -14,7 +14,7 @@ export const profile: Profile = {
   },
   intro: {
     en: 'Software engineer with {years} years of experience building backend and full-stack solutions across regulated, high-traffic environments. Strong in Java, Spring Boot, distributed systems, CI/CD, and cloud-native delivery, with additional frontend experience in React and Next.js.',
-    tr: 'Regüle edilen, yüksek trafikli ortamlarda backend ve full-stack çözümler geliştirme konusunda {years} yıllık deneyime sahip yazılım mühendisi. Java, Spring Boot, dağıtık sistemler, CI/CD ve cloud-native teslimat konularında güçlü; React ve Next.js ile frontend deneyimi de var.',
+    tr: 'Regülasyona tabi, yüksek trafikli ortamlarda backend ve full-stack çözümler geliştirme konusunda {years} yıllık deneyime sahip yazılım mühendisi. Java, Spring Boot, dağıtık sistemler, CI/CD ve cloud-native teslimat konularında güçlü; React ve Next.js ile frontend deneyimi de var.',
   },
   bio: {
     en: [
@@ -48,6 +48,6 @@ export const profile: Profile = {
   },
   environment: {
     en: 'Regulated, high-traffic systems',
-    tr: 'Regüle edilen, yüksek trafikli sistemler',
+    tr: 'Regülasyona tabi, yüksek trafikli sistemler',
   },
 };

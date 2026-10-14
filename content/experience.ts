@@ -18,7 +18,7 @@ export const experience: Role[] = [
     end: null,
     summary: {
       en: 'Building Spring Boot microservices and production-ready backend flows in a regulated digital gaming and payments environment.',
-      tr: 'Regüle edilen dijital oyun ve ödeme ortamında Spring Boot mikroservisleri ve üretime hazır backend akışları geliştiriyorum.',
+      tr: 'Regülasyona tabi dijital oyun ve ödeme ortamında Spring Boot mikroservisleri ve üretime hazır backend akışları geliştiriyorum.',
     },
     highlights: {
       en: [

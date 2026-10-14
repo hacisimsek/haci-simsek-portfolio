@@ -38,3 +38,12 @@ describe('messages', () => {
     }
   });
 });
+
+describe('Turkish metadata', () => {
+  it('puts the possessive on a Turkish noun, not on the name', () => {
+    expect(tr.Metadata.description.startsWith('{name} portfolyosu')).toBe(
+      false
+    );
+    expect(tr.Metadata.description).toMatch(/mühendisinin portfolyosu\.$/);
+  });
+});
