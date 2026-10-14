@@ -10,6 +10,9 @@ export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 export const alt = profile.asciiName;
 
+// Only the real locales; anything else is a 404, not an English image.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }

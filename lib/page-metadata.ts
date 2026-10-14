@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { profile, t, type Locale } from '@/content';
+import { profile, socials, t, type Locale } from '@/content';
 import { careerYears } from '@/lib/dates';
 import { alternatesFor } from '@/lib/seo';
+
+const xHandle = `@${new URL(socials.find((social) => social.id === 'x')!.href).pathname.slice(1)}`;
 
 type TitleKey = 'projectsTitle' | 'articlesTitle' | 'contactTitle';
 
@@ -51,6 +53,7 @@ export async function pageMetadata(
     },
     twitter: {
       card: 'summary_large_image',
+      creator: xHandle,
       title: socialTitle,
       description,
       images,

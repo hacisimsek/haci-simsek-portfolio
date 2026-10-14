@@ -46,7 +46,6 @@ describe('robots', () => {
     expect(robots()).toEqual({
       rules: { userAgent: '*', allow: '/' },
       sitemap: 'https://hacisimsek.com/sitemap.xml',
-      host: 'https://hacisimsek.com',
     });
   });
 });

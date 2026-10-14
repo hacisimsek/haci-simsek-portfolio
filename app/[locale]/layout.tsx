@@ -1,7 +1,5 @@
 import 'lenis/dist/lenis.css';
 import '../globals.css';
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono, Space_Grotesk } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -14,6 +12,7 @@ import MotionProvider from '@/components/providers/motion-provider';
 import SmoothScroll from '@/components/providers/smooth-scroll';
 import Footer from '@/components/Footer';
 import JsonLd from '@/components/seo/json-ld';
+import VercelInsights from '@/components/seo/vercel-insights';
 import ThemeColor from '@/components/seo/theme-color';
 import TerminalHost from '@/components/terminal/terminal-host';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
@@ -24,7 +23,7 @@ import { profile } from '@/content';
 import { brand } from '@/lib/og/brand';
 import { SITE_URL } from '@/lib/seo';
 import { pageMetadata } from '@/lib/page-metadata';
-import { personJsonLd, websiteJsonLd } from '@/lib/structured-data';
+import { graphJsonLd } from '@/lib/structured-data';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin', 'latin-ext'],
@@ -45,10 +44,6 @@ const geistMono = Geist_Mono({
 // Daily regeneration keeps the computed years of experience and the footer
 // year current without a redeploy.
 export const revalidate = 86400;
-
-// Only Vercel serves the /_vercel/insights endpoints; elsewhere the scripts
-// would just 404.
-const onVercel = process.env.VERCEL === '1';
 
 // The dark default; ThemeColor keeps it in step with the theme toggle.
 export const viewport: Viewport = {
@@ -96,12 +91,7 @@ export default async function LocaleLayout({
       <body
         className={`${spaceGrotesk.variable} ${geist.variable} ${geistMono.variable} min-h-screen bg-background text-foreground antialiased`}
       >
-        <JsonLd
-          data={{
-            '@context': 'https://schema.org',
-            '@graph': [personJsonLd(locale), websiteJsonLd()],
-          }}
-        />
+        <JsonLd data={graphJsonLd(locale)} />
         <NextIntlClientProvider>
           <ThemeProvider
             attribute="class"
@@ -127,12 +117,7 @@ export default async function LocaleLayout({
             </MotionProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
-        {onVercel ? (
-          <>
-            <Analytics />
-            <SpeedInsights />
-          </>
-        ) : null}
+        <VercelInsights />
       </body>
     </html>
   );

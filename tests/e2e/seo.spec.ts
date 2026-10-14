@@ -138,3 +138,40 @@ test('the browser chrome colour follows the site theme, not the OS', async ({
   await page.getByRole('button', { name: 'Toggle theme' }).click();
   await expect(themeColor).toHaveAttribute('content', '#f9fafd');
 });
+
+test('legacy /favicon.ico serves the generated icon', async ({ request }) => {
+  const response = await request.get('/favicon.ico', { maxRedirects: 0 });
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toBe('image/png');
+});
+
+test('Open Graph images exist only for real locales', async ({ request }) => {
+  const response = await request.get('/xx/opengraph-image');
+  expect(response.status()).toBe(404);
+});
+
+test('cards credit the X account', async ({ page }) => {
+  for (const path of ['/', '/projects']) {
+    await page.goto(path);
+    await expect(page.locator('meta[name="twitter:creator"]')).toHaveAttribute(
+      'content',
+      '@CodeWithHaci'
+    );
+  }
+});
+
+test('analytics code is not shipped outside Vercel', async ({
+  page,
+  request,
+}) => {
+  await page.goto('/');
+  const sources = await page
+    .locator('script[src]')
+    .evaluateAll((scripts) =>
+      scripts.map((script) => (script as HTMLScriptElement).src)
+    );
+  for (const src of sources) {
+    const body = await (await request.get(src)).text();
+    expect(body, src).not.toContain('/_vercel/insights');
+  }
+});
