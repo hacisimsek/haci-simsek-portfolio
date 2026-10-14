@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import TerminalDialog from '@/components/terminal/terminal-dialog';
@@ -57,6 +57,24 @@ describe('TerminalDialog', () => {
     expect(log).toHaveTextContent('sudo');
   });
 
+  it('keeps focus in the prompt on Tab even when the log has links', async () => {
+    const { user, input } = setup();
+    await user.type(input, 'contact{Enter}sk');
+    await user.keyboard('{Tab}');
+    expect(input).toHaveValue('skills ');
+    expect(input).toHaveFocus();
+  });
+
+  it('shows the sudo hire-me punchline before closing', async () => {
+    const { user, input, log, onOpenChange } = setup();
+    await user.type(input, 'sudo hire-me{Enter}');
+    expect(log).toHaveTextContent('Permission granted');
+    expect(onOpenChange).not.toHaveBeenCalled();
+    await waitFor(() => expect(onOpenChange).toHaveBeenCalledWith(false), {
+      timeout: 3000,
+    });
+  });
+
   it('clears the screen', async () => {
     const { user, input, log } = setup();
     await user.type(input, 'help{Enter}clear{Enter}');
@@ -82,7 +100,9 @@ describe('TerminalDialog', () => {
   it('closes with exit and with Escape', async () => {
     const { user, input, onOpenChange } = setup();
     await user.type(input, 'exit{Enter}');
-    expect(onOpenChange).toHaveBeenCalledWith(false);
+    await waitFor(() => expect(onOpenChange).toHaveBeenCalledWith(false), {
+      timeout: 3000,
+    });
     onOpenChange.mockClear();
     await user.keyboard('{Escape}');
     expect(onOpenChange).toHaveBeenCalledWith(false);

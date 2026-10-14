@@ -26,6 +26,9 @@ import {
 import { cn } from '@/lib/utils';
 
 const PROMPT = 'haci@istanbul:~$';
+// Long enough to read the last lines ("Permission granted…") before the
+// terminal closes or the page changes.
+const EXIT_DELAY = 700;
 
 export default function TerminalDialog({
   open,
@@ -47,11 +50,19 @@ export default function TerminalDialog({
   const [value, setValue] = useState('');
   const [history, setHistory] = useState(emptyHistory);
   const log = useRef<HTMLDivElement>(null);
+  const exitTimer = useRef<number | undefined>(undefined);
+
+  useEffect(() => () => window.clearTimeout(exitTimer.current), []);
 
   useEffect(() => {
     const node = log.current;
     if (node) node.scrollTop = node.scrollHeight;
   }, [lines]);
+
+  function later(action: () => void) {
+    window.clearTimeout(exitTimer.current);
+    exitTimer.current = window.setTimeout(action, EXIT_DELAY);
+  }
 
   function apply(effect: Effect) {
     switch (effect.type) {
@@ -59,18 +70,22 @@ export default function TerminalDialog({
         setLines([]);
         break;
       case 'close':
-        onOpenChange(false);
+        later(() => onOpenChange(false));
         break;
       case 'theme':
         setTheme(effect.theme);
         break;
       case 'locale':
-        onOpenChange(false);
-        router.replace(pathname, { locale: effect.locale });
+        later(() => {
+          onOpenChange(false);
+          router.replace(pathname, { locale: effect.locale });
+        });
         break;
       case 'navigate':
-        onOpenChange(false);
-        router.push(effect.href);
+        later(() => {
+          onOpenChange(false);
+          router.push(effect.href);
+        });
         break;
     }
   }
@@ -100,8 +115,10 @@ export default function TerminalDialog({
       setHistory(step.history);
       setValue(step.value);
     } else if (event.key === 'Tab' && !event.shiftKey) {
-      // Completion owns Tab here; Shift+Tab still moves focus.
+      // Completion owns Tab here; Shift+Tab still moves focus. Stop the event
+      // too, or the dialog focus trap moves focus to a link in the log.
       event.preventDefault();
+      event.stopPropagation();
       const matches = complete(value);
       if (matches.length === 1) setValue(`${matches[0]} `);
       else if (matches.length > 1) {
