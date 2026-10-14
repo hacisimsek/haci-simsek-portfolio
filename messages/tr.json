@@ -116,6 +116,7 @@
     "sortOldest": "Önce en eski",
     "showing": "{total} sonuçtan {shown} tanesi gösteriliyor",
     "empty": "Eşleşen sonuç yok.",
+    "updated": "Güncelleme: {date}",
     "reset": "Filtreleri sıfırla"
   },
   "Contact": {

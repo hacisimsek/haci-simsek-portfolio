@@ -23,7 +23,7 @@ test('home features fixture projects and articles', async ({ page }) => {
   await page.goto('/');
   const projects = page.getByRole('region', { name: 'Featured projects' });
   await expect(
-    projects.getByRole('link', { name: /ecommerce-microservices/ })
+    projects.getByRole('link', { name: /^E-commerce microservices/ })
   ).toBeVisible();
   await expect(projects.getByText('Flagship')).toBeVisible();
   await expect(
@@ -40,7 +40,7 @@ test('project cards are plain, focusable links', async ({ page }) => {
   await page.goto('/');
   const link = page
     .getByRole('region', { name: 'Featured projects' })
-    .getByRole('link', { name: /notifyhub/ });
+    .getByRole('link', { name: /^NotifyHub/ });
   await link.focus();
   await expect(link).toBeFocused();
   await expect(link).toHaveAttribute('href', /^https:\/\/github\.com\//);
@@ -66,5 +66,32 @@ test.describe('on a phone', () => {
     await page.goto('/');
     const box = await page.getByRole('heading', { level: 1 }).boundingBox();
     expect(box!.y).toBeLessThan(200);
+  });
+});
+
+test('projects are a ruled list, not cards', async ({ page }) => {
+  for (const [path, scope] of [
+    ['/', page.getByRole('region', { name: 'Featured projects' })],
+    ['/projects', page.locator('main ol')],
+  ] as const) {
+    await page.goto(path);
+    await expect(
+      scope.locator('a[href^="https://github.com/"]').first()
+    ).toBeVisible();
+    await expect(scope.locator('.surface-card, .meta-chip')).toHaveCount(0);
+  }
+});
+
+test.describe('project rows on a phone', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('are comfortable touch targets', async ({ page }) => {
+    await page.goto('/projects');
+    const rows = page.locator('main a[href^="https://github.com/"]');
+    for (const box of await rows.evaluateAll((links) =>
+      links.map((link) => link.getBoundingClientRect().height)
+    )) {
+      expect(box).toBeGreaterThanOrEqual(44);
+    }
   });
 });

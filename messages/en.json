@@ -116,6 +116,7 @@
     "sortOldest": "Oldest first",
     "showing": "Showing {shown} of {total}",
     "empty": "No matches.",
+    "updated": "Updated {date}",
     "reset": "Reset filters"
   },
   "Contact": {
