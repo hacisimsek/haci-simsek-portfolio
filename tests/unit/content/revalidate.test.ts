@@ -8,7 +8,7 @@ vi.mock('next/font/google', () => ({
 
 describe('root layout', () => {
   it('regenerates pages daily so computed years and dates stay current', async () => {
-    const layout = await import('@/app/layout');
+    const layout = await import('@/app/[locale]/layout');
     expect(layout.revalidate).toBe(86400);
   });
 });

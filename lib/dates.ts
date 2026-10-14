@@ -1,6 +1,6 @@
 import type { Locale, YearMonth } from '@/content/types';
 
-const PRESENT: Record<Locale, string> = { en: 'Present' };
+const PRESENT: Record<Locale, string> = { en: 'Present', tr: 'Halen' };
 
 function parse(value: YearMonth) {
   const [year, month] = value.split('-').map(Number);

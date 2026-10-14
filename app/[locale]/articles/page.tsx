@@ -1,33 +1,57 @@
+import type { Metadata } from 'next';
+import { alternatesFor } from '@/lib/seo';
+import { hasLocale } from 'next-intl';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ArrowUpRight, BookOpenText } from 'lucide-react';
 import { loadFeed } from '@/lib/feeds/load';
 import { getArticles } from '@/lib/feeds/medium';
 
 export const revalidate = 21600;
 
-export default async function Articles() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    return {};
+  }
+  const msg = await getTranslations({ locale, namespace: 'Metadata' });
+  return {
+    title: msg('articlesTitle'),
+    alternates: alternatesFor('/articles', locale),
+  };
+}
+
+export default async function Articles({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+  setRequestLocale(locale);
+  const msg = await getTranslations({ locale, namespace: 'Articles' });
   const feed = await loadFeed(getArticles);
 
   return (
     <section className="fade-up space-y-6 pb-6">
       <div className="section-shell">
-        <div className="mb-4 eyebrow">Articles</div>
-        <h1 className="page-title">
-          Writing where implementation detail meets clear thinking
-        </h1>
-        <p className="mt-5 page-subtitle">
-          Notes, tutorials, and practical engineering breakdowns. I use writing
-          to clarify tradeoffs, capture lessons, and make complex work easier to
-          reason about.
-        </p>
+        <div className="mb-4 eyebrow">{msg('eyebrow')}</div>
+        <h1 className="page-title">{msg('title')}</h1>
+        <p className="mt-5 page-subtitle">{msg('subtitle')}</p>
       </div>
 
       {!feed.ok ? (
         <div className="section-shell">
-          <p className="text-base text-destructive">
-            Article feed could not be loaded right now.
-          </p>
+          <p className="text-base text-destructive">{msg('errorTitle')}</p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Medium may be temporarily unavailable.
+            {msg('errorText')}
           </p>
         </div>
       ) : (
@@ -49,11 +73,17 @@ export default async function Articles() {
                     <span className="meta-chip">Medium</span>
                   </div>
 
-                  <h2 className="mt-5 text-2xl font-semibold tracking-tight">
+                  <h2
+                    lang="en"
+                    className="mt-5 text-2xl font-semibold tracking-tight"
+                  >
                     {article.title}
                   </h2>
 
-                  <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                  <p
+                    lang="en"
+                    className="mt-4 text-sm leading-7 text-muted-foreground"
+                  >
                     {article.excerpt.length > 360
                       ? `${article.excerpt.slice(0, 360)}...`
                       : article.excerpt}
@@ -78,7 +108,7 @@ export default async function Articles() {
                   </div>
 
                   <div className="inline-flex items-center gap-2 text-sm font-medium text-foreground">
-                    Read article
+                    {msg('readArticle')}
                     <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                 </div>

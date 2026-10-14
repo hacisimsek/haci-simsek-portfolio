@@ -43,3 +43,9 @@ test('projects and articles render the feeds from the fixture server', async ({
     'https://medium.com/@hacisimsek/what-is-the-saga-pattern-aaea405280dc'
   );
 });
+
+test('the Turkish home page is served under /tr', async ({ page }) => {
+  const response = await page.goto('/tr');
+  expect(response?.status()).toBe(200);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'tr');
+});

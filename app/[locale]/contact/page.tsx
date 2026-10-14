@@ -2,26 +2,23 @@
 
 import { Mail, MessageSquareText, Send, Sparkles } from 'lucide-react';
 import { useForm, ValidationError } from '@formspree/react';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { profile } from '@/content';
 
 export default function Contact() {
+  const msg = useTranslations('Contact');
   const [state, handleSubmit] = useForm('xanyoozp');
 
   if (state.succeeded) {
     return (
       <section className="fade-up">
         <div className="section-shell max-w-3xl">
-          <div className="mb-4 eyebrow">Message received</div>
-          <h1 className="page-title">
-            Thanks, I&apos;ll get back to you soon.
-          </h1>
-          <p className="mt-5 page-subtitle">
-            If the topic is a good fit, I usually respond with concrete next
-            steps instead of a generic placeholder reply.
-          </p>
+          <div className="mb-4 eyebrow">{msg('successEyebrow')}</div>
+          <h1 className="page-title">{msg('successTitle')}</h1>
+          <p className="mt-5 page-subtitle">{msg('successText')}</p>
         </div>
       </section>
     );
@@ -30,32 +27,26 @@ export default function Contact() {
   return (
     <section className="grid fade-up gap-6 pb-6 lg:grid-cols-[0.9fr_1.1fr]">
       <div className="section-shell">
-        <div className="mb-4 eyebrow">Contact</div>
-        <h1 className="page-title">
-          Let&apos;s talk about architecture, platforms, or backend systems
-        </h1>
-        <p className="mt-5 page-subtitle">
-          If you are working on backend-heavy products, distributed systems,
-          platform evolution, or cloud delivery challenges, send a note. That is
-          where I create the most value.
-        </p>
+        <div className="mb-4 eyebrow">{msg('eyebrow')}</div>
+        <h1 className="page-title">{msg('title')}</h1>
+        <p className="mt-5 page-subtitle">{msg('subtitle')}</p>
 
         <div className="mt-8 space-y-4">
           {[
             {
               icon: Sparkles,
-              title: 'Best fit',
-              text: 'Platform engineering, distributed backend systems, architecture cleanup, cloud migration, and production reliability work.',
+              title: msg('bestFitTitle'),
+              text: msg('bestFitText'),
             },
             {
               icon: MessageSquareText,
-              title: 'What helps',
-              text: 'A short summary of the problem, the current stack, and whether the challenge is around microservices, cloud readiness, scalability, or architecture evolution.',
+              title: msg('helpsTitle'),
+              text: msg('helpsText'),
             },
             {
               icon: Mail,
-              title: 'Direct email',
-              text: `You can also reach me at ${profile.email}.`,
+              title: msg('emailTitle'),
+              text: msg('emailText', { email: profile.email }),
             },
           ].map(({ icon: Icon, title, text }) => (
             <div
@@ -78,8 +69,8 @@ export default function Contact() {
 
       <div className="section-shell">
         <div className="mb-6">
-          <div className="mb-4 eyebrow">Send a message</div>
-          <h2 className="section-title">A concise brief is enough to start</h2>
+          <div className="mb-4 eyebrow">{msg('formEyebrow')}</div>
+          <h2 className="section-title">{msg('formTitle')}</h2>
         </div>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -87,31 +78,35 @@ export default function Contact() {
             <Input
               type="text"
               name="name"
-              placeholder="Your name"
-              aria-label="Your name"
+              placeholder={msg('namePlaceholder')}
+              aria-label={msg('namePlaceholder')}
               className="h-12 rounded-2xl border-border/70 bg-background/75 px-4"
             />
             <Input
               id="email"
               type="email"
               name="email"
-              placeholder="Your email"
-              aria-label="Your email"
+              placeholder={msg('emailPlaceholder')}
+              aria-label={msg('emailPlaceholder')}
               className="h-12 rounded-2xl border-border/70 bg-background/75 px-4"
             />
           </div>
-          <ValidationError prefix="Email" field="email" errors={state.errors} />
+          <ValidationError
+            prefix={msg('emailPrefix')}
+            field="email"
+            errors={state.errors}
+          />
 
           <Textarea
             id="message"
             name="message"
-            placeholder="What are you building and where do you need help?"
-            aria-label="Your message"
+            placeholder={msg('messagePlaceholder')}
+            aria-label={msg('messageLabel')}
             rows={8}
             className="rounded-[1.6rem] border-border/70 bg-background/75 px-4 py-3"
           />
           <ValidationError
-            prefix="Message"
+            prefix={msg('messagePrefix')}
             field="message"
             errors={state.errors}
           />
@@ -122,7 +117,7 @@ export default function Contact() {
             className="rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90"
           >
             <Send className="mr-2 h-4 w-4" />
-            {state.submitting ? 'Sending...' : 'Send Message'}
+            {state.submitting ? msg('sending') : msg('send')}
           </Button>
         </form>
       </div>

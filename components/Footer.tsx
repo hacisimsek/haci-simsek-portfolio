@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { ArrowUpRight } from 'lucide-react';
 import {
   GithubIcon,
@@ -6,6 +6,7 @@ import {
   XIcon,
 } from '@/components/icons/brand-icons';
 import { profile, socials } from '@/content';
+import { Link } from '@/i18n/navigation';
 
 const icons = { github: GithubIcon, linkedin: LinkedinIcon, x: XIcon };
 
@@ -18,14 +19,14 @@ const socialLinks = socials
   }));
 
 export default function Footer() {
+  const msg = useTranslations('Footer');
   return (
     <footer className="mt-16 fade-up">
       <div className="flex flex-col gap-6 surface-card px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
-          <div className="eyebrow">Available for selective collaborations</div>
+          <div className="eyebrow">{msg('eyebrow')}</div>
           <p className="max-w-xl text-sm leading-7 text-muted-foreground">
-            Building robust backend systems, distributed platform capabilities,
-            and architecture that remains operable under real production load.
+            {msg('text')}
           </p>
         </div>
 
@@ -49,13 +50,15 @@ export default function Footer() {
             href="/contact"
             className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition hover:text-accent"
           >
-            Start a conversation
+            {msg('cta')}
             <ArrowUpRight className="h-4 w-4" />
           </Link>
 
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {profile.asciiName}. Designed with
-            intent, not templates.
+            {msg('copyright', {
+              year: new Date().getFullYear(),
+              name: profile.asciiName,
+            })}
           </p>
         </div>
       </div>

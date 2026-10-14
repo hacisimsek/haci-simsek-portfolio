@@ -1,9 +1,10 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight, Mail } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons/brand-icons';
 import { Button } from '@/components/ui/button';
 import { profile, socials, t } from '@/content';
+import { Link } from '@/i18n/navigation';
 import { careerYears } from '@/lib/dates';
 
 function socialHref(id: 'github' | 'linkedin') {
@@ -11,23 +12,25 @@ function socialHref(id: 'github' | 'linkedin') {
 }
 
 export default function About() {
+  const msg = useTranslations('About');
+  const locale = useLocale();
   const years = careerYears(profile.careerStart);
   const highlights = [
-    { label: 'Experience', value: `${years} years in production engineering` },
-    { label: 'Environment', value: t(profile.environment) },
+    { label: msg('experienceLabel'), value: msg('experienceValue', { years }) },
+    { label: msg('environmentLabel'), value: t(profile.environment, locale) },
   ];
 
   return (
     <section id="about" className="fade-up">
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="section-shell">
-          <div className="mb-6 eyebrow">Editorial tech portfolio</div>
+          <div className="mb-6 eyebrow">{msg('eyebrow')}</div>
           <div className="max-w-3xl">
-            <h1 className="page-title">{t(profile.headline)}</h1>
+            <h1 className="page-title">{t(profile.headline, locale)}</h1>
             <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg sm:leading-7">
-              {t(profile.intro).replace('{years}', String(years))}
+              {t(profile.intro, locale).replace('{years}', String(years))}
             </p>
-            {t(profile.bio).map((paragraph) => (
+            {t(profile.bio, locale).map((paragraph) => (
               <p
                 key={paragraph}
                 className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground"
@@ -38,7 +41,7 @@ export default function About() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            {t(profile.expertise).map((item) => (
+            {t(profile.expertise, locale).map((item) => (
               <span key={item} className="meta-chip">
                 {item}
               </span>
@@ -51,12 +54,12 @@ export default function About() {
               className="rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90"
             >
               <Link href="/projects">
-                View Projects
+                {msg('viewProjects')}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
             <Button asChild variant="outline" className="rounded-full px-6">
-              <Link href="/contact">Start a Conversation</Link>
+              <Link href="/contact">{msg('startConversation')}</Link>
             </Button>
           </div>
 
@@ -80,7 +83,7 @@ export default function About() {
         <aside className="section-shell flex flex-col">
           <div>
             <div className="mb-4 eyebrow">
-              Currently at {profile.currentCompany}
+              {msg('currentlyAt', { company: profile.currentCompany })}
             </div>
             <div className="relative overflow-hidden rounded-4xl border border-border/70 bg-secondary/40 p-3">
               <Image
@@ -97,10 +100,10 @@ export default function About() {
           <div className="mt-6 space-y-4">
             <div className="rounded-3xl border border-border/70 bg-background/70 p-5">
               <p className="text-sm tracking-[0.24em] text-muted-foreground uppercase">
-                Based in
+                {msg('basedIn')}
               </p>
               <p className="mt-2 text-lg font-semibold">
-                {t(profile.location)}
+                {t(profile.location, locale)}
               </p>
             </div>
 
@@ -108,7 +111,7 @@ export default function About() {
               {[
                 {
                   href: `mailto:${profile.email}`,
-                  label: 'Email',
+                  label: msg('email'),
                   icon: Mail,
                 },
                 {

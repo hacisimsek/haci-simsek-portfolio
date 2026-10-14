@@ -1,0 +1,111 @@
+{
+  "Metadata": {
+    "description": "Portfolio of {name}, a software engineer with {years} years of experience building Java, Spring Boot, distributed systems, and cloud-native solutions in regulated, high-traffic environments.",
+    "projectsTitle": "Projects",
+    "articlesTitle": "Articles",
+    "contactTitle": "Contact"
+  },
+  "Nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "articles": "Articles",
+    "contact": "Contact",
+    "letsTalk": "Let's Talk",
+    "toggleTheme": "Toggle theme",
+    "toggleNavigation": "Toggle navigation"
+  },
+  "LanguageSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "tr": "Türkçe"
+  },
+  "About": {
+    "eyebrow": "Editorial tech portfolio",
+    "viewProjects": "View Projects",
+    "startConversation": "Start a Conversation",
+    "experienceLabel": "Experience",
+    "experienceValue": "{years} years in production engineering",
+    "environmentLabel": "Environment",
+    "currentlyAt": "Currently at {company}",
+    "basedIn": "Based in",
+    "email": "Email"
+  },
+  "Career": {
+    "eyebrow": "Career timeline",
+    "title": "Experience with visible product impact",
+    "copy": "Most of my recent work sits in backend-heavy systems where scale, release confidence, observability, and service reliability matter as much as implementation itself."
+  },
+  "Skills": {
+    "eyebrow": "Skills",
+    "title": "Tools I use to ship and run systems",
+    "copy": "The stack behind the roles above, from service code and messaging to delivery pipelines and the architecture patterns I write about."
+  },
+  "Education": {
+    "eyebrow": "Education",
+    "title": "Engineering foundation across hardware and software",
+    "copy": "My background combines software systems thinking with electrical and electronics fundamentals, which still influences how I reason about architecture, constraints, and reliability."
+  },
+  "Home": {
+    "eyebrow": "Beyond the resume",
+    "title": "Proof of work, writing, and next conversations",
+    "copy": "The site should do more than list roles. These entry points make it easier to evaluate how I think, what I build, and where a collaboration could start.",
+    "explore": "Explore",
+    "projectsTitle": "Featured projects",
+    "projectsText": "A selected view into experiments, shipped ideas, and production-minded engineering work.",
+    "writingTitle": "Technical writing",
+    "writingText": "Articles where architecture, implementation detail, and practical lessons are unpacked clearly.",
+    "focusTitle": "Current focus",
+    "focusText": "Authentication platforms, API-driven services, distributed systems, and cloud-ready architectures built for long-term maintainability."
+  },
+  "Projects": {
+    "eyebrow": "Projects",
+    "title": "Selected builds, experiments, and engineering curiosities",
+    "subtitle": "A live pull from GitHub that reflects how I build in the open. The focus is not just code volume, but the patterns, ideas, and product instincts behind each repo.",
+    "errorTitle": "Project feed could not be loaded right now.",
+    "errorText": "Try again in a moment or visit the GitHub profile directly."
+  },
+  "Articles": {
+    "eyebrow": "Articles",
+    "title": "Writing where implementation detail meets clear thinking",
+    "subtitle": "Notes, tutorials, and practical engineering breakdowns. I use writing to clarify tradeoffs, capture lessons, and make complex work easier to reason about.",
+    "errorTitle": "Article feed could not be loaded right now.",
+    "errorText": "Medium may be temporarily unavailable.",
+    "readArticle": "Read article"
+  },
+  "Contact": {
+    "successEyebrow": "Message received",
+    "successTitle": "Thanks, I'll get back to you soon.",
+    "successText": "If the topic is a good fit, I usually respond with concrete next steps instead of a generic placeholder reply.",
+    "eyebrow": "Contact",
+    "title": "Let's talk about architecture, platforms, or backend systems",
+    "subtitle": "If you are working on backend-heavy products, distributed systems, platform evolution, or cloud delivery challenges, send a note. That is where I create the most value.",
+    "bestFitTitle": "Best fit",
+    "bestFitText": "Platform engineering, distributed backend systems, architecture cleanup, cloud migration, and production reliability work.",
+    "helpsTitle": "What helps",
+    "helpsText": "A short summary of the problem, the current stack, and whether the challenge is around microservices, cloud readiness, scalability, or architecture evolution.",
+    "emailTitle": "Direct email",
+    "emailText": "You can also reach me at {email}.",
+    "formEyebrow": "Send a message",
+    "formTitle": "A concise brief is enough to start",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "messagePlaceholder": "What are you building and where do you need help?",
+    "messageLabel": "Your message",
+    "emailPrefix": "Email",
+    "messagePrefix": "Message",
+    "sending": "Sending...",
+    "send": "Send Message"
+  },
+  "Footer": {
+    "eyebrow": "Available for selective collaborations",
+    "text": "Building robust backend systems, distributed platform capabilities, and architecture that remains operable under real production load.",
+    "cta": "Start a conversation",
+    "copyright": "© {year} {name}. Designed with intent, not templates."
+  },
+  "NotFound": {
+    "eyebrow": "404",
+    "title": "Page not found",
+    "text": "The page you are looking for does not exist or has moved.",
+    "home": "Go to the home page"
+  }
+}

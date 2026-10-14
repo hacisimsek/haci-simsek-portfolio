@@ -26,3 +26,10 @@ describe('careerYears', () => {
     expect(careerYears('2021-06', new Date('2026-10-14T12:00:00Z'))).toBe(5);
   });
 });
+
+describe('Turkish dates', () => {
+  it('uses Turkish month names and "Halen" for ongoing roles', () => {
+    expect(formatYearMonth('2022-06', 'tr')).toBe('Haz 2022');
+    expect(formatPeriod('2025-01', null, 'tr')).toBe('Oca 2025 - Halen');
+  });
+});

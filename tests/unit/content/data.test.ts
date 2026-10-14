@@ -58,7 +58,7 @@ describe('education', () => {
 
 describe('skills', () => {
   it('includes the confirmed tools exactly once', () => {
-    const all = skills.flatMap((c) => c.items);
+    const all = skills.flatMap((c) => c.items.en);
     for (const tool of [
       'Java',
       'Spring Boot',
@@ -102,8 +102,57 @@ describe('accuracy guards', () => {
   });
 
   it('lists only skills backed by the CV or confirmed by the owner', () => {
-    const all = skills.flatMap((c) => c.items);
+    const all = skills.flatMap((c) => c.items.en);
     expect(all).not.toContain('TypeScript');
     expect(all).not.toContain('API gateway');
+  });
+});
+
+describe('Turkish translations', () => {
+  type Node = unknown;
+  const isL10n = (value: Node): value is { en: unknown; tr: unknown } =>
+    typeof value === 'object' &&
+    value !== null &&
+    'en' in value &&
+    'tr' in value;
+
+  function check(value: Node, path: string, problems: string[]) {
+    if (isL10n(value)) {
+      const { en, tr } = value;
+      if (Array.isArray(en)) {
+        if (!Array.isArray(tr) || tr.length !== en.length) {
+          problems.push(`${path}: array length differs`);
+        } else if (tr.some((item) => !String(item).trim())) {
+          problems.push(`${path}: empty item`);
+        }
+      } else if (!String(tr ?? '').trim()) {
+        problems.push(`${path}: empty`);
+      }
+      return;
+    }
+    if (Array.isArray(value)) {
+      value.forEach((item, index) =>
+        check(item, `${path}[${index}]`, problems)
+      );
+    } else if (typeof value === 'object' && value !== null) {
+      for (const [key, child] of Object.entries(value)) {
+        check(child, `${path}.${key}`, problems);
+      }
+    }
+  }
+
+  it('gives every localized field a Turkish value of the same shape', () => {
+    const problems: string[] = [];
+    check({ profile, experience, education, skills }, 'content', problems);
+    expect(problems).toEqual([]);
+  });
+
+  it('keeps the same number of bold markers in both languages', () => {
+    const count = (text: string) => (text.match(/\*\*[^*]+\*\*/g) ?? []).length;
+    for (const role of experience) {
+      role.highlights.en.forEach((line, index) => {
+        expect(count(role.highlights.tr[index])).toBe(count(line));
+      });
+    }
   });
 });

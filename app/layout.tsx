@@ -1,61 +1,7 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { JetBrains_Mono, Space_Grotesk } from 'next/font/google';
-import { ThemeProvider } from '@/components/theme-provider';
-import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { profile } from '@/content';
-import { careerYears } from '@/lib/dates';
+import type { ReactNode } from 'react';
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin', 'latin-ext'],
-  variable: '--font-display',
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ['latin', 'latin-ext'],
-  variable: '--font-mono',
-});
-
-// Daily regeneration keeps the computed years of experience and the footer
-// year current without a redeploy.
-export const revalidate = 86400;
-
-export const metadata: Metadata = {
-  title: profile.asciiName,
-  description: `Portfolio of ${profile.asciiName}, a software engineer with ${careerYears(profile.careerStart)} years of experience building Java, Spring Boot, distributed systems, and cloud-native solutions in regulated, high-traffic environments.`,
-  icons: '/images/favicon_io/favicon.ico',
-};
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${spaceGrotesk.variable} ${jetBrainsMono.variable} min-h-screen bg-background text-foreground antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="app-shell">
-            <div className="page-glow page-glow-left" />
-            <div className="page-glow page-glow-right" />
-            <div className="page-grid" />
-            <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-6 pb-10 sm:px-6 lg:px-8">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
-          </div>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+// The real root layout lives in app/[locale]/layout.tsx. This file only exists
+// so that app/not-found.tsx can handle requests outside a locale.
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return children;
 }
