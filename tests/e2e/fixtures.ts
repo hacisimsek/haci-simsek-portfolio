@@ -34,13 +34,11 @@ export async function waitForEntranceAnimations(page: Page) {
   );
 }
 
-// React tags DOM nodes it has hydrated with internal keys; once the palette
-// trigger carries one, global listeners such as the ⌘K shortcut are attached.
+// The palette trigger gets data-shortcut="ready" once its ⌘K listener is
+// attached. React tags nodes during hydration, before effects run, so a
+// hydrated trigger alone can still miss an early key press.
 export async function waitForHydration(page: Page) {
-  await page.waitForFunction(() => {
-    const trigger = document.querySelector('[aria-keyshortcuts]');
-    return (
-      !!trigger && Object.keys(trigger).some((key) => key.startsWith('__react'))
-    );
+  await page.waitForSelector('[aria-keyshortcuts][data-shortcut="ready"]', {
+    state: 'attached',
   });
 }

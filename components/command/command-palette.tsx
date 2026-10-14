@@ -59,7 +59,13 @@ export default function CommandPalette() {
       }
     }
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    // Marks the moment ⌘K starts working (hydration alone is not enough).
+    const button = trigger.current;
+    button?.setAttribute('data-shortcut', 'ready');
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      button?.removeAttribute('data-shortcut');
+    };
   }, []);
 
   return (
