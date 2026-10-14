@@ -108,4 +108,42 @@ describe('SagaFlow', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Inventory failed.');
     matchMedia.mockRestore();
   });
+
+  it('does not tick in a tab that is hidden at load', () => {
+    const visibility = vi
+      .spyOn(document, 'visibilityState', 'get')
+      .mockReturnValue('hidden');
+    render(<SagaFlow />);
+    advance(HOLD_TICKS + 2);
+    for (const step of screen.getAllByRole('listitem'))
+      expect(step).toHaveAttribute('data-status', 'done');
+    visibility.mockRestore();
+  });
+
+  it('gives the first step a full tick after the button', () => {
+    render(<SagaFlow />);
+    act(() => {
+      vi.advanceTimersByTime(TICK_MS / 2);
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Run with a failure' }));
+    act(() => {
+      vi.advanceTimersByTime(TICK_MS - 1);
+    });
+    const [order] = screen.getAllByRole('listitem');
+    expect(order).toHaveAttribute('data-status', 'running');
+    act(() => {
+      vi.advanceTimersByTime(1);
+    });
+    expect(order).toHaveAttribute('data-status', 'done');
+  });
+
+  it('is named plainly and keeps status labels on one line', () => {
+    render(<SagaFlow />, { locale: 'tr' });
+    expect(
+      screen.getByRole('figure', { name: "Bir sipariş saga'sı" })
+    ).toBeInTheDocument();
+    expect(screen.getByText('Karttan tahsil et')).toBeInTheDocument();
+    for (const label of screen.getAllByText('Tamam'))
+      expect(label).toHaveClass('shrink-0');
+  });
 });

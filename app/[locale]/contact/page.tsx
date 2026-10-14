@@ -45,16 +45,16 @@ export default async function Contact({
         <h1 className="page-title">{msg('title')}</h1>
         <p className="mt-5 page-subtitle">{msg('subtitle')}</p>
 
-        <dl className="mt-8 divide-y divide-border/70 border-y border-border/70">
+        <div className="mt-8 divide-y divide-border/70 border-y border-border/70">
           {notes.map(({ title, text }) => (
             <div key={title} className="py-5">
-              <dt className="text-lg font-semibold">{title}</dt>
-              <dd className="mt-2 text-sm leading-7 text-muted-foreground">
+              <h2 className="text-lg font-semibold">{title}</h2>
+              <p className="mt-2 text-sm leading-7 text-muted-foreground">
                 {text}
-              </dd>
+              </p>
             </div>
           ))}
-        </dl>
+        </div>
       </div>
 
       <div className="section-shell">

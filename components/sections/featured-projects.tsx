@@ -1,19 +1,12 @@
 import { ArrowRight } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import ProjectRow from '@/components/projects/project-row';
 import { Link } from '@/i18n/navigation';
 import type { FeaturedRepo } from '@/lib/featured';
 
 export default function FeaturedProjects({ repos }: { repos: FeaturedRepo[] }) {
   const msg = useTranslations('Home');
-  const collections = useTranslations('Collections');
-  const locale = useLocale();
   if (repos.length === 0) return null;
-  const date = new Intl.DateTimeFormat(locale, {
-    month: 'short',
-    year: 'numeric',
-    timeZone: 'Europe/Istanbul',
-  });
 
   return (
     <section aria-labelledby="featured-projects">
@@ -39,14 +32,6 @@ export default function FeaturedProjects({ repos }: { repos: FeaturedRepo[] }) {
             key={repo.url}
             repo={repo}
             label={repo.flagship ? msg('flagship') : undefined}
-            meta={[
-              repo.language,
-              collections('updated', {
-                date: date.format(new Date(repo.updatedAt)),
-              }),
-            ]
-              .filter(Boolean)
-              .join(' · ')}
           />
         ))}
       </ol>

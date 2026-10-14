@@ -1,14 +1,12 @@
 import { expect, test } from './fixtures';
 
 const steps = (page: import('@playwright/test').Page) =>
-  page
-    .getByRole('figure', { name: 'An order saga, running live' })
-    .locator('li');
+  page.getByRole('figure', { name: 'An order saga' }).locator('li');
 
 test('the hero shows the live saga, not a canvas', async ({ page }) => {
   await page.goto('/');
   const saga = page.getByRole('figure', {
-    name: 'An order saga, running live',
+    name: 'An order saga',
   });
   await expect(saga).toBeVisible();
   await expect(steps(page)).toHaveCount(4);
@@ -67,7 +65,7 @@ test.describe('on a phone', () => {
     );
     expect(width).toBeLessThanOrEqual(320);
     await expect(
-      page.getByRole('figure', { name: 'An order saga, running live' })
+      page.getByRole('figure', { name: 'An order saga' })
     ).toBeVisible();
   });
 });

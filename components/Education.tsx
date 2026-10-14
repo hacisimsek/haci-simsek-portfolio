@@ -1,6 +1,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { education, t } from '@/content';
 import { formatPeriod } from '@/lib/dates';
+import { SEPARATOR } from '@/lib/utils';
 
 export default function Education() {
   const msg = useTranslations('Education');
@@ -33,11 +34,13 @@ export default function Education() {
                 {t(item.degree, locale)}
               </h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                {t(item.school, locale)} · {t(item.location, locale)}
+                {t(item.school, locale)}
+                {SEPARATOR}
+                {t(item.location, locale)}
               </p>
               {t(item.notes, locale).length > 0 ? (
                 <p className="mt-2 text-sm text-muted-foreground">
-                  {t(item.notes, locale).join(' · ')}
+                  {t(item.notes, locale).join(SEPARATOR)}
                 </p>
               ) : null}
             </div>

@@ -2,7 +2,13 @@
 
 import { ArrowUpRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+} from 'react';
 import { Button } from '@/components/ui/button';
 import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 import {
@@ -18,7 +24,9 @@ export const TICK_MS = 900;
 
 const FLAGSHIP = 'https://github.com/hacisimsek/ecommerce-microservices';
 
-type Run = { saga: SagaState; byVisitor: boolean };
+// runId changes on every button press, which restarts the interval so the
+// visitor's run gets full ticks from its first step.
+type Run = { saga: SagaState; byVisitor: boolean; runId: number };
 
 const STATUS_COLOUR = {
   idle: 'text-muted-foreground',
@@ -33,28 +41,30 @@ function isRestart(previous: SagaState, next: SagaState) {
   return previous.phase !== 'forward' && next.phase === 'forward';
 }
 
-// Ticks only while the figure is on screen and the tab is visible.
+function subscribeVisibility(onChange: () => void) {
+  document.addEventListener('visibilitychange', onChange);
+  return () => document.removeEventListener('visibilitychange', onChange);
+}
+
+// Ticks only while the figure is on screen and the tab is visible, including
+// a tab that was already in the background when the page loaded.
 function useActive<T extends Element>() {
   const ref = useRef<T>(null);
   const [onScreen, setOnScreen] = useState(true);
-  const [tabVisible, setTabVisible] = useState(true);
+  const tabVisible = useSyncExternalStore(
+    subscribeVisibility,
+    () => document.visibilityState !== 'hidden',
+    () => true
+  );
 
   useEffect(() => {
     const node = ref.current;
-    const onVisibility = () =>
-      setTabVisible(document.visibilityState !== 'hidden');
-    document.addEventListener('visibilitychange', onVisibility);
-    let observer: IntersectionObserver | undefined;
-    if (node && 'IntersectionObserver' in window) {
-      observer = new IntersectionObserver(([entry]) =>
-        setOnScreen(entry.isIntersecting)
-      );
-      observer.observe(node);
-    }
-    return () => {
-      document.removeEventListener('visibilitychange', onVisibility);
-      observer?.disconnect();
-    };
+    if (!node || !('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver(([entry]) =>
+      setOnScreen(entry.isIntersecting)
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   return [ref, onScreen && tabVisible] as const;
@@ -69,6 +79,7 @@ export default function SagaFlow({ className }: { className?: string }) {
   const [run, setRun] = useState<Run>({
     saga: completed(),
     byVisitor: false,
+    runId: 0,
   });
   // Without motion the saga only moves when the visitor starts it.
   const playing = active && (!reduceMotion || run.byVisitor);
@@ -81,11 +92,11 @@ export default function SagaFlow({ className }: { className?: string }) {
         if (!isRestart(current.saga, next)) return { ...current, saga: next };
         // A finished visitor run stays on screen when motion is reduced.
         if (reduceMotion) return { ...current, byVisitor: false };
-        return { saga: next, byVisitor: false };
+        return { ...current, saga: next, byVisitor: false };
       });
     }, TICK_MS);
     return () => clearInterval(id);
-  }, [playing, reduceMotion]);
+  }, [playing, reduceMotion, run.runId]);
 
   const { saga } = run;
   // Only a visitor run can fail, so a rolled-back saga is always theirs; the
@@ -121,7 +132,7 @@ export default function SagaFlow({ className }: { className?: string }) {
             <li
               key={id}
               data-status={status}
-              className="relative flex h-18 items-start gap-4"
+              className="saga-row relative flex items-start gap-4"
             >
               <span
                 aria-hidden
@@ -145,7 +156,7 @@ export default function SagaFlow({ className }: { className?: string }) {
               </div>
               <p
                 className={cn(
-                  'pt-0.5 text-sm transition-colors',
+                  'shrink-0 pt-0.5 text-sm transition-colors',
                   STATUS_COLOUR[status]
                 )}
               >
@@ -161,7 +172,13 @@ export default function SagaFlow({ className }: { className?: string }) {
           type="button"
           variant="outline"
           className="h-11 rounded-full px-5"
-          onClick={() => setRun({ saga: withFailure(), byVisitor: true })}
+          onClick={() =>
+            setRun((current) => ({
+              saga: withFailure(),
+              byVisitor: true,
+              runId: current.runId + 1,
+            }))
+          }
         >
           {msg('run')}
         </Button>

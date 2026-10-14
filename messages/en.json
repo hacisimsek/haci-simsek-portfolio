@@ -59,7 +59,7 @@
     "paletteHint": "Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> to jump anywhere"
   },
   "Saga": {
-    "label": "An order saga, running live",
+    "label": "An order saga",
     "caption": "A saga keeps an order consistent across services without one big transaction. Each service commits its own step; when one fails, the steps before it are undone by compensating actions.",
     "run": "Run with a failure",
     "code": "See it in code",

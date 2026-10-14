@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import type { Article } from '@/lib/feeds/medium';
-import { cn } from '@/lib/utils';
+import { cn, SEPARATOR } from '@/lib/utils';
 
 // One article as a ruled list row. The date sits after the title in the DOM
 // so the link's name starts with the title, and is moved first visually.
@@ -44,7 +44,7 @@ export default function ArticleRow({
           ) : null}
           {detailed && article.categories.length > 0 ? (
             <p className="mt-2 text-sm text-muted-foreground">
-              {article.categories.slice(0, 4).join(' · ')}
+              {article.categories.slice(0, 4).join(SEPARATOR)}
             </p>
           ) : null}
         </div>

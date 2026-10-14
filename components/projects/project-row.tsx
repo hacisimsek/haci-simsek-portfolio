@@ -1,22 +1,33 @@
 import { ArrowUpRight } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import { projectTitle } from '@/lib/project-title';
 import type { Repo } from '@/lib/feeds/github';
-import { cn } from '@/lib/utils';
+import { cn, SEPARATOR } from '@/lib/utils';
 
 // One repo as a ruled list row: the readable title leads, the GitHub
-// description follows, and language and date sit in a quiet meta column.
+// description follows, and language and last update (month and year, the
+// same on every page) sit in a quiet meta column.
 export default function ProjectRow({
   repo,
-  meta,
   heading: Heading = 'h3',
   label,
 }: {
   repo: Repo;
-  meta: string;
   heading?: 'h2' | 'h3';
   /** Plain accent text above the title, e.g. "Flagship". */
   label?: string;
 }) {
+  const msg = useTranslations('Collections');
+  const locale = useLocale();
+  const updated = new Intl.DateTimeFormat(locale, {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'Europe/Istanbul',
+  }).format(new Date(repo.updatedAt));
+  const meta = [repo.language, msg('updated', { date: updated })]
+    .filter(Boolean)
+    .join(SEPARATOR);
+
   return (
     <li>
       <a

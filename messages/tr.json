@@ -59,7 +59,7 @@
     "paletteHint": "Her yere atlamak için <kbd>⌘K</kbd> veya <kbd>Ctrl K</kbd>"
   },
   "Saga": {
-    "label": "Canlı çalışan bir sipariş saga'sı",
+    "label": "Bir sipariş saga'sı",
     "caption": "Saga, bir siparişi tek büyük transaction olmadan servisler arasında tutarlı tutar. Her servis kendi adımını işler; biri başarısız olursa önceki adımlar telafi işlemleriyle geri alınır.",
     "run": "Hata senaryosunu çalıştır",
     "code": "Kodda incele",
@@ -71,7 +71,7 @@
       },
       "payment": {
         "name": "Ödeme",
-        "action": "Kartı tahsil et",
+        "action": "Karttan tahsil et",
         "undo": "Ödemeyi iade et"
       },
       "inventory": {
