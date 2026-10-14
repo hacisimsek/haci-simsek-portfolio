@@ -38,7 +38,7 @@ export default function Footer() {
           {msg('title')}
         </h2>
         <p className="mt-4 text-base leading-8 text-muted-foreground sm:text-lg">
-          {msg('text')}
+          {msg('text', { company: profile.currentCompany })}
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <Button

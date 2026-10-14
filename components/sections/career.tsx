@@ -1,3 +1,4 @@
+import { ChevronRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { experience, t } from '@/content';
 import { formatPeriod } from '@/lib/dates';
@@ -92,7 +93,11 @@ export default function Career() {
                         <Highlights items={t(role.highlights, locale)} />
                       ) : (
                         <details className="group/more mt-3">
-                          <summary className="inline-flex min-h-11 cursor-pointer items-center text-sm font-medium text-foreground hover:text-accent">
+                          <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-foreground hover:text-accent [&::-webkit-details-marker]:hidden">
+                            <ChevronRight
+                              aria-hidden
+                              className="h-4 w-4 transition-transform group-open/more:rotate-90"
+                            />
                             {msg('more')}
                           </summary>
                           <Highlights items={t(role.highlights, locale)} />

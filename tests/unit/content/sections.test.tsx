@@ -54,7 +54,11 @@ describe('Career layout', () => {
       const details = role.querySelector('details')!;
       expect(details).not.toBeNull();
       expect(details).not.toHaveAttribute('open');
-      expect(details.querySelector('summary')).toHaveTextContent('What I did');
+      const summary = details.querySelector('summary')!;
+      expect(summary).toHaveTextContent('What I did');
+      // A visible cue that it opens, not the engine-dependent marker.
+      expect(summary.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
+      expect(summary).toHaveClass('list-none');
     }
   });
 

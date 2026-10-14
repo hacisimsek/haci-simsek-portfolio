@@ -3,6 +3,8 @@ import { renderWithIntl as render } from './render';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import Footer from '@/components/Footer';
 import { openMailto } from '@/lib/mailto';
+import en from '../../messages/en.json';
+import tr from '../../messages/tr.json';
 
 vi.mock('@/lib/mailto', () => ({ openMailto: vi.fn() }));
 
@@ -105,5 +107,12 @@ describe('Footer', () => {
       );
     });
     expect(openMailto).toHaveBeenCalledWith('hacisimsek23@gmail.com');
+  });
+
+  it('takes the employer from the profile, not from the copy', () => {
+    expect(en.Footer.text).toContain('{company}');
+    expect(tr.Footer.text).toContain('{company}');
+    render(<Footer />, { locale: 'tr' });
+    expect(screen.getByText(/Sisal’deyim/)).toBeInTheDocument();
   });
 });

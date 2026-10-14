@@ -184,7 +184,7 @@
   },
   "Footer": {
     "title": "Open to the right conversation",
-    "text": "I'm at Sisal and not actively looking, but I'm always glad to talk about the right role or a hard backend problem.",
+    "text": "I'm at {company} and not actively looking, but I'm always glad to talk about the right role or a hard backend problem.",
     "cta": "Start a conversation",
     "copyEmail": "Copy email",
     "copied": "Email copied",

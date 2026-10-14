@@ -184,7 +184,7 @@
   },
   "Footer": {
     "title": "Doğru konuşmaya açığım",
-    "text": "Şu an Sisal'deyim ve aktif olarak iş aramıyorum; ama doğru bir rol ya da zorlu bir backend problemi için konuşmaktan her zaman memnuniyet duyarım.",
+    "text": "Şu an {company}’deyim ve aktif olarak iş aramıyorum, ama doğru bir rol ya da zorlu bir backend problemi için konuşmaktan her zaman memnuniyet duyarım.",
     "cta": "Bir konuşma başlat",
     "copyEmail": "E-postayı kopyala",
     "copied": "E-posta kopyalandı",
