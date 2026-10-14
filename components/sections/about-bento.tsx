@@ -69,7 +69,6 @@ export default function AboutBento({
           src={portrait}
           alt={profile.asciiName}
           placeholder="blur"
-          preload
           sizes="(min-width: 1024px) 380px, 100vw"
           className="aspect-4/5 h-full w-full rounded-[1.4rem] object-cover"
         />

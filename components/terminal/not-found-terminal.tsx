@@ -20,6 +20,7 @@ export default function NotFoundTerminal() {
       <p className="text-terminal-error">
         cd: {pathname}: {msg('noSuchFile')}
       </p>
+      <p className="text-terminal-dim">exit status 404</p>
       <Button
         type="button"
         variant="outline"
