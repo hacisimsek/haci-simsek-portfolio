@@ -116,3 +116,68 @@ test.describe('running sphere', () => {
       .toBe(true);
   });
 });
+
+test.describe('sphere resilience', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  test.beforeEach(({ viewport }) => {
+    test.skip((viewport?.width ?? 0) < 1024, 'phones only get the CSS orb');
+  });
+
+  test('a failed three.js download leaves the page and the orb intact', async ({
+    page,
+  }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.route('**/_next/static/chunks/*.js', async (route) => {
+      const response = await route.fetch();
+      const body = await response.text();
+      if (body.includes('WebGLRenderer')) return route.abort();
+      return route.fulfill({ response, body });
+    });
+    await page.goto('/');
+    await page.waitForTimeout(4000);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await expect(page.locator('[data-orb]:visible').first()).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
+  test('re-renders sharply when the pixel ratio changes', async ({ page }) => {
+    await page.goto('/');
+    const sphere = page.locator('canvas[data-sphere]');
+    await expect(sphere).toBeVisible({ timeout: 8000 });
+    const cdp = await page.context().newCDPSession(page);
+    // CDP does not fire resolution media-query changes, so pair the new ratio
+    // with a resize, as zooming does.
+    await cdp.send('Emulation.setDeviceMetricsOverride', {
+      width: 1360,
+      height: 720,
+      deviceScaleFactor: 2,
+      mobile: false,
+    });
+    await expect
+      .poll(() =>
+        sphere.evaluate((canvas) => {
+          const c = canvas as HTMLCanvasElement;
+          return (
+            Math.round((c.width / c.getBoundingClientRect().width) * 100) / 100
+          );
+        })
+      )
+      .toBe(1.75);
+  });
+
+  test('keeps the sphere on a steady 30 Hz display', async ({ page }) => {
+    // Halve rAF, as battery savers and 30 Hz monitors do.
+    await page.addInitScript(() => {
+      const raf = window.requestAnimationFrame.bind(window);
+      window.requestAnimationFrame = (callback) =>
+        raf(() => raf((time) => callback(time)));
+    });
+    await page.goto('/');
+    const sphere = page.locator('canvas[data-sphere]');
+    await expect(sphere).toBeVisible({ timeout: 8000 });
+    await page.waitForTimeout(9000);
+    await expect(sphere).toHaveCount(1);
+  });
+});

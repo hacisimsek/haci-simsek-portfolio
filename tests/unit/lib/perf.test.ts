@@ -2,7 +2,9 @@
 import { describe, expect, it } from 'vitest';
 import {
   deviceTier,
+  isSlow,
   shouldLoadSphere,
+  degrade,
   stepDown,
   type Quality,
 } from '@/lib/perf';
@@ -50,5 +52,35 @@ describe('shouldLoadSphere', () => {
     expect(shouldLoadSphere({ ...ok, tier: 'low' })).toBe(false);
     expect(shouldLoadSphere({ ...ok, reducedMotion: true })).toBe(false);
     expect(shouldLoadSphere({ ...ok, webgl2: false })).toBe(false);
+  });
+});
+
+describe('isSlow', () => {
+  it('flags janky frames on a fast display', () => {
+    // 60 Hz display (fastest frame 16.7 ms) delivering 35 fps.
+    expect(isSlow({ frames: 70, elapsed: 2000, minDelta: 16.7 })).toBe(true);
+    expect(isSlow({ frames: 118, elapsed: 2000, minDelta: 16.7 })).toBe(false);
+  });
+
+  it('accepts a steady 30 Hz display or battery-saver rAF', () => {
+    expect(isSlow({ frames: 60, elapsed: 2000, minDelta: 33.3 })).toBe(false);
+  });
+
+  it('always flags a slideshow', () => {
+    expect(isSlow({ frames: 30, elapsed: 2000, minDelta: 60 })).toBe(true);
+  });
+});
+
+describe('degrade', () => {
+  it('skips resolution steps that would not change anything on this screen', () => {
+    expect(degrade({ dpr: 1.75, tier: 'high' }, 1)).toEqual({
+      dpr: 1,
+      tier: 'mid',
+    });
+    expect(degrade({ dpr: 1.75, tier: 'high' }, 2)).toEqual({
+      dpr: 1.25,
+      tier: 'high',
+    });
+    expect(degrade({ dpr: 1, tier: 'mid' }, 2)).toBe('fallback');
   });
 });

@@ -13,13 +13,12 @@ import {
   ShaderMaterial,
   WebGLRenderer,
 } from 'three';
-import { POINTS, stepDown, type Quality } from '@/lib/perf';
+import { degrade, isSlow, POINTS, type Quality } from '@/lib/perf';
 import { cssColorToRgb } from '@/lib/three/colors';
 import { fibonacciSphere } from '@/lib/three/fibonacci';
 import { fragmentShader, vertexShader } from './shaders';
 
 const FPS_WINDOW = 2000;
-const MIN_FPS = 45;
 
 function makeGeometry(count: number) {
   const { positions, offsets } = fibonacciSphere(count, 7);
@@ -107,14 +106,15 @@ export default function ParticleSphere({
       canvas.dataset.palette = palette.dark ? 'dark' : 'light';
     }
 
-    function applyQuality(next: Exclude<Quality, 'fallback'>) {
-      const ratio = Math.min(window.devicePixelRatio, next.dpr);
-      renderer.setPixelRatio(ratio);
-      material.uniforms.uPixelRatio.value = ratio;
-      resize();
-    }
-
+    // The effective ratio is re-derived on every resize so moving to a
+    // high-density screen or zooming re-renders sharply.
     function resize() {
+      if (quality === 'fallback') return;
+      const ratio = Math.min(window.devicePixelRatio, quality.dpr);
+      if (ratio !== renderer.getPixelRatio()) {
+        renderer.setPixelRatio(ratio);
+        material.uniforms.uPixelRatio.value = ratio;
+      }
       const { width, height } = container!.getBoundingClientRect();
       if (width === 0 || height === 0) return;
       renderer.setSize(width, height, false);
@@ -123,7 +123,21 @@ export default function ParticleSphere({
     }
 
     applyPalette();
-    applyQuality(quality);
+    resize();
+
+    // ResizeObserver misses a pixel-ratio change at the same CSS size (moving
+    // the window to another monitor), so watch the resolution too.
+    let resolution: MediaQueryList | undefined;
+    function watchResolution() {
+      resolution?.removeEventListener('change', onResolution);
+      resolution = matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
+      resolution.addEventListener('change', onResolution);
+    }
+    function onResolution() {
+      resize();
+      watchResolution();
+    }
+    watchResolution();
 
     // Pointer in normalised device coordinates, eased towards its target.
     const target = [10, 10];
@@ -145,6 +159,10 @@ export default function ParticleSphere({
     let first = true;
     let frames = 0;
     let windowStart = 0;
+    let lastFrame = 0;
+    let minDelta = Infinity;
+    // The first window overlaps page-load work, so it is not judged.
+    let warmedUp = false;
     let disposed = false;
     const start = performance.now();
 
@@ -168,14 +186,19 @@ export default function ParticleSphere({
       }
 
       frames += 1;
+      if (lastFrame) minDelta = Math.min(minDelta, now - lastFrame);
+      lastFrame = now;
       if (!windowStart) windowStart = now;
       if (now - windowStart >= FPS_WINDOW) {
-        const fps = (frames * 1000) / (now - windowStart);
+        const slow =
+          warmedUp && isSlow({ frames, elapsed: now - windowStart, minDelta });
+        warmedUp = true;
         frames = 0;
         windowStart = now;
-        if (fps < MIN_FPS) {
+        minDelta = Infinity;
+        if (slow) {
           const previous = quality;
-          quality = stepDown(quality);
+          quality = degrade(quality, window.devicePixelRatio);
           if (quality === 'fallback') {
             fallback();
             return;
@@ -184,7 +207,7 @@ export default function ParticleSphere({
             points.geometry.dispose();
             points.geometry = makeGeometry(POINTS[quality.tier]);
           }
-          applyQuality(quality);
+          resize();
         }
       }
       schedule();
@@ -200,6 +223,8 @@ export default function ParticleSphere({
         // A paused window must not count as a slow one.
         frames = 0;
         windowStart = 0;
+        lastFrame = 0;
+        minDelta = Infinity;
       }
     }
 
@@ -233,6 +258,7 @@ export default function ParticleSphere({
       visibility.disconnect();
       sizes.disconnect();
       theme.disconnect();
+      resolution?.removeEventListener('change', onResolution);
       document.removeEventListener('visibilitychange', schedule);
       section.removeEventListener(
         'pointermove',

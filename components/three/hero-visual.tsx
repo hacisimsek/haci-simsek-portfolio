@@ -1,19 +1,22 @@
 'use client';
 
 import {
-  lazy,
-  Suspense,
   useEffect,
   useRef,
   useState,
+  type ComponentType,
   type ReactNode,
 } from 'react';
 import { deviceTier, shouldLoadSphere, type Tier } from '@/lib/perf';
 import { cn } from '@/lib/utils';
 
-const ParticleSphere = lazy(() => import('./particle-sphere'));
-
 type Stage = 'orb' | 'loading' | 'sphere' | 'fallback';
+
+type SphereProps = {
+  tier: 'mid' | 'high';
+  onReady: () => void;
+  onFallback: () => void;
+};
 
 function readTier(): Tier {
   const nav = navigator as Navigator & {
@@ -51,6 +54,7 @@ export default function HeroVisual({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const [stage, setStage] = useState<Stage>('orb');
   const [tier, setTier] = useState<'mid' | 'high'>('high');
+  const [Sphere, setSphere] = useState<ComponentType<SphereProps> | null>(null);
 
   useEffect(() => {
     const node = ref.current;
@@ -64,16 +68,28 @@ export default function HeroVisual({ children }: { children: ReactNode }) {
     if (!allowed || detected === 'low') return;
 
     let cancelIdle: (() => void) | undefined;
+    let cancelled = false;
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
       observer.disconnect();
+      // A decorative extra: if its chunk fails to load (stale deploy, flaky
+      // network, blocker) the orb simply stays.
       cancelIdle = whenIdle(() => {
-        setTier(detected);
-        setStage('loading');
+        import('./particle-sphere')
+          .then((module) => {
+            if (cancelled) return;
+            setTier(detected);
+            setSphere(() => module.default);
+            setStage('loading');
+          })
+          .catch(() => {
+            if (!cancelled) setStage('fallback');
+          });
       });
     });
     observer.observe(node);
     return () => {
+      cancelled = true;
       observer.disconnect();
       cancelIdle?.();
     };
@@ -94,14 +110,12 @@ export default function HeroVisual({ children }: { children: ReactNode }) {
       >
         {children}
       </div>
-      {showSphere ? (
-        <Suspense fallback={null}>
-          <ParticleSphere
-            tier={tier}
-            onReady={() => setStage('sphere')}
-            onFallback={() => setStage('fallback')}
-          />
-        </Suspense>
+      {showSphere && Sphere ? (
+        <Sphere
+          tier={tier}
+          onReady={() => setStage('sphere')}
+          onFallback={() => setStage('fallback')}
+        />
       ) : null}
     </div>
   );
