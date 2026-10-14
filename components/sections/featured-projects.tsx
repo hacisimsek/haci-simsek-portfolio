@@ -10,10 +10,9 @@ export default function FeaturedProjects({ repos }: { repos: FeaturedRepo[] }) {
   if (repos.length === 0) return null;
 
   return (
-    <section aria-labelledby="featured-projects" className="fade-up">
+    <section aria-labelledby="featured-projects">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="mb-4 eyebrow w-fit">{msg('projectsEyebrow')}</div>
           <h2 id="featured-projects" className="section-title">
             {msg('projectsTitle')}
           </h2>
@@ -38,7 +37,7 @@ export default function FeaturedProjects({ repos }: { repos: FeaturedRepo[] }) {
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              'group spotlight flex min-h-56 flex-col glass p-6 hover:border-accent/40',
+              'group spotlight flex min-h-56 flex-col surface-card p-6 hover:border-accent/40',
               repo.flagship && 'border-beam sm:p-8 md:col-span-2 lg:row-span-2'
             )}
           >

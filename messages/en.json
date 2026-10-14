@@ -67,7 +67,6 @@
     "repos": "Open-source repos"
   },
   "About": {
-    "eyebrow": "About",
     "title": "Backend engineer for systems that have to stay up",
     "currentlyAt": "Currently at {company}",
     "localTime": "Local time in Istanbul",
@@ -78,7 +77,6 @@
     "email": "Email"
   },
   "Career": {
-    "eyebrow": "Career timeline",
     "title": "Experience with visible product impact",
     "copy": "Most of my recent work sits in backend-heavy systems where scale, release confidence, observability, and service reliability matter as much as implementation itself.",
     "promoted": "Promoted",
@@ -88,35 +86,29 @@
     }
   },
   "Skills": {
-    "eyebrow": "Skills",
     "title": "Tools I use to ship and run systems",
     "copy": "The stack behind the roles above, from service code and messaging to delivery pipelines and the architecture patterns I write about.",
     "rowCore": "Languages, frameworks and data",
     "rowDelivery": "Delivery, observability and architecture"
   },
   "Education": {
-    "eyebrow": "Education",
     "title": "Engineering foundation across hardware and software",
     "copy": "My background combines software systems thinking with electrical and electronics fundamentals, which still influences how I reason about architecture, constraints, and reliability."
   },
   "Home": {
-    "projectsEyebrow": "Selected work",
     "projectsTitle": "Featured projects",
     "allProjects": "All projects",
     "flagship": "Flagship",
-    "writingEyebrow": "Writing",
     "writingTitle": "Latest writing",
     "allArticles": "All articles"
   },
   "Projects": {
-    "eyebrow": "Projects",
     "title": "Selected builds, experiments, and engineering curiosities",
     "subtitle": "A live pull from GitHub that reflects how I build in the open. The focus is not just code volume, but the patterns, ideas, and product instincts behind each repo.",
     "errorTitle": "Project feed could not be loaded right now.",
     "errorText": "Try again in a moment or visit the GitHub profile directly."
   },
   "Articles": {
-    "eyebrow": "Articles",
     "title": "Writing where implementation detail meets clear thinking",
     "subtitle": "Notes, tutorials, and practical engineering breakdowns. I use writing to clarify tradeoffs, capture lessons, and make complex work easier to reason about.",
     "errorTitle": "Article feed could not be loaded right now.",
@@ -140,10 +132,8 @@
     "reset": "Reset filters"
   },
   "Contact": {
-    "successEyebrow": "Message received",
     "successTitle": "Thanks, I'll get back to you soon.",
     "successText": "If the topic is a good fit, I usually respond with concrete next steps instead of a generic placeholder reply.",
-    "eyebrow": "Contact",
     "title": "Let's talk about architecture, platforms, or backend systems",
     "subtitle": "If you are working on backend-heavy products, distributed systems, platform evolution, or cloud delivery challenges, send a note. That is where I create the most value.",
     "bestFitTitle": "Best fit",
@@ -152,7 +142,6 @@
     "helpsText": "A short summary of the problem, the current stack, and whether the challenge is around microservices, cloud readiness, scalability, or architecture evolution.",
     "emailTitle": "Direct email",
     "emailText": "You can also reach me at {email}.",
-    "formEyebrow": "Send a message",
     "formTitle": "A concise brief is enough to start",
     "namePlaceholder": "Your name",
     "emailPlaceholder": "Your email",
@@ -181,7 +170,6 @@
     "build": "build {sha}"
   },
   "NotFound": {
-    "eyebrow": "404",
     "title": "Page not found",
     "text": "The page you are looking for does not exist or has moved.",
     "home": "Go to the home page",

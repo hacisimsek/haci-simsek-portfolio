@@ -13,10 +13,9 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
   });
 
   return (
-    <section aria-labelledby="latest-writing" className="fade-up">
+    <section aria-labelledby="latest-writing">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="mb-4 eyebrow w-fit">{msg('writingEyebrow')}</div>
           <h2 id="latest-writing" className="section-title">
             {msg('writingTitle')}
           </h2>
@@ -40,7 +39,7 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
             href={article.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex flex-col overflow-hidden glass transition-colors hover:border-accent/40"
+            className="group flex flex-col overflow-hidden surface-card transition-colors hover:border-accent/40"
           >
             <div className="overflow-hidden">
               {/* Medium thumbnails come from several CDN hosts; next/image
@@ -60,7 +59,7 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
               >
                 {date.format(new Date(article.publishedAt))}
               </time>
-              <h3 className="mt-2 leading-snug font-semibold group-hover:text-accent">
+              <h3 className="mt-2 leading-snug font-semibold break-words group-hover:text-accent">
                 {article.title}
               </h3>
             </div>

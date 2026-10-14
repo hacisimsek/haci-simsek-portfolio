@@ -23,13 +23,10 @@ export default function Hero() {
       <div className="relative min-w-0">
         {/* Phones get a faint static orb behind the name, never WebGL. */}
         <FallbackOrb className="pointer-events-none absolute top-0 -right-1/3 -z-10 w-[85vw] -translate-y-1/4 opacity-40 lg:hidden" />
-        <div className="mb-6 eyebrow w-fit">{msg('eyebrow')}</div>
-
         <h1 className="max-w-5xl page-title">
           <span className="sr-only">{profile.name}. </span>
           <span
             aria-hidden
-            style={{ '--n': letters.length } as CSSProperties}
             className="block pb-[0.12em] text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.95] font-bold tracking-tighter lg:text-[clamp(4rem,7.5vw,7.25rem)]"
           >
             {letters.map((letter, index) => (

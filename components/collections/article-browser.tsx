@@ -60,7 +60,7 @@ export default function ArticleBrowser({ articles }: { articles: Article[] }) {
               href={article.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block glass p-6 transition-colors hover:border-accent/40 sm:p-8"
+              className="group block surface-card p-6 transition-colors hover:border-accent/40 sm:p-8"
             >
               <div className="grid gap-6 lg:grid-cols-[1.2fr_0.45fr]">
                 <div>

@@ -10,7 +10,7 @@ import { careerYears } from '@/lib/dates';
 import type { Article } from '@/lib/feeds/medium';
 import { cn } from '@/lib/utils';
 
-const tile = 'glass p-6';
+const tile = 'surface-card p-6';
 
 function socialHref(id: 'github' | 'linkedin') {
   return socials.find((social) => social.id === id)!.href;
@@ -36,12 +36,11 @@ export default function AboutBento({
     <section
       id="about"
       aria-labelledby="about-title"
-      className="grid fade-up gap-4 lg:grid-cols-6"
+      className="grid gap-4 lg:grid-cols-6"
     >
       <Spotlight
         className={cn(tile, 'border-beam sm:p-8 lg:col-span-4 lg:row-span-2')}
       >
-        <div className="mb-5 eyebrow w-fit">{msg('eyebrow')}</div>
         <h2 id="about-title" className="max-w-2xl section-title">
           {msg('title')}
         </h2>
@@ -77,7 +76,7 @@ export default function AboutBento({
       </div>
 
       <Spotlight className={cn(tile, 'lg:col-span-2')}>
-        <p className="eyebrow w-fit">
+        <p className="text-sm text-muted-foreground">
           {msg('currentlyAt', { company: profile.currentCompany })}
         </p>
         <p className="mt-4 text-lg leading-snug font-semibold">

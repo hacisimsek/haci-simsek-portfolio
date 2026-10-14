@@ -50,10 +50,10 @@ describe('Footer', () => {
     expect(screen.queryByRole('link', { name: /build/i })).toBeNull();
   });
 
-  it('shows the name as a large gradient wordmark and the local time', () => {
+  it('shows the name as a large wordmark and the local time', () => {
     render(<Footer />);
     expect(
-      screen.getByText('Hacı Şimşek', { selector: '.text-aurora' })
+      screen.getByText('Hacı Şimşek', { selector: 'footer > p' })
     ).toBeInTheDocument();
     expect(screen.getByText(/Istanbul/)).toBeInTheDocument();
   });

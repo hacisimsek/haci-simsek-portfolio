@@ -43,8 +43,7 @@ test.describe('with reduced motion', () => {
     await expect(page.locator('[data-scroll-progress]')).toHaveCount(0);
     expect(
       await page
-        .locator('.fade-up')
-        .first()
+        .locator('#about')
         .evaluate((el) => getComputedStyle(el).opacity)
     ).toBe('1');
   });
@@ -127,45 +126,5 @@ test.describe('skills marquee with reduced motion', () => {
         rows.some((row) => row.scrollWidth > row.clientWidth + 1)
       );
     expect(clipped).toBe(false);
-  });
-});
-
-test.describe('hero name', () => {
-  test.use({ reducedMotion: 'no-preference' });
-
-  // A transformed child is cut out of its parent's background-clip: text, so
-  // the gradient must live on each animating letter or they stay invisible
-  // until their animation ends.
-  test('paints the gradient on each letter, not on the parent', async ({
-    page,
-  }) => {
-    await page.goto('/');
-    const styles = await page.locator('h1 .letter').evaluateAll((letters) => ({
-      parent: getComputedStyle(letters[0].parentElement!).backgroundImage,
-      letters: letters.map((letter) => {
-        const style = getComputedStyle(letter);
-        return `${style.backgroundClip}|${style.backgroundImage.startsWith('linear-gradient')}`;
-      }),
-    }));
-    expect(styles.parent).toBe('none');
-    expect(new Set(styles.letters)).toEqual(new Set(['text|true']));
-  });
-});
-
-test.describe('hero name descenders', () => {
-  test.use({ reducedMotion: 'reduce' });
-
-  // background-clip: text only paints inside each letter's own box, so the
-  // box must reach below the baseline far enough for ş/Ş cedillas.
-  test('each letter box extends below the glyph baseline', async ({ page }) => {
-    await page.goto('/');
-    const reach = await page
-      .locator('h1 .letter')
-      .first()
-      .evaluate((el) => {
-        const style = getComputedStyle(el);
-        return parseFloat(style.paddingBottom) / parseFloat(style.fontSize);
-      });
-    expect(reach).toBeGreaterThanOrEqual(0.2);
   });
 });

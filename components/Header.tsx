@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Menu, MoonIcon, SunIcon, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useTheme } from 'next-themes';
 import CommandPalette from '@/components/command/command-palette';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import ThemeToggle from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { profile } from '@/content';
 import { Link } from '@/i18n/navigation';
@@ -20,16 +20,15 @@ const navLinks = [
 
 export default function Header() {
   const t = useTranslations('Nav');
-  const { setTheme, resolvedTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-4 z-50 mb-10 fade-up">
+    <header className="sticky top-4 z-50 mb-10">
       <div
         data-glass
         className="flex min-h-[76px] items-center justify-between gap-4 glass px-5 py-3 sm:px-6"
       >
-        <Link href="/" className="min-w-0">
+        <Link href="/" className="flex min-h-11 min-w-0 items-center">
           <div className="font-display text-lg font-semibold tracking-tight whitespace-nowrap sm:text-2xl">
             {profile.name}
           </div>
@@ -49,20 +48,12 @@ export default function Header() {
 
         <div className="flex items-center gap-1.5 sm:gap-2">
           <CommandPalette />
-          <LanguageSwitcher />
-
-          <Button
-            variant="outline"
-            size="icon"
-            className="rounded-full bg-background/80"
-            onClick={() =>
-              setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
-            }
-          >
-            <SunIcon className="h-[1.1rem] w-[1.1rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-            <MoonIcon className="absolute h-[1.1rem] w-[1.1rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-            <span className="sr-only">{t('toggleTheme')}</span>
-          </Button>
+          {/* On phones these two live in the menu, so every header control can
+              be a 44px target without the bar overflowing. */}
+          <div className="hidden items-center gap-2 md:flex">
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </div>
 
           <Button
             asChild
@@ -74,7 +65,7 @@ export default function Header() {
           <Button
             variant="outline"
             size="icon"
-            className="rounded-full md:hidden"
+            className="h-11 w-11 rounded-full md:hidden"
             onClick={() => setIsMenuOpen((open) => !open)}
           >
             {isMenuOpen ? (
@@ -89,10 +80,13 @@ export default function Header() {
 
       <div
         data-glass
+        // Collapsed, the panel is only visually hidden; inert keeps its links
+        // out of the tab order and the accessibility tree.
+        inert={!isMenuOpen}
         className={cn(
           'mt-3 overflow-hidden glass px-4 transition-all duration-200 md:hidden',
           isMenuOpen
-            ? 'max-h-80 py-4 opacity-100'
+            ? 'max-h-[32rem] py-4 opacity-100'
             : 'max-h-0 border-transparent py-0 opacity-0'
         )}
       >
@@ -109,13 +103,19 @@ export default function Header() {
           ))}
           <Button
             asChild
-            className="mt-2 rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
+            className="mt-2 h-11 rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
           >
             <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
               {t('letsTalk')}
             </Link>
           </Button>
         </nav>
+        {isMenuOpen ? (
+          <div className="mt-4 flex items-center justify-between border-t border-border/60 pt-4">
+            <LanguageSwitcher touch />
+            <ThemeToggle className="h-11 w-11" />
+          </div>
+        ) : null}
       </div>
     </header>
   );

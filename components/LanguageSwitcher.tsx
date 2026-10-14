@@ -5,7 +5,12 @@ import { Link, usePathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 
-export default function LanguageSwitcher() {
+// `touch` gives each option a 44px target for the phone menu.
+export default function LanguageSwitcher({
+  touch = false,
+}: {
+  touch?: boolean;
+}) {
   const t = useTranslations('LanguageSwitcher');
   const locale = useLocale();
   const pathname = usePathname();
@@ -28,6 +33,8 @@ export default function LanguageSwitcher() {
             aria-current={active ? 'true' : undefined}
             className={cn(
               'rounded-full px-2.5 py-1 font-mono text-xs uppercase transition',
+              touch &&
+                'inline-flex min-h-11 min-w-11 items-center justify-center',
               active
                 ? 'bg-secondary text-foreground'
                 : 'text-muted-foreground hover:text-foreground'

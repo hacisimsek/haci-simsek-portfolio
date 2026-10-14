@@ -7,12 +7,12 @@ export default function Stats({ stats }: { stats: Stat[] }) {
   const locale = useLocale();
 
   return (
-    <section aria-label={msg('label')} className="fade-up">
+    <section aria-label={msg('label')}>
       <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {stats.map((stat) => (
           <div
             key={stat.id}
-            className="flex flex-col-reverse gap-2 glass px-6 py-5"
+            className="flex flex-col-reverse gap-2 surface-card px-6 py-5"
           >
             <dt className="text-sm text-muted-foreground">{msg(stat.id)}</dt>
             <dd className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">

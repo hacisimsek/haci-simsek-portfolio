@@ -95,7 +95,6 @@ export default function ContactForm() {
         tabIndex={-1}
         className="rounded-3xl border border-accent/40 bg-accent/10 p-6 outline-none"
       >
-        <div className="mb-3 eyebrow w-fit">{msg('successEyebrow')}</div>
         <h3 id="contact-success" className="section-title">
           {msg('successTitle')}
         </h3>
@@ -209,7 +208,7 @@ export default function ContactForm() {
       <Button
         type="submit"
         disabled={status === 'sending' || status === 'sent'}
-        className="min-w-44 rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90"
+        className="h-11 min-w-44 rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90"
       >
         {status === 'sending' ? (
           <>

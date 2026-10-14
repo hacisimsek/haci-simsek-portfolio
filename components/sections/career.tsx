@@ -11,11 +11,10 @@ export default function Career() {
   const groups = groupRoles(experience);
 
   return (
-    <section id="career" className="fade-up">
+    <section id="career">
       <div className="section-shell">
         <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <div className="mb-4 eyebrow">{msg('eyebrow')}</div>
             <h2 className="section-title">{msg('title')}</h2>
           </div>
           <p className="section-copy">{msg('copy')}</p>
@@ -55,7 +54,10 @@ export default function Career() {
 
                   <div className="space-y-4 pl-10 sm:pl-0">
                     {group.roles.map((role) => (
-                      <article key={role.id} className="glass p-5 sm:p-6">
+                      <article
+                        key={role.id}
+                        className="surface-card p-5 sm:p-6"
+                      >
                         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                           <div>
                             <h3 className="text-xl font-semibold">

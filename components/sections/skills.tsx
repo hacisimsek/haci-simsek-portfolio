@@ -16,11 +16,10 @@ export default function Skills() {
   const delivery = skills.filter((category) => !CORE.has(category.id));
 
   return (
-    <section id="skills" className="fade-up">
+    <section id="skills">
       <div className="section-shell">
         <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <div className="mb-4 eyebrow">{msg('eyebrow')}</div>
             <h2 className="section-title">{msg('title')}</h2>
           </div>
           <p className="section-copy">{msg('copy')}</p>
@@ -37,7 +36,7 @@ export default function Skills() {
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {skills.map((category) => (
-            <Spotlight key={category.id} className="glass p-6">
+            <Spotlight key={category.id} className="surface-card p-6">
               <article>
                 <h3 className="text-lg font-semibold">
                   {t(category.title, locale)}
