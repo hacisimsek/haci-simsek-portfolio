@@ -11,9 +11,12 @@ const easeOut = (t: number) => 1 - (1 - t) ** 3;
 export default function NumberTicker({
   value,
   locale,
+  suffix = '',
 }: {
   value: number;
   locale: string;
+  // Shown visually by the caller; repeated here for screen readers.
+  suffix?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const formatted = new Intl.NumberFormat(locale).format(value);
@@ -63,7 +66,10 @@ export default function NumberTicker({
       <span ref={ref} aria-hidden className="tabular-nums">
         {formatted}
       </span>
-      <span className="sr-only">{formatted}</span>
+      <span className="sr-only">
+        {formatted}
+        {suffix}
+      </span>
     </>
   );
 }

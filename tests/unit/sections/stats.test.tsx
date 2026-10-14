@@ -17,4 +17,11 @@ describe('Stats', () => {
     expect(screen.getByText('Yıl deneyim')).toBeInTheDocument();
     expect(screen.getAllByText('1.234').length).toBeGreaterThan(0);
   });
+
+  it('announces the "+" on years of experience', () => {
+    render(<Stats stats={[{ id: 'years', value: 5 }]} />);
+    expect(
+      screen.getByText('5+', { selector: '.sr-only' })
+    ).toBeInTheDocument();
+  });
 });

@@ -49,7 +49,9 @@ export default function Hero() {
         </h1>
 
         <p className="mt-8 flex flex-wrap items-baseline gap-x-3 font-mono text-sm text-muted-foreground sm:text-base">
-          <span className="text-accent">~/</span>
+          <span aria-hidden className="text-accent">
+            ~/
+          </span>
           <span className="text-foreground">
             <WordRotate words={roles} />
           </span>

@@ -37,4 +37,10 @@ describe('Hero', () => {
       screen.getByRole('link', { name: /Start a Conversation/ })
     ).toHaveAttribute('href', '/contact');
   });
+
+  it('does not read the decorative "~/" prompt aloud', () => {
+    render(<Hero />);
+    const prompt = screen.getByText('~/');
+    expect(prompt.closest('[aria-hidden="true"]')).not.toBeNull();
+  });
 });
