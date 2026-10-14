@@ -124,7 +124,8 @@
   },
   "Collections": {
     "search": "Search",
-    "searchPlaceholder": "Name, topic or language",
+    "searchProjects": "Name, topic or language",
+    "searchArticles": "Title or topic",
     "language": "Language",
     "category": "Topic",
     "all": "All",

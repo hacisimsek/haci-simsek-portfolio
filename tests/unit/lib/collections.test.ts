@@ -1,6 +1,12 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
-import { filterRepos, languagesOf, matchesQuery } from '@/lib/collections';
+import {
+  categoriesOf,
+  filterArticles,
+  filterRepos,
+  languagesOf,
+  matchesQuery,
+} from '@/lib/collections';
 
 const repo = (
   name: string,
@@ -73,5 +79,83 @@ describe('languagesOf', () => {
     expect(
       languagesOf([...repos, repo('x', null, '2026-01-01T00:00:00Z')])
     ).toEqual(['Java', 'TypeScript']);
+  });
+});
+
+const article = (
+  title: string,
+  categories: string[],
+  publishedAt: string,
+  excerpt = ''
+) => ({
+  title,
+  url: `https://medium.com/@hacisimsek/${title}`,
+  excerpt,
+  categories,
+  thumbnail: '',
+  publishedAt,
+});
+
+const articles = [
+  article('Saga', ['microservices', 'saga-pattern'], '2025-05-11T00:00:00Z'),
+  article(
+    'Breaker',
+    ['resilience', 'microservices'],
+    '2024-01-01T00:00:00Z',
+    'Stop cascading failures'
+  ),
+  article('Empty', [], '2024-01-02T00:00:00Z'),
+];
+
+describe('filterArticles', () => {
+  const titles = (list: { title: string }[]) => list.map((a) => a.title);
+
+  it('searches title, excerpt and categories', () => {
+    expect(
+      titles(
+        filterArticles(articles, {
+          query: 'cascading',
+          category: null,
+          sort: 'newest',
+        })
+      )
+    ).toEqual(['Breaker']);
+    expect(
+      titles(
+        filterArticles(articles, {
+          query: 'saga pattern',
+          category: null,
+          sort: 'newest',
+        })
+      )
+    ).toEqual(['Saga']);
+  });
+
+  it('filters by category and sorts by date', () => {
+    expect(
+      titles(
+        filterArticles(articles, {
+          query: '',
+          category: 'microservices',
+          sort: 'newest',
+        })
+      )
+    ).toEqual(['Saga', 'Breaker']);
+    expect(
+      titles(
+        filterArticles(articles, { query: '', category: null, sort: 'oldest' })
+      )
+    ).toEqual(['Breaker', 'Empty', 'Saga']);
+  });
+});
+
+describe('categoriesOf', () => {
+  it('lists the most used categories first, capped', () => {
+    expect(categoriesOf(articles)).toEqual([
+      'microservices',
+      'resilience',
+      'saga-pattern',
+    ]);
+    expect(categoriesOf(articles, 1)).toEqual(['microservices']);
   });
 });

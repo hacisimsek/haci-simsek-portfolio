@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 export default function CollectionControls<Sort extends string>({
   query,
   onQuery,
+  placeholder,
   chips,
   chipsLabel,
   active,
@@ -21,6 +22,7 @@ export default function CollectionControls<Sort extends string>({
 }: {
   query: string;
   onQuery: (value: string) => void;
+  placeholder: string;
   chips: string[];
   chipsLabel: string;
   active: string | null;
@@ -65,7 +67,7 @@ export default function CollectionControls<Sort extends string>({
               type="search"
               value={query}
               onChange={(event) => onQuery(event.target.value)}
-              placeholder={msg('searchPlaceholder')}
+              placeholder={placeholder}
               className="h-11 w-full rounded-full border border-border/70 bg-background/60 pr-4 pl-11 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </span>

@@ -124,7 +124,8 @@
   },
   "Collections": {
     "search": "Ara",
-    "searchPlaceholder": "Ad, konu veya dil",
+    "searchProjects": "Ad, konu veya dil",
+    "searchArticles": "Başlık veya konu",
     "language": "Dil",
     "category": "Konu",
     "all": "Tümü",

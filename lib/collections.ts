@@ -1,4 +1,5 @@
 import type { Repo } from '@/lib/feeds/github';
+import type { Article } from '@/lib/feeds/medium';
 import { fold } from '@/lib/fold';
 
 // Every word of the query must appear somewhere in the fields, ignoring case
@@ -46,5 +47,37 @@ function byFrequency(values: string[]): string[] {
 export function languagesOf(repos: Repo[]): string[] {
   return byFrequency(
     repos.flatMap((repo) => (repo.language ? [repo.language] : []))
+  );
+}
+
+export type ArticleSort = 'newest' | 'oldest';
+
+export function filterArticles(
+  articles: Article[],
+  {
+    query,
+    category,
+    sort,
+  }: { query: string; category: string | null; sort: ArticleSort }
+): Article[] {
+  const direction = sort === 'newest' ? -1 : 1;
+  return articles
+    .filter((article) => !category || article.categories.includes(category))
+    .filter((article) =>
+      matchesQuery(
+        [article.title, article.excerpt, ...article.categories],
+        query.replace(/-/g, ' ')
+      )
+    )
+    .sort(
+      (a, b) =>
+        direction * (Date.parse(a.publishedAt) - Date.parse(b.publishedAt))
+    );
+}
+
+export function categoriesOf(articles: Article[], limit = 8): string[] {
+  return byFrequency(articles.flatMap((article) => article.categories)).slice(
+    0,
+    limit
   );
 }

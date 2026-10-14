@@ -31,6 +31,7 @@ export default function ProjectBrowser({ repos }: { repos: Repo[] }) {
       <CollectionControls
         query={query}
         onQuery={setQuery}
+        placeholder={msg('searchProjects')}
         chips={languagesOf(repos)}
         chipsLabel={msg('language')}
         active={language}
