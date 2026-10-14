@@ -6,20 +6,15 @@ import {
   lazy,
   Suspense,
   useEffect,
+  useRef,
   useState,
   useSyncExternalStore,
 } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 
-// cmdk and the command list load on first open, not with the page.
+// The dialog, cmdk and the command list load on first use, not with the page.
+const loadDialog = () => import('./command-dialog');
 const loadMenu = () => import('./command-menu');
-const CommandMenu = lazy(loadMenu);
+const CommandDialog = lazy(loadDialog);
 
 const subscribe = () => () => {};
 const isApple = () => /Mac|iPhone|iPad/.test(navigator.userAgent);
@@ -30,12 +25,22 @@ const notApple = () => false;
 export default function CommandPalette() {
   const t = useTranslations('Command');
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const trigger = useRef<HTMLButtonElement>(null);
   const apple = useSyncExternalStore(subscribe, isApple, notApple);
 
-  // Warm the chunk once the page is idle so the first ⌘K opens instantly.
+  function toggle(next: boolean) {
+    if (next) setMounted(true);
+    setOpen(next);
+  }
+
+  // Warm the chunks once the page is idle so the first ⌘K opens instantly.
   useEffect(() => {
     if (!('requestIdleCallback' in window)) return;
-    const id = window.requestIdleCallback(() => void loadMenu());
+    const id = window.requestIdleCallback(() => {
+      void loadDialog();
+      void loadMenu();
+    });
     return () => window.cancelIdleCallback(id);
   }, []);
 
@@ -48,6 +53,7 @@ export default function CommandPalette() {
         !event.shiftKey
       ) {
         event.preventDefault();
+        setMounted(true);
         setOpen((current) => !current);
       }
     }
@@ -56,23 +62,30 @@ export default function CommandPalette() {
   }, []);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="inline-flex h-9 items-center gap-2 rounded-full border border-input bg-background/80 px-3 text-muted-foreground transition hover:text-foreground">
+    <>
+      <button
+        ref={trigger}
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        onClick={() => toggle(true)}
+        className="inline-flex h-9 items-center gap-2 rounded-full border border-input bg-background/80 px-3 text-muted-foreground transition hover:text-foreground"
+      >
         <Search aria-hidden className="h-3.5 w-3.5" />
         <span className="sr-only">{t('title')}</span>
         <kbd aria-hidden className="hidden font-mono text-xs sm:inline">
           {apple ? '⌘K' : 'Ctrl K'}
         </kbd>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogTitle className="sr-only">{t('title')}</DialogTitle>
-        <DialogDescription className="sr-only">
-          {t('description')}
-        </DialogDescription>
-        <Suspense fallback={<div className="h-14" />}>
-          <CommandMenu onDone={() => setOpen(false)} />
+      </button>
+      {mounted && (
+        <Suspense fallback={null}>
+          <CommandDialog
+            open={open}
+            onOpenChange={toggle}
+            returnFocusTo={trigger}
+          />
         </Suspense>
-      </DialogContent>
-    </Dialog>
+      )}
+    </>
   );
 }
