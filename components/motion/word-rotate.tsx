@@ -1,10 +1,10 @@
 'use client';
 
-import { AnimatePresence, m } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 
 // Visual only: callers expose the full list to assistive tech separately.
+// Each word remounts (new key) and replays the CSS .word-in animation.
 export default function WordRotate({
   words,
   interval = 2800,
@@ -25,18 +25,10 @@ export default function WordRotate({
   }, [reduceMotion, words.length, interval]);
 
   return (
-    <span aria-hidden className="relative inline-grid">
-      <AnimatePresence mode="wait" initial={false}>
-        <m.span
-          key={index}
-          initial={{ opacity: 0, y: '0.4em' }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: '-0.4em' }}
-          transition={{ duration: 0.35, ease: 'easeOut' }}
-        >
-          {words[index]}
-        </m.span>
-      </AnimatePresence>
+    <span aria-hidden className="inline-block">
+      <span key={index} className={index > 0 ? 'word-in inline-block' : ''}>
+        {words[index]}
+      </span>
     </span>
   );
 }

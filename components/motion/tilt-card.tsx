@@ -1,10 +1,8 @@
 'use client';
 
-import { m, useSpring } from 'motion/react';
 import type { ComponentProps, PointerEvent } from 'react';
 import { tiltFromPointer } from '@/lib/tilt';
-
-const spring = { stiffness: 220, damping: 22 };
+import { cn } from '@/lib/utils';
 
 function canTilt() {
   return (
@@ -13,55 +11,48 @@ function canTilt() {
   );
 }
 
-// A link that leans towards the pointer. Touch, keyboard and reduced-motion
-// users get the same link without the tilt.
+// A link that leans towards the pointer via the .tilt CSS variables. Touch,
+// keyboard and reduced-motion users get the same link without the tilt.
 export default function TiltCard({
-  style,
+  className,
   onPointerMove,
   onPointerLeave,
   onBlur,
   ...props
-}: ComponentProps<typeof m.a>) {
-  const rotateX = useSpring(0, spring);
-  const rotateY = useSpring(0, spring);
-
+}: ComponentProps<'a'>) {
   function move(event: PointerEvent<HTMLAnchorElement>) {
     onPointerMove?.(event);
     if (!canTilt()) return;
-    const tilt = tiltFromPointer(
+    const card = event.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const { rotateX, rotateY } = tiltFromPointer(
       event.clientX,
       event.clientY,
-      event.currentTarget.getBoundingClientRect()
+      rect
     );
-    rotateX.set(tilt.rotateX);
-    rotateY.set(tilt.rotateY);
-    event.currentTarget.style.setProperty(
-      '--x',
-      `${event.clientX - event.currentTarget.getBoundingClientRect().left}px`
-    );
-    event.currentTarget.style.setProperty(
-      '--y',
-      `${event.clientY - event.currentTarget.getBoundingClientRect().top}px`
-    );
+    card.style.setProperty('--rx', `${rotateX}deg`);
+    card.style.setProperty('--ry', `${rotateY}deg`);
+    card.style.setProperty('--x', `${event.clientX - rect.left}px`);
+    card.style.setProperty('--y', `${event.clientY - rect.top}px`);
   }
 
-  function reset() {
-    rotateX.set(0);
-    rotateY.set(0);
+  function reset(card: HTMLAnchorElement) {
+    card.style.removeProperty('--rx');
+    card.style.removeProperty('--ry');
   }
 
   return (
-    <m.a
+    <a
       {...props}
-      style={{ ...style, rotateX, rotateY, transformPerspective: 900 }}
+      className={cn('tilt', className)}
       onPointerMove={move}
       onPointerLeave={(event) => {
         onPointerLeave?.(event);
-        reset();
+        reset(event.currentTarget);
       }}
       onBlur={(event) => {
         onBlur?.(event);
-        reset();
+        reset(event.currentTarget);
       }}
     />
   );

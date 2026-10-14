@@ -1,7 +1,9 @@
 'use client';
 
-import { animate } from 'motion/react';
 import { useEffect, useRef } from 'react';
+
+const DURATION = 1200;
+const easeOut = (t: number) => 1 - (1 - t) ** 3;
 
 // The server renders the final value. A ticker that starts below the fold
 // counts up from zero when it scrolls into view; one already on screen keeps
@@ -14,8 +16,7 @@ export default function NumberTicker({
   locale: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const format = new Intl.NumberFormat(locale);
-  const formatted = format.format(value);
+  const formatted = new Intl.NumberFormat(locale).format(value);
 
   useEffect(() => {
     const node = ref.current;
@@ -26,8 +27,8 @@ export default function NumberTicker({
     ) {
       return;
     }
-    const numberFormat = new Intl.NumberFormat(locale);
-    let stop: (() => void) | undefined;
+    const format = new Intl.NumberFormat(locale);
+    let frame = 0;
     let first = true;
     const observer = new IntersectionObserver(([entry]) => {
       if (first) {
@@ -36,24 +37,24 @@ export default function NumberTicker({
           observer.disconnect();
           return;
         }
-        node.textContent = numberFormat.format(0);
+        node.textContent = format.format(0);
         return;
       }
       if (!entry.isIntersecting) return;
       observer.disconnect();
-      stop = animate(0, value, {
-        duration: 1.2,
-        ease: 'easeOut',
-        onUpdate: (latest) => {
-          node.textContent = numberFormat.format(Math.round(latest));
-        },
-      }).stop;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const progress = Math.min(1, (now - start) / DURATION);
+        node.textContent = format.format(Math.round(easeOut(progress) * value));
+        if (progress < 1) frame = requestAnimationFrame(tick);
+      };
+      frame = requestAnimationFrame(tick);
     });
     observer.observe(node);
     return () => {
       observer.disconnect();
-      stop?.();
-      node.textContent = numberFormat.format(value);
+      cancelAnimationFrame(frame);
+      node.textContent = format.format(value);
     };
   }, [value, locale]);
 

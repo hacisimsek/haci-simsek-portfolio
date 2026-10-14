@@ -460,6 +460,7 @@
   .aurora-blob,
   .fade-up,
   .letter,
+  .word-in,
   .border-beam::before {
     animation: none !important;
   }
@@ -536,4 +537,21 @@ section[id] {
       transparent 60%
     );
   }
+}
+
+.word-in {
+  animation: word-in 350ms ease-out;
+}
+
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.4em);
+  }
+}
+
+.tilt {
+  transform: perspective(900px) rotateX(var(--rx, 0deg))
+    rotateY(var(--ry, 0deg));
+  transition: transform 180ms ease-out;
 }
