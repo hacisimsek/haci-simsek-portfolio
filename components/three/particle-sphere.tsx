@@ -96,18 +96,29 @@ export default function ParticleSphere({
     const points = new Points(makeGeometry(POINTS[tier]), material);
     scene.add(points);
 
+    // Lenis toggles classes on <html> on every scroll; only a real theme
+    // change needs new colours.
+    let paletteDark: boolean | undefined;
     function applyPalette() {
+      const dark = document.documentElement.classList.contains('dark');
+      if (dark === paletteDark) return;
+      paletteDark = dark;
       const palette = readPalette();
       material.uniforms.uColorA.value.setRGB(...palette.a);
       material.uniforms.uColorB.value.setRGB(...palette.b);
       material.blending = palette.dark ? AdditiveBlending : NormalBlending;
       material.uniforms.uOpacity.value = palette.dark ? 0.9 : 0.75;
-      material.needsUpdate = true;
       canvas.dataset.palette = palette.dark ? 'dark' : 'light';
     }
 
     // The effective ratio is re-derived on every resize so moving to a
     // high-density screen or zooming re-renders sharply.
+    // Cached so pointer moves never force a layout.
+    let rect = canvas.getBoundingClientRect();
+    function measure() {
+      rect = canvas.getBoundingClientRect();
+    }
+
     function resize() {
       if (quality === 'fallback') return;
       const ratio = Math.min(window.devicePixelRatio, quality.dpr);
@@ -115,6 +126,7 @@ export default function ParticleSphere({
         renderer.setPixelRatio(ratio);
         material.uniforms.uPixelRatio.value = ratio;
       }
+      measure();
       const { width, height } = container!.getBoundingClientRect();
       if (width === 0 || height === 0) return;
       renderer.setSize(width, height, false);
@@ -144,7 +156,6 @@ export default function ParticleSphere({
     const pointer = material.uniforms.uPointer.value as number[];
     const section = container.closest('section') ?? container;
     function onPointerMove(event: PointerEvent) {
-      const rect = canvas.getBoundingClientRect();
       target[0] = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       target[1] = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
     }
@@ -152,6 +163,7 @@ export default function ParticleSphere({
       target[0] = target[1] = 10;
     }
     section.addEventListener('pointermove', onPointerMove as EventListener);
+    window.addEventListener('scroll', measure, { passive: true });
     section.addEventListener('pointerleave', onPointerLeave);
 
     let visible = true;
@@ -266,9 +278,12 @@ export default function ParticleSphere({
       );
       section.removeEventListener('pointerleave', onPointerLeave);
       canvas.removeEventListener('webglcontextlost', onContextLost);
+      window.removeEventListener('scroll', measure);
       points.geometry.dispose();
       material.dispose();
       renderer.dispose();
+      // dispose() keeps the GL context; release it so remounts don't pile up.
+      renderer.forceContextLoss();
       canvas.remove();
     };
   }, [tier]);

@@ -105,7 +105,7 @@ export default function HeroVisual({ children }: { children: ReactNode }) {
       <div
         className={cn(
           'transition-opacity duration-700',
-          stage === 'sphere' && 'opacity-0'
+          stage === 'sphere' && 'orb-paused opacity-0'
         )}
       >
         {children}
