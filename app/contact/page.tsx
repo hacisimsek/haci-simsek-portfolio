@@ -5,6 +5,7 @@ import { useForm, ValidationError } from '@formspree/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { profile } from '@/content';
 
 export default function Contact() {
   const [state, handleSubmit] = useForm('xanyoozp');
@@ -54,7 +55,7 @@ export default function Contact() {
             {
               icon: Mail,
               title: 'Direct email',
-              text: 'You can also reach me at hacisimsek23@gmail.com.',
+              text: `You can also reach me at ${profile.email}.`,
             },
           ].map(({ icon: Icon, title, text }) => (
             <div

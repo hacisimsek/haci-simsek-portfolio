@@ -5,24 +5,17 @@ import {
   LinkedinIcon,
   XIcon,
 } from '@/components/icons/brand-icons';
+import { profile, socials } from '@/content';
 
-const socialLinks = [
-  {
-    href: 'https://github.com/hacisimsek',
-    label: 'GitHub',
-    icon: GithubIcon,
-  },
-  {
-    href: 'https://www.linkedin.com/in/haci-simsek/',
-    label: 'LinkedIn',
-    icon: LinkedinIcon,
-  },
-  {
-    href: 'https://x.com/CodeWithHaci',
-    label: 'X',
-    icon: XIcon,
-  },
-];
+const icons = { github: GithubIcon, linkedin: LinkedinIcon, x: XIcon };
+
+const socialLinks = socials
+  .filter((social) => social.id !== 'medium')
+  .map((social) => ({
+    href: social.href,
+    label: social.label,
+    icon: icons[social.id as keyof typeof icons],
+  }));
 
 export default function Footer() {
   return (
@@ -61,7 +54,8 @@ export default function Footer() {
           </Link>
 
           <p className="text-xs text-muted-foreground">
-            © 2026 Haci Simsek. Designed with intent, not templates.
+            © {new Date().getFullYear()} {profile.asciiName}. Designed with
+            intent, not templates.
           </p>
         </div>
       </div>

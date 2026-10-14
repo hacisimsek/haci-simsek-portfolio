@@ -1,19 +1,5 @@
-const education = [
-  {
-    school: 'Bahcesehir University',
-    location: 'Istanbul, Turkey',
-    degree: 'BSc, Electrical and Electronic Engineering',
-    track: 'Major',
-    period: 'Sep 2017 - Jun 2021',
-  },
-  {
-    school: 'Bahcesehir University',
-    location: 'Istanbul, Turkey',
-    degree: 'BSc, Software Engineering',
-    track: 'Minor',
-    period: 'Sep 2019 - Jun 2021',
-  },
-];
+import { education, t } from '@/content';
+import { formatPeriod } from '@/lib/dates';
 
 export default function Education() {
   return (
@@ -36,20 +22,29 @@ export default function Education() {
         <div className="grid gap-4 md:grid-cols-2">
           {education.map((item) => (
             <article
-              key={`${item.degree}-${item.track}`}
+              key={item.id}
               className="rounded-[1.6rem] border border-border/70 bg-background/75 p-6"
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <span className="meta-chip">{item.track}</span>
+                <span className="meta-chip">{t(item.trackLabel)}</span>
                 <span className="text-xs tracking-[0.22em] text-muted-foreground uppercase">
-                  {item.period}
+                  {formatPeriod(item.start, item.end)}
                 </span>
               </div>
 
-              <h3 className="mt-5 text-xl font-semibold">{item.degree}</h3>
+              <h3 className="mt-5 text-xl font-semibold">{t(item.degree)}</h3>
               <p className="mt-3 text-sm text-muted-foreground">
-                {item.school} · {item.location}
+                {t(item.school)} · {t(item.location)}
               </p>
+              {t(item.notes).length > 0 ? (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {t(item.notes).map((note) => (
+                    <span key={note} className="meta-chip">
+                      {note}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
             </article>
           ))}
         </div>

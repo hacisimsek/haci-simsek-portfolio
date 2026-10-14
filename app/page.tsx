@@ -3,6 +3,7 @@ import { ArrowRight, FileText, FolderGit2, Layers3 } from 'lucide-react';
 import About from '@/components/About';
 import Career from '@/components/Career';
 import Education from '@/components/Education';
+import Skills from '@/components/Skills';
 
 const featuredAreas = [
   {
@@ -33,6 +34,7 @@ export default function Home() {
     <div className="space-y-6 pb-6">
       <About />
       <Career />
+      <Skills />
       <Education />
 
       <section className="fade-up">
