@@ -96,9 +96,16 @@ export default function CommandMenu({ onDone }: { onDone: () => void }) {
   async function run(item: Item) {
     const { action } = item;
     if (action.type === 'copy-email') {
-      await navigator.clipboard.writeText(profile.email);
-      setCopied(true);
-      return;
+      try {
+        await navigator.clipboard.writeText(profile.email);
+        setCopied(true);
+        return;
+      } catch {
+        // Clipboard blocked: fall back to the mail client.
+        onDone();
+        window.location.assign(`mailto:${profile.email}`);
+        return;
+      }
     }
 
     onDone();

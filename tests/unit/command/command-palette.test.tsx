@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import CommandPalette from '@/components/command/command-palette';
@@ -56,5 +56,17 @@ describe('CommandPalette', () => {
 
     expect(await navigator.clipboard.readText()).toBe(profile.email);
     expect(screen.getByRole('option', { name: 'Copied' })).toBeInTheDocument();
+  });
+});
+
+describe('CommandPalette shortcut', () => {
+  it('ignores auto-repeat while the keys are held', async () => {
+    render(<CommandPalette />);
+    fireEvent.keyDown(window, { key: 'k', ctrlKey: true });
+    fireEvent.keyDown(window, { key: 'k', ctrlKey: true, repeat: true });
+
+    expect(
+      await screen.findByRole('dialog', { name: 'Command palette' })
+    ).toBeInTheDocument();
   });
 });

@@ -47,6 +47,7 @@ export default function CommandPalette() {
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (
+        !event.repeat &&
         event.key.toLowerCase() === 'k' &&
         (event.metaKey || event.ctrlKey) &&
         !event.altKey &&
@@ -67,6 +68,7 @@ export default function CommandPalette() {
         ref={trigger}
         type="button"
         aria-haspopup="dialog"
+        aria-keyshortcuts="Control+K Meta+K"
         aria-expanded={open}
         onClick={() => toggle(true)}
         className="inline-flex h-9 items-center gap-2 rounded-full border border-input bg-background/80 px-3 text-muted-foreground transition hover:text-foreground"

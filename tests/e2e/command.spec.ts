@@ -1,6 +1,7 @@
 import { expect, test } from './fixtures';
 
-const shortcut = process.platform === 'darwin' ? 'Meta+k' : 'Control+k';
+// The handler accepts both modifiers; Control is deterministic on every OS.
+const shortcut = 'Control+k';
 
 test.describe('command palette', () => {
   test('navigates to a page from the keyboard', async ({ page }) => {

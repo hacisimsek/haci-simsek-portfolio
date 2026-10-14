@@ -1,16 +1,21 @@
 'use client';
 
 import { ReactLenis, useLenis } from 'lenis/react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname } from '@/i18n/navigation';
 import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 
 function ResetOnNavigate() {
   const lenis = useLenis();
   const pathname = usePathname();
+  const previous = useRef(pathname);
 
+  // Only on real route changes: running on mount would undo the browser's
+  // scroll restoration after a reload. Hash links (/#about) scroll to their
+  // section instead.
   useEffect(() => {
-    // Hash links (/#about) scroll to their section instead.
+    if (previous.current === pathname) return;
+    previous.current = pathname;
     if (window.location.hash) return;
     lenis?.scrollTo(0, { immediate: true });
   }, [lenis, pathname]);
@@ -25,7 +30,7 @@ export default function SmoothScroll() {
   if (reduceMotion) return null;
 
   return (
-    <ReactLenis root options={{ lerp: 0.1, anchors: true }}>
+    <ReactLenis root options={{ lerp: 0.1 }}>
       <ResetOnNavigate />
     </ReactLenis>
   );

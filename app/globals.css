@@ -276,12 +276,11 @@
 
 .aurora-blob {
   position: absolute;
-  width: 60vmax;
-  height: 60vmax;
+  width: min(60vmax, 900px);
+  height: min(60vmax, 900px);
   border-radius: 9999px;
   opacity: 0.55;
   mix-blend-mode: multiply;
-  will-change: transform;
 }
 
 .dark .aurora-blob {
@@ -367,6 +366,11 @@
 }
 
 @media (prefers-reduced-transparency: reduce) {
+  .dialog-overlay {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   [data-glass] {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;

@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures';
+import { expect, test, waitForEntranceAnimations } from './fixtures';
 
 test.describe('with motion', () => {
   test.use({ reducedMotion: 'no-preference' });
@@ -42,5 +42,38 @@ test.describe('with reduced motion', () => {
         .first()
         .evaluate((el) => getComputedStyle(el).opacity)
     ).toBe('1');
+  });
+});
+
+test.describe('smooth scrolling side effects', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  test('a reload keeps the restored scroll position', async ({ page }) => {
+    await page.goto('/');
+    await waitForEntranceAnimations(page);
+    await page.evaluate(() => window.scrollTo(0, 1500));
+    await page.waitForTimeout(300);
+    await page.reload();
+    await page.waitForFunction(() =>
+      document.documentElement.classList.contains('lenis')
+    );
+    await page.waitForTimeout(500);
+
+    expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(1000);
+  });
+
+  test('the page does not scroll behind the open palette', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForFunction(() =>
+      document.documentElement.classList.contains('lenis')
+    );
+    await page.keyboard.press('Control+k');
+    await expect(page.getByRole('combobox')).toBeFocused();
+
+    await page.mouse.move(20, 400);
+    await page.mouse.wheel(0, 1200);
+    await page.waitForTimeout(600);
+
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
   });
 });
