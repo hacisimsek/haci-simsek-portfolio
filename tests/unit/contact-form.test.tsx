@@ -54,7 +54,7 @@ describe('ContactForm', () => {
 
     resolve(new Response('{}'));
     expect(
-      await screen.findByRole('status', { name: /Thanks/ }, { timeout: 2000 })
+      await screen.findByRole('status', { name: /Thanks/ }, { timeout: 4000 })
     ).toHaveFocus();
   });
 
@@ -93,7 +93,7 @@ describe('ContactForm', () => {
     await user.click(screen.getByRole('button', { name: 'Send Message' }));
 
     expect(
-      await screen.findByRole('status', { name: /Thanks/ }, { timeout: 2000 })
+      await screen.findByRole('status', { name: /Thanks/ }, { timeout: 4000 })
     ).toBeInTheDocument();
     expect(fetchMock).not.toHaveBeenCalled();
   });

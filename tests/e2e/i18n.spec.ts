@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures';
+import { expect, revealHeaderControls, test } from './fixtures';
 
 test('the Turkish home page is translated', async ({ page }) => {
   await page.goto('/tr');
@@ -20,6 +20,7 @@ test('Turkish browsers are redirected once and English sticks', async ({
   await page.goto('/');
   await expect(page).toHaveURL(/\/tr$/);
 
+  await revealHeaderControls(page);
   await page
     .getByRole('navigation', { name: 'Dil' })
     .getByRole('link', { name: 'English' })
@@ -34,6 +35,7 @@ test('Turkish browsers are redirected once and English sticks', async ({
 
 test('the switcher keeps the current page', async ({ page }) => {
   await page.goto('/projects');
+  await revealHeaderControls(page);
   await page
     .getByRole('navigation', { name: 'Language' })
     .getByRole('link', { name: 'Türkçe' })

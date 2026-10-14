@@ -49,7 +49,8 @@ export default function CollectionControls<Sort extends string>({
       aria-pressed={active === value}
       onClick={() => onChip(value)}
       className={cn(
-        'rounded-full border px-3 py-1.5 text-sm transition',
+        // 44px tall on phones, compact where a pointer is likely.
+        'min-h-11 min-w-11 rounded-full border px-3 py-1.5 text-sm transition md:min-h-0 md:min-w-0',
         active === value
           ? 'border-accent bg-accent text-accent-foreground'
           : 'border-border/70 bg-background/60 text-muted-foreground hover:text-foreground'

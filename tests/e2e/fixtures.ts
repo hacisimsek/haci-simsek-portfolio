@@ -43,3 +43,15 @@ export async function waitForHydration(page: Page) {
     state: 'attached',
   });
 }
+
+// On phones the language and theme controls live in the menu; open it when
+// the menu button is showing so tests can reach them on every project.
+export async function revealHeaderControls(page: Page) {
+  const menu = page.getByRole('button', {
+    name: /Toggle navigation|Menüyü aç\/kapat/,
+  });
+  if (await menu.isVisible()) {
+    await waitForHydration(page);
+    await menu.click();
+  }
+}

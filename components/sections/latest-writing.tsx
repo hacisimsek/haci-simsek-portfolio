@@ -60,7 +60,7 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
               >
                 {date.format(new Date(article.publishedAt))}
               </time>
-              <h3 className="mt-2 leading-snug font-semibold group-hover:text-accent">
+              <h3 className="mt-2 leading-snug font-semibold break-words group-hover:text-accent">
                 {article.title}
               </h3>
             </div>

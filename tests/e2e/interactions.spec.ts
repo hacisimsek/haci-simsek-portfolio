@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures';
+import { expect, revealHeaderControls, test } from './fixtures';
 
 test('theme toggle switches and persists across reloads', async ({ page }) => {
   await page.goto('/');
@@ -8,6 +8,7 @@ test('theme toggle switches and persists across reloads', async ({ page }) => {
     : 'light';
   const next = initial === 'dark' ? 'light' : 'dark';
 
+  await revealHeaderControls(page);
   await page.getByRole('button', { name: 'Toggle theme' }).click();
   await expect(html).toHaveClass(new RegExp(`\\b${next}\\b`));
 

@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures';
+import { expect, revealHeaderControls, test } from './fixtures';
 
 for (const { path, ogLocale } of [
   { path: '/', ogLocale: 'en_US' },
@@ -135,6 +135,7 @@ test('the browser chrome colour follows the site theme, not the OS', async ({
   await expect(themeColor).toHaveCount(1);
   // The site defaults to dark even on a light OS.
   await expect(themeColor).toHaveAttribute('content', '#05070f');
+  await revealHeaderControls(page);
   await page.getByRole('button', { name: 'Toggle theme' }).click();
   await expect(themeColor).toHaveAttribute('content', '#f9fafd');
 });

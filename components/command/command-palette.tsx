@@ -77,7 +77,7 @@ export default function CommandPalette() {
         aria-keyshortcuts="Control+K Meta+K"
         aria-expanded={open}
         onClick={() => toggle(true)}
-        className="inline-flex h-9 items-center gap-2 rounded-full border border-input bg-background/80 px-3 text-muted-foreground transition hover:text-foreground"
+        className="inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-input bg-background/80 px-3 text-muted-foreground transition hover:text-foreground md:h-9 md:min-w-0"
       >
         <Search aria-hidden className="h-3.5 w-3.5" />
         <span className="sr-only">{t('title')}</span>
