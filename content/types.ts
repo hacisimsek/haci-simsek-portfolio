@@ -65,6 +65,7 @@ export interface Profile {
   intro: L10n;
   bio: L10n<string[]>;
   location: L10n;
+  city: L10n;
   email: string;
   careerStart: YearMonth;
   expertise: L10n<string[]>;

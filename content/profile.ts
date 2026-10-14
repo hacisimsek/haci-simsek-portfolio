@@ -44,6 +44,7 @@ export const profile: Profile = {
     en: 'Istanbul, engineering systems for international-scale products',
     tr: 'İstanbul’dan, uluslararası ölçekte ürünler için sistemler geliştiriyorum',
   },
+  city: { en: 'Istanbul', tr: 'İstanbul' },
   email: 'hacisimsek23@gmail.com',
   careerStart: '2021-06',
   expertise: {
