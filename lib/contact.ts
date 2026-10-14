@@ -10,14 +10,15 @@ export type ContactValues = {
   name: string;
   email: string;
   message: string;
-  // Honeypot: hidden from people, filled in by naive bots.
-  website: string;
+  // Honeypot: hidden from people, filled in by naive bots. Formspree also
+  // discards non-JS submissions where `_gotcha` is set.
+  _gotcha: string;
 };
 
 export function contactSchema(t: (key: ContactErrorKey) => string) {
   return z.object({
     name: z.string().check(z.trim(), z.minLength(2, t('nameRequired'))),
-    email: z.email(t('emailInvalid')),
+    email: z.pipe(z.string().check(z.trim()), z.email(t('emailInvalid'))),
     message: z
       .string()
       .check(
@@ -25,18 +26,18 @@ export function contactSchema(t: (key: ContactErrorKey) => string) {
         z.minLength(20, t('messageShort')),
         z.maxLength(5000, t('messageLong'))
       ),
-    website: z.string(),
+    _gotcha: z.string(),
   });
 }
 
 export type SubmitResult = 'sent' | 'failed';
 
 export async function submitContact(
-  { name, email, message, website }: ContactValues,
+  { name, email, message, _gotcha }: ContactValues,
   fetchImpl: typeof fetch = fetch
 ): Promise<SubmitResult> {
   // Report success to bots so they don't retry, but send nothing.
-  if (website) return 'sent';
+  if (_gotcha) return 'sent';
   try {
     const response = await fetchImpl(FORMSPREE_ENDPOINT, {
       method: 'POST',

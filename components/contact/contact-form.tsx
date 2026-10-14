@@ -22,7 +22,7 @@ const defaultValues: ContactValues = {
   name: '',
   email: '',
   message: '',
-  website: '',
+  _gotcha: '',
 };
 
 const field =
@@ -184,12 +184,12 @@ export default function ContactForm() {
         aria-hidden="true"
         className="absolute -left-[9999px] h-px w-px overflow-hidden"
       >
-        <label htmlFor="contact-website">{msg('honeypotLabel')}</label>
+        <label htmlFor="contact-gotcha">{msg('honeypotLabel')}</label>
         <input
-          id="contact-website"
+          id="contact-gotcha"
           tabIndex={-1}
           autoComplete="off"
-          {...register('website')}
+          {...register('_gotcha')}
         />
       </div>
 

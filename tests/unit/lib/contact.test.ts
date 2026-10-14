@@ -12,7 +12,7 @@ const valid: ContactValues = {
   name: 'Ada',
   email: 'ada@example.com',
   message: 'We need help moving our checkout to services.',
-  website: '',
+  _gotcha: '',
 };
 
 describe('contactSchema', () => {
@@ -22,6 +22,12 @@ describe('contactSchema', () => {
 
   it('accepts a complete message', () => {
     expect(schema.safeParse(valid).success).toBe(true);
+  });
+
+  it('trims a pasted email before checking it', () => {
+    const result = schema.safeParse({ ...valid, email: ' ada@example.com ' });
+    expect(result.success).toBe(true);
+    expect(result.data?.email).toBe('ada@example.com');
   });
 
   it('explains each invalid field with a translated message', () => {
@@ -53,7 +59,7 @@ describe('submitContact', () => {
   it('pretends to succeed for bots and sends nothing', async () => {
     const fetchImpl = vi.fn();
     await expect(
-      submitContact({ ...valid, website: 'spam.example' }, fetchImpl)
+      submitContact({ ...valid, _gotcha: 'spam.example' }, fetchImpl)
     ).resolves.toBe('sent');
     expect(fetchImpl).not.toHaveBeenCalled();
   });

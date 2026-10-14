@@ -82,7 +82,7 @@ describe('ContactForm', () => {
     const { container } = render(<ContactForm />);
 
     const trap = container.querySelector<HTMLInputElement>(
-      'input[name="website"]'
+      'input[name="_gotcha"]'
     )!;
     expect(trap).toHaveAttribute('tabindex', '-1');
     expect(trap).toHaveAttribute('autocomplete', 'off');
