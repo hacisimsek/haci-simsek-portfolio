@@ -1,4 +1,4 @@
-export type Locale = 'en';
+export type Locale = 'en' | 'tr';
 
 export type L10n<T = string> = Record<Locale, T>;
 
@@ -20,7 +20,7 @@ export type YearMonth = `${number}-${Month}`;
 
 export interface Role {
   id: string;
-  company: string;
+  company: L10n;
   title: L10n;
   team?: L10n;
   kind: 'employment' | 'internship' | 'leadership';

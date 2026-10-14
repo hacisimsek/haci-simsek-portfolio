@@ -40,7 +40,7 @@ export default function Career() {
                   <div>
                     <h3 className="text-xl font-semibold">{t(role.title)}</h3>
                     <p className="mt-1 text-sm text-accent">
-                      {role.company}
+                      {t(role.company)}
                       {role.team ? ` · ${t(role.team)}` : ''}
                     </p>
                   </div>
