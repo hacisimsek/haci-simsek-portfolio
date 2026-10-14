@@ -140,11 +140,20 @@
     "namePlaceholder": "Adınız",
     "emailPlaceholder": "E-posta adresiniz",
     "messagePlaceholder": "Ne geliştiriyorsunuz ve nerede yardıma ihtiyacınız var?",
-    "messageLabel": "Mesajınız",
-    "emailPrefix": "E-posta",
-    "messagePrefix": "Mesaj",
+    "messageLabel": "Mesaj",
     "sending": "Gönderiliyor...",
-    "send": "Mesajı gönder"
+    "send": "Mesajı gönder",
+    "nameLabel": "Ad",
+    "emailLabel": "E-posta",
+    "honeypotLabel": "Bu alanı boş bırakın",
+    "sent": "Gönderildi",
+    "failed": "Mesajınız gönderilemedi. Lütfen tekrar deneyin ya da doğrudan e-posta gönderin.",
+    "errors": {
+      "nameRequired": "Lütfen en az 2 karakter girin.",
+      "emailInvalid": "Lütfen geçerli bir e-posta adresi girin.",
+      "messageShort": "Lütfen en az 20 karakter yazın.",
+      "messageLong": "Lütfen 5.000 karakterin altında tutun."
+    }
   },
   "Footer": {
     "eyebrow": "Seçili iş birliklerine açığım",
