@@ -102,9 +102,10 @@
     "email": "E-posta"
   },
   "Career": {
-    "title": "Ürüne görünür etkisi olan deneyim",
+    "title": "Çalıştığım yerler",
     "copy": "Son dönemdeki işlerimin çoğu, ölçek, güvenli yayın, gözlemlenebilirlik ve servis güvenilirliğinin en az geliştirmenin kendisi kadar önemli olduğu backend ağırlıklı sistemlerde.",
     "promoted": "Terfi",
+    "more": "Neler yaptım",
     "kind": {
       "internship": "Staj",
       "leadership": "Liderlik"

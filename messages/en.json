@@ -102,9 +102,10 @@
     "email": "Email"
   },
   "Career": {
-    "title": "Experience with visible product impact",
+    "title": "Where I've worked",
     "copy": "Most of my recent work sits in backend-heavy systems where scale, release confidence, observability, and service reliability matter as much as implementation itself.",
     "promoted": "Promoted",
+    "more": "What I did",
     "kind": {
       "internship": "Internship",
       "leadership": "Leadership"
