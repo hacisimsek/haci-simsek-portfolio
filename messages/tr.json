@@ -93,10 +93,7 @@
       "compensating": "Geri alınıyor",
       "compensated": "Geri alındı"
     },
-    "outcome": {
-      "completed": "Sipariş tamamlandı.",
-      "rolledBack": "Stok yetersiz. Ödeme iade edildi, sipariş iptal edildi."
-    }
+    "outcome": "Stok yetersiz. Ödeme iade edildi, sipariş iptal edildi."
   },
   "About": {
     "title": "Ayakta kalması gereken sistemler için backend mühendisi",

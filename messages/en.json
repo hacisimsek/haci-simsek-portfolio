@@ -93,10 +93,7 @@
       "compensating": "Undoing",
       "compensated": "Undone"
     },
-    "outcome": {
-      "completed": "Order completed.",
-      "rolledBack": "Inventory failed. Payment refunded and order cancelled."
-    }
+    "outcome": "Inventory failed. Payment refunded and order cancelled."
   },
   "About": {
     "title": "Backend engineer for systems that have to stay up",

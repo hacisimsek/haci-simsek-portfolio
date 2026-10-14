@@ -88,10 +88,10 @@ export default function SagaFlow({ className }: { className?: string }) {
   }, [playing, reduceMotion]);
 
   const { saga } = run;
+  // Only a visitor run can fail, so a rolled-back saga is always theirs; the
+  // sentence stays as long as the result does.
   const outcome =
-    run.byVisitor && (saga.phase === 'completed' || saga.phase === 'rolledBack')
-      ? msg(`outcome.${saga.phase}`)
-      : '';
+    saga.failAt !== null && saga.phase === 'rolledBack' ? msg('outcome') : '';
   const backwards =
     saga.phase === 'compensating' || saga.phase === 'rolledBack';
 

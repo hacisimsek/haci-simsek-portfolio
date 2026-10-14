@@ -83,4 +83,29 @@ describe('SagaFlow', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('Sipariş servisi')).toBeInTheDocument();
   });
+
+  it('keeps the outcome with the still result when motion is reduced', () => {
+    const matchMedia = vi.spyOn(window, 'matchMedia').mockImplementation(
+      (query) =>
+        ({
+          matches: query.includes('reduce'),
+          media: query,
+          addEventListener() {},
+          removeEventListener() {},
+        }) as unknown as MediaQueryList
+    );
+    render(<SagaFlow />);
+    advance(HOLD_TICKS + 2);
+    // Nothing moves on its own.
+    for (const step of screen.getAllByRole('listitem'))
+      expect(step).toHaveAttribute('data-status', 'done');
+    fireEvent.click(screen.getByRole('button', { name: 'Run with a failure' }));
+    advance(5 + HOLD_TICKS + 2);
+    expect(screen.getAllByRole('listitem')[2]).toHaveAttribute(
+      'data-status',
+      'failed'
+    );
+    expect(screen.getByRole('status')).toHaveTextContent('Inventory failed.');
+    matchMedia.mockRestore();
+  });
 });
