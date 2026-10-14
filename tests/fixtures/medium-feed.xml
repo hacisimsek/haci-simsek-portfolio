@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <title><![CDATA[Stories by Haci Simsek on Medium]]></title>
+    <link>https://medium.com/@hacisimsek?source=rss-9260146db199------2</link>
+    <item>
+      <title><![CDATA[What is the Saga Pattern?]]></title>
+      <link>https://medium.com/@hacisimsek/what-is-the-saga-pattern-aaea405280dc?source=rss-9260146db199------2</link>
+      <guid isPermaLink="false">https://medium.com/p/aaea405280dc</guid>
+      <category><![CDATA[distributed-transaction]]></category>
+      <category><![CDATA[saga-pattern]]></category>
+      <category><![CDATA[microservices]]></category>
+      <category><![CDATA[orchestration]]></category>
+      <category><![CDATA[choreography]]></category>
+      <dc:creator><![CDATA[Haci Simsek]]></dc:creator>
+      <pubDate>Sun, 11 May 2025 07:49:30 GMT</pubDate>
+      <content:encoded><![CDATA[<h3>What is the Saga Pattern?</h3><p>Managing distributed transactions &amp; consistency.</p><figure><img alt="" src="https://cdn-images-1.medium.com/max/1024/1*saga.png" /></figure><pre>if (a &lt; b) {}</pre><img src="https://medium.com/_/stat?event=post.clientViewed" width="1" height="1">]]></content:encoded>
+    </item>
+    <item>
+      <title><![CDATA[Understanding Circuit Breaker Pattern in Microservices]]></title>
+      <link>https://medium.com/@hacisimsek/understanding-circuit-breaker-pattern-in-microservices-1234?source=rss-9260146db199------2</link>
+      <guid isPermaLink="false">https://medium.com/p/1234</guid>
+      <category><![CDATA[resilience]]></category>
+      <pubDate>Mon, 01 Jan 2024 10:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[<p>Short text.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title><![CDATA[No Content Post]]></title>
+      <link>https://medium.com/@hacisimsek/no-content-post-5678?source=rss</link>
+      <guid isPermaLink="false">https://medium.com/p/5678</guid>
+      <pubDate>Tue, 02 Jan 2024 10:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

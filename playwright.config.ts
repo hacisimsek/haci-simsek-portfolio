@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 const PORT = 3100;
+const FEED_PORT = 3101;
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -23,10 +24,22 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: `npm run build && npm run start -- --port ${PORT}`,
-    url: `http://localhost:${PORT}`,
-    reuseExistingServer: !process.env.CI,
-    timeout: 180_000,
-  },
+  webServer: [
+    {
+      command: 'node tests/e2e/feed-server.mjs',
+      url: `http://localhost:${FEED_PORT}/users/hacisimsek/repos`,
+      reuseExistingServer: !process.env.CI,
+    },
+    {
+      // Drop cached feed responses so the build always reads the current fixtures.
+      command: `node -e "require('node:fs').rmSync('.next/cache/fetch-cache', { recursive: true, force: true })" && npm run build && npm run start -- --port ${PORT}`,
+      url: `http://localhost:${PORT}`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 180_000,
+      env: {
+        GITHUB_API_URL: `http://localhost:${FEED_PORT}`,
+        MEDIUM_FEED_URL: `http://localhost:${FEED_PORT}/feed/@hacisimsek`,
+      },
+    },
+  ],
 });

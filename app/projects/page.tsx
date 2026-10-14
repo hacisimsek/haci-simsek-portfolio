@@ -1,56 +1,11 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import { ArrowUpRight, Clock3, FolderGit2 } from 'lucide-react';
+import { getRepos } from '@/lib/feeds/github';
+import { loadFeed } from '@/lib/feeds/load';
 
-interface Project {
-  name: string;
-  description: string;
-  html_url: string;
-  updated_at: string;
-  language?: string;
-}
+export const revalidate = 3600;
 
-async function fetchProjectsData() {
-  const response = await fetch('https://api.github.com/users/hacisimsek/repos');
-  const data = await response.json();
-
-  return data
-    .filter((project: Project) => project.description !== null)
-    .sort(
-      (a: Project, b: Project) =>
-        new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-    );
-}
-
-export default function Projects() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setHasError(true);
-      setIsLoading(false);
-    }, 20000);
-
-    async function fetchProjects() {
-      try {
-        const filteredData = await fetchProjectsData();
-        setProjects(filteredData);
-        clearTimeout(timeoutId);
-      } catch (error) {
-        console.error('Error fetching projects:', error);
-        setHasError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchProjects();
-
-    return () => clearTimeout(timeoutId);
-  }, []);
+export default async function Projects() {
+  const feed = await loadFeed(getRepos);
 
   return (
     <section className="fade-up space-y-6 pb-6">
@@ -66,16 +21,7 @@ export default function Projects() {
         </p>
       </div>
 
-      {isLoading ? (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, index) => (
-            <div
-              key={index}
-              className="h-64 animate-pulse surface-card bg-card/70"
-            />
-          ))}
-        </div>
-      ) : hasError ? (
+      {!feed.ok ? (
         <div className="section-shell">
           <p className="text-base text-destructive">
             Project feed could not be loaded right now.
@@ -86,10 +32,10 @@ export default function Projects() {
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project) => (
+          {feed.data.map((project) => (
             <a
-              key={project.html_url}
-              href={project.html_url}
+              key={project.url}
+              href={project.url}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex min-h-72 flex-col surface-card p-6 transition hover:-translate-y-1 hover:border-accent/40"
@@ -118,7 +64,7 @@ export default function Projects() {
                 ) : null}
                 <span className="meta-chip">
                   <Clock3 className="mr-2 h-3.5 w-3.5" />
-                  {new Date(project.updated_at).toLocaleDateString('en-US', {
+                  {new Date(project.updatedAt).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
                     year: 'numeric',

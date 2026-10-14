@@ -22,12 +22,24 @@ test('unknown routes return 404', async ({ page }) => {
   expect(response?.status()).toBe(404);
 });
 
-test('projects and articles render the stubbed feeds', async ({ page }) => {
+test('projects and articles render the feeds from the fixture server', async ({
+  page,
+}) => {
   await page.goto('/projects');
-  await expect(page.getByText('ecommerce-microservices')).toBeVisible();
+  // The fixture keeps 3 of its 8 repos; the live API returns many more.
+  await expect(page.locator('main a[target="_blank"]')).toHaveCount(3);
+  await expect(
+    page.getByRole('heading', { name: 'notifyhub', exact: true })
+  ).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'forked-lib', exact: true })
+  ).toHaveCount(0);
 
   await page.goto('/articles');
-  await expect(
-    page.getByText('Understanding Circuit Breaker Pattern in Microservices')
-  ).toBeVisible();
+  await expect(page.locator('main a[target="_blank"]')).toHaveCount(3);
+  const saga = page.getByRole('link', { name: /What is the Saga Pattern\?/ });
+  await expect(saga).toHaveAttribute(
+    'href',
+    'https://medium.com/@hacisimsek/what-is-the-saga-pattern-aaea405280dc'
+  );
 });

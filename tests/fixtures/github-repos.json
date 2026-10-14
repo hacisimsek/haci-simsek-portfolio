@@ -1,0 +1,74 @@
+[
+  {
+    "name": "notifyhub",
+    "description": "Smart reminder and notification platform.",
+    "html_url": "https://github.com/hacisimsek/notifyhub",
+    "language": "Java",
+    "updated_at": "2026-10-12T10:00:00Z",
+    "fork": false,
+    "archived": false
+  },
+  {
+    "name": "ecommerce-microservices",
+    "description": "Spring Boot microservices with an orchestration-based Saga Pattern.",
+    "html_url": "https://github.com/hacisimsek/ecommerce-microservices",
+    "language": "Java",
+    "updated_at": "2026-10-01T10:00:00Z",
+    "fork": false,
+    "archived": false
+  },
+  {
+    "name": "forked-lib",
+    "description": "A fork.",
+    "html_url": "https://github.com/hacisimsek/forked-lib",
+    "language": "Java",
+    "updated_at": "2026-10-13T10:00:00Z",
+    "fork": true,
+    "archived": false
+  },
+  {
+    "name": "old-experiment",
+    "description": "Archived.",
+    "html_url": "https://github.com/hacisimsek/old-experiment",
+    "language": "Java",
+    "updated_at": "2026-10-13T10:00:00Z",
+    "fork": false,
+    "archived": true
+  },
+  {
+    "name": "no-description",
+    "description": null,
+    "html_url": "https://github.com/hacisimsek/no-description",
+    "language": "Java",
+    "updated_at": "2026-10-13T10:00:00Z",
+    "fork": false,
+    "archived": false
+  },
+  {
+    "name": "blank-description",
+    "description": "   ",
+    "html_url": "https://github.com/hacisimsek/blank-description",
+    "language": "Java",
+    "updated_at": "2026-10-13T10:00:00Z",
+    "fork": false,
+    "archived": false
+  },
+  {
+    "name": "hacisimsek",
+    "description": "Profile README",
+    "html_url": "https://github.com/hacisimsek/hacisimsek",
+    "language": null,
+    "updated_at": "2026-10-13T10:00:00Z",
+    "fork": false,
+    "archived": false
+  },
+  {
+    "name": "url-shortener-service",
+    "description": "URL shortener.",
+    "html_url": "https://github.com/hacisimsek/url-shortener-service",
+    "language": null,
+    "updated_at": "2026-09-01T10:00:00Z",
+    "fork": false,
+    "archived": false
+  }
+]
