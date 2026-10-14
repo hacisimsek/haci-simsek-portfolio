@@ -73,7 +73,6 @@ export async function generateMetadata({
       template: `%s | ${profile.asciiName}`,
     },
     description,
-    icons: '/images/favicon_io/favicon.ico',
     alternates: alternatesFor('/', locale),
     openGraph: {
       type: 'website',

@@ -25,3 +25,33 @@ for (const { path, ogLocale } of [
     expect(await meta('meta[name="twitter:card"]')).toBe('summary_large_image');
   });
 }
+
+test('crawl files are served at the site root', async ({ request }) => {
+  const sitemap = await request.get('/sitemap.xml');
+  expect(sitemap.status()).toBe(200);
+  expect(sitemap.headers()['content-type']).toContain('xml');
+  const xml = await sitemap.text();
+  expect(xml.match(/<loc>/g)).toHaveLength(8);
+  expect(xml).toContain('hreflang="tr"');
+
+  const robots = await request.get('/robots.txt');
+  expect(await robots.text()).toContain(
+    'Sitemap: https://hacisimsek.com/sitemap.xml'
+  );
+
+  const manifest = await request.get('/manifest.webmanifest');
+  expect((await manifest.json()).name).toBe('Haci Simsek');
+});
+
+test('generated icons are linked and served without a redirect', async ({
+  page,
+  request,
+}) => {
+  await page.goto('/tr');
+  for (const rel of ['icon', 'apple-touch-icon']) {
+    const href = await page.locator(`link[rel="${rel}"]`).getAttribute('href');
+    const response = await request.get(href!, { maxRedirects: 0 });
+    expect(response.status(), href!).toBe(200);
+    expect(response.headers()['content-type']).toBe('image/png');
+  }
+});
