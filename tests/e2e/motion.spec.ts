@@ -1,4 +1,9 @@
-import { expect, test, waitForEntranceAnimations } from './fixtures';
+import {
+  expect,
+  test,
+  waitForEntranceAnimations,
+  waitForHydration,
+} from './fixtures';
 
 test.describe('with motion', () => {
   test.use({ reducedMotion: 'no-preference' });
@@ -67,6 +72,7 @@ test.describe('smooth scrolling side effects', () => {
     await page.waitForFunction(() =>
       document.documentElement.classList.contains('lenis')
     );
+    await waitForHydration(page);
     await page.keyboard.press('Control+k');
     await expect(page.getByRole('combobox')).toBeFocused();
 
@@ -75,5 +81,73 @@ test.describe('smooth scrolling side effects', () => {
     await page.waitForTimeout(600);
 
     expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  });
+});
+
+test.describe('career timeline', () => {
+  const fillScale = (page: import('@playwright/test').Page) =>
+    page.locator('[data-timeline-fill]').evaluate((el) => {
+      const transform = getComputedStyle(el).transform;
+      return transform === 'none' ? 1 : new DOMMatrix(transform).d;
+    });
+
+  test.describe('with motion', () => {
+    test.use({ reducedMotion: 'no-preference' });
+
+    test('the line fills as the timeline scrolls', async ({ page }) => {
+      await page.goto('/');
+      await waitForHydration(page);
+      await page.locator('#career').scrollIntoViewIfNeeded();
+      await expect.poll(() => fillScale(page)).toBeLessThan(0.6);
+      await page.evaluate(() =>
+        window.scrollTo(0, document.documentElement.scrollHeight)
+      );
+      await expect.poll(() => fillScale(page)).toBeGreaterThan(0.95);
+    });
+  });
+
+  test.describe('with reduced motion', () => {
+    test.use({ reducedMotion: 'reduce' });
+
+    test('the line is drawn in full', async ({ page }) => {
+      await page.goto('/');
+      expect(await fillScale(page)).toBe(1);
+    });
+  });
+});
+
+test.describe('skills marquee with reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  test('wraps instead of clipping', async ({ page }) => {
+    await page.goto('/');
+    const clipped = await page
+      .locator('.marquee')
+      .evaluateAll((rows) =>
+        rows.some((row) => row.scrollWidth > row.clientWidth + 1)
+      );
+    expect(clipped).toBe(false);
+  });
+});
+
+test.describe('hero name', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  // A transformed child is cut out of its parent's background-clip: text, so
+  // the gradient must live on each animating letter or they stay invisible
+  // until their animation ends.
+  test('paints the gradient on each letter, not on the parent', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    const styles = await page.locator('h1 .letter').evaluateAll((letters) => ({
+      parent: getComputedStyle(letters[0].parentElement!).backgroundImage,
+      letters: letters.map((letter) => {
+        const style = getComputedStyle(letter);
+        return `${style.backgroundClip}|${style.backgroundImage.startsWith('linear-gradient')}`;
+      }),
+    }));
+    expect(styles.parent).toBe('none');
+    expect(new Set(styles.letters)).toEqual(new Set(['text|true']));
   });
 });

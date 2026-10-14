@@ -1,14 +1,17 @@
-import { useTranslations } from 'next-intl';
-import { ArrowUpRight } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
+import { ArrowUpRight, Clock3, GitCommitHorizontal } from 'lucide-react';
 import {
   GithubIcon,
   LinkedinIcon,
   XIcon,
 } from '@/components/icons/brand-icons';
+import LocalTime from '@/components/motion/local-time';
 import { profile, socials } from '@/content';
 import { Link } from '@/i18n/navigation';
 
 const icons = { github: GithubIcon, linkedin: LinkedinIcon, x: XIcon };
+
+const REPO = 'https://github.com/hacisimsek/haci-simsek-portfolio';
 
 const socialLinks = socials
   .filter((social) => social.id !== 'medium')
@@ -20,8 +23,14 @@ const socialLinks = socials
 
 export default function Footer() {
   const msg = useTranslations('Footer');
+  const locale = useLocale();
+  // Set by Vercel at build time; absent locally.
+  const sha = process.env.VERCEL_GIT_COMMIT_SHA;
   return (
-    <footer className="mt-16 fade-up">
+    <footer className="mt-24 fade-up">
+      <p className="mb-8 overflow-hidden text-aurora pb-[0.12em] font-display text-[clamp(3rem,12vw,9rem)] leading-none font-bold tracking-tighter">
+        {profile.name}
+      </p>
       <div className="flex flex-col gap-6 surface-card px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
           <div className="eyebrow">{msg('eyebrow')}</div>
@@ -53,6 +62,24 @@ export default function Footer() {
             {msg('cta')}
             <ArrowUpRight className="h-4 w-4" />
           </Link>
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground sm:justify-end">
+            <span className="inline-flex items-center gap-1.5">
+              <Clock3 aria-hidden className="h-3.5 w-3.5" />
+              {msg('localTime')} <LocalTime locale={locale} />
+            </span>
+            {sha ? (
+              <a
+                href={`${REPO}/commit/${sha}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-mono hover:text-foreground"
+              >
+                <GitCommitHorizontal aria-hidden className="h-3.5 w-3.5" />
+                {msg('build', { sha: sha.slice(0, 7) })}
+              </a>
+            ) : null}
+          </div>
 
           <p className="text-xs text-muted-foreground">
             {msg('copyright', {

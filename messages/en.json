@@ -51,26 +51,47 @@
       "tr": "Türkçe"
     }
   },
-  "About": {
-    "eyebrow": "Editorial tech portfolio",
+  "Hero": {
+    "eyebrow": "Software engineer · Istanbul",
+    "rolesLabel": "Roles",
     "viewProjects": "View Projects",
     "startConversation": "Start a Conversation",
-    "experienceLabel": "Experience",
-    "experienceValue": "{years} years in production engineering",
-    "environmentLabel": "Environment",
+    "paletteHint": "Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> to jump anywhere"
+  },
+  "Stats": {
+    "label": "At a glance",
+    "years": "Years of experience",
+    "companies": "Companies",
+    "articles": "Articles",
+    "repos": "Open-source repos"
+  },
+  "About": {
+    "eyebrow": "About",
+    "title": "Backend engineer for systems that have to stay up",
     "currentlyAt": "Currently at {company}",
-    "basedIn": "Based in",
+    "localTime": "Local time in Istanbul",
+    "educationTitle": "Education",
+    "minor": "Minor: {degree}",
+    "scholarship": "Full scholarship at {school}",
+    "latestArticle": "Latest article",
     "email": "Email"
   },
   "Career": {
     "eyebrow": "Career timeline",
     "title": "Experience with visible product impact",
-    "copy": "Most of my recent work sits in backend-heavy systems where scale, release confidence, observability, and service reliability matter as much as implementation itself."
+    "copy": "Most of my recent work sits in backend-heavy systems where scale, release confidence, observability, and service reliability matter as much as implementation itself.",
+    "promoted": "Promoted",
+    "kind": {
+      "internship": "Internship",
+      "leadership": "Leadership"
+    }
   },
   "Skills": {
     "eyebrow": "Skills",
     "title": "Tools I use to ship and run systems",
-    "copy": "The stack behind the roles above, from service code and messaging to delivery pipelines and the architecture patterns I write about."
+    "copy": "The stack behind the roles above, from service code and messaging to delivery pipelines and the architecture patterns I write about.",
+    "rowCore": "Languages, frameworks and data",
+    "rowDelivery": "Delivery, observability and architecture"
   },
   "Education": {
     "eyebrow": "Education",
@@ -78,16 +99,13 @@
     "copy": "My background combines software systems thinking with electrical and electronics fundamentals, which still influences how I reason about architecture, constraints, and reliability."
   },
   "Home": {
-    "eyebrow": "Beyond the resume",
-    "title": "Proof of work, writing, and next conversations",
-    "copy": "The site should do more than list roles. These entry points make it easier to evaluate how I think, what I build, and where a collaboration could start.",
-    "explore": "Explore",
+    "projectsEyebrow": "Selected work",
     "projectsTitle": "Featured projects",
-    "projectsText": "A selected view into experiments, shipped ideas, and production-minded engineering work.",
-    "writingTitle": "Technical writing",
-    "writingText": "Articles where architecture, implementation detail, and practical lessons are unpacked clearly.",
-    "focusTitle": "Current focus",
-    "focusText": "Authentication platforms, API-driven services, distributed systems, and cloud-ready architectures built for long-term maintainability."
+    "allProjects": "All projects",
+    "flagship": "Flagship",
+    "writingEyebrow": "Writing",
+    "writingTitle": "Latest writing",
+    "allArticles": "All articles"
   },
   "Projects": {
     "eyebrow": "Projects",
@@ -132,7 +150,9 @@
     "eyebrow": "Available for selective collaborations",
     "text": "Building robust backend systems, distributed platform capabilities, and architecture that remains operable under real production load.",
     "cta": "Start a conversation",
-    "copyright": "© {year} {name}. Designed with intent, not templates."
+    "copyright": "© {year} {name}. Designed with intent, not templates.",
+    "localTime": "Istanbul",
+    "build": "build {sha}"
   },
   "NotFound": {
     "eyebrow": "404",

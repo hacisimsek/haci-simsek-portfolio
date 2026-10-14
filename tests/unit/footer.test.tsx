@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { renderWithIntl as render } from './render';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import Footer from '@/components/Footer';
 
 describe('Footer', () => {
@@ -26,5 +26,35 @@ describe('Footer', () => {
     expect(
       screen.getByRole('link', { name: /start a conversation/i })
     ).toHaveAttribute('href', '/contact');
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('links the short build SHA when deployed', () => {
+    vi.stubEnv(
+      'VERCEL_GIT_COMMIT_SHA',
+      '662ca9cc40dbccaac05477a86eccd1acefa7dd7c'
+    );
+    render(<Footer />);
+    expect(screen.getByRole('link', { name: /662ca9c/ })).toHaveAttribute(
+      'href',
+      'https://github.com/hacisimsek/haci-simsek-portfolio/commit/662ca9cc40dbccaac05477a86eccd1acefa7dd7c'
+    );
+  });
+
+  it('hides the build link outside a deployment', () => {
+    vi.stubEnv('VERCEL_GIT_COMMIT_SHA', '');
+    render(<Footer />);
+    expect(screen.queryByRole('link', { name: /build/i })).toBeNull();
+  });
+
+  it('shows the name as a large gradient wordmark and the local time', () => {
+    render(<Footer />);
+    expect(
+      screen.getByText('Hacı Şimşek', { selector: '.text-aurora' })
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Istanbul/)).toBeInTheDocument();
   });
 });

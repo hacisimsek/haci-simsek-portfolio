@@ -12,6 +12,20 @@ export const profile: Profile = {
     en: 'Software engineer building backend and distributed systems for high-traffic environments.',
     tr: 'Yüksek trafikli ortamlar için backend ve dağıtık sistemler geliştiren yazılım mühendisi.',
   },
+  rotatingRoles: {
+    en: [
+      'Senior Specialist @ Sisal',
+      'Backend engineer',
+      'Distributed systems builder',
+      'Technical writer',
+    ],
+    tr: [
+      'Kıdemli Uzman @ Sisal',
+      'Backend mühendisi',
+      'Dağıtık sistem geliştiricisi',
+      'Teknik yazar',
+    ],
+  },
   intro: {
     en: 'Software engineer with {years} years of experience building backend and full-stack solutions across regulated, high-traffic environments. Strong in Java, Spring Boot, distributed systems, CI/CD, and cloud-native delivery, with additional frontend experience in React and Next.js.',
     tr: 'Regülasyona tabi, yüksek trafikli ortamlarda backend ve full-stack çözümler geliştirme konusunda {years} yıllık deneyime sahip yazılım mühendisi. Java, Spring Boot, dağıtık sistemler, CI/CD ve cloud-native teslimat konularında güçlü; React ve Next.js ile frontend deneyimi de var.',

@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures';
+import { expect, test, waitForHydration } from './fixtures';
 
 // The handler accepts both modifiers; Control is deterministic on every OS.
 const shortcut = 'Control+k';
@@ -6,6 +6,7 @@ const shortcut = 'Control+k';
 test.describe('command palette', () => {
   test('navigates to a page from the keyboard', async ({ page }) => {
     await page.goto('/');
+    await waitForHydration(page);
     await page.keyboard.press(shortcut);
     const dialog = page.getByRole('dialog', { name: 'Command palette' });
     await expect(dialog).toBeVisible();

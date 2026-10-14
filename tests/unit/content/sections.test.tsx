@@ -1,10 +1,9 @@
 import { screen, within } from '@testing-library/react';
 import { renderWithIntl as render } from '../render';
 import { describe, expect, it } from 'vitest';
-import About from '@/components/About';
-import Career from '@/components/Career';
+import Career from '@/components/sections/career';
 import Education from '@/components/Education';
-import Skills from '@/components/Skills';
+import Skills from '@/components/sections/skills';
 
 describe('Career', () => {
   it('shows all five roles with their periods', () => {
@@ -30,6 +29,16 @@ describe('Career', () => {
   });
 });
 
+describe('Career timeline', () => {
+  it('groups the Sisal promotion and labels non-employment roles', () => {
+    render(<Career />);
+    expect(screen.getByText('Promoted')).toBeInTheDocument();
+    expect(screen.getByText('Internship')).toBeInTheDocument();
+    expect(screen.getByText('Leadership')).toBeInTheDocument();
+    expect(screen.getAllByRole('listitem', { name: /./ })).toHaveLength(4);
+  });
+});
+
 describe('Education', () => {
   it('shows the scholarship on the major', () => {
     render(<Education />);
@@ -46,15 +55,5 @@ describe('Skills', () => {
       .getByRole('heading', { name: 'Messaging and data' })
       .closest('article')!;
     expect(within(group).getByText('Kafka')).toBeInTheDocument();
-  });
-});
-
-describe('About', () => {
-  it('computes the years of experience', () => {
-    render(<About />);
-    expect(
-      screen.getByText(/Software engineer with \d+ years of experience/)
-    ).toBeInTheDocument();
-    expect(screen.queryByText(/\{years\}/)).toBeNull();
   });
 });

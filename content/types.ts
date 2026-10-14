@@ -61,6 +61,7 @@ export interface Profile {
   role: L10n;
   currentCompany: string;
   headline: L10n;
+  rotatingRoles: L10n<string[]>;
   intro: L10n;
   bio: L10n<string[]>;
   location: L10n;
@@ -68,4 +69,9 @@ export interface Profile {
   careerStart: YearMonth;
   expertise: L10n<string[]>;
   environment: L10n;
+}
+
+export interface FeaturedProject {
+  name: string;
+  flagship?: boolean;
 }

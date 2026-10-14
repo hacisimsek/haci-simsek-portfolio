@@ -51,26 +51,47 @@
       "tr": "Türkçe"
     }
   },
-  "About": {
-    "eyebrow": "Teknik portfolyo",
+  "Hero": {
+    "eyebrow": "Yazılım mühendisi · İstanbul",
+    "rolesLabel": "Roller",
     "viewProjects": "Projeleri gör",
     "startConversation": "Bir konuşma başlat",
-    "experienceLabel": "Deneyim",
-    "experienceValue": "Üretim ortamında {years} yıl",
-    "environmentLabel": "Ortam",
+    "paletteHint": "Her yere atlamak için <kbd>⌘K</kbd> veya <kbd>Ctrl K</kbd>"
+  },
+  "Stats": {
+    "label": "Kısaca",
+    "years": "Yıl deneyim",
+    "companies": "Şirket",
+    "articles": "Makale",
+    "repos": "Açık kaynak repo"
+  },
+  "About": {
+    "eyebrow": "Hakkımda",
+    "title": "Ayakta kalması gereken sistemler için backend mühendisi",
     "currentlyAt": "Şu an {company} bünyesinde",
-    "basedIn": "Konum",
+    "localTime": "İstanbul’da saat",
+    "educationTitle": "Eğitim",
+    "minor": "Yan dal: {degree}",
+    "scholarship": "{school}, tam burslu",
+    "latestArticle": "Son yazı",
     "email": "E-posta"
   },
   "Career": {
     "eyebrow": "Kariyer",
     "title": "Ürüne görünür etkisi olan deneyim",
-    "copy": "Son dönemdeki işlerimin çoğu, ölçek, güvenli yayın, gözlemlenebilirlik ve servis güvenilirliğinin en az geliştirmenin kendisi kadar önemli olduğu backend ağırlıklı sistemlerde."
+    "copy": "Son dönemdeki işlerimin çoğu, ölçek, güvenli yayın, gözlemlenebilirlik ve servis güvenilirliğinin en az geliştirmenin kendisi kadar önemli olduğu backend ağırlıklı sistemlerde.",
+    "promoted": "Terfi",
+    "kind": {
+      "internship": "Staj",
+      "leadership": "Liderlik"
+    }
   },
   "Skills": {
     "eyebrow": "Yetkinlikler",
     "title": "Sistemleri geliştirip işletirken kullandığım araçlar",
-    "copy": "Yukarıdaki rollerin arkasındaki teknoloji yığını: servis kodu ve mesajlaşmadan teslimat süreçlerine ve hakkında yazdığım mimari desenlere kadar."
+    "copy": "Yukarıdaki rollerin arkasındaki teknoloji yığını: servis kodu ve mesajlaşmadan teslimat süreçlerine ve hakkında yazdığım mimari desenlere kadar.",
+    "rowCore": "Diller, framework’ler ve veri",
+    "rowDelivery": "Teslimat, gözlemlenebilirlik ve mimari"
   },
   "Education": {
     "eyebrow": "Eğitim",
@@ -78,16 +99,13 @@
     "copy": "Yazılım sistemleri düşüncesini elektrik-elektronik temelleriyle birleştiren bir geçmişim var; bu da mimariyi, kısıtları ve güvenilirliği nasıl ele aldığımı hâlâ etkiliyor."
   },
   "Home": {
-    "eyebrow": "Özgeçmişin ötesinde",
-    "title": "İşler, yazılar ve yeni konuşmalar",
-    "copy": "Bu site rolleri listelemekten fazlasını yapmalı. Bu bölümler nasıl düşündüğümü, neler geliştirdiğimi ve bir iş birliğinin nereden başlayabileceğini görmeyi kolaylaştırıyor.",
-    "explore": "Keşfet",
+    "projectsEyebrow": "Seçili işler",
     "projectsTitle": "Öne çıkan projeler",
-    "projectsText": "Deneyler, hayata geçmiş fikirler ve üretim odaklı mühendislik çalışmalarından bir seçki.",
-    "writingTitle": "Teknik yazılar",
-    "writingText": "Mimarinin, uygulama ayrıntılarının ve pratik derslerin açıkça anlatıldığı yazılar.",
-    "focusTitle": "Şu anki odak",
-    "focusText": "Kimlik doğrulama platformları, API odaklı servisler, dağıtık sistemler ve uzun vadede sürdürülebilir, buluta hazır mimariler."
+    "allProjects": "Tüm projeler",
+    "flagship": "Amiral gemisi",
+    "writingEyebrow": "Yazılar",
+    "writingTitle": "Son yazılar",
+    "allArticles": "Tüm yazılar"
   },
   "Projects": {
     "eyebrow": "Projeler",
@@ -132,7 +150,9 @@
     "eyebrow": "Seçili iş birliklerine açığım",
     "text": "Güçlü backend sistemler, dağıtık platform yetenekleri ve gerçek üretim yükü altında işletilebilir kalan mimariler geliştiriyorum.",
     "cta": "Bir konuşma başlat",
-    "copyright": "© {year} {name}. Şablonla değil, özenle tasarlandı."
+    "copyright": "© {year} {name}. Şablonla değil, özenle tasarlandı.",
+    "localTime": "İstanbul",
+    "build": "sürüm {sha}"
   },
   "NotFound": {
     "eyebrow": "404",
