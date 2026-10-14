@@ -1,6 +1,11 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
-import { firstImageSrc, htmlToText, stripQuery } from '@/lib/feeds/html';
+import {
+  decodeText,
+  firstImageSrc,
+  htmlToText,
+  stripQuery,
+} from '@/lib/feeds/html';
 
 describe('htmlToText', () => {
   it('drops tags and keeps words apart across block elements', () => {
@@ -19,6 +24,20 @@ describe('htmlToText', () => {
 
   it('collapses whitespace and trims', () => {
     expect(htmlToText('  <p>a\n\n   b</p>  ')).toBe('a b');
+  });
+});
+
+describe('decodeText', () => {
+  it('keeps angle brackets that are plain text, such as generics', () => {
+    expect(decodeText('Generics with <T> &amp; Optional&lt;T&gt;')).toBe(
+      'Generics with <T> & Optional<T>'
+    );
+  });
+});
+
+describe('out-of-range entities', () => {
+  it('leaves code points above U+10FFFF untouched instead of throwing', () => {
+    expect(htmlToText('<p>a &#1114112; b</p>')).toBe('a &#1114112; b');
   });
 });
 

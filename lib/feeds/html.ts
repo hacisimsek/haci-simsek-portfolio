@@ -16,11 +16,19 @@ function decodeEntities(text: string): string {
           entity[1].toLowerCase() === 'x'
             ? Number.parseInt(entity.slice(2), 16)
             : Number.parseInt(entity.slice(1), 10);
-        return Number.isFinite(code) ? String.fromCodePoint(code) : match;
+        return Number.isFinite(code) && code >= 0 && code <= 0x10ffff
+          ? String.fromCodePoint(code)
+          : match;
       }
       return NAMED_ENTITIES[entity.toLowerCase()] ?? match;
     }
   );
+}
+
+// For fields that are plain text in the feed, such as CDATA titles: decodes
+// entities without treating `<T>` as a tag.
+export function decodeText(text: string): string {
+  return decodeEntities(text).replace(/\s+/g, ' ').trim();
 }
 
 export function htmlToText(html: string): string {

@@ -8,7 +8,7 @@ const PROFILE_REPO = 'hacisimsek';
 const repoSchema = z.object({
   name: z.string(),
   description: z.string().nullable(),
-  html_url: z.url(),
+  html_url: z.url({ protocol: /^https$/ }),
   language: z.string().nullable(),
   updated_at: z.string(),
   fork: z.boolean(),

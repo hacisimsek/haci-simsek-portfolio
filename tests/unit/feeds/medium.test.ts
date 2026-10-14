@@ -52,6 +52,22 @@ describe('parseMediumFeed', () => {
     expect(empty.excerpt).toBe('');
   });
 
+  it('keeps generics in titles as text', () => {
+    const generic = xml.replace(
+      '<![CDATA[No Content Post]]>',
+      '<![CDATA[Generics with <T> in Java]]>'
+    );
+    expect(parseMediumFeed(generic)[2].title).toBe('Generics with <T> in Java');
+  });
+
+  it('rejects links that are not https', () => {
+    const unsafe = xml.replace(
+      'https://medium.com/@hacisimsek/no-content-post-5678?source=rss',
+      'javascript:alert(1)'
+    );
+    expect(() => parseMediumFeed(unsafe)).toThrow();
+  });
+
   it('rejects documents that are not an RSS feed', () => {
     expect(() =>
       parseMediumFeed('<html><body>Blocked</body></html>')

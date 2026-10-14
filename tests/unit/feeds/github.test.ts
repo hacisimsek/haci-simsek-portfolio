@@ -27,6 +27,15 @@ describe('selectRepos', () => {
     });
   });
 
+  it('rejects repository links that are not https', () => {
+    const unsafe = repos.map((repo) =>
+      repo.name === 'notifyhub'
+        ? { ...repo, html_url: 'javascript:alert(1)' }
+        : repo
+    );
+    expect(() => selectRepos(unsafe)).toThrow();
+  });
+
   it('rejects a payload that is not a repo list', () => {
     expect(() => selectRepos({ message: 'API rate limit exceeded' })).toThrow();
   });

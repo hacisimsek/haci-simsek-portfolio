@@ -1,7 +1,7 @@
 import 'server-only';
 import { XMLParser } from 'fast-xml-parser';
 import { z } from 'zod';
-import { firstImageSrc, htmlToText, stripQuery } from './html';
+import { decodeText, firstImageSrc, htmlToText, stripQuery } from './html';
 
 export const ARTICLES_REVALIDATE = 21600;
 export const ARTICLE_FALLBACK_THUMBNAIL =
@@ -11,7 +11,7 @@ const IMAGE_HOSTS = ['cdn-images-1.medium.com', 'miro.medium.com'] as const;
 
 const itemSchema = z.object({
   title: z.string(),
-  link: z.url(),
+  link: z.url({ protocol: /^https$/ }),
   pubDate: z.string(),
   category: z.array(z.string()).default([]),
   'content:encoded': z.string().default(''),
@@ -32,8 +32,8 @@ export interface Article {
   publishedAt: string;
 }
 
-// Entities are decoded once, in htmlToText, so text inside and outside CDATA
-// sections ends up the same.
+// The parser leaves entities alone; decodeText (plain-text titles) and
+// htmlToText (HTML content) each decode them exactly once.
 const parser = new XMLParser({
   ignoreAttributes: true,
   processEntities: false,
@@ -47,7 +47,7 @@ export function parseMediumFeed(xml: string): Article[] {
   return feed.rss.channel.item.map((item) => {
     const html = item['content:encoded'];
     return {
-      title: htmlToText(item.title),
+      title: decodeText(item.title),
       url: stripQuery(item.link),
       excerpt: htmlToText(html),
       categories: item.category,
