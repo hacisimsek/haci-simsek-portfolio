@@ -6,7 +6,8 @@ export type CommandAction =
   | { type: 'theme'; theme: 'dark' | 'light' | 'system' }
   | { type: 'locale'; locale: Locale }
   | { type: 'copy-email' }
-  | { type: 'external'; href: string };
+  | { type: 'external'; href: string }
+  | { type: 'terminal' };
 
 export type CommandItem = {
   id: string;
@@ -57,9 +58,16 @@ export function buildCommands({
     {
       id: 'navigate',
       heading: t('groups.navigate'),
-      items: sections.map(({ id, key, href }) =>
-        item(id, t(key), { type: 'navigate', href }, [key.slice(4)])
-      ),
+      items: [
+        ...sections.map(({ id, key, href }) =>
+          item(id, t(key), { type: 'navigate', href }, [key.slice(4)])
+        ),
+        item('open-terminal', t('openTerminal'), { type: 'terminal' }, [
+          'terminal',
+          'shell',
+          'console',
+        ]),
+      ],
     },
     {
       id: 'preferences',

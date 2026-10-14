@@ -49,7 +49,8 @@
     "locale": {
       "en": "English",
       "tr": "Türkçe"
-    }
+    },
+    "openTerminal": "Terminali aç"
   },
   "Hero": {
     "eyebrow": "Yazılım mühendisi · İstanbul",
@@ -183,6 +184,38 @@
     "eyebrow": "404",
     "title": "Sayfa bulunamadı",
     "text": "Aradığınız sayfa mevcut değil ya da taşınmış.",
-    "home": "Ana sayfaya dön"
+    "home": "Ana sayfaya dön",
+    "noSuchFile": "Böyle bir dosya ya da dizin yok",
+    "openTerminal": "Terminali aç"
+  },
+  "Terminal": {
+    "title": "Terminal",
+    "description": "Bir komut yazıp Enter’a basın. Liste için help yazın.",
+    "inputLabel": "Komut",
+    "welcome": "Merhaba! Bu terminalin neler yapabildiğini görmek için help yazın.",
+    "helpHeader": "Kullanılabilir komutlar:",
+    "help": {
+      "clear": "ekranı temizler",
+      "contact": "bana nasıl ulaşılır",
+      "exit": "terminali kapatır",
+      "experience": "nerelerde çalıştım",
+      "help": "bu listeyi gösterir",
+      "lang": "dili değiştirir (en, tr)",
+      "projects": "geliştirdiğim işler",
+      "skills": "kullandığım teknolojiler",
+      "sudo": "sudo hire-me deneyin",
+      "theme": "renk temasını değiştirir (dark, light, system)",
+      "whoami": "ben kimim"
+    },
+    "projectsHeader": "Öne çıkan projeler (GitHub’da açılır):",
+    "usage": "kullanım",
+    "themeSet": "Tema {theme} olarak ayarlandı.",
+    "langSet": "Dil {language} olarak değiştiriliyor…",
+    "bye": "Görüşmek üzere!",
+    "sudoDenied": "İyi denemeydi. Burada sudo yalnızca sudo hire-me için çalışır.",
+    "hirePassword": "[sudo] visitor için parola: ••••••••",
+    "hireGranted": "İzin verildi. İletişim sayfası açılıyor…",
+    "notFound": "komut bulunamadı: {command}. Liste için help yazın.",
+    "matches": "Eşleşenler: {matches}"
   }
 }

@@ -36,6 +36,11 @@ describe('buildCommands', () => {
     });
   });
 
+  it('opens the terminal', () => {
+    expect(byId('open-terminal')?.action).toEqual({ type: 'terminal' });
+    expect(byId('open-terminal')?.keywords).toContain('shell');
+  });
+
   it('switches theme and language', () => {
     expect(byId('theme-dark')?.action).toEqual({
       type: 'theme',

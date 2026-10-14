@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl';
+import NotFoundTerminal from '@/components/terminal/not-found-terminal';
 import { Link } from '@/i18n/navigation';
 
 export default function NotFoundPage() {
@@ -10,6 +11,7 @@ export default function NotFoundPage() {
         <div className="mb-4 eyebrow">{msg('eyebrow')}</div>
         <h1 className="page-title">{msg('title')}</h1>
         <p className="mt-5 page-subtitle">{msg('text')}</p>
+        <NotFoundTerminal />
         <Link href="/" className="mt-6 inline-block underline">
           {msg('home')}
         </Link>
