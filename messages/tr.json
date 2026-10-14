@@ -62,6 +62,7 @@
     "label": "Bir sipariş saga'sı",
     "caption": "Saga, bir siparişi tek büyük transaction olmadan servisler arasında tutarlı tutar. Her servis kendi adımını işler; biri başarısız olursa önceki adımlar telafi işlemleriyle geri alınır.",
     "run": "Hata senaryosunu çalıştır",
+    "pause": "Duraklat",
     "code": "Kodda incele",
     "steps": {
       "order": {
@@ -91,7 +92,8 @@
       "done": "Tamam",
       "failed": "Stok yok",
       "compensating": "Geri alınıyor",
-      "compensated": "Geri alındı"
+      "compensated": "Geri alındı",
+      "skipped": "Atlandı"
     },
     "outcome": "Stok yetersiz. Ödeme iade edildi, sipariş iptal edildi."
   },

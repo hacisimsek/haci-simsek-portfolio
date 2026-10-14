@@ -62,6 +62,7 @@
     "label": "An order saga",
     "caption": "A saga keeps an order consistent across services without one big transaction. Each service commits its own step; when one fails, the steps before it are undone by compensating actions.",
     "run": "Run with a failure",
+    "pause": "Pause",
     "code": "See it in code",
     "steps": {
       "order": {
@@ -91,7 +92,8 @@
       "done": "Done",
       "failed": "Out of stock",
       "compensating": "Undoing",
-      "compensated": "Undone"
+      "compensated": "Undone",
+      "skipped": "Skipped"
     },
     "outcome": "Inventory failed. Payment refunded and order cancelled."
   },

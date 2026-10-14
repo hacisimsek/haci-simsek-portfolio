@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Pause } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import {
   useEffect,
@@ -35,6 +35,7 @@ const STATUS_COLOUR = {
   failed: 'text-destructive',
   compensating: 'text-primary',
   compensated: 'text-primary',
+  skipped: 'text-muted-foreground',
 } as const;
 
 function isRestart(previous: SagaState, next: SagaState) {
@@ -81,8 +82,11 @@ export default function SagaFlow({ className }: { className?: string }) {
     byVisitor: false,
     runId: 0,
   });
-  // Without motion the saga only moves when the visitor starts it.
-  const playing = active && (!reduceMotion || run.byVisitor);
+  // Auto-play can be paused (WCAG 2.2.2) and is off without motion; a run
+  // the visitor starts always plays.
+  const [paused, setPaused] = useState(false);
+  const autoPlay = !reduceMotion && !paused;
+  const playing = active && (run.byVisitor || autoPlay);
 
   useEffect(() => {
     if (!playing) return;
@@ -90,13 +94,13 @@ export default function SagaFlow({ className }: { className?: string }) {
       setRun((current) => {
         const next = tick(current.saga);
         if (!isRestart(current.saga, next)) return { ...current, saga: next };
-        // A finished visitor run stays on screen when motion is reduced.
-        if (reduceMotion) return { ...current, byVisitor: false };
+        // Without auto-play a finished visitor run stays on screen.
+        if (!autoPlay) return { ...current, byVisitor: false };
         return { ...current, saga: next, byVisitor: false };
       });
     }, TICK_MS);
     return () => clearInterval(id);
-  }, [playing, reduceMotion, run.runId]);
+  }, [playing, autoPlay, run.runId]);
 
   const { saga } = run;
   // Only a visitor run can fail, so a rolled-back saga is always theirs; the
@@ -182,6 +186,18 @@ export default function SagaFlow({ className }: { className?: string }) {
         >
           {msg('run')}
         </Button>
+        {reduceMotion ? null : (
+          <Button
+            type="button"
+            variant="ghost"
+            aria-pressed={paused}
+            className="h-11 rounded-full px-4 text-muted-foreground aria-pressed:text-foreground"
+            onClick={() => setPaused((value) => !value)}
+          >
+            <Pause aria-hidden className="mr-2 h-4 w-4" />
+            {msg('pause')}
+          </Button>
+        )}
         <a
           href={FLAGSHIP}
           target="_blank"

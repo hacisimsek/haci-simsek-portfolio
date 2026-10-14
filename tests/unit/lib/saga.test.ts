@@ -6,6 +6,7 @@ import {
   STEPS,
   start,
   tick,
+  VISITOR_HOLD_TICKS,
   withFailure,
   type SagaState,
 } from '@/lib/saga';
@@ -37,11 +38,12 @@ describe('saga', () => {
     expect(state.statuses).toEqual(['done', 'compensating', 'failed', 'idle']);
     state = run(state, 2);
     expect(state.phase).toBe('rolledBack');
+    // Shipping never ran: it is skipped, not still waiting.
     expect(state.statuses).toEqual([
       'compensated',
       'compensated',
       'failed',
-      'idle',
+      'skipped',
     ]);
   });
 
@@ -61,5 +63,21 @@ describe('saga', () => {
   it('runs the failure scenario from the inventory step', () => {
     expect(STEPS[FAILING_STEP]).toBe('inventory');
     expect(withFailure()).toEqual(start(FAILING_STEP));
+  });
+
+  it('holds a failed run longer so it can be read', () => {
+    const rolledBack = run(start(FAILING_STEP), 5);
+    expect(rolledBack.phase).toBe('rolledBack');
+    expect(VISITOR_HOLD_TICKS).toBeGreaterThan(HOLD_TICKS);
+    expect(run(rolledBack, VISITOR_HOLD_TICKS - 1).phase).toBe('rolledBack');
+    expect(run(rolledBack, VISITOR_HOLD_TICKS).phase).toBe('forward');
+  });
+
+  it('never skips a step in a happy run', () => {
+    let state = start();
+    for (let i = 0; i < STEPS.length + HOLD_TICKS; i += 1) {
+      expect(state.statuses).not.toContain('skipped');
+      state = tick(state);
+    }
   });
 });
