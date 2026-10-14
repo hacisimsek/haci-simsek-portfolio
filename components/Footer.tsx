@@ -1,10 +1,12 @@
-import { useTranslations } from 'next-intl';
 import { ArrowUpRight, GitCommitHorizontal } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import CopyEmailButton from '@/components/copy-email-button';
 import {
   GithubIcon,
   LinkedinIcon,
   XIcon,
 } from '@/components/icons/brand-icons';
+import { Button } from '@/components/ui/button';
 import { profile, socials } from '@/content';
 import { Link } from '@/i18n/navigation';
 
@@ -20,64 +22,72 @@ const socialLinks = socials
     icon: icons[social.id as keyof typeof icons],
   }));
 
+// The page's closing section: an honest invitation and one clear action,
+// above a quiet row with the copyright, build and social links.
 export default function Footer() {
   const msg = useTranslations('Footer');
   // Set by Vercel at build time; absent locally.
   const sha = process.env.VERCEL_GIT_COMMIT_SHA;
   return (
-    <footer className="mt-24">
-      <div className="flex flex-col gap-6 surface-card px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-2">
-          <p className="font-medium">{msg('availability')}</p>
-          <p className="max-w-xl text-sm leading-7 text-muted-foreground">
-            {msg('text')}
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-4 sm:items-end">
-          <div className="flex items-center gap-3">
-            {socialLinks.map(({ href, label, icon: Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-border/70 bg-background/85 text-muted-foreground transition hover:-translate-y-0.5 hover:border-accent/50 hover:text-foreground"
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
-          </div>
-
-          <Link
-            href="/contact"
-            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-foreground transition hover:text-accent"
+    <footer className="mt-24 border-t border-border/70 pt-14">
+      <section aria-labelledby="closing-title" className="max-w-3xl">
+        <h2
+          id="closing-title"
+          className="font-display text-3xl font-semibold tracking-tight sm:text-5xl"
+        >
+          {msg('title')}
+        </h2>
+        <p className="mt-4 text-base leading-8 text-muted-foreground sm:text-lg">
+          {msg('text')}
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <Button
+            asChild
+            size="lg"
+            className="rounded-full bg-accent px-7 text-accent-foreground hover:bg-accent/90"
           >
-            {msg('cta')}
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
+            <Link href="/contact">
+              {msg('cta')}
+              <ArrowUpRight aria-hidden className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+          <CopyEmailButton email={profile.email} />
+        </div>
+      </section>
 
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground sm:justify-end">
-            {sha ? (
-              <a
-                href={`${REPO}/commit/${sha}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 font-mono hover:text-foreground"
-              >
-                <GitCommitHorizontal aria-hidden className="h-3.5 w-3.5" />
-                {msg('build', { sha: sha.slice(0, 7) })}
-              </a>
-            ) : null}
-          </div>
-
-          <p className="text-xs text-muted-foreground">
+      <div className="mt-14 flex flex-col gap-4 border-t border-border/70 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <span>
             {msg('copyright', {
               year: new Date().getFullYear(),
               name: profile.name,
             })}
-          </p>
+          </span>
+          {sha ? (
+            <a
+              href={`${REPO}/commit/${sha}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-mono hover:text-foreground"
+            >
+              <GitCommitHorizontal aria-hidden className="h-3.5 w-3.5" />
+              {msg('build', { sha: sha.slice(0, 7) })}
+            </a>
+          ) : null}
+        </div>
+        <div className="flex items-center gap-2">
+          {socialLinks.map(({ href, label, icon: Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              className="flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <Icon className="h-4 w-4" />
+            </a>
+          ))}
         </div>
       </div>
     </footer>

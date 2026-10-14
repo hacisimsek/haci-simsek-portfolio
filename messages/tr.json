@@ -183,10 +183,12 @@
     }
   },
   "Footer": {
-    "availability": "Seçili iş birliklerine açığım",
-    "text": "Güçlü backend sistemler, dağıtık platform yetenekleri ve gerçek üretim yükü altında işletilebilir kalan mimariler geliştiriyorum.",
+    "title": "Doğru konuşmaya açığım",
+    "text": "Şu an Sisal'deyim ve aktif olarak iş aramıyorum; ama doğru bir rol ya da zorlu bir backend problemi için konuşmaktan her zaman memnuniyet duyarım.",
     "cta": "Bir konuşma başlat",
-    "copyright": "© {year} {name}. Şablonla değil, özenle tasarlandı.",
+    "copyEmail": "E-postayı kopyala",
+    "copied": "E-posta kopyalandı",
+    "copyright": "© {year} {name}.",
     "build": "derleme {sha}"
   },
   "NotFound": {
