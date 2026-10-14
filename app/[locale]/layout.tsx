@@ -5,8 +5,6 @@ import { Geist, Geist_Mono, Space_Grotesk } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
 import Header from '@/components/Header';
-import AuroraBackground from '@/components/effects/aurora-background';
-import GrainOverlay from '@/components/effects/grain-overlay';
 import ScrollProgress from '@/components/effects/scroll-progress';
 import MotionProvider from '@/components/providers/motion-provider';
 import SmoothScroll from '@/components/providers/smooth-scroll';
@@ -104,10 +102,7 @@ export default async function LocaleLayout({
             <MotionProvider>
               <SmoothScroll />
               <ScrollProgress />
-              <AuroraBackground />
-              <GrainOverlay />
               <div className="app-shell">
-                <div className="page-grid" />
                 <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-6 pb-10 sm:px-6 lg:px-8">
                   <Header />
                   <main id="main" tabIndex={-1} className="flex-1 outline-none">

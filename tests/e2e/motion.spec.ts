@@ -8,15 +8,13 @@ import {
 test.describe('with motion', () => {
   test.use({ reducedMotion: 'no-preference' });
 
-  test('aurora drifts, Lenis scrolls and the progress bar follows', async ({
+  test('no background layers, Lenis scrolls and the progress bar follows', async ({
     page,
   }) => {
     await page.goto('/');
-    const blob = page.locator('[data-aurora] [data-blob]').first();
-    await expect(blob).toHaveCount(1);
-    expect(
-      await blob.evaluate((el) => getComputedStyle(el).animationName)
-    ).not.toBe('none');
+    await expect(page.locator('[data-aurora], .grain, .page-grid')).toHaveCount(
+      0
+    );
     await expect(page.locator('html')).toHaveClass(/\blenis\b/);
 
     const bar = page.locator('[data-scroll-progress]');
@@ -35,10 +33,6 @@ test.describe('with reduced motion', () => {
 
   test('everything holds still and content is visible', async ({ page }) => {
     await page.goto('/');
-    const blob = page.locator('[data-aurora] [data-blob]').first();
-    expect(
-      await blob.evaluate((el) => getComputedStyle(el).animationName)
-    ).toBe('none');
     await expect(page.locator('html')).not.toHaveClass(/\blenis\b/);
     await expect(page.locator('[data-scroll-progress]')).toHaveCount(0);
     expect(
@@ -127,7 +121,7 @@ test.describe('one authored motion moment', () => {
     });
   }
 
-  test('only the aurora loops forever', async ({ page }) => {
+  test('nothing loops forever', async ({ page }) => {
     await page.goto('/');
     const looping = await page.evaluate(() =>
       document
@@ -140,7 +134,6 @@ test.describe('one authored motion moment', () => {
           const target = (animation.effect as KeyframeEffect).target;
           return target instanceof Element ? target.className : '';
         })
-        .filter((name) => !/aurora-blob/.test(String(name)))
     );
     expect(looping).toEqual([]);
   });
