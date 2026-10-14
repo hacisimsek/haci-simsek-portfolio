@@ -122,6 +122,21 @@
     "errorText": "Medium geçici olarak erişilemez olabilir.",
     "readArticle": "Yazıyı oku"
   },
+  "Collections": {
+    "search": "Ara",
+    "searchPlaceholder": "Ad, konu veya dil",
+    "language": "Dil",
+    "category": "Konu",
+    "all": "Tümü",
+    "sort": "Sırala",
+    "sortRecent": "Son güncellenen",
+    "sortName": "Ad (A–Z)",
+    "sortNewest": "Önce en yeni",
+    "sortOldest": "Önce en eski",
+    "showing": "{total} sonuçtan {shown} tanesi gösteriliyor",
+    "empty": "Eşleşen sonuç yok.",
+    "reset": "Filtreleri sıfırla"
+  },
   "Contact": {
     "successEyebrow": "Mesajınız alındı",
     "successTitle": "Teşekkürler, en kısa sürede dönüş yapacağım.",

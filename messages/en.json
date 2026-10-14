@@ -122,6 +122,21 @@
     "errorText": "Medium may be temporarily unavailable.",
     "readArticle": "Read article"
   },
+  "Collections": {
+    "search": "Search",
+    "searchPlaceholder": "Name, topic or language",
+    "language": "Language",
+    "category": "Topic",
+    "all": "All",
+    "sort": "Sort",
+    "sortRecent": "Recently updated",
+    "sortName": "Name (A–Z)",
+    "sortNewest": "Newest first",
+    "sortOldest": "Oldest first",
+    "showing": "Showing {shown} of {total}",
+    "empty": "No matches.",
+    "reset": "Reset filters"
+  },
   "Contact": {
     "successEyebrow": "Message received",
     "successTitle": "Thanks, I'll get back to you soon.",
