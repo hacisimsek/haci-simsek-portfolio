@@ -10,7 +10,14 @@ const KNOWN_CONTRAST_TARGETS = new Set([
   'button[type="submit"]',
 ]);
 
-for (const path of ['/', '/projects', '/articles', '/contact']) {
+for (const path of [
+  '/',
+  '/projects',
+  '/articles',
+  '/contact',
+  '/tr',
+  '/tr/contact',
+]) {
   test(`${path} has no unexpected accessibility violations`, async ({
     page,
   }) => {

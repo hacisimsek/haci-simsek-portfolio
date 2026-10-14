@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+import { alternatesFor } from '@/lib/seo';
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
@@ -7,6 +9,22 @@ import { getRepos } from '@/lib/feeds/github';
 import { loadFeed } from '@/lib/feeds/load';
 
 export const revalidate = 3600;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    return {};
+  }
+  const msg = await getTranslations({ locale, namespace: 'Metadata' });
+  return {
+    title: msg('projectsTitle'),
+    alternates: alternatesFor('/projects', locale),
+  };
+}
 
 export default async function Projects({
   params,

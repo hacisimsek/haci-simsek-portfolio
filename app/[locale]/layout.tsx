@@ -6,11 +6,12 @@ import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { profile } from '@/content';
 import { careerYears } from '@/lib/dates';
+import { alternatesFor, SITE_URL } from '@/lib/seo';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin', 'latin-ext'],
@@ -26,11 +27,31 @@ const jetBrainsMono = JetBrains_Mono({
 // year current without a redeploy.
 export const revalidate = 86400;
 
-export const metadata: Metadata = {
-  title: profile.asciiName,
-  description: `Portfolio of ${profile.asciiName}, a software engineer with ${careerYears(profile.careerStart)} years of experience building Java, Spring Boot, distributed systems, and cloud-native solutions in regulated, high-traffic environments.`,
-  icons: '/images/favicon_io/favicon.ico',
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    return {};
+  }
+  const msg = await getTranslations({ locale, namespace: 'Metadata' });
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: profile.asciiName,
+      template: `%s | ${profile.asciiName}`,
+    },
+    description: msg('description', {
+      name: profile.asciiName,
+      years: careerYears(profile.careerStart),
+    }),
+    icons: '/images/favicon_io/favicon.ico',
+    alternates: alternatesFor('/', locale),
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
