@@ -349,8 +349,6 @@
   }
 
   .aurora-blob,
-  .orb-core,
-  .orb-ring,
   .check-draw,
   .letter,
   .dialog-content,
@@ -458,68 +456,4 @@ section[id] {
 
 .saga-pulse[data-backwards] {
   background-color: var(--destructive);
-}
-
-/* CSS stand-in for the WebGL sphere (components/three/fallback-orb.tsx). */
-/* Layered so utilities such as `absolute` on a placed orb still win. */
-@layer components {
-  .orb {
-    position: relative;
-  }
-}
-
-.orb-core {
-  position: absolute;
-  inset: 14%;
-  border-radius: 9999px;
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      color-mix(in oklab, var(--accent) 70%, transparent),
-      transparent 55%
-    ),
-    radial-gradient(
-      circle at 65% 72%,
-      color-mix(in oklab, var(--primary) 75%, transparent),
-      transparent 60%
-    ),
-    radial-gradient(
-      circle,
-      color-mix(in oklab, var(--primary) 25%, transparent),
-      transparent 70%
-    );
-  box-shadow: 0 0 120px -20px
-    color-mix(in oklab, var(--primary) 55%, transparent);
-  animation: orb-spin 40s linear infinite;
-}
-
-.orb-ring {
-  position: absolute;
-  inset: 4%;
-  border-radius: 9999px;
-  background-image: radial-gradient(
-    color-mix(in oklab, var(--foreground) 35%, transparent) 1px,
-    transparent 1.5px
-  );
-  background-size: 14px 14px;
-  mask-image: radial-gradient(
-    circle,
-    transparent 54%,
-    #000 56%,
-    #000 70%,
-    transparent 72%
-  );
-  animation: orb-spin 90s linear infinite reverse;
-}
-
-@keyframes orb-spin {
-  to {
-    transform: rotate(1turn);
-  }
-}
-
-/* The orb is hidden behind the live WebGL sphere; stop its animations. */
-.orb-paused .orb-core,
-.orb-paused .orb-ring {
-  animation-play-state: paused;
 }

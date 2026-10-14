@@ -71,3 +71,20 @@ test.describe('on a phone', () => {
     ).toBeVisible();
   });
 });
+
+test.describe('without the WebGL sphere', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  test('the home page loads no three.js and no orb', async ({ page }) => {
+    const scripts: string[] = [];
+    page.on('response', async (response) => {
+      if (response.request().resourceType() === 'script') {
+        scripts.push(await response.text().catch(() => ''));
+      }
+    });
+    await page.goto('/');
+    await page.waitForTimeout(3000);
+    expect(scripts.some((body) => body.includes('WebGLRenderer'))).toBe(false);
+    await expect(page.locator('.orb, .orb-core')).toHaveCount(0);
+  });
+});
