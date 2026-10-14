@@ -115,3 +115,17 @@ test.describe('career timeline', () => {
     });
   });
 });
+
+test.describe('skills marquee with reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  test('wraps instead of clipping', async ({ page }) => {
+    await page.goto('/');
+    const clipped = await page
+      .locator('.marquee')
+      .evaluateAll((rows) =>
+        rows.some((row) => row.scrollWidth > row.clientWidth + 1)
+      );
+    expect(clipped).toBe(false);
+  });
+});

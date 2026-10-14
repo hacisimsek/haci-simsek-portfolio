@@ -45,11 +45,12 @@ describe('Turkish interface', () => {
 
 describe('Turkish skills', () => {
   it('translates generic skill names and keeps product names', async () => {
-    const { default: Skills } = await import('@/components/Skills');
+    const { default: Skills } = await import('@/components/sections/skills');
     renderWithIntl(<Skills />, { locale: 'tr' });
-    expect(screen.getByText('Yük testi')).toBeInTheDocument();
-    expect(screen.getByText('Mikroservisler')).toBeInTheDocument();
+    // Each skill appears in the marquee and in its category card.
+    expect(screen.getAllByText('Yük testi').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Mikroservisler').length).toBeGreaterThan(0);
     expect(screen.queryByText('Load testing')).toBeNull();
-    expect(screen.getByText('Kubernetes')).toBeInTheDocument();
+    expect(screen.getAllByText('Kubernetes').length).toBeGreaterThan(0);
   });
 });

@@ -89,7 +89,9 @@
   "Skills": {
     "eyebrow": "Yetkinlikler",
     "title": "Sistemleri geliştirip işletirken kullandığım araçlar",
-    "copy": "Yukarıdaki rollerin arkasındaki teknoloji yığını: servis kodu ve mesajlaşmadan teslimat süreçlerine ve hakkında yazdığım mimari desenlere kadar."
+    "copy": "Yukarıdaki rollerin arkasındaki teknoloji yığını: servis kodu ve mesajlaşmadan teslimat süreçlerine ve hakkında yazdığım mimari desenlere kadar.",
+    "rowCore": "Diller, framework’ler ve veri",
+    "rowDelivery": "Teslimat, gözlemlenebilirlik ve mimari"
   },
   "Education": {
     "eyebrow": "Eğitim",

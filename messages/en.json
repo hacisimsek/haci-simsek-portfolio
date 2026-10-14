@@ -89,7 +89,9 @@
   "Skills": {
     "eyebrow": "Skills",
     "title": "Tools I use to ship and run systems",
-    "copy": "The stack behind the roles above, from service code and messaging to delivery pipelines and the architecture patterns I write about."
+    "copy": "The stack behind the roles above, from service code and messaging to delivery pipelines and the architecture patterns I write about.",
+    "rowCore": "Languages, frameworks and data",
+    "rowDelivery": "Delivery, observability and architecture"
   },
   "Education": {
     "eyebrow": "Education",

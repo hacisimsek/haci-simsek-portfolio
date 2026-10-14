@@ -3,7 +3,7 @@ import { renderWithIntl as render } from '../render';
 import { describe, expect, it } from 'vitest';
 import Career from '@/components/sections/career';
 import Education from '@/components/Education';
-import Skills from '@/components/Skills';
+import Skills from '@/components/sections/skills';
 
 describe('Career', () => {
   it('shows all five roles with their periods', () => {
