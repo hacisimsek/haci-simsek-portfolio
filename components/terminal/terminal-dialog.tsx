@@ -148,7 +148,7 @@ export default function TerminalDialog({
   return (
     <Dialog open={open} onOpenChange={changeOpen}>
       <DialogContent
-        className="max-w-2xl border-white/10 bg-[#05070f] font-mono text-[#f0f1f9]"
+        className="max-w-2xl border-white/10 bg-terminal font-mono text-terminal-foreground"
         onCloseAutoFocus={(event) => {
           if (!returnFocusTo?.current) return;
           event.preventDefault();
@@ -156,10 +156,16 @@ export default function TerminalDialog({
         }}
       >
         <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
-          <span aria-hidden className="h-3 w-3 rounded-full bg-[#ff5f57]" />
-          <span aria-hidden className="h-3 w-3 rounded-full bg-[#febc2e]" />
-          <span aria-hidden className="h-3 w-3 rounded-full bg-[#28c840]" />
-          <DialogTitle className="ml-2 text-xs tracking-wide text-[#a1a4b2]">
+          <span
+            aria-hidden
+            className="h-3 w-3 rounded-full bg-terminal-close"
+          />
+          <span
+            aria-hidden
+            className="h-3 w-3 rounded-full bg-terminal-minimize"
+          />
+          <span aria-hidden className="h-3 w-3 rounded-full bg-terminal-zoom" />
+          <DialogTitle className="ml-2 text-xs tracking-wide text-terminal-dim">
             {msg('title')}
           </DialogTitle>
           <DialogDescription className="sr-only">
@@ -176,13 +182,14 @@ export default function TerminalDialog({
             <div
               key={index}
               className={cn(
-                line.kind === 'error' && 'text-[#ff8f8f]',
-                line.kind === 'output' && 'text-[#c9cbd6]'
+                line.kind === 'error' && 'text-terminal-error',
+                line.kind === 'output' && 'text-terminal-text'
               )}
             >
               {line.kind === 'input' ? (
                 <>
-                  <span className="text-[#36dede]">{PROMPT}</span> {line.text}
+                  <span className="text-terminal-prompt">{PROMPT}</span>{' '}
+                  {line.text}
                 </>
               ) : line.href ? (
                 <a
@@ -193,7 +200,7 @@ export default function TerminalDialog({
                       ? 'noopener noreferrer'
                       : undefined
                   }
-                  className="text-[#36dede] underline underline-offset-4"
+                  className="text-terminal-prompt underline underline-offset-4"
                 >
                   {line.text}
                 </a>
@@ -204,7 +211,7 @@ export default function TerminalDialog({
           ))}
         </div>
         <div className="flex items-center gap-2 px-4 pt-2 pb-4 text-sm">
-          <label htmlFor="terminal-input" className="text-[#36dede]">
+          <label htmlFor="terminal-input" className="text-terminal-prompt">
             <span aria-hidden>{PROMPT}</span>
             <span className="sr-only">{msg('inputLabel')}</span>
           </label>
@@ -217,7 +224,7 @@ export default function TerminalDialog({
             value={value}
             onChange={(event) => setValue(event.target.value)}
             onKeyDown={onKeyDown}
-            className="flex-1 bg-transparent text-base text-[#f0f1f9] caret-[#36dede] outline-none sm:text-sm"
+            className="flex-1 bg-transparent text-base text-terminal-foreground caret-terminal-prompt outline-none sm:text-sm"
           />
         </div>
       </DialogContent>

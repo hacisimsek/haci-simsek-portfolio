@@ -3,6 +3,16 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* The terminal is always dark, whatever the site theme. */
+  --color-terminal: #05070f;
+  --color-terminal-foreground: #f0f1f9;
+  --color-terminal-text: #c9cbd6;
+  --color-terminal-dim: #a1a4b2;
+  --color-terminal-prompt: #36dede;
+  --color-terminal-error: #ff8f8f;
+  --color-terminal-close: #ff5f57;
+  --color-terminal-minimize: #febc2e;
+  --color-terminal-zoom: #28c840;
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
   --background-image-gradient-conic: conic-gradient(
     from 180deg at 50% 50%,

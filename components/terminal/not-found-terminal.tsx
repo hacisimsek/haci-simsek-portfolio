@@ -12,17 +12,18 @@ export default function NotFoundTerminal() {
   const pathname = usePathname();
 
   return (
-    <div className="mt-8 rounded-2xl border border-white/10 bg-[#05070f] p-5 font-mono text-sm leading-7 text-[#c9cbd6]">
+    <div className="mt-8 rounded-2xl border border-white/10 bg-terminal p-5 font-mono text-sm leading-7 text-terminal-text">
       <p>
-        <span className="text-[#36dede]">haci@istanbul:~$</span> cd {pathname}
+        <span className="text-terminal-prompt">haci@istanbul:~$</span> cd{' '}
+        {pathname}
       </p>
-      <p className="text-[#ff8f8f]">
+      <p className="text-terminal-error">
         cd: {pathname}: {msg('noSuchFile')}
       </p>
       <Button
         type="button"
         variant="outline"
-        className="mt-4 rounded-full border-white/20 bg-transparent font-sans text-[#f0f1f9] hover:bg-white/10"
+        className="mt-4 rounded-full border-white/20 bg-transparent font-sans text-terminal-foreground hover:bg-white/10"
         onClick={openTerminal}
       >
         <SquareTerminal aria-hidden className="mr-2 h-4 w-4" />
