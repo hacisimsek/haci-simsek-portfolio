@@ -1,4 +1,5 @@
-import { z } from 'zod';
+// zod/mini keeps the client bundle small; the API is functional checks.
+import { z } from 'zod/mini';
 
 export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xanyoozp';
 
@@ -15,13 +16,15 @@ export type ContactValues = {
 
 export function contactSchema(t: (key: ContactErrorKey) => string) {
   return z.object({
-    name: z.string().trim().min(2, t('nameRequired')),
+    name: z.string().check(z.trim(), z.minLength(2, t('nameRequired'))),
     email: z.email(t('emailInvalid')),
     message: z
       .string()
-      .trim()
-      .min(20, t('messageShort'))
-      .max(5000, t('messageLong')),
+      .check(
+        z.trim(),
+        z.minLength(20, t('messageShort')),
+        z.maxLength(5000, t('messageLong'))
+      ),
     website: z.string(),
   });
 }
