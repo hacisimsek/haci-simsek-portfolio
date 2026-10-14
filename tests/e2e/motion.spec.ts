@@ -129,3 +129,25 @@ test.describe('skills marquee with reduced motion', () => {
     expect(clipped).toBe(false);
   });
 });
+
+test.describe('hero name', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  // A transformed child is cut out of its parent's background-clip: text, so
+  // the gradient must live on each animating letter or they stay invisible
+  // until their animation ends.
+  test('paints the gradient on each letter, not on the parent', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    const styles = await page.locator('h1 .letter').evaluateAll((letters) => ({
+      parent: getComputedStyle(letters[0].parentElement!).backgroundImage,
+      letters: letters.map((letter) => {
+        const style = getComputedStyle(letter);
+        return `${style.backgroundClip}|${style.backgroundImage.startsWith('linear-gradient')}`;
+      }),
+    }));
+    expect(styles.parent).toBe('none');
+    expect(new Set(styles.letters)).toEqual(new Set(['text|true']));
+  });
+});

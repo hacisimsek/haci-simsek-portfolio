@@ -136,9 +136,10 @@ export default function AboutBento({
             />
           </a>
           <p className="mt-2 text-xs text-muted-foreground">
-            {new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(
-              new Date(latestArticle.publishedAt)
-            )}
+            {new Intl.DateTimeFormat(locale, {
+              dateStyle: 'medium',
+              timeZone: 'Europe/Istanbul',
+            }).format(new Date(latestArticle.publishedAt))}
           </p>
         </Spotlight>
       ) : null}

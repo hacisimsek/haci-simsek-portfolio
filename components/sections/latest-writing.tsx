@@ -7,7 +7,10 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
   const msg = useTranslations('Home');
   const locale = useLocale();
   if (articles.length === 0) return null;
-  const date = new Intl.DateTimeFormat(locale, { dateStyle: 'medium' });
+  const date = new Intl.DateTimeFormat(locale, {
+    dateStyle: 'medium',
+    timeZone: 'Europe/Istanbul',
+  });
 
   return (
     <section aria-labelledby="latest-writing" className="fade-up">

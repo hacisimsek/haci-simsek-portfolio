@@ -11,6 +11,7 @@ export default function Hero() {
   const msg = useTranslations('Hero');
   const locale = useLocale();
   const roles = t(profile.rotatingRoles, locale);
+  const letters = splitGraphemes(profile.name);
 
   return (
     <section
@@ -23,9 +24,10 @@ export default function Hero() {
         <span className="sr-only">{profile.name}. </span>
         <span
           aria-hidden
-          className="block text-aurora pb-[0.12em] text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.95] font-bold tracking-tighter"
+          style={{ '--n': letters.length } as CSSProperties}
+          className="block pb-[0.12em] text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.95] font-bold tracking-tighter"
         >
-          {splitGraphemes(profile.name).map((letter, index) => (
+          {letters.map((letter, index) => (
             <span
               key={index}
               className="letter"
