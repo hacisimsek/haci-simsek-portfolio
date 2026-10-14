@@ -71,6 +71,8 @@ Available scripts:
 - `npm run start` - Serve the production build locally with `next start`
 - `npm run lint` - Lint with ESLint
 - `npm run typecheck` - Generate Next.js route types and run the TypeScript compiler
+- `npm test` - Run unit and component tests with Vitest
+- `npm run test:e2e` - Build the site and run Playwright end-to-end and accessibility tests (run `npx playwright install chromium` once first)
 - `npm run format` / `npm run format:check` - Format or check formatting with Prettier
 
 ## Production Build and Preview
