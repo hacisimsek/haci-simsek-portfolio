@@ -16,5 +16,11 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     include: ['tests/unit/**/*.test.{ts,tsx}'],
+    server: {
+      deps: {
+        // Let Vite resolve next-intl's extensionless next/navigation import.
+        inline: ['next-intl'],
+      },
+    },
   },
 });

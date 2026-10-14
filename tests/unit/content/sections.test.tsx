@@ -1,4 +1,5 @@
-import { render, screen, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
+import { renderWithIntl as render } from '../render';
 import { describe, expect, it } from 'vitest';
 import About from '@/components/About';
 import Career from '@/components/Career';

@@ -1,21 +1,24 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, MoonIcon, SunIcon, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import { profile } from '@/content';
+import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/articles', label: 'Articles' },
-  { href: '/contact', label: 'Contact' },
-];
+  { href: '/', key: 'home' },
+  { href: '/projects', key: 'projects' },
+  { href: '/articles', key: 'articles' },
+  { href: '/contact', key: 'contact' },
+] as const;
 
 export default function Header() {
+  const t = useTranslations('Nav');
   const { setTheme, resolvedTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -35,12 +38,14 @@ export default function Header() {
               href={link.href}
               className="rounded-full px-4 py-2 text-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground"
             >
-              {link.label}
+              {t(link.key)}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+
           <Button
             variant="outline"
             size="icon"
@@ -51,14 +56,14 @@ export default function Header() {
           >
             <SunIcon className="h-[1.1rem] w-[1.1rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
             <MoonIcon className="absolute h-[1.1rem] w-[1.1rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-            <span className="sr-only">Toggle theme</span>
+            <span className="sr-only">{t('toggleTheme')}</span>
           </Button>
 
           <Button
             asChild
             className="hidden rounded-full bg-accent px-5 text-accent-foreground hover:bg-accent/90 md:inline-flex"
           >
-            <Link href="/contact">Let&apos;s Talk</Link>
+            <Link href="/contact">{t('letsTalk')}</Link>
           </Button>
 
           <Button
@@ -72,7 +77,7 @@ export default function Header() {
             ) : (
               <Menu className="h-4 w-4" />
             )}
-            <span className="sr-only">Toggle navigation</span>
+            <span className="sr-only">{t('toggleNavigation')}</span>
           </Button>
         </div>
       </div>
@@ -93,7 +98,7 @@ export default function Header() {
               className="rounded-2xl px-3 py-3 text-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground"
               onClick={() => setIsMenuOpen(false)}
             >
-              {link.label}
+              {t(link.key)}
             </Link>
           ))}
           <Button
@@ -101,7 +106,7 @@ export default function Header() {
             className="mt-2 rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
           >
             <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
-              Let&apos;s Talk
+              {t('letsTalk')}
             </Link>
           </Button>
         </nav>
