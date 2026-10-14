@@ -70,3 +70,8 @@ export interface Profile {
   expertise: L10n<string[]>;
   environment: L10n;
 }
+
+export interface FeaturedProject {
+  name: string;
+  flagship?: boolean;
+}

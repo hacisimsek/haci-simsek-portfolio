@@ -99,16 +99,13 @@
     "copy": "My background combines software systems thinking with electrical and electronics fundamentals, which still influences how I reason about architecture, constraints, and reliability."
   },
   "Home": {
-    "eyebrow": "Beyond the resume",
-    "title": "Proof of work, writing, and next conversations",
-    "copy": "The site should do more than list roles. These entry points make it easier to evaluate how I think, what I build, and where a collaboration could start.",
-    "explore": "Explore",
+    "projectsEyebrow": "Selected work",
     "projectsTitle": "Featured projects",
-    "projectsText": "A selected view into experiments, shipped ideas, and production-minded engineering work.",
-    "writingTitle": "Technical writing",
-    "writingText": "Articles where architecture, implementation detail, and practical lessons are unpacked clearly.",
-    "focusTitle": "Current focus",
-    "focusText": "Authentication platforms, API-driven services, distributed systems, and cloud-ready architectures built for long-term maintainability."
+    "allProjects": "All projects",
+    "flagship": "Flagship",
+    "writingEyebrow": "Writing",
+    "writingTitle": "Latest writing",
+    "allArticles": "All articles"
   },
   "Projects": {
     "eyebrow": "Projects",

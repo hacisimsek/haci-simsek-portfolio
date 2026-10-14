@@ -99,16 +99,13 @@
     "copy": "Yazılım sistemleri düşüncesini elektrik-elektronik temelleriyle birleştiren bir geçmişim var; bu da mimariyi, kısıtları ve güvenilirliği nasıl ele aldığımı hâlâ etkiliyor."
   },
   "Home": {
-    "eyebrow": "Özgeçmişin ötesinde",
-    "title": "İşler, yazılar ve yeni konuşmalar",
-    "copy": "Bu site rolleri listelemekten fazlasını yapmalı. Bu bölümler nasıl düşündüğümü, neler geliştirdiğimi ve bir iş birliğinin nereden başlayabileceğini görmeyi kolaylaştırıyor.",
-    "explore": "Keşfet",
+    "projectsEyebrow": "Seçili işler",
     "projectsTitle": "Öne çıkan projeler",
-    "projectsText": "Deneyler, hayata geçmiş fikirler ve üretim odaklı mühendislik çalışmalarından bir seçki.",
-    "writingTitle": "Teknik yazılar",
-    "writingText": "Mimarinin, uygulama ayrıntılarının ve pratik derslerin açıkça anlatıldığı yazılar.",
-    "focusTitle": "Şu anki odak",
-    "focusText": "Kimlik doğrulama platformları, API odaklı servisler, dağıtık sistemler ve uzun vadede sürdürülebilir, buluta hazır mimariler."
+    "allProjects": "Tüm projeler",
+    "flagship": "Amiral gemisi",
+    "writingEyebrow": "Yazılar",
+    "writingTitle": "Son yazılar",
+    "allArticles": "Tüm yazılar"
   },
   "Projects": {
     "eyebrow": "Projeler",

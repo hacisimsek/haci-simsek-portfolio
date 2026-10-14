@@ -9,6 +9,7 @@ export function t<T>(value: L10n<T>, locale: Locale = DEFAULT_LOCALE): T {
 export { education } from './education';
 export { experience } from './experience';
 export { profile } from './profile';
+export { featuredProjects } from './projects';
 export { skills } from './skills';
 export { socials } from './socials';
 export type * from './types';
