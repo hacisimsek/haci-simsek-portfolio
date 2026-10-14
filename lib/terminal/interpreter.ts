@@ -31,7 +31,6 @@ type Context = {
 type Result = { lines: Line[]; effect?: Effect };
 
 const THEMES = ['dark', 'light', 'system'] as const;
-const LANGUAGE_NAMES: Record<Locale, string> = { en: 'English', tr: 'Türkçe' };
 const GITHUB = socials.find((social) => social.id === 'github')!.href;
 const LOCALES = ['en', 'tr'] as const;
 
@@ -106,7 +105,7 @@ const handlers: Record<string, (args: string[], ctx: Context) => Result> = {
       return { lines: [error(`${t('usage')}: lang <${LOCALES.join('|')}>`)] };
     }
     return {
-      lines: [out(t('langSet', { language: LANGUAGE_NAMES[locale] }))],
+      lines: [out(t('langSet', { language: t(`languages.${locale}`) }))],
       effect: { type: 'locale', locale },
     };
   },

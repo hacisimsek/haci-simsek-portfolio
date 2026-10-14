@@ -110,8 +110,8 @@ describe('complete', () => {
 
 describe('polish', () => {
   it('names the language it switches to', () => {
-    expect(text(run('lang tr', ctx('en')))).toContain('Türkçe');
-    expect(text(run('lang en', ctx('tr')))).toContain('English');
+    expect(text(run('lang tr', ctx('en')))).toContain('Turkish');
+    expect(text(run('lang en', ctx('tr')))).toContain('İngilizce');
   });
 
   it('mentions the keyboard shortcuts in help', () => {

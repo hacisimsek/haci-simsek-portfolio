@@ -89,18 +89,23 @@ describe('ProjectBrowser', () => {
 
   it('shows the count at once but announces it only after typing pauses', async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
-    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
-    render(<ProjectBrowser repos={repos} />);
-    await user.type(screen.getByLabelText('Search'), 'remind');
+    try {
+      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+      render(<ProjectBrowser repos={repos} />);
+      await user.type(screen.getByLabelText('Search'), 'remind');
 
-    expect(
-      screen.getByText('Showing 1 of 3', { selector: '[aria-hidden="true"]' })
-    ).toBeInTheDocument();
-    expect(screen.getByRole('status')).not.toHaveTextContent('Showing 1 of 3');
-    await act(async () => {
-      vi.advanceTimersByTime(500);
-    });
-    expect(screen.getByRole('status')).toHaveTextContent('Showing 1 of 3');
-    vi.useRealTimers();
+      expect(
+        screen.getByText('Showing 1 of 3', { selector: '[aria-hidden="true"]' })
+      ).toBeInTheDocument();
+      expect(screen.getByRole('status')).not.toHaveTextContent(
+        'Showing 1 of 3'
+      );
+      await act(async () => {
+        vi.advanceTimersByTime(500);
+      });
+      expect(screen.getByRole('status')).toHaveTextContent('Showing 1 of 3');
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });
