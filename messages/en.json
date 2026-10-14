@@ -184,5 +184,35 @@
     "title": "Page not found",
     "text": "The page you are looking for does not exist or has moved.",
     "home": "Go to the home page"
+  },
+  "Terminal": {
+    "title": "Terminal",
+    "description": "Type a command and press Enter. Type help for the list.",
+    "inputLabel": "Command",
+    "welcome": "Hi! Type help to see what this terminal can do.",
+    "helpHeader": "Available commands:",
+    "help": {
+      "clear": "clear the screen",
+      "contact": "how to reach me",
+      "exit": "close the terminal",
+      "experience": "where I have worked",
+      "help": "show this list",
+      "lang": "switch language (en, tr)",
+      "projects": "things I have built",
+      "skills": "what I work with",
+      "sudo": "try sudo hire-me",
+      "theme": "switch the colour theme (dark, light, system)",
+      "whoami": "who I am"
+    },
+    "projectsHeader": "Featured projects (opens GitHub):",
+    "usage": "usage",
+    "themeSet": "Theme set to {theme}.",
+    "langSet": "Switching language to {language}…",
+    "bye": "Bye!",
+    "sudoDenied": "Nice try. The only thing sudo does here is sudo hire-me.",
+    "hirePassword": "[sudo] password for visitor: ••••••••",
+    "hireGranted": "Permission granted. Opening the contact page…",
+    "notFound": "command not found: {command}. Type help for the list.",
+    "matches": "Matches: {matches}"
   }
 }
