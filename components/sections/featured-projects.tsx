@@ -1,6 +1,5 @@
 import { ArrowRight, ArrowUpRight, FolderGit2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import TiltCard from '@/components/motion/tilt-card';
 import { Link } from '@/i18n/navigation';
 import type { FeaturedRepo } from '@/lib/featured';
 import { cn } from '@/lib/utils';
@@ -31,14 +30,14 @@ export default function FeaturedProjects({ repos }: { repos: FeaturedRepo[] }) {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {repos.map((repo) => (
-          <TiltCard
+          <a
             key={repo.url}
             href={repo.url}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              'group spotlight flex min-h-56 flex-col surface-card p-6 hover:border-accent/40',
-              repo.flagship && 'border-beam sm:p-8 md:col-span-2 lg:row-span-2'
+              'group spotlight flex min-h-56 flex-col surface-card p-6 transition-colors hover:border-accent/40',
+              repo.flagship && 'sm:p-8 md:col-span-2 lg:row-span-2'
             )}
           >
             <div className="flex items-start justify-between gap-3">
@@ -78,7 +77,7 @@ export default function FeaturedProjects({ repos }: { repos: FeaturedRepo[] }) {
                 <span className="meta-chip">{repo.language}</span>
               </span>
             ) : null}
-          </TiltCard>
+          </a>
         ))}
       </div>
     </section>

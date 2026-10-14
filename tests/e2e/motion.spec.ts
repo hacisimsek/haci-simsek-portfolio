@@ -115,16 +115,33 @@ test.describe('career timeline', () => {
   });
 });
 
-test.describe('skills marquee with reduced motion', () => {
-  test.use({ reducedMotion: 'reduce' });
+test.describe('one authored motion moment', () => {
+  test.use({ reducedMotion: 'no-preference' });
 
-  test('wraps instead of clipping', async ({ page }) => {
-    await page.goto('/');
-    const clipped = await page
-      .locator('.marquee')
-      .evaluateAll((rows) =>
-        rows.some((row) => row.scrollWidth > row.clientWidth + 1)
+  for (const path of ['/', '/projects']) {
+    test(`${path} has no marquee, beam or tilt`, async ({ page }) => {
+      await page.goto(path);
+      await expect(page.locator('.marquee, .border-beam, .tilt')).toHaveCount(
+        0
       );
-    expect(clipped).toBe(false);
+    });
+  }
+
+  test('only the aurora and the orb loop forever', async ({ page }) => {
+    await page.goto('/');
+    const looping = await page.evaluate(() =>
+      document
+        .getAnimations()
+        .filter(
+          (animation) =>
+            animation.effect?.getComputedTiming().iterations === Infinity
+        )
+        .map((animation) => {
+          const target = (animation.effect as KeyframeEffect).target;
+          return target instanceof Element ? target.className : '';
+        })
+        .filter((name) => !/aurora-blob|orb-core|orb-ring/.test(String(name)))
+    );
+    expect(looping).toEqual([]);
   });
 });

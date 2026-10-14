@@ -45,22 +45,3 @@ test('project cards are plain, focusable links', async ({ page }) => {
   await expect(link).toBeFocused();
   await expect(link).toHaveAttribute('href', /^https:\/\/github\.com\//);
 });
-
-// With reduced motion the tilt is dropped on purpose (see globals.css).
-test.describe('with motion', () => {
-  test.use({ reducedMotion: 'no-preference' });
-
-  test('tilting project cards still fade their border colour', async ({
-    page,
-  }) => {
-    await page.goto('/');
-    const card = page
-      .getByRole('region', { name: 'Featured projects' })
-      .getByRole('link', { name: /notifyhub/ });
-    const transition = await card.evaluate(
-      (el) => getComputedStyle(el).transitionProperty
-    );
-    expect(transition).toContain('transform');
-    expect(transition).toContain('border-color');
-  });
-});

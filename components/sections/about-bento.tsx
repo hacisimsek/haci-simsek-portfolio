@@ -31,9 +31,7 @@ export default function AboutBento() {
       aria-labelledby="about-title"
       className="grid gap-4 lg:grid-cols-6"
     >
-      <Spotlight
-        className={cn(tile, 'border-beam sm:p-8 lg:col-span-4 lg:row-span-2')}
-      >
+      <Spotlight className={cn(tile, 'sm:p-8 lg:col-span-4 lg:row-span-2')}>
         <h2 id="about-title" className="max-w-2xl section-title">
           {msg('title')}
         </h2>

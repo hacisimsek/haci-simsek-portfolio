@@ -47,7 +47,6 @@ describe('Turkish skills', () => {
   it('translates generic skill names and keeps product names', async () => {
     const { default: Skills } = await import('@/components/sections/skills');
     renderWithIntl(<Skills />, { locale: 'tr' });
-    // Each skill appears in the marquee and in its category card.
     expect(screen.getAllByText('Yük testi').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Mikroservisler').length).toBeGreaterThan(0);
     expect(screen.queryByText('Load testing')).toBeNull();

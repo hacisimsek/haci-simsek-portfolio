@@ -136,7 +136,7 @@ test.describe('reduced motion', () => {
     expect(transition.property).not.toMatch(/transform|translate|all/);
 
     const moving = await page.evaluate(() =>
-      [...document.querySelectorAll('.aurora-blob, .letter, .marquee > ul')]
+      [...document.querySelectorAll('.aurora-blob, .letter')]
         .map((el) => getComputedStyle(el).animationName)
         .filter((name) => name !== 'none')
     );
