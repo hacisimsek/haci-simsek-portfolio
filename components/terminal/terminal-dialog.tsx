@@ -59,6 +59,12 @@ export default function TerminalDialog({
     if (node) node.scrollTop = node.scrollHeight;
   }, [lines]);
 
+  // A half-typed command does not survive closing; history and log do.
+  function changeOpen(next: boolean) {
+    if (!next) setValue('');
+    onOpenChange(next);
+  }
+
   function later(action: () => void) {
     window.clearTimeout(exitTimer.current);
     exitTimer.current = window.setTimeout(action, EXIT_DELAY);
@@ -70,20 +76,20 @@ export default function TerminalDialog({
         setLines([]);
         break;
       case 'close':
-        later(() => onOpenChange(false));
+        later(() => changeOpen(false));
         break;
       case 'theme':
         setTheme(effect.theme);
         break;
       case 'locale':
         later(() => {
-          onOpenChange(false);
+          changeOpen(false);
           router.replace(pathname, { locale: effect.locale });
         });
         break;
       case 'navigate':
         later(() => {
-          onOpenChange(false);
+          changeOpen(false);
           router.push(effect.href);
         });
         break;
@@ -137,9 +143,9 @@ export default function TerminalDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={changeOpen}>
       <DialogContent
-        className="terminal max-w-2xl border-white/10 bg-[#05070f] font-mono text-[#f0f1f9]"
+        className="max-w-2xl border-white/10 bg-[#05070f] font-mono text-[#f0f1f9]"
         onCloseAutoFocus={(event) => {
           if (!returnFocusTo?.current) return;
           event.preventDefault();
@@ -160,7 +166,6 @@ export default function TerminalDialog({
         <div
           ref={log}
           role="log"
-          aria-live="polite"
           data-lenis-prevent
           className="max-h-[min(55vh,440px)] min-h-48 overflow-y-auto px-4 pt-4 text-sm leading-6 break-words whitespace-pre-wrap"
         >
@@ -209,7 +214,7 @@ export default function TerminalDialog({
             value={value}
             onChange={(event) => setValue(event.target.value)}
             onKeyDown={onKeyDown}
-            className="terminal-input flex-1 bg-transparent text-[#f0f1f9] caret-[#36dede] outline-none"
+            className="flex-1 bg-transparent text-[#f0f1f9] caret-[#36dede] outline-none"
           />
         </div>
       </DialogContent>

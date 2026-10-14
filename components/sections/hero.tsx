@@ -20,10 +20,9 @@ export default function Hero() {
       id="top"
       className="relative grid min-h-[calc(100svh-9rem)] items-center gap-8 py-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]"
     >
-      {/* Phones get a faint static orb behind the name, never WebGL. */}
-      <FallbackOrb className="pointer-events-none absolute top-0 -right-1/3 -z-10 w-[85vw] opacity-40 lg:hidden" />
-
       <div className="relative min-w-0">
+        {/* Phones get a faint static orb behind the name, never WebGL. */}
+        <FallbackOrb className="pointer-events-none absolute top-0 -right-1/3 -z-10 w-[85vw] -translate-y-1/4 opacity-40 lg:hidden" />
         <div className="mb-6 eyebrow w-fit">{msg('eyebrow')}</div>
 
         <h1 className="max-w-5xl page-title">
@@ -49,7 +48,9 @@ export default function Hero() {
         </h1>
 
         <p className="mt-8 flex flex-wrap items-baseline gap-x-3 font-mono text-sm text-muted-foreground sm:text-base">
-          <span className="text-accent">~/</span>
+          <span aria-hidden className="text-accent">
+            ~/
+          </span>
           <span className="text-foreground">
             <WordRotate words={roles} />
           </span>

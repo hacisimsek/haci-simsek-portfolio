@@ -161,9 +161,6 @@
   @apply max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg;
 }
 
-/* backwards, not both: a filled animation keeps an opacity effect applied,
-   which turns the element into a backdrop root and stops glass inside it
-   from blurring the page. */
 @utility text-aurora {
   background-image: linear-gradient(
     100deg,
@@ -206,6 +203,9 @@
   }
 }
 
+/* backwards, not both: a filled animation keeps an opacity effect applied,
+   which turns the element into a backdrop root and stops glass inside it
+   from blurring the page. */
 @utility fade-up {
   animation: fade-up 0.7s ease-out backwards;
 }
@@ -571,7 +571,11 @@ section[id] {
 .tilt {
   transform: perspective(900px) rotateX(var(--rx, 0deg))
     rotateY(var(--ry, 0deg));
-  transition: transform 180ms ease-out;
+  /* Keeps the hover border fade that transition-colors would give. */
+  transition:
+    transform 180ms ease-out,
+    border-color 150ms ease,
+    background-color 150ms ease;
 }
 
 .check-draw {
@@ -586,8 +590,11 @@ section[id] {
 }
 
 /* CSS stand-in for the WebGL sphere (components/three/fallback-orb.tsx). */
-.orb {
-  position: relative;
+/* Layered so utilities such as `absolute` on a placed orb still win. */
+@layer components {
+  .orb {
+    position: relative;
+  }
 }
 
 .orb-core {
@@ -638,4 +645,10 @@ section[id] {
   to {
     transform: rotate(1turn);
   }
+}
+
+/* The orb is hidden behind the live WebGL sphere; stop its animations. */
+.orb-paused .orb-core,
+.orb-paused .orb-ring {
+  animation-play-state: paused;
 }

@@ -2,6 +2,7 @@
 
 import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 // Search box, toggle chips and a sort menu shared by the project and article
@@ -34,6 +35,13 @@ export default function CollectionControls<Sort extends string>({
   total: number;
 }) {
   const msg = useTranslations('Collections');
+  const count = msg('showing', { shown, total });
+  // Screen readers hear the count once typing pauses, not on every key.
+  const [announced, setAnnounced] = useState(count);
+  useEffect(() => {
+    const timer = window.setTimeout(() => setAnnounced(count), 400);
+    return () => window.clearTimeout(timer);
+  }, [count]);
   const chip = (label: string, value: string | null) => (
     <button
       key={label}
@@ -97,8 +105,11 @@ export default function CollectionControls<Sort extends string>({
           {chips.map((value) => chip(value, value))}
         </div>
       ) : null}
-      <p role="status" className="text-sm text-muted-foreground">
-        {msg('showing', { shown, total })}
+      <p aria-hidden="true" className="text-sm text-muted-foreground">
+        {count}
+      </p>
+      <p role="status" className="sr-only">
+        {announced}
       </p>
     </div>
   );

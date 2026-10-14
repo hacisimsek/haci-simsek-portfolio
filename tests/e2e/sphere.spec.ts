@@ -186,3 +186,57 @@ test.describe('sphere resilience', () => {
     await expect(sphere).toHaveCount(1);
   });
 });
+
+test.describe('sphere housekeeping', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  test.beforeEach(async ({ page, viewport }) => {
+    test.skip((viewport?.width ?? 0) < 1024, 'phones only get the CSS orb');
+    await page.goto('/');
+    await expect(page.locator('canvas[data-sphere]')).toBeVisible({
+      timeout: 8000,
+    });
+  });
+
+  test('scrolling does not re-run the palette', async ({ page }) => {
+    await page.evaluate(() => {
+      const canvas = document.querySelector('canvas[data-sphere]')!;
+      (window as unknown as { paletteWrites: number }).paletteWrites = 0;
+      new MutationObserver((records) => {
+        (window as unknown as { paletteWrites: number }).paletteWrites +=
+          records.length;
+      }).observe(canvas, { attributeFilter: ['data-palette'] });
+    });
+    for (let i = 0; i < 3; i++) {
+      await page.mouse.wheel(0, 300);
+      await page.waitForTimeout(400);
+    }
+    expect(
+      await page.evaluate(
+        () => (window as unknown as { paletteWrites: number }).paletteWrites
+      )
+    ).toBe(0);
+  });
+
+  test('the hidden CSS orb stops animating', async ({ page }) => {
+    await expect
+      .poll(() =>
+        page
+          .locator('.hidden.lg\\:block .orb-core')
+          .evaluate((el) => getComputedStyle(el).animationPlayState)
+      )
+      .toBe('paused');
+  });
+});
+
+test.describe('phone orb', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('sits behind the name', async ({ page }) => {
+    await page.goto('/');
+    const orb = await page.locator('[data-orb]:visible').first().boundingBox();
+    const name = await page.locator('h1 > span[aria-hidden]').boundingBox();
+    expect(orb!.y).toBeLessThan(name!.y + name!.height);
+    expect(orb!.y + orb!.height).toBeGreaterThan(name!.y);
+  });
+});

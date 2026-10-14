@@ -31,6 +31,8 @@ type Context = {
 type Result = { lines: Line[]; effect?: Effect };
 
 const THEMES = ['dark', 'light', 'system'] as const;
+const LANGUAGE_NAMES: Record<Locale, string> = { en: 'English', tr: 'Türkçe' };
+const GITHUB = socials.find((social) => social.id === 'github')!.href;
 const LOCALES = ['en', 'tr'] as const;
 
 const out = (text: string, href?: string): Line => ({
@@ -47,6 +49,7 @@ const handlers: Record<string, (args: string[], ctx: Context) => Result> = {
       ...COMMANDS.map((name) =>
         out(`  ${name.padEnd(12)}${t(`help.${name}`)}`)
       ),
+      out(t('helpKeys')),
     ],
   }),
   whoami: (_, { locale }) => {
@@ -77,7 +80,7 @@ const handlers: Record<string, (args: string[], ctx: Context) => Result> = {
     lines: [
       out(t('projectsHeader')),
       ...featuredProjects.map((project) =>
-        out(project.name, `https://github.com/hacisimsek/${project.name}`)
+        out(project.name, `${GITHUB}/${project.name}`)
       ),
     ],
   }),
@@ -103,7 +106,7 @@ const handlers: Record<string, (args: string[], ctx: Context) => Result> = {
       return { lines: [error(`${t('usage')}: lang <${LOCALES.join('|')}>`)] };
     }
     return {
-      lines: [out(t('langSet', { language: locale }))],
+      lines: [out(t('langSet', { language: LANGUAGE_NAMES[locale] }))],
       effect: { type: 'locale', locale },
     };
   },

@@ -2,6 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { socials } from '@/content';
 import {
+  graphJsonLd,
   personJsonLd,
   serializeJsonLd,
   websiteJsonLd,
@@ -56,6 +57,24 @@ describe('serializeJsonLd', () => {
     expect(out).not.toContain('</');
     expect(JSON.parse(out)).toEqual({
       text: '</script><script>alert(1)</script>',
+    });
+  });
+});
+
+describe('graphJsonLd', () => {
+  it('links the nodes by @id under a single @context', () => {
+    const graph = graphJsonLd('tr') as unknown as {
+      '@context': string;
+      '@graph': Record<string, unknown>[];
+    };
+    expect(graph['@context']).toBe('https://schema.org');
+    const [person, website] = graph['@graph'];
+    expect(person['@context']).toBeUndefined();
+    expect(person['@id']).toBe('https://hacisimsek.com/#person');
+    expect(person.image).toBe('https://hacisimsek.com/tr/opengraph-image');
+    expect(website['@id']).toBe('https://hacisimsek.com/#website');
+    expect(website.publisher).toEqual({
+      '@id': 'https://hacisimsek.com/#person',
     });
   });
 });

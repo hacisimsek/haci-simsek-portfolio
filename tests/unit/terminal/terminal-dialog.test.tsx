@@ -1,5 +1,6 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import TerminalDialog from '@/components/terminal/terminal-dialog';
 import { renderWithIntl as render } from '../render';
@@ -106,5 +107,33 @@ describe('TerminalDialog', () => {
     onOpenChange.mockClear();
     await user.keyboard('{Escape}');
     expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+});
+
+describe('TerminalDialog across opens', () => {
+  function Harness() {
+    const [open, setOpen] = useState(true);
+    return (
+      <>
+        <button type="button" onClick={() => setOpen(true)}>
+          reopen
+        </button>
+        <TerminalDialog open={open} onOpenChange={setOpen} />
+      </>
+    );
+  }
+
+  it('drops a half-typed command on close but keeps history and log', async () => {
+    const user = userEvent.setup();
+    render(<Harness />);
+    const input = () => screen.getByRole('textbox', { name: 'Command' });
+    await user.type(input(), 'whoami{Enter}ski');
+    await user.keyboard('{Escape}');
+    await user.click(screen.getByRole('button', { name: 'reopen' }));
+
+    expect(input()).toHaveValue('');
+    expect(screen.getByRole('log')).toHaveTextContent('Hacı Şimşek');
+    await user.keyboard('{ArrowUp}');
+    expect(input()).toHaveValue('whoami');
   });
 });

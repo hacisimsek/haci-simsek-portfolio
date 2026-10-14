@@ -1,6 +1,7 @@
-import { screen, within } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { act } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import ProjectBrowser from '@/components/collections/project-browser';
 import { renderWithIntl as render } from './render';
 
@@ -40,7 +41,9 @@ describe('ProjectBrowser', () => {
     await user.type(screen.getByLabelText('Search'), 'remind');
 
     expect(cards()).toEqual(['notifyhub']);
-    expect(screen.getByRole('status')).toHaveTextContent('Showing 1 of 3');
+    await waitFor(() =>
+      expect(screen.getByRole('status')).toHaveTextContent('Showing 1 of 3')
+    );
   });
 
   it('toggles a language filter', async () => {
@@ -71,12 +74,33 @@ describe('ProjectBrowser', () => {
     render(<ProjectBrowser repos={repos} />, { locale: 'tr' });
     await user.type(screen.getByLabelText('Ara'), 'kafka');
 
-    expect(screen.getByRole('status')).toHaveTextContent('3 sonuçtan 0 tanesi');
+    await waitFor(() =>
+      expect(screen.getByRole('status')).toHaveTextContent(
+        '3 sonuçtan 0 tanesi'
+      )
+    );
     expect(screen.getByText('Eşleşen sonuç yok.')).toBeInTheDocument();
     await user.click(
       screen.getByRole('button', { name: 'Filtreleri sıfırla' })
     );
     expect(cards()).toHaveLength(3);
     expect(screen.getByLabelText('Ara')).toHaveValue('');
+  });
+
+  it('shows the count at once but announces it only after typing pauses', async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    render(<ProjectBrowser repos={repos} />);
+    await user.type(screen.getByLabelText('Search'), 'remind');
+
+    expect(
+      screen.getByText('Showing 1 of 3', { selector: '[aria-hidden="true"]' })
+    ).toBeInTheDocument();
+    expect(screen.getByRole('status')).not.toHaveTextContent('Showing 1 of 3');
+    await act(async () => {
+      vi.advanceTimersByTime(500);
+    });
+    expect(screen.getByRole('status')).toHaveTextContent('Showing 1 of 3');
+    vi.useRealTimers();
   });
 });

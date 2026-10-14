@@ -178,7 +178,7 @@
     "cta": "Bir konuşma başlat",
     "copyright": "© {year} {name}. Şablonla değil, özenle tasarlandı.",
     "localTime": "İstanbul",
-    "build": "sürüm {sha}"
+    "build": "derleme {sha}"
   },
   "NotFound": {
     "eyebrow": "404",
@@ -216,6 +216,7 @@
     "hirePassword": "[sudo] visitor için parola: ••••••••",
     "hireGranted": "İzin verildi. İletişim sayfası açılıyor…",
     "notFound": "komut bulunamadı: {command}. Liste için help yazın.",
-    "matches": "Eşleşenler: {matches}"
+    "matches": "Eşleşenler: {matches}",
+    "helpKeys": "Tuşlar: ↑/↓ geçmiş · Tab tamamla · Ctrl+L temizle · Esc kapat"
   }
 }

@@ -1,20 +1,24 @@
-import type { Person, WebSite, WithContext } from 'schema-dts';
+import type { Graph, Person, WebSite } from 'schema-dts';
 import { education, profile, skills, socials, t, type Locale } from '@/content';
 import { SITE_URL } from '@/lib/seo';
+
+const PERSON_ID = `${SITE_URL}/#person`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
 
 const homeUrl = (locale: Locale) =>
   locale === 'en' ? SITE_URL : `${SITE_URL}/${locale}`;
 
 // No email here: structured data is scraped far more than the page itself.
-export function personJsonLd(locale: Locale): WithContext<Person> {
+export function personJsonLd(locale: Locale): Exclude<Person, string> {
   const school = education.find((item) => item.track === 'major')!;
   return {
-    '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': PERSON_ID,
     name: profile.name,
     alternateName: profile.asciiName,
     jobTitle: t(profile.role, locale),
     url: homeUrl(locale),
+    image: `${SITE_URL}/${locale}/opengraph-image`,
     worksFor: { '@type': 'Organization', name: profile.currentCompany },
     alumniOf: {
       '@type': 'CollegeOrUniversity',
@@ -32,13 +36,21 @@ export function personJsonLd(locale: Locale): WithContext<Person> {
   };
 }
 
-export function websiteJsonLd(): WithContext<WebSite> {
+export function websiteJsonLd(): Exclude<WebSite, string> {
   return {
-    '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': WEBSITE_ID,
     name: profile.asciiName,
     url: SITE_URL,
     inLanguage: ['en', 'tr'],
+    publisher: { '@id': PERSON_ID },
+  };
+}
+
+export function graphJsonLd(locale: Locale): Graph {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [personJsonLd(locale), websiteJsonLd()],
   };
 }
 

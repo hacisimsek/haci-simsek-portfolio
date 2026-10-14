@@ -16,7 +16,11 @@ export default function Stats({ stats }: { stats: Stat[] }) {
           >
             <dt className="text-sm text-muted-foreground">{msg(stat.id)}</dt>
             <dd className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
-              <NumberTicker value={stat.value} locale={locale} />
+              <NumberTicker
+                value={stat.value}
+                locale={locale}
+                suffix={stat.id === 'years' ? '+' : undefined}
+              />
               {stat.id === 'years' ? (
                 <span aria-hidden className="text-accent">
                   +
