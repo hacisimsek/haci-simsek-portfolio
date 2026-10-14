@@ -89,23 +89,8 @@
   @apply relative overflow-x-clip;
 }
 
-@utility page-grid {
-  @apply pointer-events-none absolute inset-0 opacity-60;
-  background-image:
-    linear-gradient(
-      color-mix(in oklab, var(--foreground) 4%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      color-mix(in oklab, var(--foreground) 4%, transparent) 1px,
-      transparent 1px
-    );
-  background-size: 44px 44px;
-  mask-image: linear-gradient(180deg, white, rgba(255, 255, 255, 0.2));
-}
-
-/* Frosted bar over the aurora; see the reduced-transparency fallback below. */
+/* Frosted bar over the content scrolling beneath it; see the
+   reduced-transparency fallback below. */
 @utility glass {
   @apply rounded-[calc(var(--radius)+0.35rem)] border;
   border-color: color-mix(in oklab, var(--foreground) 10%, transparent);
@@ -117,8 +102,7 @@
   backdrop-filter: blur(14px) saturate(140%);
 }
 
-/* Solid layer over the aurora. No backdrop blur: the aurora moves, so every
-   blurred card would re-render each frame. Blur stays a header effect. */
+/* Solid layer. No backdrop blur: blur stays a header effect. */
 @utility surface-card {
   @apply rounded-[calc(var(--radius)+0.35rem)] border;
   box-shadow: 0 20px 60px -36px
@@ -142,9 +126,21 @@
   }
 }
 
+/* Section titles carry the hero saga's step ring, so the page reads as a
+   sequence of steps. The ring is centred on the first line of the title. */
 @utility section-title {
   font-family: var(--font-space-grotesk), var(--font-geist), sans-serif;
-  @apply text-2xl font-semibold tracking-tight sm:text-3xl;
+  @apply flex items-start gap-3 text-2xl font-semibold tracking-tight sm:text-3xl;
+
+  &::before {
+    content: '';
+    flex-shrink: 0;
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-top: calc((1lh - 0.75rem) / 2);
+    border: 2px solid var(--accent);
+    border-radius: 9999px;
+  }
 }
 
 @utility section-copy {
@@ -188,10 +184,6 @@
     --border: oklch(0.18 0.03 275 / 0.1);
     --input: oklch(0.18 0.03 275 / 0.16);
     --ring: oklch(0.5 0.23 290);
-    --aurora-1: oklch(0.85 0.1 295);
-    --aurora-2: oklch(0.86 0.09 220);
-    --aurora-3: oklch(0.87 0.08 345);
-    --aurora-4: oklch(0.88 0.08 165);
     --chart-1: oklch(0.5 0.23 290);
     --chart-2: oklch(0.52 0.12 215);
     --chart-3: oklch(0.6 0.17 45);
@@ -221,10 +213,6 @@
     --border: oklch(1 0 0 / 0.09);
     --input: oklch(1 0 0 / 0.14);
     --ring: oklch(0.75 0.16 290);
-    --aurora-1: oklch(0.62 0.24 295);
-    --aurora-2: oklch(0.72 0.15 220);
-    --aurora-3: oklch(0.65 0.22 345);
-    --aurora-4: oklch(0.78 0.15 165);
     --chart-1: oklch(0.7 0.2 290);
     --chart-2: oklch(0.82 0.13 195);
     --chart-3: oklch(0.72 0.17 45);
@@ -251,91 +239,6 @@
   }
 }
 
-/* Aurora: transform-only drift, painted once per blob, no blur filter. */
-.aurora {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.aurora-blob {
-  position: absolute;
-  width: min(60vmax, 900px);
-  height: min(60vmax, 900px);
-  border-radius: 9999px;
-  opacity: 0.55;
-  mix-blend-mode: multiply;
-}
-
-.dark .aurora-blob {
-  opacity: 0.32;
-  mix-blend-mode: screen;
-}
-
-.aurora-blob-1 {
-  top: -25vmax;
-  left: -15vmax;
-  background: radial-gradient(closest-side, var(--aurora-1), transparent);
-  animation: aurora-drift-1 28s ease-in-out infinite alternate;
-}
-
-.aurora-blob-2 {
-  top: -20vmax;
-  right: -20vmax;
-  background: radial-gradient(closest-side, var(--aurora-2), transparent);
-  animation: aurora-drift-2 34s ease-in-out infinite alternate;
-}
-
-.aurora-blob-3 {
-  bottom: -30vmax;
-  left: 10vmax;
-  background: radial-gradient(closest-side, var(--aurora-3), transparent);
-  animation: aurora-drift-3 40s ease-in-out infinite alternate;
-}
-
-.aurora-blob-4 {
-  bottom: -25vmax;
-  right: -10vmax;
-  background: radial-gradient(closest-side, var(--aurora-4), transparent);
-  animation: aurora-drift-4 22s ease-in-out infinite alternate;
-}
-
-@keyframes aurora-drift-1 {
-  to {
-    transform: translate3d(12vmax, 8vmax, 0) scale(1.15);
-  }
-}
-
-@keyframes aurora-drift-2 {
-  to {
-    transform: translate3d(-10vmax, 12vmax, 0) scale(0.9);
-  }
-}
-
-@keyframes aurora-drift-3 {
-  to {
-    transform: translate3d(8vmax, -10vmax, 0) scale(1.1);
-  }
-}
-
-@keyframes aurora-drift-4 {
-  to {
-    transform: translate3d(-12vmax, -6vmax, 0) scale(1.2);
-  }
-}
-
-/* Static film grain; never animated so it costs nothing per frame. */
-.grain {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 /* A clear keyboard focus for plain links and disclosures. In the base layer
    so button-styled links keep their own ring utilities instead. */
 @layer base {
@@ -359,7 +262,6 @@
     scroll-behavior: auto !important;
   }
 
-  .aurora-blob,
   .check-draw,
   .letter,
   .dialog-content,
@@ -378,11 +280,6 @@
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     background-color: var(--card);
-  }
-
-  .aurora,
-  .grain {
-    display: none;
   }
 }
 
