@@ -349,8 +349,6 @@
   }
 
   .aurora-blob,
-  .orb-core,
-  .orb-ring,
   .check-draw,
   .letter,
   .dialog-content,
@@ -438,66 +436,24 @@ section[id] {
   }
 }
 
-/* CSS stand-in for the WebGL sphere (components/three/fallback-orb.tsx). */
-/* Layered so utilities such as `absolute` on a placed orb still win. */
-@layer components {
-  .orb {
-    position: relative;
-  }
-}
-
-.orb-core {
+/* The token travelling through the hero saga: it sits in the current step's
+   ring (each step is 4.5rem tall) and turns to the destructive colour while
+   the saga compensates. */
+.saga-pulse {
   position: absolute;
-  inset: 14%;
+  top: 12px;
+  left: 8px;
+  width: 8px;
+  height: 8px;
   border-radius: 9999px;
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      color-mix(in oklab, var(--accent) 70%, transparent),
-      transparent 55%
-    ),
-    radial-gradient(
-      circle at 65% 72%,
-      color-mix(in oklab, var(--primary) 75%, transparent),
-      transparent 60%
-    ),
-    radial-gradient(
-      circle,
-      color-mix(in oklab, var(--primary) 25%, transparent),
-      transparent 70%
-    );
-  box-shadow: 0 0 120px -20px
-    color-mix(in oklab, var(--primary) 55%, transparent);
-  animation: orb-spin 40s linear infinite;
+  background-color: var(--accent);
+  transform: translateY(calc(var(--step, 0) * 4.5rem));
+  transition:
+    transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 200ms ease;
+  z-index: 1;
 }
 
-.orb-ring {
-  position: absolute;
-  inset: 4%;
-  border-radius: 9999px;
-  background-image: radial-gradient(
-    color-mix(in oklab, var(--foreground) 35%, transparent) 1px,
-    transparent 1.5px
-  );
-  background-size: 14px 14px;
-  mask-image: radial-gradient(
-    circle,
-    transparent 54%,
-    #000 56%,
-    #000 70%,
-    transparent 72%
-  );
-  animation: orb-spin 90s linear infinite reverse;
-}
-
-@keyframes orb-spin {
-  to {
-    transform: rotate(1turn);
-  }
-}
-
-/* The orb is hidden behind the live WebGL sphere; stop its animations. */
-.orb-paused .orb-core,
-.orb-paused .orb-ring {
-  animation-play-state: paused;
+.saga-pulse[data-backwards] {
+  background-color: var(--destructive);
 }

@@ -127,7 +127,7 @@ test.describe('one authored motion moment', () => {
     });
   }
 
-  test('only the aurora and the orb loop forever', async ({ page }) => {
+  test('only the aurora loops forever', async ({ page }) => {
     await page.goto('/');
     const looping = await page.evaluate(() =>
       document
@@ -140,7 +140,7 @@ test.describe('one authored motion moment', () => {
           const target = (animation.effect as KeyframeEffect).target;
           return target instanceof Element ? target.className : '';
         })
-        .filter((name) => !/aurora-blob|orb-core|orb-ring/.test(String(name)))
+        .filter((name) => !/aurora-blob/.test(String(name)))
     );
     expect(looping).toEqual([]);
   });

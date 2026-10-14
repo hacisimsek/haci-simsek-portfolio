@@ -1,8 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import type { CSSProperties } from 'react';
-import FallbackOrb from '@/components/three/fallback-orb';
-import HeroVisual from '@/components/three/hero-visual';
+import SagaFlow from '@/components/saga/saga-flow';
 import { Button } from '@/components/ui/button';
 import { profile, t } from '@/content';
 import { Link } from '@/i18n/navigation';
@@ -20,8 +19,6 @@ export default function Hero() {
       className="relative grid gap-8 pt-4 pb-12 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center lg:py-12"
     >
       <div className="relative min-w-0">
-        {/* Phones get a faint static orb behind the name, never WebGL. */}
-        <FallbackOrb className="pointer-events-none absolute top-0 -right-1/3 -z-10 w-[85vw] -translate-y-1/4 opacity-40 lg:hidden" />
         <h1 className="max-w-5xl page-title">
           <span className="sr-only">{profile.name}. </span>
           <span
@@ -83,11 +80,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="hidden lg:block">
-        <HeroVisual>
-          <FallbackOrb />
-        </HeroVisual>
-      </div>
+      <SagaFlow className="lg:justify-self-end" />
     </section>
   );
 }

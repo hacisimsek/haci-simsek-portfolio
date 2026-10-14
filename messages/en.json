@@ -58,6 +58,43 @@
     "startConversation": "Start a conversation",
     "paletteHint": "Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> to jump anywhere"
   },
+  "Saga": {
+    "label": "An order saga, running live",
+    "caption": "A saga keeps an order consistent across services without one big transaction. Each service commits its own step; when one fails, the steps before it are undone by compensating actions.",
+    "run": "Run with a failure",
+    "code": "See it in code",
+    "steps": {
+      "order": {
+        "name": "Order service",
+        "action": "Create order",
+        "undo": "Cancel order"
+      },
+      "payment": {
+        "name": "Payment",
+        "action": "Charge card",
+        "undo": "Refund payment"
+      },
+      "inventory": {
+        "name": "Inventory",
+        "action": "Reserve stock",
+        "undo": "Release stock"
+      },
+      "shipping": {
+        "name": "Shipping",
+        "action": "Book courier",
+        "undo": "Cancel courier"
+      }
+    },
+    "status": {
+      "idle": "Waiting",
+      "running": "Running",
+      "done": "Done",
+      "failed": "Out of stock",
+      "compensating": "Undoing",
+      "compensated": "Undone"
+    },
+    "outcome": "Inventory failed. Payment refunded and order cancelled."
+  },
   "About": {
     "title": "Backend engineer for systems that have to stay up",
     "currentlyAt": "Currently at {company}",
