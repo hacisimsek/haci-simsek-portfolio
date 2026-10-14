@@ -15,6 +15,7 @@ import SmoothScroll from '@/components/providers/smooth-scroll';
 import Footer from '@/components/Footer';
 import JsonLd from '@/components/seo/json-ld';
 import ThemeColor from '@/components/seo/theme-color';
+import TerminalHost from '@/components/terminal/terminal-host';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -109,6 +110,7 @@ export default async function LocaleLayout({
             disableTransitionOnChange
           >
             <ThemeColor />
+            <TerminalHost />
             <MotionProvider>
               <SmoothScroll />
               <ScrollProgress />
