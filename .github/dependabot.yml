@@ -24,6 +24,8 @@ updates:
           - 'eslint'
           - 'eslint-*'
           - 'prettier'
+        exclude-patterns:
+          - 'eslint-config-next'
     ignore:
       - dependency-name: 'react'
         versions: ['>=19.4.0']
@@ -33,6 +35,8 @@ updates:
         versions: ['>=6.1.0']
       - dependency-name: 'eslint'
         versions: ['>=10.0.0']
+      - dependency-name: '@types/node'
+        versions: ['>=25.0.0']
   - package-ecosystem: github-actions
     directory: /
     schedule:
