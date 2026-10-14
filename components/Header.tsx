@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Menu, MoonIcon, SunIcon, X } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
+import { profile } from '@/content';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
@@ -23,7 +24,7 @@ export default function Header() {
       <div className="flex min-h-[88px] items-center justify-between gap-4 surface-card px-5 py-4 sm:px-6">
         <Link href="/" className="min-w-0">
           <div className="text-xl font-semibold tracking-tight sm:text-2xl">
-            Hacı Şimşek
+            {profile.name}
           </div>
         </Link>
 

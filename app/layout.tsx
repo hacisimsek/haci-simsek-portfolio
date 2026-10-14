@@ -5,6 +5,8 @@ import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { profile } from '@/content';
+import { careerYears } from '@/lib/dates';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin', 'latin-ext'],
@@ -17,9 +19,8 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Haci Simsek',
-  description:
-    'Portfolio of Haci Simsek, a software engineer with 5 years of experience building Java, Spring Boot, distributed systems, and cloud-native solutions in regulated, high-traffic environments.',
+  title: profile.asciiName,
+  description: `Portfolio of ${profile.asciiName}, a software engineer with ${careerYears(profile.careerStart)} years of experience building Java, Spring Boot, distributed systems, and cloud-native solutions in regulated, high-traffic environments.`,
   icons: '/images/favicon_io/favicon.ico',
 };
 

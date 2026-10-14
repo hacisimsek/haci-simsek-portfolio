@@ -3,41 +3,42 @@ import Link from 'next/link';
 import { ArrowRight, Mail } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons/brand-icons';
 import { Button } from '@/components/ui/button';
+import { profile, socials, t } from '@/content';
+import { careerYears } from '@/lib/dates';
 
-const expertise = [
-  'Java & Spring Boot',
-  'Distributed systems',
-  'CI/CD and observability',
-  'Cloud-native architecture',
-];
-
-const highlights = [
-  { label: 'Experience', value: '5 years in production engineering' },
-  { label: 'Environment', value: 'Regulated, high-traffic systems' },
-];
+function socialHref(id: 'github' | 'linkedin') {
+  return socials.find((social) => social.id === id)!.href;
+}
 
 export default function About() {
+  const years = careerYears(profile.careerStart);
+  const highlights = [
+    { label: 'Experience', value: `${years} years in production engineering` },
+    { label: 'Environment', value: t(profile.environment) },
+  ];
+
   return (
     <section id="about" className="fade-up">
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="section-shell">
           <div className="mb-6 eyebrow">Editorial tech portfolio</div>
           <div className="max-w-3xl">
-            <h1 className="page-title">
-              Software engineer building backend and distributed systems for
-              high-traffic environments.
-            </h1>
+            <h1 className="page-title">{t(profile.headline)}</h1>
             <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg sm:leading-7">
-              Software engineer with 5 years of experience building backend and
-              full-stack solutions across regulated, high-traffic environments.
-              Strong in Java, Spring Boot, distributed systems, CI/CD, and
-              cloud-native delivery, with additional frontend experience in
-              React and Next.js.
+              {t(profile.intro).replace('{years}', String(years))}
             </p>
+            {t(profile.bio).map((paragraph) => (
+              <p
+                key={paragraph}
+                className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground"
+              >
+                {paragraph}
+              </p>
+            ))}
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            {expertise.map((item) => (
+            {t(profile.expertise).map((item) => (
               <span key={item} className="meta-chip">
                 {item}
               </span>
@@ -78,11 +79,13 @@ export default function About() {
 
         <aside className="section-shell flex flex-col">
           <div>
-            <div className="mb-4 eyebrow">Currently at Sisal</div>
+            <div className="mb-4 eyebrow">
+              Currently at {profile.currentCompany}
+            </div>
             <div className="relative overflow-hidden rounded-4xl border border-border/70 bg-secondary/40 p-3">
               <Image
                 src="/images/IMG_0569.JPG"
-                alt="Haci Simsek"
+                alt={profile.asciiName}
                 width={1200}
                 height={1400}
                 preload
@@ -97,24 +100,24 @@ export default function About() {
                 Based in
               </p>
               <p className="mt-2 text-lg font-semibold">
-                Istanbul, engineering systems for international-scale products
+                {t(profile.location)}
               </p>
             </div>
 
             <div className="flex gap-3">
               {[
                 {
-                  href: 'mailto:hacisimsek23@gmail.com',
+                  href: `mailto:${profile.email}`,
                   label: 'Email',
                   icon: Mail,
                 },
                 {
-                  href: 'https://github.com/hacisimsek',
+                  href: socialHref('github'),
                   label: 'GitHub',
                   icon: GithubIcon,
                 },
                 {
-                  href: 'https://www.linkedin.com/in/haci-simsek/',
+                  href: socialHref('linkedin'),
                   label: 'LinkedIn',
                   icon: LinkedinIcon,
                 },
