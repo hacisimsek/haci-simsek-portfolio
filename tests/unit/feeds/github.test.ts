@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import repos from '../../fixtures/github-repos.json';
 import { getRepos, selectRepos } from '@/lib/feeds/github';
