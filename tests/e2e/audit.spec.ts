@@ -98,3 +98,48 @@ test.describe('text at 200%', () => {
     }
   });
 });
+
+test.describe('one authored motion moment', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  test('sections do not each run an entrance animation', async ({ page }) => {
+    for (const path of ['/', '/projects', '/contact']) {
+      await page.goto(path);
+      const entrances = await page.evaluate(
+        () =>
+          document
+            .getAnimations()
+            .filter(
+              (animation) =>
+                (animation as CSSAnimation).animationName === 'fade-up'
+            ).length + document.querySelectorAll('.fade-up').length
+      );
+      expect(entrances, path).toBe(0);
+    }
+  });
+});
+
+test.describe('reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  test('keeps colour feedback but drops movement', async ({ page }) => {
+    await page.goto('/');
+    const link = page.locator('header nav a').first();
+    const transition = await link.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return {
+        duration: parseFloat(style.transitionDuration),
+        property: style.transitionProperty,
+      };
+    });
+    expect(transition.duration).toBeGreaterThanOrEqual(0.1);
+    expect(transition.property).not.toMatch(/transform|translate|all/);
+
+    const moving = await page.evaluate(() =>
+      [...document.querySelectorAll('.aurora-blob, .letter, .marquee > ul')]
+        .map((el) => getComputedStyle(el).animationName)
+        .filter((name) => name !== 'none')
+    );
+    expect(moving).toEqual([]);
+  });
+});

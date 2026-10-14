@@ -43,8 +43,7 @@ test.describe('with reduced motion', () => {
     await expect(page.locator('[data-scroll-progress]')).toHaveCount(0);
     expect(
       await page
-        .locator('.fade-up')
-        .first()
+        .locator('#about')
         .evaluate((el) => getComputedStyle(el).opacity)
     ).toBe('1');
   });

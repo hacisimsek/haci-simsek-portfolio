@@ -46,7 +46,7 @@ export default async function Contact({
   ];
 
   return (
-    <section className="grid fade-up gap-6 pb-6 lg:grid-cols-[0.9fr_1.1fr]">
+    <section className="grid gap-6 pb-6 lg:grid-cols-[0.9fr_1.1fr]">
       <div className="section-shell">
         <div className="mb-4 eyebrow">{msg('eyebrow')}</div>
         <h1 className="page-title">{msg('title')}</h1>

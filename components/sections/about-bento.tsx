@@ -36,7 +36,7 @@ export default function AboutBento({
     <section
       id="about"
       aria-labelledby="about-title"
-      className="grid fade-up gap-4 lg:grid-cols-6"
+      className="grid gap-4 lg:grid-cols-6"
     >
       <Spotlight
         className={cn(tile, 'border-beam sm:p-8 lg:col-span-4 lg:row-span-2')}

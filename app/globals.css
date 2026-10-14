@@ -205,13 +205,6 @@
   }
 }
 
-/* backwards, not both: a filled animation keeps an opacity effect applied,
-   which turns the element into a backdrop root and stops glass inside it
-   from blurring the page. */
-@utility fade-up {
-  animation: fade-up 0.7s ease-out backwards;
-}
-
 @layer base {
   :root {
     --background: oklch(0.985 0.004 275);
@@ -294,18 +287,6 @@
 
   ::selection {
     background: color-mix(in oklab, var(--accent) 24%, transparent);
-  }
-}
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -450,23 +431,27 @@
   }
 }
 
+/* Reduced motion: nothing moves, but colour and opacity feedback (hover,
+   focus, pressed) still eases in, so state changes stay legible. */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
   ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-property:
+      color, background-color, border-color, text-decoration-color, fill,
+      stroke, opacity, box-shadow !important;
+    scroll-behavior: auto !important;
   }
 
   .aurora-blob,
   .orb-core,
   .orb-ring,
   .check-draw,
-  .fade-up,
   .letter,
   .word-in,
-  .border-beam::before {
+  .border-beam::before,
+  .dialog-content,
+  .animate-spin {
     animation: none !important;
   }
 }

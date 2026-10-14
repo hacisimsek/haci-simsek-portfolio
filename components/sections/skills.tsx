@@ -16,7 +16,7 @@ export default function Skills() {
   const delivery = skills.filter((category) => !CORE.has(category.id));
 
   return (
-    <section id="skills" className="fade-up">
+    <section id="skills">
       <div className="section-shell">
         <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>

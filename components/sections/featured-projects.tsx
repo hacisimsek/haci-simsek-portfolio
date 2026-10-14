@@ -10,7 +10,7 @@ export default function FeaturedProjects({ repos }: { repos: FeaturedRepo[] }) {
   if (repos.length === 0) return null;
 
   return (
-    <section aria-labelledby="featured-projects" className="fade-up">
+    <section aria-labelledby="featured-projects">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="mb-4 eyebrow w-fit">{msg('projectsEyebrow')}</div>

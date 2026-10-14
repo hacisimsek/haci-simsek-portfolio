@@ -27,7 +27,7 @@ export default function Footer() {
   // Set by Vercel at build time; absent locally.
   const sha = process.env.VERCEL_GIT_COMMIT_SHA;
   return (
-    <footer className="mt-24 fade-up">
+    <footer className="mt-24">
       <p className="mb-8 text-aurora pb-[0.12em] font-display text-[clamp(3rem,12vw,9rem)] leading-none font-bold tracking-tighter break-words">
         {profile.name}
       </p>

@@ -23,7 +23,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-4 z-50 mb-10 fade-up">
+    <header className="sticky top-4 z-50 mb-10">
       <div
         data-glass
         className="flex min-h-[76px] items-center justify-between gap-4 glass px-5 py-3 sm:px-6"

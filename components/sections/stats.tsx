@@ -7,7 +7,7 @@ export default function Stats({ stats }: { stats: Stat[] }) {
   const locale = useLocale();
 
   return (
-    <section aria-label={msg('label')} className="fade-up">
+    <section aria-label={msg('label')}>
       <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {stats.map((stat) => (
           <div
