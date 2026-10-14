@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
+import { GithubIcon, LinkedinIcon } from '@/components/icons/brand-icons';
 import { Button } from '@/components/ui/button';
 
 const expertise = [
@@ -20,18 +21,18 @@ export default function About() {
     <section id="about" className="fade-up">
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="section-shell">
-          <div className="eyebrow mb-6">Editorial tech portfolio</div>
+          <div className="mb-6 eyebrow">Editorial tech portfolio</div>
           <div className="max-w-3xl">
             <h1 className="page-title">
               Software engineer building backend and distributed systems for
               high-traffic environments.
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
-              Software engineer with 5 years of experience building backend
-              and full-stack solutions across regulated, high-traffic
-              environments. Strong in Java, Spring Boot, distributed systems,
-              CI/CD, and cloud-native delivery, with additional frontend
-              experience in React and Next.js.
+            <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg sm:leading-7">
+              Software engineer with 5 years of experience building backend and
+              full-stack solutions across regulated, high-traffic environments.
+              Strong in Java, Spring Boot, distributed systems, CI/CD, and
+              cloud-native delivery, with additional frontend experience in
+              React and Next.js.
             </p>
           </div>
 
@@ -64,10 +65,10 @@ export default function About() {
                 key={item.label}
                 className="rounded-3xl border border-border/60 bg-background/70 p-5"
               >
-                <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                <p className="text-xs tracking-[0.22em] text-muted-foreground uppercase">
                   {item.label}
                 </p>
-                <div className="mt-3 text-xl font-semibold leading-8">
+                <div className="mt-3 text-xl leading-8 font-semibold">
                   {item.value}
                 </div>
               </div>
@@ -77,22 +78,22 @@ export default function About() {
 
         <aside className="section-shell flex flex-col">
           <div>
-            <div className="eyebrow mb-4">Currently at Sisal</div>
-            <div className="relative overflow-hidden rounded-[2rem] border border-border/70 bg-secondary/40 p-3">
+            <div className="mb-4 eyebrow">Currently at Sisal</div>
+            <div className="relative overflow-hidden rounded-4xl border border-border/70 bg-secondary/40 p-3">
               <Image
                 src="/images/IMG_0569.JPG"
                 alt="Haci Simsek"
                 width={1200}
                 height={1400}
-                priority
-                className="aspect-[4/5] w-full rounded-[1.4rem] object-cover"
+                preload
+                className="aspect-4/5 w-full rounded-[1.4rem] object-cover"
               />
             </div>
           </div>
 
           <div className="mt-6 space-y-4">
             <div className="rounded-3xl border border-border/70 bg-background/70 p-5">
-              <p className="text-sm uppercase tracking-[0.24em] text-muted-foreground">
+              <p className="text-sm tracking-[0.24em] text-muted-foreground uppercase">
                 Based in
               </p>
               <p className="mt-2 text-lg font-semibold">
@@ -110,12 +111,12 @@ export default function About() {
                 {
                   href: 'https://github.com/hacisimsek',
                   label: 'GitHub',
-                  icon: Github,
+                  icon: GithubIcon,
                 },
                 {
                   href: 'https://www.linkedin.com/in/haci-simsek/',
                   label: 'LinkedIn',
-                  icon: Linkedin,
+                  icon: LinkedinIcon,
                 },
               ].map(({ href, label, icon: Icon }) => (
                 <a
@@ -123,9 +124,7 @@ export default function About() {
                   href={href}
                   target={href.startsWith('http') ? '_blank' : undefined}
                   rel={
-                    href.startsWith('http')
-                      ? 'noopener noreferrer'
-                      : undefined
+                    href.startsWith('http') ? 'noopener noreferrer' : undefined
                   }
                   className="flex flex-1 items-center justify-center gap-2 rounded-full border border-border/70 bg-background/80 px-4 py-3 text-sm text-muted-foreground transition hover:border-accent/50 hover:text-foreground"
                 >

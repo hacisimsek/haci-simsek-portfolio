@@ -39,7 +39,7 @@ export default function Home() {
         <div className="section-shell">
           <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <div className="eyebrow mb-4">Beyond the resume</div>
+              <div className="mb-4 eyebrow">Beyond the resume</div>
               <h2 className="section-title">
                 Proof of work, writing, and next conversations
               </h2>

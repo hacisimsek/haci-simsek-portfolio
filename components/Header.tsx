@@ -20,7 +20,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-4 z-50 mb-10 fade-up">
-      <div className="surface-card flex min-h-[88px] items-center justify-between gap-4 px-5 py-4 sm:px-6">
+      <div className="flex min-h-[88px] items-center justify-between gap-4 surface-card px-5 py-4 sm:px-6">
         <Link href="/" className="min-w-0">
           <div className="text-xl font-semibold tracking-tight sm:text-2xl">
             Hacı Şimşek
@@ -48,8 +48,8 @@ export default function Header() {
               setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
             }
           >
-            <SunIcon className="h-[1.1rem] w-[1.1rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <MoonIcon className="absolute h-[1.1rem] w-[1.1rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <SunIcon className="h-[1.1rem] w-[1.1rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+            <MoonIcon className="absolute h-[1.1rem] w-[1.1rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
             <span className="sr-only">Toggle theme</span>
           </Button>
 
@@ -78,7 +78,7 @@ export default function Header() {
 
       <div
         className={cn(
-          'surface-card mt-3 overflow-hidden px-4 transition-all duration-200 md:hidden',
+          'mt-3 overflow-hidden surface-card px-4 transition-all duration-200 md:hidden',
           isMenuOpen
             ? 'max-h-80 py-4 opacity-100'
             : 'max-h-0 border-transparent py-0 opacity-0'
@@ -95,7 +95,10 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <Button asChild className="mt-2 rounded-full bg-accent text-accent-foreground hover:bg-accent/90">
+          <Button
+            asChild
+            className="mt-2 rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
+          >
             <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
               Let&apos;s Talk
             </Link>

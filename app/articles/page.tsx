@@ -11,6 +11,29 @@ interface Article {
   thumbnail?: string;
 }
 
+interface FeedItem {
+  title: string;
+  description: string;
+  guid: string;
+  categories?: string[];
+  content: string;
+}
+
+const FALLBACK_THUMBNAIL =
+  'https://cdn-images-1.medium.com/v2/resize:fit:564/0*-BkwD9DCSLszd2ag.jpg';
+
+function findImage(htmlString: string) {
+  const regex = /<img.*?src="([^">]*\/([^">]*?))".*?>/g;
+  const match = regex.exec(htmlString);
+  return match ? match[1] : FALLBACK_THUMBNAIL;
+}
+
+function extractTextFromHTML(htmlString: string) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+  return doc.body.textContent || '';
+}
+
 export default function Articles() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,9 +46,9 @@ export default function Articles() {
           'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@hacisimsek'
         );
         const data = await response.json();
-        const items = data.items || [];
+        const items: FeedItem[] = data.items || [];
 
-        const formattedArticles = items.map((item: any) => ({
+        const formattedArticles = items.map((item) => ({
           title: item.title,
           description: extractTextFromHTML(item.description),
           guid: item.guid,
@@ -45,31 +68,17 @@ export default function Articles() {
     fetchArticles();
   }, []);
 
-  function findImage(htmlString: string) {
-    const regex = /<img.*?src="([^">]*\/([^">]*?))".*?>/g;
-    const match = regex.exec(htmlString);
-    return match
-      ? match[1]
-      : 'https://cdn-images-1.medium.com/v2/resize:fit:564/0*-BkwD9DCSLszd2ag.jpg';
-  }
-
-  function extractTextFromHTML(htmlString: string) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlString, 'text/html');
-    return doc.body.textContent || '';
-  }
-
   return (
-    <section className="space-y-6 pb-6 fade-up">
+    <section className="fade-up space-y-6 pb-6">
       <div className="section-shell">
-        <div className="eyebrow mb-4">Articles</div>
+        <div className="mb-4 eyebrow">Articles</div>
         <h1 className="page-title">
           Writing where implementation detail meets clear thinking
         </h1>
         <p className="mt-5 page-subtitle">
-          Notes, tutorials, and practical engineering breakdowns. I use
-          writing to clarify tradeoffs, capture lessons, and make complex work
-          easier to reason about.
+          Notes, tutorials, and practical engineering breakdowns. I use writing
+          to clarify tradeoffs, capture lessons, and make complex work easier to
+          reason about.
         </p>
       </div>
 
@@ -78,7 +87,7 @@ export default function Articles() {
           {Array.from({ length: 4 }).map((_, index) => (
             <div
               key={index}
-              className="surface-card h-56 animate-pulse bg-card/70"
+              className="h-56 animate-pulse surface-card bg-card/70"
             />
           ))}
         </div>
@@ -134,7 +143,7 @@ export default function Articles() {
                     <img
                       src={article.thumbnail}
                       alt={article.title}
-                      className="aspect-[4/3] h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+                      className="aspect-4/3 h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
                     />
                   </div>
 

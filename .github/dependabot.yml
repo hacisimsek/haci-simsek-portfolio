@@ -1,0 +1,39 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      next-react:
+        patterns:
+          - 'next'
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
+          - 'eslint-config-next'
+      tailwind:
+        patterns:
+          - 'tailwindcss'
+          - '@tailwindcss/*'
+          - 'prettier-plugin-tailwindcss'
+      lint-format:
+        patterns:
+          - 'eslint'
+          - 'eslint-*'
+          - 'prettier'
+    ignore:
+      - dependency-name: 'react'
+        versions: ['>=19.4.0']
+      - dependency-name: 'react-dom'
+        versions: ['>=19.4.0']
+      - dependency-name: 'typescript'
+        versions: ['>=6.1.0']
+      - dependency-name: 'eslint'
+        versions: ['>=10.0.0']
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

@@ -8,29 +8,47 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      # Temporarily audits production dependencies only. The remaining dev-only
-      # advisories come from tailwindcss@3 and eslint-config-next@13 (via braces,
-      # which has no patched release) and are resolved by the Tailwind 4 /
-      # eslint-config-next 16 upgrade, which restores the full-tree audit.
-      - name: Audit dependencies
+      - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
+
+      # Reported but not blocking: braces (every release, no fix yet) reaches
+      # the tree only through eslint-config-next's lint tooling.
+      - name: Audit all dependencies
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Check formatting
+        run: npm run format:check
 
       - name: Build application
         run: npm run build

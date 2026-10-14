@@ -53,10 +53,12 @@ export default function Projects() {
   }, []);
 
   return (
-    <section className="space-y-6 pb-6 fade-up">
+    <section className="fade-up space-y-6 pb-6">
       <div className="section-shell">
-        <div className="eyebrow mb-4">Projects</div>
-        <h1 className="page-title">Selected builds, experiments, and engineering curiosities</h1>
+        <div className="mb-4 eyebrow">Projects</div>
+        <h1 className="page-title">
+          Selected builds, experiments, and engineering curiosities
+        </h1>
         <p className="mt-5 page-subtitle">
           A live pull from GitHub that reflects how I build in the open. The
           focus is not just code volume, but the patterns, ideas, and product
@@ -69,7 +71,7 @@ export default function Projects() {
           {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
-              className="surface-card h-64 animate-pulse bg-card/70"
+              className="h-64 animate-pulse surface-card bg-card/70"
             />
           ))}
         </div>
@@ -90,7 +92,7 @@ export default function Projects() {
               href={project.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group surface-card flex min-h-[18rem] flex-col p-6 transition hover:-translate-y-1 hover:border-accent/40"
+              className="group flex min-h-72 flex-col surface-card p-6 transition hover:-translate-y-1 hover:border-accent/40"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary text-foreground">
