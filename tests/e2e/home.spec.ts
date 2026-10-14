@@ -10,6 +10,15 @@ test('home has no stats strip and no rotating words', async ({ page }) => {
   await expect(page.locator('.word-in')).toHaveCount(0);
 });
 
+test('home shows each fact once', async ({ page }) => {
+  await page.goto('/');
+  await expect(
+    page.getByRole('link', { name: /What is the Saga Pattern\?/ })
+  ).toHaveCount(1);
+  await expect(page.getByText(/Local time in Istanbul/)).toHaveCount(1);
+  await expect(page.locator('footer').getByText('Hacı Şimşek')).toHaveCount(0);
+});
+
 test('home features fixture projects and articles', async ({ page }) => {
   await page.goto('/');
   const projects = page.getByRole('region', { name: 'Featured projects' });

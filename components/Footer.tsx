@@ -1,11 +1,10 @@
-import { useLocale, useTranslations } from 'next-intl';
-import { ArrowUpRight, Clock3, GitCommitHorizontal } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { ArrowUpRight, GitCommitHorizontal } from 'lucide-react';
 import {
   GithubIcon,
   LinkedinIcon,
   XIcon,
 } from '@/components/icons/brand-icons';
-import LocalTime from '@/components/motion/local-time';
 import { profile, socials } from '@/content';
 import { Link } from '@/i18n/navigation';
 
@@ -23,14 +22,10 @@ const socialLinks = socials
 
 export default function Footer() {
   const msg = useTranslations('Footer');
-  const locale = useLocale();
   // Set by Vercel at build time; absent locally.
   const sha = process.env.VERCEL_GIT_COMMIT_SHA;
   return (
     <footer className="mt-24">
-      <p className="mb-8 font-display text-[clamp(3rem,12vw,9rem)] leading-none font-bold tracking-tighter break-words">
-        {profile.name}
-      </p>
       <div className="flex flex-col gap-6 surface-card px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
           <p className="font-medium">{msg('availability')}</p>
@@ -64,10 +59,6 @@ export default function Footer() {
           </Link>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground sm:justify-end">
-            <span className="inline-flex items-center gap-1.5">
-              <Clock3 aria-hidden className="h-3.5 w-3.5" />
-              {msg('localTime')} <LocalTime locale={locale} />
-            </span>
             {sha ? (
               <a
                 href={`${REPO}/commit/${sha}`}

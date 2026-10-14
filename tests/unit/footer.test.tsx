@@ -50,12 +50,10 @@ describe('Footer', () => {
     expect(screen.queryByRole('link', { name: /build/i })).toBeNull();
   });
 
-  it('shows the name as a large wordmark and the local time', () => {
+  it('leaves the name and the local time to the hero and About', () => {
     render(<Footer />);
-    expect(
-      screen.getByText('Hacı Şimşek', { selector: 'footer > p' })
-    ).toBeInTheDocument();
-    expect(screen.getByText(/Istanbul/)).toBeInTheDocument();
+    expect(screen.queryByText('Hacı Şimşek')).toBeNull();
+    expect(screen.queryByText(/Istanbul/)).toBeNull();
   });
 
   it('calls the build a "derleme" in Turkish', () => {

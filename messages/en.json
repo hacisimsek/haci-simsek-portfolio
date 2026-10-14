@@ -63,10 +63,6 @@
     "title": "Backend engineer for systems that have to stay up",
     "currentlyAt": "Currently at {company}",
     "localTime": "Local time in Istanbul",
-    "educationTitle": "Education",
-    "minor": "Minor: {degree}",
-    "scholarship": "Full scholarship at {school}",
-    "latestArticle": "Latest article",
     "email": "Email"
   },
   "Career": {
@@ -159,7 +155,6 @@
     "text": "Building robust backend systems, distributed platform capabilities, and architecture that remains operable under real production load.",
     "cta": "Start a conversation",
     "copyright": "© {year} {name}. Designed with intent, not templates.",
-    "localTime": "Istanbul",
     "build": "build {sha}"
   },
   "NotFound": {

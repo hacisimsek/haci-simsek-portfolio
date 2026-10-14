@@ -63,10 +63,6 @@
     "title": "Ayakta kalması gereken sistemler için backend mühendisi",
     "currentlyAt": "Şu an {company} bünyesinde",
     "localTime": "İstanbul’da saat",
-    "educationTitle": "Eğitim",
-    "minor": "Yan dal: {degree}",
-    "scholarship": "{school}, tam burslu",
-    "latestArticle": "Son yazı",
     "email": "E-posta"
   },
   "Career": {
@@ -159,7 +155,6 @@
     "text": "Güçlü backend sistemler, dağıtık platform yetenekleri ve gerçek üretim yükü altında işletilebilir kalan mimariler geliştiriyorum.",
     "cta": "Bir konuşma başlat",
     "copyright": "© {year} {name}. Şablonla değil, özenle tasarlandı.",
-    "localTime": "İstanbul",
     "build": "derleme {sha}"
   },
   "NotFound": {

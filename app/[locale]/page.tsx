@@ -37,7 +37,7 @@ export default async function Home({
   return (
     <div className="space-y-16 pb-6 sm:space-y-24">
       <Hero />
-      <AboutBento latestArticle={articles.ok ? articles.data[0] : undefined} />
+      <AboutBento />
       <FeaturedProjects
         repos={repos.ok ? selectFeatured(repos.data, featuredProjects) : []}
       />
