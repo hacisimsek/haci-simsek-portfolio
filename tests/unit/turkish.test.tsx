@@ -1,6 +1,6 @@
 import { screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import Career from '@/components/Career';
+import Career from '@/components/sections/career';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { renderWithIntl } from './render';

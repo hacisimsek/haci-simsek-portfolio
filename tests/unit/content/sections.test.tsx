@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import { renderWithIntl as render } from '../render';
 import { describe, expect, it } from 'vitest';
-import Career from '@/components/Career';
+import Career from '@/components/sections/career';
 import Education from '@/components/Education';
 import Skills from '@/components/Skills';
 
@@ -26,6 +26,16 @@ describe('Career', () => {
     expect(
       screen.getByText('Orion', { selector: 'strong' })
     ).toBeInTheDocument();
+  });
+});
+
+describe('Career timeline', () => {
+  it('groups the Sisal promotion and labels non-employment roles', () => {
+    render(<Career />);
+    expect(screen.getByText('Promoted')).toBeInTheDocument();
+    expect(screen.getByText('Internship')).toBeInTheDocument();
+    expect(screen.getByText('Leadership')).toBeInTheDocument();
+    expect(screen.getAllByRole('listitem', { name: /./ })).toHaveLength(4);
   });
 });
 

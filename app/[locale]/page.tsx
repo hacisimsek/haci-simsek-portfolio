@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ArrowRight, FileText, FolderGit2, Layers3 } from 'lucide-react';
-import Career from '@/components/Career';
+import Career from '@/components/sections/career';
 import Education from '@/components/Education';
 import Skills from '@/components/Skills';
 import AboutBento from '@/components/sections/about-bento';

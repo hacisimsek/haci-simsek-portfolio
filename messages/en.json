@@ -79,7 +79,12 @@
   "Career": {
     "eyebrow": "Career timeline",
     "title": "Experience with visible product impact",
-    "copy": "Most of my recent work sits in backend-heavy systems where scale, release confidence, observability, and service reliability matter as much as implementation itself."
+    "copy": "Most of my recent work sits in backend-heavy systems where scale, release confidence, observability, and service reliability matter as much as implementation itself.",
+    "promoted": "Promoted",
+    "kind": {
+      "internship": "Internship",
+      "leadership": "Leadership"
+    }
   },
   "Skills": {
     "eyebrow": "Skills",

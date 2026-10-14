@@ -79,7 +79,12 @@
   "Career": {
     "eyebrow": "Kariyer",
     "title": "Ürüne görünür etkisi olan deneyim",
-    "copy": "Son dönemdeki işlerimin çoğu, ölçek, güvenli yayın, gözlemlenebilirlik ve servis güvenilirliğinin en az geliştirmenin kendisi kadar önemli olduğu backend ağırlıklı sistemlerde."
+    "copy": "Son dönemdeki işlerimin çoğu, ölçek, güvenli yayın, gözlemlenebilirlik ve servis güvenilirliğinin en az geliştirmenin kendisi kadar önemli olduğu backend ağırlıklı sistemlerde.",
+    "promoted": "Terfi",
+    "kind": {
+      "internship": "Staj",
+      "leadership": "Liderlik"
+    }
   },
   "Skills": {
     "eyebrow": "Yetkinlikler",
