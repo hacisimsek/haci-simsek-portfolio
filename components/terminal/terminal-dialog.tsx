@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { usePathname, useRouter } from '@/i18n/navigation';
+import { focusMainAfterNavigation } from '@/lib/focus-main';
 import { down, emptyHistory, push, up } from '@/lib/terminal/history';
 import {
   complete,
@@ -84,12 +85,14 @@ export default function TerminalDialog({
       case 'locale':
         later(() => {
           changeOpen(false);
+          focusMainAfterNavigation(window.location.pathname);
           router.replace(pathname, { locale: effect.locale });
         });
         break;
       case 'navigate':
         later(() => {
           changeOpen(false);
+          focusMainAfterNavigation(window.location.pathname);
           router.push(effect.href);
         });
         break;
@@ -214,7 +217,7 @@ export default function TerminalDialog({
             value={value}
             onChange={(event) => setValue(event.target.value)}
             onKeyDown={onKeyDown}
-            className="flex-1 bg-transparent text-[#f0f1f9] caret-[#36dede] outline-none"
+            className="flex-1 bg-transparent text-base text-[#f0f1f9] caret-[#36dede] outline-none sm:text-sm"
           />
         </div>
       </DialogContent>

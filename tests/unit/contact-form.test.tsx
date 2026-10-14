@@ -69,9 +69,9 @@ describe('ContactForm', () => {
     await fill(user);
     await user.click(screen.getByRole('button', { name: 'Send Message' }));
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(
-      /could not be sent/
-    );
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent(/could not be sent/);
+    await waitFor(() => expect(alert).toHaveFocus());
     expect(screen.getByLabelText('Message')).toHaveValue(message);
   });
 

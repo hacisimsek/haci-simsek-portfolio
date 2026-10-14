@@ -56,7 +56,7 @@ export default function ProjectBrowser({ repos }: { repos: Repo[] }) {
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group spotlight flex min-h-64 flex-col glass p-6 transition-colors hover:border-accent/40"
+              className="group spotlight flex min-h-64 flex-col glass p-6 hover:border-accent/40"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary">

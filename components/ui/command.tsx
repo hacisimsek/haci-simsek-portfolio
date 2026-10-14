@@ -26,7 +26,8 @@ export function CommandInput({
       <Search aria-hidden className="h-4 w-4 shrink-0 text-muted-foreground" />
       <CommandPrimitive.Input
         className={cn(
-          'h-14 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground',
+          // 16px on phones so iOS Safari does not zoom in on focus.
+          'h-14 w-full bg-transparent text-base outline-none placeholder:text-muted-foreground sm:text-sm',
           className
         )}
         {...props}

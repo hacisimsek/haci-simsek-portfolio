@@ -110,7 +110,9 @@ export default async function LocaleLayout({
                 <div className="page-grid" />
                 <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-6 pb-10 sm:px-6 lg:px-8">
                   <Header />
-                  <main className="flex-1">{children}</main>
+                  <main id="main" tabIndex={-1} className="flex-1 outline-none">
+                    {children}
+                  </main>
                   <Footer />
                 </div>
               </div>

@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { profile, socials, t, type Locale } from '@/content';
 import { careerYears } from '@/lib/dates';
+import { xHandle } from '@/lib/social';
 import { alternatesFor } from '@/lib/seo';
 
-const xHandle = `@${new URL(socials.find((social) => social.id === 'x')!.href).pathname.slice(1)}`;
+const creator = xHandle(socials);
 
 type TitleKey = 'projectsTitle' | 'articlesTitle' | 'contactTitle';
 
@@ -30,10 +31,10 @@ export async function pageMetadata(
   // app/[locale]/opengraph-image, so name it explicitly.
   const images = [
     {
-      url: `/${locale}/opengraph-image`,
+      url: `/${locale}/opengraph-image/card`,
       width: 1200,
       height: 630,
-      alt: profile.asciiName,
+      alt: `${profile.asciiName} · ${t(profile.role, locale)}`,
     },
   ];
 
@@ -53,7 +54,7 @@ export async function pageMetadata(
     },
     twitter: {
       card: 'summary_large_image',
-      creator: xHandle,
+      ...(creator ? { creator } : {}),
       title: socialTitle,
       description,
       images,

@@ -38,7 +38,7 @@ export default function FeaturedProjects({ repos }: { repos: FeaturedRepo[] }) {
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              'group spotlight flex min-h-56 flex-col glass p-6 transition-colors hover:border-accent/40',
+              'group spotlight flex min-h-56 flex-col glass p-6 hover:border-accent/40',
               repo.flagship && 'border-beam sm:p-8 md:col-span-2 lg:row-span-2'
             )}
           >

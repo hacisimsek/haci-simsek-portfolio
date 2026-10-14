@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 import { securityHeaders } from './lib/security-headers';
@@ -16,6 +17,15 @@ const insightsAliases: Record<string, string> =
 
 const nextConfig: NextConfig = {
   turbopack: { resolveAlias: insightsAliases },
+  // Same stub for `next build --webpack`; webpack wants absolute paths.
+  webpack(config) {
+    for (const [name, path] of Object.entries(insightsAliases)) {
+      config.resolve.alias[name] = fileURLToPath(
+        new URL(path, import.meta.url)
+      );
+    }
+    return config;
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
   },

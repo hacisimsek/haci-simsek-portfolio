@@ -217,6 +217,10 @@
     "hireGranted": "İzin verildi. İletişim sayfası açılıyor…",
     "notFound": "komut bulunamadı: {command}. Liste için help yazın.",
     "matches": "Eşleşenler: {matches}",
-    "helpKeys": "Tuşlar: ↑/↓ geçmiş · Tab tamamla · Ctrl+L temizle · Esc kapat"
+    "helpKeys": "Tuşlar: ↑/↓ geçmiş · Tab tamamla · Ctrl+L temizle · Esc kapat",
+    "languages": {
+      "en": "İngilizce",
+      "tr": "Türkçe"
+    }
   }
 }

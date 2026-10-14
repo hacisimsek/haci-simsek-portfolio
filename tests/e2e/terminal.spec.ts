@@ -74,3 +74,37 @@ for (const theme of ['dark', 'light'] as const) {
     expect(violations.map((v) => `${v.id}: ${v.nodes.length}`)).toEqual([]);
   });
 }
+
+test('after navigating, focus starts at the new page content', async ({
+  page,
+}) => {
+  await page.goto('/projects');
+  const input = await openFromPalette(page);
+  await input.fill('sudo hire-me');
+  await input.press('Enter');
+  await expect(page).toHaveURL(/\/contact$/);
+  await expect(page.locator('main')).toBeFocused();
+});
+
+for (const { width, minSize, maxSize } of [
+  { width: 390, minSize: 16, maxSize: 99 },
+  { width: 1280, minSize: 0, maxSize: 15 },
+]) {
+  test(`inputs are ${width < 640 ? 'at least 16px on phones' : 'compact on desktop'}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('/');
+    const input = await openFromPalette(page);
+    const size = (locator: typeof input) =>
+      locator.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
+    expect(await size(input)).toBeGreaterThanOrEqual(minSize);
+    expect(await size(input)).toBeLessThanOrEqual(maxSize);
+    await page.keyboard.press('Escape');
+    await waitForHydration(page);
+    await page.keyboard.press('Control+k');
+    const combobox = page.getByRole('combobox');
+    expect(await size(combobox)).toBeGreaterThanOrEqual(minSize);
+    expect(await size(combobox)).toBeLessThanOrEqual(maxSize);
+  });
+}

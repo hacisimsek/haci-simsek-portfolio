@@ -49,6 +49,7 @@ export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle');
   const sending = useRef(false);
   const success = useRef<HTMLDivElement>(null);
+  const failure = useRef<HTMLParagraphElement>(null);
   const schema = useMemo(
     () => contactSchema((key) => msg(`errors.${key}`)),
     [msg]
@@ -72,6 +73,7 @@ export default function ContactForm() {
 
   useEffect(() => {
     if (status === 'done') success.current?.focus();
+    if (status === 'failed') failure.current?.focus();
   }, [status]);
 
   async function onValid(values: ContactValues) {
@@ -195,7 +197,9 @@ export default function ContactForm() {
 
       {status === 'failed' ? (
         <p
+          ref={failure}
           role="alert"
+          tabIndex={-1}
           className="rounded-2xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm"
         >
           {msg('failed')}

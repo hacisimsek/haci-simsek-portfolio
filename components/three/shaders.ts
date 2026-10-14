@@ -89,6 +89,7 @@ void main() {
 export const fragmentShader = /* glsl */ `
 uniform vec3 uColorA;
 uniform vec3 uColorB;
+uniform vec3 uColorC;
 uniform float uOpacity;
 varying float vOffset;
 varying float vDepth;
@@ -97,6 +98,9 @@ void main() {
   float d = length(gl_PointCoord - 0.5);
   if (d > 0.5) discard;
   float alpha = smoothstep(0.5, 0.1, d) * (0.35 + 0.65 * vDepth) * uOpacity;
-  gl_FragColor = vec4(mix(uColorA, uColorB, vOffset), alpha);
+  vec3 base = mix(uColorA, uColorB, vOffset);
+  // The brightest few points pick up the third aurora colour.
+  vec3 color = mix(base, uColorC, smoothstep(0.82, 1.0, vOffset));
+  gl_FragColor = vec4(color, alpha);
 }
 `;

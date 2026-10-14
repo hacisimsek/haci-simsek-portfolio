@@ -18,7 +18,7 @@ export function personJsonLd(locale: Locale): Exclude<Person, string> {
     alternateName: profile.asciiName,
     jobTitle: t(profile.role, locale),
     url: homeUrl(locale),
-    image: `${SITE_URL}/${locale}/opengraph-image`,
+    image: `${SITE_URL}/${locale}/opengraph-image/card`,
     worksFor: { '@type': 'Organization', name: profile.currentCompany },
     alumniOf: {
       '@type': 'CollegeOrUniversity',
