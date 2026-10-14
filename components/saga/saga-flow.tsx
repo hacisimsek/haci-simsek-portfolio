@@ -191,7 +191,7 @@ export default function SagaFlow({ className }: { className?: string }) {
             type="button"
             variant="ghost"
             aria-pressed={paused}
-            className="h-11 rounded-full px-4 text-muted-foreground aria-pressed:text-foreground"
+            className="h-11 rounded-full px-4 text-muted-foreground aria-pressed:bg-secondary aria-pressed:text-foreground"
             onClick={() => setPaused((value) => !value)}
           >
             <Pause aria-hidden className="mr-2 h-4 w-4" />

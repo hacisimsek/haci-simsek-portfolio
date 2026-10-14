@@ -164,6 +164,8 @@ describe('SagaFlow', () => {
     expect(pause).toHaveAttribute('aria-pressed', 'false');
     fireEvent.click(pause);
     expect(pause).toHaveAttribute('aria-pressed', 'true');
+    // The latched state is visible, not only announced.
+    expect(pause).toHaveClass('aria-pressed:bg-secondary');
     advance(HOLD_TICKS + 2);
     for (const step of screen.getAllByRole('listitem'))
       expect(step).toHaveAttribute('data-status', 'done');
