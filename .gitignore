@@ -82,3 +82,9 @@ dist
 # Next.js generated types
 next-env.d.ts
 *.tsbuildinfo
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

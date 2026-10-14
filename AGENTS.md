@@ -62,7 +62,9 @@ Before opening or merging a PR, prefer running the checks that match the change:
 - `npm run lint`
 - `npm run typecheck`
 - `npm run format:check`
+- `npm test`
 - `npm run build`
+- `npm run test:e2e`
 - `npm audit --omit=dev --audit-level=high`
 
 ## Notes For Future Changes
