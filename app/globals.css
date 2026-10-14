@@ -3,7 +3,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* The terminal is always dark, whatever the site theme. */
+  /* The terminal is always dark, whatever the site theme. Keep in sync with
+     lib/og/brand.ts (tests/unit/palette-sync.test.ts checks it). */
   --color-terminal: #05070f;
   --color-terminal-foreground: #f0f1f9;
   --color-terminal-text: #c9cbd6;
