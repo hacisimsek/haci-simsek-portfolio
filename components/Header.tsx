@@ -26,7 +26,7 @@ export default function Header() {
     <header className="sticky top-4 z-50 mb-10 fade-up">
       <div className="flex min-h-[88px] items-center justify-between gap-4 surface-card px-5 py-4 sm:px-6">
         <Link href="/" className="min-w-0">
-          <div className="text-xl font-semibold tracking-tight sm:text-2xl">
+          <div className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
             {profile.name}
           </div>
         </Link>

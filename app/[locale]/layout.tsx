@@ -1,6 +1,6 @@
 import '../globals.css';
 import type { Metadata } from 'next';
-import { JetBrains_Mono, Space_Grotesk } from 'next/font/google';
+import { Geist, Geist_Mono, Space_Grotesk } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
 import Header from '@/components/Header';
@@ -15,12 +15,18 @@ import { alternatesFor, SITE_URL } from '@/lib/seo';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin', 'latin-ext'],
-  variable: '--font-display',
+  variable: '--font-space-grotesk',
 });
 
-const jetBrainsMono = JetBrains_Mono({
+const geist = Geist({
   subsets: ['latin', 'latin-ext'],
-  variable: '--font-mono',
+  variable: '--font-geist',
+});
+
+const geistMono = Geist_Mono({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-geist-mono',
+  preload: false,
 });
 
 // Daily regeneration keeps the computed years of experience and the footer
@@ -73,7 +79,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${jetBrainsMono.variable} min-h-screen bg-background text-foreground antialiased`}
+        className={`${spaceGrotesk.variable} ${geist.variable} ${geistMono.variable} min-h-screen bg-background text-foreground antialiased`}
       >
         <NextIntlClientProvider>
           <ThemeProvider
