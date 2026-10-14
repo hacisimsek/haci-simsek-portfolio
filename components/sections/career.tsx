@@ -3,6 +3,7 @@ import { experience, t } from '@/content';
 import { formatPeriod } from '@/lib/dates';
 import { groupRoles } from '@/lib/group-roles';
 import { RichText } from '@/lib/rich-text';
+import { SEPARATOR } from '@/lib/utils';
 import TimelineTrack from './timeline-track';
 
 export default function Career() {
@@ -65,9 +66,15 @@ export default function Career() {
                           {formatPeriod(role.start, role.end, locale)}
                         </span>
                         {role.team ? (
-                          <span> · {t(role.team, locale)}</span>
+                          <span>
+                            {SEPARATOR}
+                            {t(role.team, locale)}
+                          </span>
                         ) : null}
-                        <span> · {t(role.focus, locale)}</span>
+                        <span>
+                          {SEPARATOR}
+                          {t(role.focus, locale)}
+                        </span>
                       </p>
                       {role.kind !== 'employment' ? (
                         <p className="mt-1 text-sm font-medium text-accent">

@@ -170,3 +170,27 @@ test('contact notes are not cards inside a card', async ({ page }) => {
     );
   expect(nested).toBe(0);
 });
+
+test('separators never start a line', async ({ page }) => {
+  for (const path of ['/', '/projects', '/articles', '/contact']) {
+    await page.goto(path);
+    const breakable = await page.evaluate(() => {
+      const walker = document.createTreeWalker(
+        document.querySelector('main')!,
+        NodeFilter.SHOW_TEXT
+      );
+      const found: string[] = [];
+      while (walker.nextNode()) {
+        const text = walker.currentNode.textContent ?? '';
+        if (/ ·/.test(text)) found.push(text.trim());
+      }
+      return found;
+    });
+    expect(breakable, path).toEqual([]);
+  }
+});
+
+test('each contact note is a heading', async ({ page }) => {
+  await page.goto('/contact');
+  await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4);
+});

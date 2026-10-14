@@ -1,6 +1,6 @@
 'use client';
 
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import ProjectRow from '@/components/projects/project-row';
 import { filterRepos, languagesOf, type RepoSort } from '@/lib/collections';
@@ -10,15 +10,10 @@ import EmptyResults from './empty-results';
 
 export default function ProjectBrowser({ repos }: { repos: Repo[] }) {
   const msg = useTranslations('Collections');
-  const locale = useLocale();
   const [query, setQuery] = useState('');
   const [language, setLanguage] = useState<string | null>(null);
   const [sort, setSort] = useState<RepoSort>('recent');
   const shown = filterRepos(repos, { query, language, sort });
-  const date = new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
-    timeZone: 'Europe/Istanbul',
-  });
 
   function reset() {
     setQuery('');
@@ -50,19 +45,7 @@ export default function ProjectBrowser({ repos }: { repos: Repo[] }) {
       ) : (
         <ol className="divide-y divide-border/70 border-y border-border/70">
           {shown.map((project) => (
-            <ProjectRow
-              key={project.url}
-              repo={project}
-              heading="h2"
-              meta={[
-                project.language,
-                msg('updated', {
-                  date: date.format(new Date(project.updatedAt)),
-                }),
-              ]
-                .filter(Boolean)
-                .join(' · ')}
-            />
+            <ProjectRow key={project.url} repo={project} heading="h2" />
           ))}
         </ol>
       )}

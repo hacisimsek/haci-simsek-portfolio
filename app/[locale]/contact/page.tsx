@@ -48,7 +48,9 @@ export default async function Contact({
         <dl className="mt-8 divide-y divide-border/70 border-y border-border/70">
           {notes.map(({ title, text }) => (
             <div key={title} className="py-5">
-              <dt className="text-lg font-semibold">{title}</dt>
+              <dt>
+                <h2 className="text-lg font-semibold">{title}</h2>
+              </dt>
               <dd className="mt-2 text-sm leading-7 text-muted-foreground">
                 {text}
               </dd>

@@ -1,7 +1,8 @@
 import type { SVGProps } from 'react';
 
-// Brand marks were removed from lucide-react 1.x. These paths are copied
-// from lucide-react 0.446 (ISC License, Copyright (c) Lucide Contributors).
+// Brand marks were removed from lucide-react 1.x. The GitHub and LinkedIn
+// paths are copied from lucide-react 0.446 (ISC License, Copyright (c) Lucide
+// Contributors); the X mark comes from Simple Icons (CC0 1.0).
 
 type BrandIconProps = SVGProps<SVGSVGElement>;
 
