@@ -438,6 +438,28 @@ section[id] {
   }
 }
 
+/* The token travelling through the hero saga: it sits in the current step's
+   ring (each step is 4.5rem tall) and turns to the destructive colour while
+   the saga compensates. */
+.saga-pulse {
+  position: absolute;
+  top: 12px;
+  left: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: var(--accent);
+  transform: translateY(calc(var(--step, 0) * 4.5rem));
+  transition:
+    transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 200ms ease;
+  z-index: 1;
+}
+
+.saga-pulse[data-backwards] {
+  background-color: var(--destructive);
+}
+
 /* CSS stand-in for the WebGL sphere (components/three/fallback-orb.tsx). */
 /* Layered so utilities such as `absolute` on a placed orb still win. */
 @layer components {

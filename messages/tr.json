@@ -58,6 +58,46 @@
     "startConversation": "Bir konuşma başlat",
     "paletteHint": "Her yere atlamak için <kbd>⌘K</kbd> veya <kbd>Ctrl K</kbd>"
   },
+  "Saga": {
+    "label": "Canlı çalışan bir sipariş saga'sı",
+    "caption": "Saga, bir siparişi tek büyük transaction olmadan servisler arasında tutarlı tutar. Her servis kendi adımını işler; biri başarısız olursa önceki adımlar telafi işlemleriyle geri alınır.",
+    "run": "Hata senaryosunu çalıştır",
+    "code": "Kodda incele",
+    "steps": {
+      "order": {
+        "name": "Sipariş servisi",
+        "action": "Sipariş oluştur",
+        "undo": "Siparişi iptal et"
+      },
+      "payment": {
+        "name": "Ödeme",
+        "action": "Kartı tahsil et",
+        "undo": "Ödemeyi iade et"
+      },
+      "inventory": {
+        "name": "Stok",
+        "action": "Stok ayır",
+        "undo": "Stoğu serbest bırak"
+      },
+      "shipping": {
+        "name": "Kargo",
+        "action": "Kurye ayarla",
+        "undo": "Kuryeyi iptal et"
+      }
+    },
+    "status": {
+      "idle": "Bekliyor",
+      "running": "Çalışıyor",
+      "done": "Tamam",
+      "failed": "Stok yok",
+      "compensating": "Geri alınıyor",
+      "compensated": "Geri alındı"
+    },
+    "outcome": {
+      "completed": "Sipariş tamamlandı.",
+      "rolledBack": "Stok yetersiz. Ödeme iade edildi, sipariş iptal edildi."
+    }
+  },
   "About": {
     "title": "Ayakta kalması gereken sistemler için backend mühendisi",
     "currentlyAt": "Şu an {company} bünyesinde",

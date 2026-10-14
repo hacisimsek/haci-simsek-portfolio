@@ -35,6 +35,17 @@ export function start(failAt: number | null = null): SagaState {
   };
 }
 
+/** A happy run that has already finished: the still picture of the saga. */
+export function completed(): SagaState {
+  return {
+    phase: 'completed',
+    index: STEPS.length - 1,
+    failAt: null,
+    statuses: STEPS.map(() => 'done'),
+    held: 0,
+  };
+}
+
 /** A fresh run in which inventory fails, whatever was on screen before. */
 export function withFailure(): SagaState {
   return start(FAILING_STEP);

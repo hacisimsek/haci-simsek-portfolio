@@ -50,9 +50,17 @@ describe('Hero', () => {
     ).toHaveAttribute('href', '/contact');
   });
 
+  it('shows the live saga instead of the sphere', () => {
+    const { container } = render(<Hero />);
+    expect(
+      screen.getByRole('figure', { name: 'An order saga, running live' })
+    ).toBeInTheDocument();
+    expect(container.querySelector('canvas, .orb')).toBeNull();
+  });
+
   it('drops the rotating role line', () => {
     render(<Hero />);
     expect(screen.queryByText('~/')).toBeNull();
-    expect(screen.queryByRole('list')).toBeNull();
+    expect(screen.queryByRole('list', { name: 'Roles' })).toBeNull();
   });
 });

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  completed,
   FAILING_STEP,
   HOLD_TICKS,
   STEPS,
@@ -42,6 +43,10 @@ describe('saga', () => {
       'failed',
       'idle',
     ]);
+  });
+
+  it('has a finished still picture', () => {
+    expect(completed()).toEqual(run(start(), STEPS.length));
   });
 
   it('holds a finished saga, then starts a happy run again', () => {
