@@ -120,3 +120,25 @@ test('keyboard focus is clearly visible on list rows and disclosures', async ({
     expect(outline.width).toBeGreaterThanOrEqual(2);
   }
 });
+
+test('section titles carry the saga step ring', async ({ page }) => {
+  await page.goto('/');
+  const rings = await page
+    .locator('main h2.section-title')
+    .evaluateAll((titles) =>
+      titles.map((title) => {
+        const ring = getComputedStyle(title, '::before');
+        return {
+          width: parseFloat(ring.borderTopWidth),
+          round: ring.borderTopLeftRadius,
+          shown: ring.content !== 'none',
+        };
+      })
+    );
+  expect(rings.length).toBeGreaterThan(3);
+  for (const ring of rings) {
+    expect(ring.shown).toBe(true);
+    expect(ring.width).toBeGreaterThanOrEqual(2);
+    expect(ring.round).not.toBe('0px');
+  }
+});
