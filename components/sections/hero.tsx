@@ -17,7 +17,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative grid min-h-[calc(100svh-9rem)] items-center gap-8 py-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]"
+      className="relative grid gap-8 pt-4 pb-12 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center lg:py-12"
     >
       <div className="relative min-w-0">
         {/* Phones get a faint static orb behind the name, never WebGL. */}

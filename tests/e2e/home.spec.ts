@@ -45,3 +45,26 @@ test('project cards are plain, focusable links', async ({ page }) => {
   await expect(link).toBeFocused();
   await expect(link).toHaveAttribute('href', /^https:\/\/github\.com\//);
 });
+
+test('home never puts a card inside a card', async ({ page }) => {
+  await page.goto('/');
+  const nested = await page
+    .locator('.surface-card, .section-shell')
+    .evaluateAll(
+      (cards) =>
+        cards.filter((card) =>
+          card.parentElement?.closest('.surface-card, .section-shell')
+        ).length
+    );
+  expect(nested).toBe(0);
+});
+
+test.describe('on a phone', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('the name starts near the top of the first screen', async ({ page }) => {
+    await page.goto('/');
+    const box = await page.getByRole('heading', { level: 1 }).boundingBox();
+    expect(box!.y).toBeLessThan(200);
+  });
+});
