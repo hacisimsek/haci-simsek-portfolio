@@ -21,10 +21,22 @@ describe('Hero', () => {
     ).toBeInTheDocument();
   });
 
-  it('lists every rotating role for assistive tech', () => {
+  it('states the career facts in one plain line', () => {
+    render(<Hero />);
+    expect(
+      screen.getByText(
+        /^\d+\+ years of experience · Software Development Senior Specialist at Sisal · Istanbul$/
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('states the career facts in Turkish', () => {
     render(<Hero />, { locale: 'tr' });
-    const list = screen.getByRole('list', { name: 'Roller' });
-    expect(list.querySelectorAll('li')).toHaveLength(4);
+    expect(
+      screen.getByText(
+        /^\d+\+ yıl deneyim · Sisal bünyesinde Kıdemli Yazılım Geliştirme Uzmanı · İstanbul$/
+      )
+    ).toBeInTheDocument();
   });
 
   it('links to projects and contact', () => {
@@ -38,9 +50,9 @@ describe('Hero', () => {
     ).toHaveAttribute('href', '/contact');
   });
 
-  it('does not read the decorative "~/" prompt aloud', () => {
+  it('drops the rotating role line', () => {
     render(<Hero />);
-    const prompt = screen.getByText('~/');
-    expect(prompt.closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(screen.queryByText('~/')).toBeNull();
+    expect(screen.queryByRole('list')).toBeNull();
   });
 });

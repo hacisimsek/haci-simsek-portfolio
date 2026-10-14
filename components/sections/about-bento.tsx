@@ -1,13 +1,12 @@
-import { ArrowUpRight, Clock3, GraduationCap, Mail } from 'lucide-react';
+import { Clock3, Mail } from 'lucide-react';
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { GithubIcon, LinkedinIcon } from '@/components/icons/brand-icons';
 import LocalTime from '@/components/motion/local-time';
 import Spotlight from '@/components/motion/spotlight';
 import portrait from '@/assets/images/portrait.jpg';
-import { education, profile, socials, t } from '@/content';
+import { profile, socials, t } from '@/content';
 import { careerYears } from '@/lib/dates';
-import type { Article } from '@/lib/feeds/medium';
 import { cn } from '@/lib/utils';
 
 const tile = 'surface-card p-6';
@@ -16,16 +15,10 @@ function socialHref(id: 'github' | 'linkedin') {
   return socials.find((social) => social.id === id)!.href;
 }
 
-export default function AboutBento({
-  latestArticle,
-}: {
-  latestArticle?: Article;
-}) {
+export default function AboutBento() {
   const msg = useTranslations('About');
   const locale = useLocale();
   const years = careerYears(profile.careerStart);
-  const major = education.find((item) => item.track === 'major')!;
-  const minor = education.find((item) => item.track === 'minor');
   const links = [
     { href: `mailto:${profile.email}`, label: msg('email'), icon: Mail },
     { href: socialHref('github'), label: 'GitHub', icon: GithubIcon },
@@ -38,9 +31,7 @@ export default function AboutBento({
       aria-labelledby="about-title"
       className="grid gap-4 lg:grid-cols-6"
     >
-      <Spotlight
-        className={cn(tile, 'border-beam sm:p-8 lg:col-span-4 lg:row-span-2')}
-      >
+      <Spotlight className={cn(tile, 'sm:p-8 lg:col-span-4 lg:row-span-2')}>
         <h2 id="about-title" className="max-w-2xl section-title">
           {msg('title')}
         </h2>
@@ -96,58 +87,8 @@ export default function AboutBento({
         </p>
       </Spotlight>
 
-      <Spotlight className={cn(tile, 'lg:col-span-2')}>
-        <p className="flex items-center gap-2 text-sm text-muted-foreground">
-          <GraduationCap aria-hidden className="h-4 w-4" />
-          {msg('educationTitle')}
-        </p>
-        <p className="mt-3 leading-snug font-semibold">
-          {t(major.degree, locale)}
-        </p>
-        {minor ? (
-          <p className="mt-1 text-sm text-muted-foreground">
-            {msg('minor', { degree: t(minor.degree, locale) })}
-          </p>
-        ) : null}
-        <p className="mt-3 text-sm text-accent">
-          {msg('scholarship', { school: t(major.school, locale) })}
-        </p>
-      </Spotlight>
-
-      {latestArticle ? (
-        <Spotlight className={cn(tile, 'lg:col-span-3')}>
-          <p className="text-sm text-muted-foreground">
-            {msg('latestArticle')}
-          </p>
-          <a
-            href={latestArticle.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group mt-3 flex items-start justify-between gap-4"
-          >
-            <span className="text-lg leading-snug font-semibold group-hover:text-accent">
-              {latestArticle.title}
-            </span>
-            <ArrowUpRight
-              aria-hidden
-              className="mt-1 h-5 w-5 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground"
-            />
-          </a>
-          <p className="mt-2 text-xs text-muted-foreground">
-            {new Intl.DateTimeFormat(locale, {
-              dateStyle: 'medium',
-              timeZone: 'Europe/Istanbul',
-            }).format(new Date(latestArticle.publishedAt))}
-          </p>
-        </Spotlight>
-      ) : null}
-
       <div
-        className={cn(
-          tile,
-          'flex flex-wrap items-center gap-3',
-          latestArticle ? 'lg:col-span-3' : 'lg:col-span-6'
-        )}
+        className={cn(tile, 'flex flex-wrap items-center gap-3 lg:col-span-2')}
       >
         {links.map(({ href, label, icon: Icon }) => (
           <a

@@ -3,7 +3,6 @@
 import { ArrowUpRight, Clock3, FolderGit2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
-import TiltCard from '@/components/motion/tilt-card';
 import { filterRepos, languagesOf, type RepoSort } from '@/lib/collections';
 import type { Repo } from '@/lib/feeds/github';
 import CollectionControls from './collection-controls';
@@ -51,12 +50,12 @@ export default function ProjectBrowser({ repos }: { repos: Repo[] }) {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {shown.map((project) => (
-            <TiltCard
+            <a
               key={project.url}
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group spotlight flex min-h-64 flex-col surface-card p-6 hover:border-accent/40"
+              className="group spotlight flex min-h-64 flex-col surface-card p-6 transition-colors hover:border-accent/40"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary">
@@ -82,7 +81,7 @@ export default function ProjectBrowser({ repos }: { repos: Repo[] }) {
                   {date.format(new Date(project.updatedAt))}
                 </span>
               </div>
-            </TiltCard>
+            </a>
           ))}
         </div>
       )}

@@ -1,12 +1,22 @@
 import { expect, test } from './fixtures';
 
-test('home stats count the fixture feeds', async ({ page }) => {
+test('home has no stats strip and no rotating words', async ({ page }) => {
   await page.goto('/');
-  const stats = page.getByRole('region', { name: 'At a glance' });
-  const repos = stats.locator('div', { hasText: 'Open-source repos' });
-  await expect(repos.locator('dd .sr-only')).toHaveText('3');
-  const articles = stats.locator('div', { hasText: 'Articles' });
-  await expect(articles.locator('dd .sr-only')).toHaveText('3');
+  await expect(page.getByRole('region', { name: 'At a glance' })).toHaveCount(
+    0
+  );
+  await expect(page.getByText(/\d+\+ years of experience · /)).toBeVisible();
+  await page.waitForTimeout(3500);
+  await expect(page.locator('.word-in')).toHaveCount(0);
+});
+
+test('home shows each fact once', async ({ page }) => {
+  await page.goto('/');
+  await expect(
+    page.getByRole('link', { name: /What is the Saga Pattern\?/ })
+  ).toHaveCount(1);
+  await expect(page.getByText(/Local time in Istanbul/)).toHaveCount(1);
+  await expect(page.locator('footer').getByText('Hacı Şimşek')).toHaveCount(0);
 });
 
 test('home features fixture projects and articles', async ({ page }) => {
@@ -36,21 +46,25 @@ test('project cards are plain, focusable links', async ({ page }) => {
   await expect(link).toHaveAttribute('href', /^https:\/\/github\.com\//);
 });
 
-// With reduced motion the tilt is dropped on purpose (see globals.css).
-test.describe('with motion', () => {
-  test.use({ reducedMotion: 'no-preference' });
-
-  test('tilting project cards still fade their border colour', async ({
-    page,
-  }) => {
-    await page.goto('/');
-    const card = page
-      .getByRole('region', { name: 'Featured projects' })
-      .getByRole('link', { name: /notifyhub/ });
-    const transition = await card.evaluate(
-      (el) => getComputedStyle(el).transitionProperty
+test('home never puts a card inside a card', async ({ page }) => {
+  await page.goto('/');
+  const nested = await page
+    .locator('.surface-card, .section-shell')
+    .evaluateAll(
+      (cards) =>
+        cards.filter((card) =>
+          card.parentElement?.closest('.surface-card, .section-shell')
+        ).length
     );
-    expect(transition).toContain('transform');
-    expect(transition).toContain('border-color');
+  expect(nested).toBe(0);
+});
+
+test.describe('on a phone', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('the name starts near the top of the first screen', async ({ page }) => {
+    await page.goto('/');
+    const box = await page.getByRole('heading', { level: 1 }).boundingBox();
+    expect(box!.y).toBeLessThan(200);
   });
 });

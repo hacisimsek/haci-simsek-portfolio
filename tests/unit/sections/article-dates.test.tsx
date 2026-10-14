@@ -1,6 +1,5 @@
 import { screen } from '@testing-library/react';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import AboutBento from '@/components/sections/about-bento';
 import LatestWriting from '@/components/sections/latest-writing';
 import { renderWithIntl as render } from '../render';
 
@@ -23,11 +22,6 @@ describe('article dates', () => {
   });
   afterAll(() => {
     process.env.TZ = originalTz;
-  });
-
-  it('formats the latest article in Istanbul time', () => {
-    render(<AboutBento latestArticle={article} />);
-    expect(screen.getByText('Jan 2, 2026')).toBeInTheDocument();
   });
 
   it('formats the writing cards in Istanbul time', () => {

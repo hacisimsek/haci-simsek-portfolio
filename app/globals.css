@@ -167,37 +167,6 @@
   @apply max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg;
 }
 
-@property --angle {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
-
-/* A light that runs around the card edge. */
-@utility border-beam {
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: conic-gradient(
-      from var(--angle),
-      transparent 70%,
-      var(--primary),
-      var(--accent),
-      transparent
-    );
-    mask:
-      linear-gradient(#000 0 0) content-box exclude,
-      linear-gradient(#000 0 0);
-    animation: beam-spin 6s linear infinite;
-    pointer-events: none;
-  }
-}
-
 @layer base {
   :root {
     --background: oklch(0.985 0.004 275);
@@ -368,62 +337,6 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.marquee {
-  display: flex;
-  gap: 0.75rem;
-  overflow: hidden;
-  mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 8%,
-    #000 92%,
-    transparent
-  );
-}
-
-.marquee > ul {
-  display: flex;
-  flex-shrink: 0;
-  gap: 0.75rem;
-  min-width: 100%;
-  justify-content: space-around;
-  animation: marquee 40s linear infinite;
-}
-
-.marquee[data-reverse] > ul {
-  animation-direction: reverse;
-}
-
-.marquee:hover > ul,
-.marquee:focus-within > ul {
-  animation-play-state: paused;
-}
-
-@keyframes marquee {
-  to {
-    transform: translateX(calc(-100% - 0.75rem));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee {
-    flex-wrap: wrap;
-    mask-image: none;
-  }
-
-  .marquee > ul {
-    flex-shrink: 1;
-    flex-wrap: wrap;
-    min-width: 0;
-    justify-content: flex-start;
-    animation: none;
-  }
-
-  .marquee > ul[aria-hidden] {
-    display: none;
-  }
-}
-
 /* Reduced motion: nothing moves, but colour and opacity feedback (hover,
    focus, pressed) still eases in, so state changes stay legible. */
 @media (prefers-reduced-motion: reduce) {
@@ -441,8 +354,6 @@
   .orb-ring,
   .check-draw,
   .letter,
-  .word-in,
-  .border-beam::before,
   .dialog-content,
   .animate-spin {
     animation: none !important;
@@ -507,12 +418,6 @@ section[id] {
   }
 }
 
-@keyframes beam-spin {
-  to {
-    --angle: 360deg;
-  }
-}
-
 @media (hover: hover) and (pointer: fine) {
   .spotlight {
     background-image: radial-gradient(
@@ -521,27 +426,6 @@ section[id] {
       transparent 60%
     );
   }
-}
-
-.word-in {
-  animation: word-in 350ms ease-out;
-}
-
-@keyframes word-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.4em);
-  }
-}
-
-.tilt {
-  transform: perspective(900px) rotateX(var(--rx, 0deg))
-    rotateY(var(--ry, 0deg));
-  /* Keeps the hover border fade that transition-colors would give. */
-  transition:
-    transform 180ms ease-out,
-    border-color 150ms ease,
-    background-color 150ms ease;
 }
 
 .check-draw {
