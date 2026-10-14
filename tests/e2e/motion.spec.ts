@@ -151,3 +151,21 @@ test.describe('hero name', () => {
     expect(new Set(styles.letters)).toEqual(new Set(['text|true']));
   });
 });
+
+test.describe('hero name descenders', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  // background-clip: text only paints inside each letter's own box, so the
+  // box must reach below the baseline far enough for ş/Ş cedillas.
+  test('each letter box extends below the glyph baseline', async ({ page }) => {
+    await page.goto('/');
+    const reach = await page
+      .locator('h1 .letter')
+      .first()
+      .evaluate((el) => {
+        const style = getComputedStyle(el);
+        return parseFloat(style.paddingBottom) / parseFloat(style.fontSize);
+      });
+    expect(reach).toBeGreaterThanOrEqual(0.2);
+  });
+});
