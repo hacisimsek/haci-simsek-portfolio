@@ -66,12 +66,14 @@
     "repos": "Open-source repos"
   },
   "About": {
-    "eyebrow": "Editorial tech portfolio",
-    "experienceLabel": "Experience",
-    "experienceValue": "{years} years in production engineering",
-    "environmentLabel": "Environment",
+    "eyebrow": "About",
+    "title": "Backend engineer for systems that have to stay up",
     "currentlyAt": "Currently at {company}",
-    "basedIn": "Based in",
+    "localTime": "Local time in Istanbul",
+    "educationTitle": "Education",
+    "minor": "Minor: {degree}",
+    "scholarship": "Full scholarship at {school}",
+    "latestArticle": "Latest article",
     "email": "Email"
   },
   "Career": {

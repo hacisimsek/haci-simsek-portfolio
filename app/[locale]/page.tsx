@@ -3,10 +3,10 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ArrowRight, FileText, FolderGit2, Layers3 } from 'lucide-react';
-import About from '@/components/About';
 import Career from '@/components/Career';
 import Education from '@/components/Education';
 import Skills from '@/components/Skills';
+import AboutBento from '@/components/sections/about-bento';
 import Hero from '@/components/sections/hero';
 import Stats from '@/components/sections/stats';
 import { experience, profile } from '@/content';
@@ -52,7 +52,7 @@ export default async function Home({
     <div className="space-y-6 pb-6">
       <Hero />
       <Stats stats={stats} />
-      <About />
+      <AboutBento latestArticle={articles.ok ? articles.data[0] : undefined} />
       <Career />
       <Skills />
       <Education />

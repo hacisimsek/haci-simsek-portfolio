@@ -66,12 +66,14 @@
     "repos": "Açık kaynak repo"
   },
   "About": {
-    "eyebrow": "Teknik portfolyo",
-    "experienceLabel": "Deneyim",
-    "experienceValue": "Üretim ortamında {years} yıl",
-    "environmentLabel": "Ortam",
+    "eyebrow": "Hakkımda",
+    "title": "Ayakta kalması gereken sistemler için backend mühendisi",
     "currentlyAt": "Şu an {company} bünyesinde",
-    "basedIn": "Konum",
+    "localTime": "İstanbul’da saat",
+    "educationTitle": "Eğitim",
+    "minor": "Yan dal: {degree}",
+    "scholarship": "{school}, tam burslu",
+    "latestArticle": "Son yazı",
     "email": "E-posta"
   },
   "Career": {

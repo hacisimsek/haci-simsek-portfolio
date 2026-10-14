@@ -1,7 +1,6 @@
 import { screen, within } from '@testing-library/react';
 import { renderWithIntl as render } from '../render';
 import { describe, expect, it } from 'vitest';
-import About from '@/components/About';
 import Career from '@/components/Career';
 import Education from '@/components/Education';
 import Skills from '@/components/Skills';
@@ -46,15 +45,5 @@ describe('Skills', () => {
       .getByRole('heading', { name: 'Messaging and data' })
       .closest('article')!;
     expect(within(group).getByText('Kafka')).toBeInTheDocument();
-  });
-});
-
-describe('About', () => {
-  it('computes the years of experience', () => {
-    render(<About />);
-    expect(
-      screen.getByText(/Software engineer with \d+ years of experience/)
-    ).toBeInTheDocument();
-    expect(screen.queryByText(/\{years\}/)).toBeNull();
   });
 });

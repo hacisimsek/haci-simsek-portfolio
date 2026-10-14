@@ -175,6 +175,37 @@
   color: transparent;
 }
 
+@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* A light that runs around the card edge. */
+@utility border-beam {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--angle),
+      transparent 70%,
+      var(--primary),
+      var(--accent),
+      transparent
+    );
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+    animation: beam-spin 6s linear infinite;
+    pointer-events: none;
+  }
+}
+
 @utility fade-up {
   animation: fade-up 0.7s ease-out backwards;
 }
@@ -372,7 +403,8 @@
 
   .aurora-blob,
   .fade-up,
-  .letter {
+  .letter,
+  .border-beam::before {
     animation: none !important;
   }
 }
@@ -431,5 +463,21 @@ section[id] {
   from {
     opacity: 0;
     transform: translateY(0.35em) rotate(4deg);
+  }
+}
+
+@keyframes beam-spin {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .spotlight {
+    background-image: radial-gradient(
+      420px circle at var(--x, -100%) var(--y, -100%),
+      color-mix(in oklab, var(--primary) 12%, transparent),
+      transparent 60%
+    );
   }
 }
