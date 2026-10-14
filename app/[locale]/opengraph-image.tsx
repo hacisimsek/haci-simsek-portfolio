@@ -1,31 +1,42 @@
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { ImageResponse } from 'next/og';
+import { notFound } from 'next/navigation';
 import { profile, t } from '@/content';
 import { routing } from '@/i18n/routing';
 import { brand } from '@/lib/og/brand';
 import { DISPLAY_FONT_FAMILY, loadDisplayFont } from '@/lib/og/font';
 
-export const size = { width: 1200, height: 630 };
-export const contentType = 'image/png';
-export const alt = profile.asciiName;
+const size = { width: 1200, height: 630 };
 
-// Only the real locales; anything else is a 404, not an English image.
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+// One image per locale, so the alt text can be in that language.
+export function generateImageMetadata({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  const locale = hasLocale(routing.locales, params.locale)
+    ? params.locale
+    : routing.defaultLocale;
+  return [
+    {
+      id: 'card',
+      size,
+      contentType: 'image/png',
+      alt: `${profile.asciiName} · ${t(profile.role, locale)}`,
+    },
+  ];
 }
 
 export default async function OpenGraphImage({
   params,
 }: {
   params: Promise<{ locale: string }>;
+  id: Promise<string>;
 }) {
-  const { locale: requested } = await params;
-  const locale = hasLocale(routing.locales, requested)
-    ? requested
-    : routing.defaultLocale;
+  const { locale } = await params;
+  // Only real locales get a card; anything else is a 404, not an English image.
+  if (!hasLocale(routing.locales, locale)) notFound();
   const msg = await getTranslations({ locale, namespace: 'Hero' });
 
   return new ImageResponse(

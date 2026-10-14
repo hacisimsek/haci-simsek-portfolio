@@ -71,7 +71,7 @@ describe('graphJsonLd', () => {
     const [person, website] = graph['@graph'];
     expect(person['@context']).toBeUndefined();
     expect(person['@id']).toBe('https://hacisimsek.com/#person');
-    expect(person.image).toBe('https://hacisimsek.com/tr/opengraph-image');
+    expect(person.image).toBe('https://hacisimsek.com/tr/opengraph-image/card');
     expect(website['@id']).toBe('https://hacisimsek.com/#website');
     expect(website.publisher).toEqual({
       '@id': 'https://hacisimsek.com/#person',

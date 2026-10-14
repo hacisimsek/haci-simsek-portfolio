@@ -146,7 +146,7 @@ test('legacy /favicon.ico serves the generated icon', async ({ request }) => {
 });
 
 test('Open Graph images exist only for real locales', async ({ request }) => {
-  const response = await request.get('/xx/opengraph-image');
+  const response = await request.get('/xx/opengraph-image/card');
   expect(response.status()).toBe(404);
 });
 
@@ -174,4 +174,19 @@ test('analytics code is not shipped outside Vercel', async ({
     const body = await (await request.get(src)).text();
     expect(body, src).not.toContain('/_vercel/insights');
   }
+});
+
+test('Open Graph image alt text follows the language', async ({ page }) => {
+  const alts: string[] = [];
+  for (const path of ['/', '/tr', '/tr/projects']) {
+    await page.goto(path);
+    alts.push(
+      (await page
+        .locator('meta[property="og:image:alt"]')
+        .getAttribute('content')) ?? ''
+    );
+  }
+  expect(alts[0]).toContain('Software Development Senior Specialist');
+  expect(alts[1]).toContain('Kıdemli Yazılım Geliştirme Uzmanı');
+  expect(alts[2]).toBe(alts[1]);
 });
