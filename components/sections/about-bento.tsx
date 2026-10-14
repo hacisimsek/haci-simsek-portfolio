@@ -10,7 +10,7 @@ import { careerYears } from '@/lib/dates';
 import type { Article } from '@/lib/feeds/medium';
 import { cn } from '@/lib/utils';
 
-const tile = 'glass p-6';
+const tile = 'surface-card p-6';
 
 function socialHref(id: 'github' | 'linkedin') {
   return socials.find((social) => social.id === id)!.href;

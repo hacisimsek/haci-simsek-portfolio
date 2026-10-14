@@ -55,7 +55,10 @@ export default function Career() {
 
                   <div className="space-y-4 pl-10 sm:pl-0">
                     {group.roles.map((role) => (
-                      <article key={role.id} className="glass p-5 sm:p-6">
+                      <article
+                        key={role.id}
+                        className="surface-card p-5 sm:p-6"
+                      >
                         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                           <div>
                             <h3 className="text-xl font-semibold">

@@ -40,7 +40,7 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
             href={article.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex flex-col overflow-hidden glass transition-colors hover:border-accent/40"
+            className="group flex flex-col overflow-hidden surface-card transition-colors hover:border-accent/40"
           >
             <div className="overflow-hidden">
               {/* Medium thumbnails come from several CDN hosts; next/image

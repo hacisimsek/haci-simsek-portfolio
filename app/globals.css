@@ -106,12 +106,14 @@
   backdrop-filter: blur(14px) saturate(140%);
 }
 
+/* Solid layer over the aurora. No backdrop blur: the aurora moves, so every
+   blurred card would re-render each frame. Blur stays a header effect. */
 @utility surface-card {
-  @apply rounded-[calc(var(--radius)+0.35rem)] border backdrop-blur-sm;
+  @apply rounded-[calc(var(--radius)+0.35rem)] border;
   box-shadow: 0 20px 60px -36px
     color-mix(in oklab, var(--foreground) 45%, transparent);
   border-color: color-mix(in oklab, var(--border) 70%, transparent);
-  background-color: color-mix(in oklab, var(--card) 85%, transparent);
+  background-color: color-mix(in oklab, var(--card) 92%, transparent);
 }
 
 @utility eyebrow {
@@ -534,9 +536,10 @@ section[id] {
   animation-delay: calc(var(--i) * 40ms + 120ms);
 }
 
+/* Transform only: the name is visible from the first paint (it is the LCP
+   text), the letters just settle into place. */
 @keyframes letter-in {
   from {
-    opacity: 0;
     transform: translateY(0.35em) rotate(4deg);
   }
 }

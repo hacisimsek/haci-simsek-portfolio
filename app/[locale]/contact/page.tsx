@@ -54,7 +54,7 @@ export default async function Contact({
 
         <div className="mt-8 space-y-4">
           {notes.map(({ icon: Icon, title, text }) => (
-            <div key={title} className="glass p-5">
+            <div key={title} className="surface-card p-5">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary text-foreground">
                   <Icon aria-hidden className="h-4 w-4" />
