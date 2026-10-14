@@ -1,9 +1,15 @@
+import 'lenis/dist/lenis.css';
 import '../globals.css';
 import type { Metadata } from 'next';
-import { JetBrains_Mono, Space_Grotesk } from 'next/font/google';
+import { Geist, Geist_Mono, Space_Grotesk } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
 import Header from '@/components/Header';
+import AuroraBackground from '@/components/effects/aurora-background';
+import GrainOverlay from '@/components/effects/grain-overlay';
+import ScrollProgress from '@/components/effects/scroll-progress';
+import MotionProvider from '@/components/providers/motion-provider';
+import SmoothScroll from '@/components/providers/smooth-scroll';
 import Footer from '@/components/Footer';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -15,12 +21,18 @@ import { alternatesFor, SITE_URL } from '@/lib/seo';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin', 'latin-ext'],
-  variable: '--font-display',
+  variable: '--font-space-grotesk',
 });
 
-const jetBrainsMono = JetBrains_Mono({
+const geist = Geist({
   subsets: ['latin', 'latin-ext'],
-  variable: '--font-mono',
+  variable: '--font-geist',
+});
+
+const geistMono = Geist_Mono({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-geist-mono',
+  preload: false,
 });
 
 // Daily regeneration keeps the computed years of experience and the footer
@@ -73,7 +85,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${jetBrainsMono.variable} min-h-screen bg-background text-foreground antialiased`}
+        className={`${spaceGrotesk.variable} ${geist.variable} ${geistMono.variable} min-h-screen bg-background text-foreground antialiased`}
       >
         <NextIntlClientProvider>
           <ThemeProvider
@@ -82,16 +94,20 @@ export default async function LocaleLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="app-shell">
-              <div className="page-glow page-glow-left" />
-              <div className="page-glow page-glow-right" />
-              <div className="page-grid" />
-              <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-6 pb-10 sm:px-6 lg:px-8">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
+            <MotionProvider>
+              <SmoothScroll />
+              <ScrollProgress />
+              <AuroraBackground />
+              <GrainOverlay />
+              <div className="app-shell">
+                <div className="page-grid" />
+                <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-6 pb-10 sm:px-6 lg:px-8">
+                  <Header />
+                  <main className="flex-1">{children}</main>
+                  <Footer />
+                </div>
               </div>
-            </div>
+            </MotionProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

@@ -49,7 +49,7 @@ export default async function Home({
               <Link
                 key={key}
                 href={href}
-                className="group rounded-[1.8rem] border border-border/70 bg-background/75 p-6 transition hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_18px_40px_-32px_hsl(var(--foreground)/0.65)]"
+                className="group rounded-[1.8rem] border border-border/70 bg-background/75 p-6 transition hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_18px_40px_-32px_color-mix(in_oklab,var(--foreground)_65%,transparent)]"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary text-foreground">
                   <Icon className="h-5 w-5" />

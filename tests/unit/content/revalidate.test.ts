@@ -3,7 +3,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('next/font/google', () => ({
   Space_Grotesk: () => ({ variable: 'font-display' }),
-  JetBrains_Mono: () => ({ variable: 'font-mono' }),
+  Geist: () => ({ variable: 'font-geist' }),
+  Geist_Mono: () => ({ variable: 'font-geist-mono' }),
 }));
 
 describe('root layout', () => {

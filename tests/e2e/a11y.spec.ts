@@ -1,40 +1,48 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, waitForEntranceAnimations } from './fixtures';
 
-// Known issue: accent buttons (#fffbf5 on #ed7035) reach a 2.92:1 contrast
-// ratio. The redesign replaces these tokens; until then only these exact
-// targets are tolerated so any new violation still fails.
-const KNOWN_CONTRAST_TARGETS = new Set([
-  '.md\\:inline-flex',
-  '.bg-accent.px-6.text-accent-foreground',
-  'button[type="submit"]',
-]);
+const paths = ['/', '/projects', '/articles', '/contact', '/tr', '/tr/contact'];
 
-for (const path of [
-  '/',
-  '/projects',
-  '/articles',
-  '/contact',
-  '/tr',
-  '/tr/contact',
-]) {
-  test(`${path} has no unexpected accessibility violations`, async ({
+for (const theme of ['dark', 'light'] as const) {
+  for (const path of paths) {
+    test(`${path} (${theme}) has no accessibility violations`, async ({
+      page,
+    }) => {
+      await page.addInitScript((value) => {
+        localStorage.setItem('theme', value);
+      }, theme);
+      await page.goto(path);
+      await waitForEntranceAnimations(page);
+
+      const { violations } = await new AxeBuilder({ page }).analyze();
+      const found = violations.flatMap((v) =>
+        v.nodes.map((node) => `${v.id} (${v.impact}): ${node.target.join(' ')}`)
+      );
+
+      expect(found).toEqual([]);
+    });
+  }
+}
+
+for (const theme of ['dark', 'light'] as const) {
+  test(`the open command palette (${theme}) has no accessibility violations`, async ({
     page,
   }) => {
-    await page.goto(path);
-    await waitForEntranceAnimations(page);
+    await page.addInitScript((value) => {
+      localStorage.setItem('theme', value);
+    }, theme);
+    await page.goto('/');
+    await page.getByRole('button', { name: /Command palette/ }).click();
+    await expect(page.getByRole('combobox')).toBeFocused();
+    await page.getByRole('option', { name: 'Projects' }).hover();
 
-    const { violations } = await new AxeBuilder({ page }).analyze();
-    const unexpected = violations.flatMap((v) =>
-      v.nodes
-        .map((node) => node.target.join(' '))
-        .filter(
-          (target) =>
-            !(v.id === 'color-contrast' && KNOWN_CONTRAST_TARGETS.has(target))
-        )
-        .map((target) => `${v.id} (${v.impact}): ${target}`)
+    const { violations } = await new AxeBuilder({ page })
+      .include('[role="dialog"]')
+      .analyze();
+    const found = violations.flatMap((v) =>
+      v.nodes.map((node) => `${v.id} (${v.impact}): ${node.target.join(' ')}`)
     );
 
-    expect(unexpected).toEqual([]);
+    expect(found).toEqual([]);
   });
 }

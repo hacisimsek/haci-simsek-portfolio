@@ -24,7 +24,7 @@ export default function Career() {
               className="relative grid gap-5 sm:grid-cols-[120px_1fr]"
             >
               <div className="relative z-10 flex items-start gap-4 sm:block">
-                <span className="mt-2 block h-6 w-6 rounded-full border border-accent/30 bg-accent/90 shadow-[0_0_0_6px_hsl(var(--background))]" />
+                <span className="mt-2 block h-6 w-6 rounded-full border border-accent/30 bg-accent/90 shadow-[0_0_0_6px_var(--background)]" />
                 <div className="sm:pt-0.5">
                   <p className="text-xs tracking-[0.22em] text-muted-foreground uppercase">
                     {formatPeriod(role.start, role.end, locale)}
