@@ -1,6 +1,6 @@
 import 'lenis/dist/lenis.css';
 import '../globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono, Space_Grotesk } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
@@ -11,13 +11,15 @@ import ScrollProgress from '@/components/effects/scroll-progress';
 import MotionProvider from '@/components/providers/motion-provider';
 import SmoothScroll from '@/components/providers/smooth-scroll';
 import Footer from '@/components/Footer';
+import JsonLd from '@/components/seo/json-ld';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { profile } from '@/content';
+import { profile, t } from '@/content';
 import { careerYears } from '@/lib/dates';
 import { alternatesFor, SITE_URL } from '@/lib/seo';
+import { personJsonLd, websiteJsonLd } from '@/lib/structured-data';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin', 'latin-ext'],
@@ -39,6 +41,15 @@ const geistMono = Geist_Mono({
 // year current without a redeploy.
 export const revalidate = 86400;
 
+// The --background tokens (oklch 0.985 0.004 275 / 0.13 0.02 275) in sRGB, for
+// the browser chrome.
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f9fafd' },
+    { media: '(prefers-color-scheme: dark)', color: '#05070f' },
+  ],
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -49,6 +60,11 @@ export async function generateMetadata({
     return {};
   }
   const msg = await getTranslations({ locale, namespace: 'Metadata' });
+  const description = msg('description', {
+    name: profile.asciiName,
+    years: careerYears(profile.careerStart),
+  });
+  const title = `${profile.asciiName} · ${t(profile.role, locale)}`;
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -56,12 +72,19 @@ export async function generateMetadata({
       default: profile.asciiName,
       template: `%s | ${profile.asciiName}`,
     },
-    description: msg('description', {
-      name: profile.asciiName,
-      years: careerYears(profile.careerStart),
-    }),
+    description,
     icons: '/images/favicon_io/favicon.ico',
     alternates: alternatesFor('/', locale),
+    openGraph: {
+      type: 'website',
+      siteName: profile.asciiName,
+      title,
+      description,
+      url: alternatesFor('/', locale).canonical,
+      locale: locale === 'tr' ? 'tr_TR' : 'en_US',
+      alternateLocale: locale === 'tr' ? 'en_US' : 'tr_TR',
+    },
+    twitter: { card: 'summary_large_image', title, description },
   };
 }
 
@@ -87,6 +110,12 @@ export default async function LocaleLayout({
       <body
         className={`${spaceGrotesk.variable} ${geist.variable} ${geistMono.variable} min-h-screen bg-background text-foreground antialiased`}
       >
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@graph': [personJsonLd(locale), websiteJsonLd()],
+          }}
+        />
         <NextIntlClientProvider>
           <ThemeProvider
             attribute="class"
