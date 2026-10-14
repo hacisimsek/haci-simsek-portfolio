@@ -1,6 +1,24 @@
-import type { Page } from '@playwright/test';
+import { test as base, type Page } from '@playwright/test';
 
-export { expect, test } from '@playwright/test';
+export { expect } from '@playwright/test';
+
+// The WebGL sphere renders on the CPU in CI (no GPU), which slows every other
+// test. Pages report a 2-core device (tier "low", CSS orb only) unless a spec
+// opts in with test.use({ sphere: true }), which reports 8 cores.
+export const test = base.extend<{ sphere: boolean }>({
+  sphere: [false, { option: true }],
+  page: async ({ page, sphere }, provide) => {
+    await page.addInitScript(
+      (cores) => {
+        Object.defineProperty(navigator, 'hardwareConcurrency', {
+          get: () => cores,
+        });
+      },
+      sphere ? 8 : 2
+    );
+    await provide(page);
+  },
+});
 
 // Waits for finite animations such as the .fade-up entrance. Infinite ones
 // (e.g. animate-pulse) never finish and are ignored.
