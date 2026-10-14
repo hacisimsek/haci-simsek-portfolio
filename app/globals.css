@@ -415,16 +415,6 @@ section[id] {
   }
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .spotlight {
-    background-image: radial-gradient(
-      420px circle at var(--x, -100%) var(--y, -100%),
-      color-mix(in oklab, var(--primary) 12%, transparent),
-      transparent 60%
-    );
-  }
-}
-
 .check-draw {
   stroke-dasharray: 24;
   animation: check-draw 400ms ease-out backwards;

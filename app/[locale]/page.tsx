@@ -2,7 +2,7 @@ import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import Education from '@/components/Education';
-import AboutBento from '@/components/sections/about-bento';
+import About from '@/components/sections/about';
 import Career from '@/components/sections/career';
 import FeaturedProjects from '@/components/sections/featured-projects';
 import Hero from '@/components/sections/hero';
@@ -37,7 +37,7 @@ export default async function Home({
   return (
     <div className="space-y-16 pb-6 sm:space-y-24">
       <Hero />
-      <AboutBento />
+      <About />
       <FeaturedProjects
         repos={repos.ok ? selectFeatured(repos.data, featuredProjects) : []}
       />

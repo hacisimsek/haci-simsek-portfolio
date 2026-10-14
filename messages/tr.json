@@ -96,10 +96,7 @@
     "outcome": "Stok yetersiz. Ödeme iade edildi, sipariş iptal edildi."
   },
   "About": {
-    "title": "Ayakta kalması gereken sistemler için backend mühendisi",
-    "currentlyAt": "Şu an {company} bünyesinde",
-    "localTime": "İstanbul’da saat",
-    "email": "E-posta"
+    "title": "Ayakta kalması gereken sistemler için backend mühendisi"
   },
   "Career": {
     "title": "Çalıştığım yerler",

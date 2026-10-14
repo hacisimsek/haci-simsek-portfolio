@@ -15,7 +15,8 @@ test('home shows each fact once', async ({ page }) => {
   await expect(
     page.getByRole('link', { name: /What is the Saga Pattern\?/ })
   ).toHaveCount(1);
-  await expect(page.getByText(/Local time in Istanbul/)).toHaveCount(1);
+  // The clock tile was filler; the page no longer shows a local time.
+  await expect(page.getByText(/Local time/)).toHaveCount(0);
   // No wordmark in the footer; the name appears only in the copyright line.
   await expect(page.locator('footer > p')).toHaveCount(0);
 });
@@ -195,4 +196,10 @@ test('each contact note is a heading', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4);
   // Headings are not allowed inside a definition term.
   await expect(page.locator('dt :is(h1, h2, h3, h4, h5, h6)')).toHaveCount(0);
+});
+
+test('about is prose, not cards', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#about')).toBeVisible();
+  await expect(page.locator('#about .surface-card')).toHaveCount(0);
 });

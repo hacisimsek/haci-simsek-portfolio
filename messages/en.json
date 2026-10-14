@@ -96,10 +96,7 @@
     "outcome": "Inventory failed. Payment refunded and order cancelled."
   },
   "About": {
-    "title": "Backend engineer for systems that have to stay up",
-    "currentlyAt": "Currently at {company}",
-    "localTime": "Local time in Istanbul",
-    "email": "Email"
+    "title": "Backend engineer for systems that have to stay up"
   },
   "Career": {
     "title": "Where I've worked",
