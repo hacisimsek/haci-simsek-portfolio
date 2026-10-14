@@ -5,8 +5,8 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import ContactForm from '@/components/contact/contact-form';
 import { profile } from '@/content';
+import { pageMetadata } from '@/lib/page-metadata';
 import { routing } from '@/i18n/routing';
-import { alternatesFor } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -17,11 +17,7 @@ export async function generateMetadata({
   if (!hasLocale(routing.locales, locale)) {
     return {};
   }
-  const msg = await getTranslations({ locale, namespace: 'Metadata' });
-  return {
-    title: msg('contactTitle'),
-    alternates: alternatesFor('/contact', locale),
-  };
+  return pageMetadata(locale, '/contact', 'contactTitle');
 }
 
 export default async function Contact({

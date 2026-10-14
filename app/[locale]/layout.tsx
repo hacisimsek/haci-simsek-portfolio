@@ -14,13 +14,15 @@ import MotionProvider from '@/components/providers/motion-provider';
 import SmoothScroll from '@/components/providers/smooth-scroll';
 import Footer from '@/components/Footer';
 import JsonLd from '@/components/seo/json-ld';
+import ThemeColor from '@/components/seo/theme-color';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { profile, t } from '@/content';
-import { careerYears } from '@/lib/dates';
-import { alternatesFor, SITE_URL } from '@/lib/seo';
+import { profile } from '@/content';
+import { brand } from '@/lib/og/brand';
+import { SITE_URL } from '@/lib/seo';
+import { pageMetadata } from '@/lib/page-metadata';
 import { personJsonLd, websiteJsonLd } from '@/lib/structured-data';
 
 const spaceGrotesk = Space_Grotesk({
@@ -47,13 +49,9 @@ export const revalidate = 86400;
 // would just 404.
 const onVercel = process.env.VERCEL === '1';
 
-// The --background tokens (oklch 0.985 0.004 275 / 0.13 0.02 275) in sRGB, for
-// the browser chrome.
+// The dark default; ThemeColor keeps it in step with the theme toggle.
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f9fafd' },
-    { media: '(prefers-color-scheme: dark)', color: '#05070f' },
-  ],
+  themeColor: brand.background,
 };
 
 export async function generateMetadata({
@@ -65,31 +63,13 @@ export async function generateMetadata({
   if (!hasLocale(routing.locales, locale)) {
     return {};
   }
-  const msg = await getTranslations({ locale, namespace: 'Metadata' });
-  const description = msg('description', {
-    name: profile.asciiName,
-    years: careerYears(profile.careerStart),
-  });
-  const title = `${profile.asciiName} · ${t(profile.role, locale)}`;
-
   return {
     metadataBase: new URL(SITE_URL),
     title: {
       default: profile.asciiName,
       template: `%s | ${profile.asciiName}`,
     },
-    description,
-    alternates: alternatesFor('/', locale),
-    openGraph: {
-      type: 'website',
-      siteName: profile.asciiName,
-      title,
-      description,
-      url: alternatesFor('/', locale).canonical,
-      locale: locale === 'tr' ? 'tr_TR' : 'en_US',
-      alternateLocale: locale === 'tr' ? 'en_US' : 'tr_TR',
-    },
-    twitter: { card: 'summary_large_image', title, description },
+    ...(await pageMetadata(locale, '/')),
   };
 }
 
@@ -128,6 +108,7 @@ export default async function LocaleLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <ThemeColor />
             <MotionProvider>
               <SmoothScroll />
               <ScrollProgress />

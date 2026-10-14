@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { alternatesFor } from '@/lib/seo';
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import ArticleBrowser from '@/components/collections/article-browser';
 import { loadFeed } from '@/lib/feeds/load';
+import { pageMetadata } from '@/lib/page-metadata';
 import { getArticles } from '@/lib/feeds/medium';
 
 export const revalidate = 21600;
@@ -19,11 +19,7 @@ export async function generateMetadata({
   if (!hasLocale(routing.locales, locale)) {
     return {};
   }
-  const msg = await getTranslations({ locale, namespace: 'Metadata' });
-  return {
-    title: msg('articlesTitle'),
-    alternates: alternatesFor('/articles', locale),
-  };
+  return pageMetadata(locale, '/articles', 'articlesTitle');
 }
 
 export default async function Articles({

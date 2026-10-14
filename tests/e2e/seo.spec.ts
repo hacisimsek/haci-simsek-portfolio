@@ -18,7 +18,6 @@ for (const { path, ogLocale } of [
 
     const meta = (selector: string) =>
       page.locator(selector).getAttribute('content');
-    await expect(page.locator('meta[name="theme-color"]')).toHaveCount(2);
     expect(await meta('meta[property="og:locale"]')).toBe(ogLocale);
     expect(await meta('meta[property="og:title"]')).toBeTruthy();
     expect(await meta('meta[property="og:description"]')).toBeTruthy();
@@ -106,4 +105,36 @@ test('analytics stay off outside Vercel', async ({ page }) => {
   await page.goto('/');
   await page.waitForTimeout(1500);
   expect(insights).toEqual([]);
+});
+
+for (const { path, title } of [
+  { path: '/projects', title: /Projects/ },
+  { path: '/tr/contact', title: /İletişim/ },
+]) {
+  test(`${path} shares its own URL and title`, async ({ page }) => {
+    await page.goto(path);
+    const content = (selector: string) =>
+      page.locator(selector).getAttribute('content');
+    expect(await content('meta[property="og:url"]')).toBe(
+      `https://hacisimsek.com${path}`
+    );
+    expect(await content('meta[property="og:title"]')).toMatch(title);
+    expect(await content('meta[name="twitter:title"]')).toMatch(title);
+    expect(await content('meta[property="og:image"]')).toContain(
+      'opengraph-image'
+    );
+  });
+}
+
+test('the browser chrome colour follows the site theme, not the OS', async ({
+  page,
+}) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.goto('/');
+  const themeColor = page.locator('meta[name="theme-color"]');
+  await expect(themeColor).toHaveCount(1);
+  // The site defaults to dark even on a light OS.
+  await expect(themeColor).toHaveAttribute('content', '#05070f');
+  await page.getByRole('button', { name: 'Toggle theme' }).click();
+  await expect(themeColor).toHaveAttribute('content', '#f9fafd');
 });
