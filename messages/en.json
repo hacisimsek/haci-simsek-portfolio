@@ -216,6 +216,7 @@
     "hirePassword": "[sudo] password for visitor: ••••••••",
     "hireGranted": "Permission granted. Opening the contact page…",
     "notFound": "command not found: {command}. Type help for the list.",
-    "matches": "Matches: {matches}"
+    "matches": "Matches: {matches}",
+    "helpKeys": "Keys: ↑/↓ history · Tab complete · Ctrl+L clear · Esc close"
   }
 }

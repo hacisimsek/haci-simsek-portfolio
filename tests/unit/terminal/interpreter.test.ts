@@ -107,3 +107,22 @@ describe('complete', () => {
     expect(complete('')).toEqual([...COMMANDS]);
   });
 });
+
+describe('polish', () => {
+  it('names the language it switches to', () => {
+    expect(text(run('lang tr', ctx('en')))).toContain('Türkçe');
+    expect(text(run('lang en', ctx('tr')))).toContain('English');
+  });
+
+  it('mentions the keyboard shortcuts in help', () => {
+    const out = text(run('help', ctx('en')));
+    expect(out).toContain('Tab');
+    expect(out).toContain('Ctrl+L');
+  });
+
+  it('builds project links from the GitHub profile in socials', () => {
+    const github = socials.find((social) => social.id === 'github')!.href;
+    const links = run('projects', ctx('en')).lines.filter((l) => l.href);
+    expect(links.every((l) => l.href!.startsWith(`${github}/`))).toBe(true);
+  });
+});

@@ -57,4 +57,15 @@ describe('Footer', () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/Istanbul/)).toBeInTheDocument();
   });
+
+  it('calls the build a "derleme" in Turkish', () => {
+    vi.stubEnv(
+      'VERCEL_GIT_COMMIT_SHA',
+      '662ca9cc40dbccaac05477a86eccd1acefa7dd7c'
+    );
+    render(<Footer />, { locale: 'tr' });
+    expect(
+      screen.getByRole('link', { name: /derleme 662ca9c/ })
+    ).toBeInTheDocument();
+  });
 });
