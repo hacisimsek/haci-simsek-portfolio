@@ -5,7 +5,9 @@ test('projects can be searched', async ({ page }) => {
   await waitForHydration(page);
   await page.getByLabel('Search').fill('notify');
   await expect(page.locator('main a[target="_blank"]')).toHaveCount(1);
-  await expect(page.getByRole('status')).toContainText('Showing 1 of 3');
+  await expect(page.locator('main').getByRole('status')).toContainText(
+    'Showing 1 of 3'
+  );
 });
 
 test('the Turkish projects page explains an empty result', async ({ page }) => {
