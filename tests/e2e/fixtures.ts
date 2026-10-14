@@ -21,7 +21,7 @@ export const test = base.extend<{ sphere: boolean }>({
   },
 });
 
-// Waits for finite animations such as the .fade-up entrance. Infinite ones
+// Waits for finite animations such as the hero letter entrance. Infinite ones
 // (e.g. animate-pulse) never finish and are ignored.
 export async function waitForEntranceAnimations(page: Page) {
   await page.waitForFunction(() =>

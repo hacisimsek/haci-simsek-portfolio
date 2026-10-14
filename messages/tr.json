@@ -162,7 +162,7 @@
     }
   },
   "Footer": {
-    "eyebrow": "Seçili iş birliklerine açığım",
+    "availability": "Seçili iş birliklerine açığım",
     "text": "Güçlü backend sistemler, dağıtık platform yetenekleri ve gerçek üretim yükü altında işletilebilir kalan mimariler geliştiriyorum.",
     "cta": "Bir konuşma başlat",
     "copyright": "© {year} {name}. Şablonla değil, özenle tasarlandı.",

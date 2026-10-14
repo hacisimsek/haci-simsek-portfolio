@@ -33,7 +33,7 @@ export default function Footer() {
       </p>
       <div className="flex flex-col gap-6 surface-card px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
-          <p className="font-medium">{msg('eyebrow')}</p>
+          <p className="font-medium">{msg('availability')}</p>
           <p className="max-w-xl text-sm leading-7 text-muted-foreground">
             {msg('text')}
           </p>
