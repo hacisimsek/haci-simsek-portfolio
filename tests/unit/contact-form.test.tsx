@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import ContactForm from '@/components/contact/contact-form';
@@ -14,6 +14,7 @@ async function fill(user: ReturnType<typeof userEvent.setup>) {
 
 describe('ContactForm', () => {
   afterEach(() => {
+    vi.useRealTimers();
     vi.unstubAllGlobals();
   });
 
@@ -52,10 +53,16 @@ describe('ContactForm', () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(screen.getByRole('button', { name: /Sending/ })).toBeDisabled();
 
-    resolve(new Response('{}'));
-    expect(
-      await screen.findByRole('status', { name: /Thanks/ }, { timeout: 4000 })
-    ).toHaveFocus();
+    // The thank-you panel appears after a 600ms timer and focuses itself in an
+    // effect. With a real timer, findBy can see the commit before that effect
+    // runs, so drive the timer inside act() to flush the effect first.
+    vi.useFakeTimers();
+    await act(async () => resolve(new Response('{}')));
+    expect(screen.getByRole('button', { name: /Sent/ })).toBeDisabled();
+    await act(() => vi.advanceTimersByTimeAsync(600));
+
+    expect(screen.getByRole('status', { name: /Thanks/ })).toHaveFocus();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it('keeps the message and offers a retry when sending fails', async () => {
