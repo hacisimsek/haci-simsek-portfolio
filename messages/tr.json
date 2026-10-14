@@ -58,6 +58,13 @@
     "startConversation": "Bir konuşma başlat",
     "paletteHint": "Her yere atlamak için <kbd>⌘K</kbd> veya <kbd>Ctrl K</kbd>"
   },
+  "Stats": {
+    "label": "Kısaca",
+    "years": "Yıl deneyim",
+    "companies": "Şirket",
+    "articles": "Makale",
+    "repos": "Açık kaynak repo"
+  },
   "About": {
     "eyebrow": "Teknik portfolyo",
     "experienceLabel": "Deneyim",

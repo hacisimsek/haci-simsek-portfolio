@@ -8,7 +8,17 @@ import Career from '@/components/Career';
 import Education from '@/components/Education';
 import Skills from '@/components/Skills';
 import Hero from '@/components/sections/hero';
+import Stats from '@/components/sections/stats';
+import { experience, profile } from '@/content';
+import { getRepos } from '@/lib/feeds/github';
+import { loadFeed } from '@/lib/feeds/load';
+import { getArticles } from '@/lib/feeds/medium';
+import { buildStats } from '@/lib/stats';
 import { Link } from '@/i18n/navigation';
+
+// The home page shows live repo and article data, so it refreshes as often as
+// the GitHub feed does.
+export const revalidate = 3600;
 
 const featuredAreas = [
   { key: 'projects', href: '/projects', icon: FolderGit2 },
@@ -27,10 +37,21 @@ export default async function Home({
   }
   setRequestLocale(locale);
   const msg = await getTranslations({ locale, namespace: 'Home' });
+  const [repos, articles] = await Promise.all([
+    loadFeed(getRepos),
+    loadFeed(getArticles),
+  ]);
+  const stats = buildStats({
+    careerStart: profile.careerStart,
+    roles: experience,
+    repos: repos.ok ? repos.data.length : undefined,
+    articles: articles.ok ? articles.data.length : undefined,
+  });
 
   return (
     <div className="space-y-6 pb-6">
       <Hero />
+      <Stats stats={stats} />
       <About />
       <Career />
       <Skills />
