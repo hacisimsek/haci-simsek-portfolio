@@ -49,7 +49,8 @@
     "locale": {
       "en": "English",
       "tr": "Türkçe"
-    }
+    },
+    "openTerminal": "Open terminal"
   },
   "Hero": {
     "eyebrow": "Software engineer · Istanbul",
@@ -183,7 +184,9 @@
     "eyebrow": "404",
     "title": "Page not found",
     "text": "The page you are looking for does not exist or has moved.",
-    "home": "Go to the home page"
+    "home": "Go to the home page",
+    "noSuchFile": "No such file or directory",
+    "openTerminal": "Open terminal"
   },
   "Terminal": {
     "title": "Terminal",

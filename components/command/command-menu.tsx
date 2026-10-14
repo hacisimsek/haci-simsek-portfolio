@@ -9,6 +9,7 @@ import {
   Monitor,
   Moon,
   Sun,
+  SquareTerminal,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
@@ -24,6 +25,7 @@ import {
 import { profile, socials } from '@/content';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { fold } from '@/lib/fold';
+import { openTerminal } from '@/lib/terminal/open';
 import {
   buildCommands,
   type CommandAction,
@@ -68,10 +70,17 @@ function ItemIcon({
       );
     case 'external':
       return <ExternalLink aria-hidden className={className} />;
+    case 'terminal':
+      return <SquareTerminal aria-hidden className={className} />;
   }
 }
 
-export default function CommandMenu({ onDone }: { onDone: () => void }) {
+export default function CommandMenu({
+  onDone,
+}: {
+  // `afterClose` runs once the palette has closed and returned focus.
+  onDone: (afterClose?: () => void) => void;
+}) {
   const t = useTranslations('Command');
   const router = useRouter();
   const pathname = usePathname();
@@ -106,6 +115,12 @@ export default function CommandMenu({ onDone }: { onDone: () => void }) {
         window.location.assign(`mailto:${profile.email}`);
         return;
       }
+    }
+
+    if (action.type === 'terminal') {
+      // Opening it right away would race the palette handing focus back.
+      onDone(openTerminal);
+      return;
     }
 
     onDone();

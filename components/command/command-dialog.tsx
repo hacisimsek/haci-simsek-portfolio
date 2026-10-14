@@ -2,7 +2,7 @@
 
 import { useLenis } from 'lenis/react';
 import { useTranslations } from 'next-intl';
-import { Suspense, lazy, useEffect, type RefObject } from 'react';
+import { Suspense, lazy, useEffect, useRef, type RefObject } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -23,6 +23,7 @@ export default function CommandDialog({
 }) {
   const t = useTranslations('Command');
   const lenis = useLenis();
+  const afterClose = useRef<(() => void) | undefined>(undefined);
 
   // Lenis ignores the dialog's scroll lock, so pause it while open.
   useEffect(() => {
@@ -38,6 +39,9 @@ export default function CommandDialog({
         onCloseAutoFocus={(event) => {
           event.preventDefault();
           returnFocusTo.current?.focus();
+          const next = afterClose.current;
+          afterClose.current = undefined;
+          next?.();
         }}
       >
         <DialogTitle className="sr-only">{t('title')}</DialogTitle>
@@ -45,7 +49,12 @@ export default function CommandDialog({
           {t('description')}
         </DialogDescription>
         <Suspense fallback={<div className="h-14" />}>
-          <CommandMenu onDone={() => onOpenChange(false)} />
+          <CommandMenu
+            onDone={(next) => {
+              afterClose.current = next;
+              onOpenChange(false);
+            }}
+          />
         </Suspense>
       </DialogContent>
     </Dialog>

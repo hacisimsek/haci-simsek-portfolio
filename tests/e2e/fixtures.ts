@@ -1,6 +1,7 @@
 import { test as base, type Page } from '@playwright/test';
 
 export { expect } from '@playwright/test';
+export type { Page } from '@playwright/test';
 
 // The WebGL sphere renders on the CPU in CI (no GPU), which slows every other
 // test. Pages report a 2-core device (tier "low", CSS orb only) unless a spec
