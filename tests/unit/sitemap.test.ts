@@ -53,8 +53,8 @@ describe('robots', () => {
 describe('manifest', () => {
   it('names the site and uses the generated icons and theme colours', () => {
     expect(manifest()).toMatchObject({
-      name: 'Haci Simsek',
-      short_name: 'Haci Simsek',
+      name: 'Hacı Şimşek',
+      short_name: 'Hacı Şimşek',
       start_url: '/',
       display: 'standalone',
       background_color: '#05070f',

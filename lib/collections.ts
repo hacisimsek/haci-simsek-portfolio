@@ -1,4 +1,5 @@
 import type { Repo } from '@/lib/feeds/github';
+import { projectTitle } from '@/lib/project-title';
 import type { Article } from '@/lib/feeds/medium';
 import { fold } from '@/lib/fold';
 
@@ -27,11 +28,14 @@ export function filterRepos(
   return repos
     .filter((repo) => !language || repo.language === language)
     .filter((repo) =>
-      matchesQuery([repo.name, repo.description, repo.language], query)
+      matchesQuery(
+        [repo.name, projectTitle(repo.name), repo.description, repo.language],
+        query
+      )
     )
     .sort((a, b) =>
       sort === 'name'
-        ? a.name.localeCompare(b.name, 'en')
+        ? projectTitle(a.name).localeCompare(projectTitle(b.name), 'en')
         : Date.parse(b.updatedAt) - Date.parse(a.updatedAt)
     );
 }

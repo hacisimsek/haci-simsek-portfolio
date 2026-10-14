@@ -40,7 +40,8 @@ export function websiteJsonLd(): Exclude<WebSite, string> {
   return {
     '@type': 'WebSite',
     '@id': WEBSITE_ID,
-    name: profile.asciiName,
+    name: profile.name,
+    alternateName: profile.asciiName,
     url: SITE_URL,
     inLanguage: ['en', 'tr'],
     publisher: { '@id': PERSON_ID },

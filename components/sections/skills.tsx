@@ -1,5 +1,4 @@
 import { useLocale, useTranslations } from 'next-intl';
-import Spotlight from '@/components/motion/spotlight';
 import { skills, t } from '@/content';
 
 export default function Skills() {
@@ -7,32 +6,31 @@ export default function Skills() {
   const locale = useLocale();
 
   return (
-    <section id="skills">
-      <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <h2 className="section-title">{msg('title')}</h2>
-        </div>
+    <section id="skills" aria-labelledby="skills-title">
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <h2 id="skills-title" className="section-title">
+          {msg('title')}
+        </h2>
         <p className="section-copy">{msg('copy')}</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <dl className="divide-y divide-border/70 border-y border-border/70">
         {skills.map((category) => (
-          <Spotlight key={category.id} className="surface-card p-6">
-            <article>
-              <h3 className="text-lg font-semibold">
-                {t(category.title, locale)}
-              </h3>
-              <div className="mt-4 flex flex-wrap gap-2">
+          <div
+            key={category.id}
+            className="grid gap-2 py-5 sm:grid-cols-[14rem_minmax(0,1fr)] sm:gap-8"
+          >
+            <dt className="font-semibold">{t(category.title, locale)}</dt>
+            <dd>
+              <ul className="flex flex-wrap gap-x-5 gap-y-1 leading-7 text-muted-foreground">
                 {t(category.items, locale).map((item) => (
-                  <span key={item} className="meta-chip">
-                    {item}
-                  </span>
+                  <li key={item}>{item}</li>
                 ))}
-              </div>
-            </article>
-          </Spotlight>
+              </ul>
+            </dd>
+          </div>
         ))}
-      </div>
+      </dl>
     </section>
   );
 }

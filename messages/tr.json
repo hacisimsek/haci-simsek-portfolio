@@ -10,7 +10,6 @@
     "projects": "Projeler",
     "articles": "Yazılar",
     "contact": "İletişim",
-    "letsTalk": "Konuşalım",
     "toggleTheme": "Temayı değiştir",
     "toggleNavigation": "Menüyü aç/kapat"
   },
@@ -54,7 +53,7 @@
   },
   "Hero": {
     "eyebrow": "Yazılım mühendisi · İstanbul",
-    "facts": "{years}+ yıl deneyim · {company} bünyesinde {role} · {city}",
+    "facts": "{years}+ yıl deneyim\u00a0· {company} bünyesinde {role}\u00a0· {city}",
     "viewProjects": "Projeleri gör",
     "startConversation": "Bir konuşma başlat",
     "paletteHint": "Her yere atlamak için <kbd>⌘K</kbd> veya <kbd>Ctrl K</kbd>"
@@ -99,8 +98,7 @@
     "title": "Uygulama ayrıntısının net düşünceyle buluştuğu yazılar",
     "subtitle": "Notlar, eğitimler ve pratik mühendislik çözümlemeleri. Yazmayı ödünleşimleri netleştirmek, dersleri kayda geçirmek ve karmaşık işleri anlaşılır kılmak için kullanıyorum.",
     "errorTitle": "Yazı listesi şu anda yüklenemedi.",
-    "errorText": "Medium geçici olarak erişilemez olabilir.",
-    "readArticle": "Yazıyı oku"
+    "errorText": "Medium geçici olarak erişilemez olabilir."
   },
   "Collections": {
     "search": "Ara",
@@ -116,6 +114,7 @@
     "sortOldest": "Önce en eski",
     "showing": "{total} sonuçtan {shown} tanesi gösteriliyor",
     "empty": "Eşleşen sonuç yok.",
+    "updated": "Güncelleme: {date}",
     "reset": "Filtreleri sıfırla"
   },
   "Contact": {

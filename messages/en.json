@@ -10,7 +10,6 @@
     "projects": "Projects",
     "articles": "Articles",
     "contact": "Contact",
-    "letsTalk": "Let's Talk",
     "toggleTheme": "Toggle theme",
     "toggleNavigation": "Toggle navigation"
   },
@@ -54,9 +53,9 @@
   },
   "Hero": {
     "eyebrow": "Software engineer · Istanbul",
-    "facts": "{years}+ years of experience · {role} at {company} · {city}",
+    "facts": "{years}+ years of experience\u00a0· {role} at {company}\u00a0· {city}",
     "viewProjects": "View Projects",
-    "startConversation": "Start a Conversation",
+    "startConversation": "Start a conversation",
     "paletteHint": "Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> to jump anywhere"
   },
   "About": {
@@ -99,8 +98,7 @@
     "title": "Writing where implementation detail meets clear thinking",
     "subtitle": "Notes, tutorials, and practical engineering breakdowns. I use writing to clarify tradeoffs, capture lessons, and make complex work easier to reason about.",
     "errorTitle": "Article feed could not be loaded right now.",
-    "errorText": "Medium may be temporarily unavailable.",
-    "readArticle": "Read article"
+    "errorText": "Medium may be temporarily unavailable."
   },
   "Collections": {
     "search": "Search",
@@ -116,6 +114,7 @@
     "sortOldest": "Oldest first",
     "showing": "Showing {shown} of {total}",
     "empty": "No matches.",
+    "updated": "Updated {date}",
     "reset": "Reset filters"
   },
   "Contact": {

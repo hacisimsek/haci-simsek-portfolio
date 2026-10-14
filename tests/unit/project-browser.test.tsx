@@ -40,7 +40,7 @@ describe('ProjectBrowser', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Showing 3 of 3');
     await user.type(screen.getByLabelText('Search'), 'remind');
 
-    expect(cards()).toEqual(['notifyhub']);
+    expect(cards()).toEqual(['NotifyHub']);
     await waitFor(() =>
       expect(screen.getByRole('status')).toHaveTextContent('Showing 1 of 3')
     );
@@ -56,7 +56,7 @@ describe('ProjectBrowser', () => {
     });
     await user.click(typescript);
     expect(typescript).toHaveAttribute('aria-pressed', 'true');
-    expect(cards()).toEqual(['wordly']);
+    expect(cards()).toEqual(['Wordly']);
 
     await user.click(within(filters).getByRole('button', { name: 'All' }));
     expect(cards()).toHaveLength(3);
@@ -66,7 +66,7 @@ describe('ProjectBrowser', () => {
     const user = userEvent.setup();
     render(<ProjectBrowser repos={repos} />);
     await user.selectOptions(screen.getByLabelText('Sort'), 'name');
-    expect(cards()).toEqual(['bff-application', 'notifyhub', 'wordly']);
+    expect(cards()).toEqual(['BFF application', 'NotifyHub', 'Wordly']);
   });
 
   it('offers a reset when nothing matches, in Turkish too', async () => {

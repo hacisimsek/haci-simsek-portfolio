@@ -155,7 +155,6 @@
   @apply inline-flex items-center rounded-full border px-3 py-1 text-xs text-muted-foreground;
   border-color: color-mix(in oklab, var(--border) 70%, transparent);
   background-color: color-mix(in oklab, var(--background) 85%, transparent);
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 @utility page-title {

@@ -7,14 +7,14 @@ export default function NotFoundPage() {
 
   return (
     <section className="space-y-6 pb-6">
-      <div className="section-shell">
+      <header className="pt-2">
         <h1 className="page-title">{msg('title')}</h1>
         <p className="mt-5 page-subtitle">{msg('text')}</p>
-        <NotFoundTerminal />
-        <Link href="/" className="mt-6 inline-block underline">
-          {msg('home')}
-        </Link>
-      </div>
+      </header>
+      <NotFoundTerminal />
+      <Link href="/" className="inline-flex min-h-11 items-center underline">
+        {msg('home')}
+      </Link>
     </section>
   );
 }

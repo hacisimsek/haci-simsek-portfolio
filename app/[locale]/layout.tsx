@@ -62,8 +62,8 @@ export async function generateMetadata({
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      default: profile.asciiName,
-      template: `%s | ${profile.asciiName}`,
+      default: profile.name,
+      template: `%s | ${profile.name}`,
     },
     ...(await pageMetadata(locale, '/')),
   };

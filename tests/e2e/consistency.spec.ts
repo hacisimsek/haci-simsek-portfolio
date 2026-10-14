@@ -1,0 +1,98 @@
+import { expect, test } from './fixtures';
+
+test.describe('desktop header', () => {
+  test.skip(({ isMobile }) => isMobile, 'the phone header has its own menu');
+
+  test('has three nav links and one contact button', async ({ page }) => {
+    await page.goto('/');
+    const nav = page.locator('header nav').first();
+    await expect(nav.getByRole('link')).toHaveText([
+      'Home',
+      'Projects',
+      'Articles',
+    ]);
+    await expect(
+      page.locator('header').getByRole('link', { name: 'Contact' }).first()
+    ).toBeVisible();
+    await expect(page.getByText("Let's Talk")).toHaveCount(0);
+  });
+
+  for (const [path, current] of [
+    ['/', 'Home'],
+    ['/projects', 'Projects'],
+    ['/tr/articles', 'Yazılar'],
+  ] as const) {
+    test(`marks ${current} as the current page on ${path}`, async ({
+      page,
+    }) => {
+      await page.goto(path);
+      const marked = page
+        .locator('header nav')
+        .first()
+        .locator('[aria-current="page"]');
+      await expect(marked).toHaveCount(1);
+      await expect(marked).toHaveText(current);
+    });
+  }
+});
+
+test('every contact call to action uses the same words', async ({ page }) => {
+  await page.goto('/');
+  await expect(
+    page
+      .locator('main')
+      .getByRole('link', { name: 'Start a conversation', exact: true })
+  ).toHaveCount(1);
+  await expect(
+    page
+      .locator('footer')
+      .getByRole('link', { name: 'Start a conversation', exact: true })
+  ).toHaveCount(1);
+});
+
+test('the name keeps its Turkish letters', async ({ page, request }) => {
+  await page.goto('/');
+  await expect(page).toHaveTitle(/Hacı Şimşek/);
+  await expect(page.locator('footer')).toContainText('Hacı Şimşek');
+  await expect(page.getByRole('img', { name: 'Hacı Şimşek' })).toHaveCount(1);
+  const manifest = await (await request.get('/manifest.webmanifest')).json();
+  expect(manifest.name).toBe('Hacı Şimşek');
+});
+
+test('the hero facts keep separators off line starts', async ({ page }) => {
+  await page.goto('/');
+  const text = await page.getByText(/^\d+\+ years of experience/).textContent();
+  expect(text).toContain(' · ');
+  expect(text).not.toMatch(/ ·/);
+});
+
+test('project rows fade their colour on hover', async ({ page }) => {
+  await page.goto('/');
+  const row = page
+    .getByRole('region', { name: 'Featured projects' })
+    .getByRole('link', { name: /^NotifyHub/ });
+  const property = await row.evaluate(
+    (el) => getComputedStyle(el).transitionProperty
+  );
+  expect(property).toMatch(/color|all/);
+});
+
+test.describe('on a phone', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('section links and the footer call to action are 44px tall', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    for (const link of [
+      page.getByRole('link', { name: 'All projects' }),
+      page.getByRole('link', { name: 'All articles' }),
+      page
+        .locator('footer')
+        .getByRole('link', { name: 'Start a conversation' }),
+    ]) {
+      const box = await link.boundingBox();
+      expect(box!.height).toBeGreaterThanOrEqual(44);
+    }
+  });
+});

@@ -8,19 +8,25 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import ThemeToggle from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { profile } from '@/content';
-import { Link } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
   { href: '/', key: 'home' },
   { href: '/projects', key: 'projects' },
   { href: '/articles', key: 'articles' },
-  { href: '/contact', key: 'contact' },
 ] as const;
+
+function isCurrent(pathname: string, href: string) {
+  return href === '/'
+    ? pathname === '/'
+    : pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export default function Header() {
   const t = useTranslations('Nav');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-4 z-50 mb-10">
@@ -39,7 +45,8 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-full px-4 py-2 text-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+              aria-current={isCurrent(pathname, link.href) ? 'page' : undefined}
+              className="rounded-full px-4 py-2 text-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground aria-[current=page]:bg-secondary aria-[current=page]:text-foreground"
             >
               {t(link.key)}
             </Link>
@@ -59,7 +66,7 @@ export default function Header() {
             asChild
             className="hidden rounded-full bg-accent px-5 text-accent-foreground hover:bg-accent/90 md:inline-flex"
           >
-            <Link href="/contact">{t('letsTalk')}</Link>
+            <Link href="/contact">{t('contact')}</Link>
           </Button>
 
           <Button
@@ -95,7 +102,8 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-2xl px-3 py-3 text-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground"
+              aria-current={isCurrent(pathname, link.href) ? 'page' : undefined}
+              className="rounded-2xl px-3 py-3 text-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground aria-[current=page]:bg-secondary aria-[current=page]:text-foreground"
               onClick={() => setIsMenuOpen(false)}
             >
               {t(link.key)}
@@ -106,7 +114,7 @@ export default function Header() {
             className="mt-2 h-11 rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
           >
             <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
-              {t('letsTalk')}
+              {t('contact')}
             </Link>
           </Button>
         </nav>

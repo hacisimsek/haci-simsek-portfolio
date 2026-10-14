@@ -4,8 +4,8 @@ import { brand } from '@/lib/og/brand';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: profile.asciiName,
-    short_name: profile.asciiName,
+    name: profile.name,
+    short_name: profile.name,
     description: profile.headline.en,
     start_url: '/',
     display: 'standalone',

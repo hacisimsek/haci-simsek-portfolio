@@ -29,7 +29,7 @@ test('projects and articles render the feeds from the fixture server', async ({
   // The fixture keeps 3 of its 8 repos; the live API returns many more.
   await expect(page.locator('main a[target="_blank"]')).toHaveCount(3);
   await expect(
-    page.getByRole('heading', { name: 'notifyhub', exact: true })
+    page.getByRole('heading', { name: 'NotifyHub', exact: true })
   ).toBeVisible();
   await expect(
     page.getByRole('heading', { name: 'forked-lib', exact: true })

@@ -52,7 +52,7 @@ export default function Footer() {
 
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 text-sm font-medium text-foreground transition hover:text-accent"
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-foreground transition hover:text-accent"
           >
             {msg('cta')}
             <ArrowUpRight className="h-4 w-4" />
@@ -75,7 +75,7 @@ export default function Footer() {
           <p className="text-xs text-muted-foreground">
             {msg('copyright', {
               year: new Date().getFullYear(),
-              name: profile.asciiName,
+              name: profile.name,
             })}
           </p>
         </div>

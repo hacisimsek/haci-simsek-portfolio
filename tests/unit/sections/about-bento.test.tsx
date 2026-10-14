@@ -15,7 +15,7 @@ describe('AboutBento', () => {
   it('shows the portrait and current role', () => {
     render(<AboutBento />);
     expect(
-      screen.getByRole('img', { name: 'Haci Simsek' })
+      screen.getByRole('img', { name: 'Hacı Şimşek' })
     ).toBeInTheDocument();
     expect(
       screen.getByText('Software Development Senior Specialist')

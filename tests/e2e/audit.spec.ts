@@ -182,7 +182,7 @@ test.describe('phone primary actions', () => {
     await page.getByRole('button', { name: 'Toggle navigation' }).click();
     const cta = page
       .locator('header')
-      .getByRole('link', { name: "Let's Talk" })
+      .getByRole('link', { name: 'Contact' })
       .last();
     await expect(cta).toBeVisible();
     expect(await size(cta)).toBeGreaterThanOrEqual(44);

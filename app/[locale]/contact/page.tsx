@@ -1,4 +1,3 @@
-import { Mail, MessageSquareText, Sparkles } from 'lucide-react';
 import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -32,14 +31,9 @@ export default async function Contact({
   setRequestLocale(locale);
   const msg = await getTranslations({ locale, namespace: 'Contact' });
   const notes = [
-    { icon: Sparkles, title: msg('bestFitTitle'), text: msg('bestFitText') },
+    { title: msg('bestFitTitle'), text: msg('bestFitText') },
+    { title: msg('helpsTitle'), text: msg('helpsText') },
     {
-      icon: MessageSquareText,
-      title: msg('helpsTitle'),
-      text: msg('helpsText'),
-    },
-    {
-      icon: Mail,
       title: msg('emailTitle'),
       text: msg('emailText', { email: profile.email }),
     },
@@ -47,25 +41,20 @@ export default async function Contact({
 
   return (
     <section className="grid gap-6 pb-6 lg:grid-cols-[0.9fr_1.1fr]">
-      <div className="section-shell">
+      <div className="pt-2">
         <h1 className="page-title">{msg('title')}</h1>
         <p className="mt-5 page-subtitle">{msg('subtitle')}</p>
 
-        <div className="mt-8 space-y-4">
-          {notes.map(({ icon: Icon, title, text }) => (
-            <div key={title} className="surface-card p-5">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary text-foreground">
-                  <Icon aria-hidden className="h-4 w-4" />
-                </div>
-                <h2 className="text-lg font-semibold">{title}</h2>
-              </div>
-              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+        <dl className="mt-8 divide-y divide-border/70 border-y border-border/70">
+          {notes.map(({ title, text }) => (
+            <div key={title} className="py-5">
+              <dt className="text-lg font-semibold">{title}</dt>
+              <dd className="mt-2 text-sm leading-7 text-muted-foreground">
                 {text}
-              </p>
+              </dd>
             </div>
           ))}
-        </div>
+        </dl>
       </div>
 
       <div className="section-shell">
