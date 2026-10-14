@@ -54,17 +54,10 @@
   },
   "Hero": {
     "eyebrow": "Yazılım mühendisi · İstanbul",
-    "rolesLabel": "Roller",
+    "facts": "{years}+ yıl deneyim · {company} bünyesinde {role} · {city}",
     "viewProjects": "Projeleri gör",
     "startConversation": "Bir konuşma başlat",
     "paletteHint": "Her yere atlamak için <kbd>⌘K</kbd> veya <kbd>Ctrl K</kbd>"
-  },
-  "Stats": {
-    "label": "Kısaca",
-    "years": "Yıl deneyim",
-    "companies": "Şirket",
-    "articles": "Makale",
-    "repos": "Açık kaynak repo"
   },
   "About": {
     "title": "Ayakta kalması gereken sistemler için backend mühendisi",

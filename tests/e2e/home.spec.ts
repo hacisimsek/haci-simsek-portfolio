@@ -1,12 +1,13 @@
 import { expect, test } from './fixtures';
 
-test('home stats count the fixture feeds', async ({ page }) => {
+test('home has no stats strip and no rotating words', async ({ page }) => {
   await page.goto('/');
-  const stats = page.getByRole('region', { name: 'At a glance' });
-  const repos = stats.locator('div', { hasText: 'Open-source repos' });
-  await expect(repos.locator('dd .sr-only')).toHaveText('3');
-  const articles = stats.locator('div', { hasText: 'Articles' });
-  await expect(articles.locator('dd .sr-only')).toHaveText('3');
+  await expect(page.getByRole('region', { name: 'At a glance' })).toHaveCount(
+    0
+  );
+  await expect(page.getByText(/\d+\+ years of experience · /)).toBeVisible();
+  await page.waitForTimeout(3500);
+  await expect(page.locator('.word-in')).toHaveCount(0);
 });
 
 test('home features fixture projects and articles', async ({ page }) => {

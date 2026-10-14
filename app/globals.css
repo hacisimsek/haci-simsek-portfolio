@@ -441,7 +441,6 @@
   .orb-ring,
   .check-draw,
   .letter,
-  .word-in,
   .border-beam::before,
   .dialog-content,
   .animate-spin {
@@ -520,17 +519,6 @@ section[id] {
       color-mix(in oklab, var(--primary) 12%, transparent),
       transparent 60%
     );
-  }
-}
-
-.word-in {
-  animation: word-in 350ms ease-out;
-}
-
-@keyframes word-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.4em);
   }
 }
 

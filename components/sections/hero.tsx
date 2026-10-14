@@ -1,18 +1,17 @@
 import { ArrowRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import type { CSSProperties } from 'react';
-import WordRotate from '@/components/motion/word-rotate';
 import FallbackOrb from '@/components/three/fallback-orb';
 import HeroVisual from '@/components/three/hero-visual';
 import { Button } from '@/components/ui/button';
 import { profile, t } from '@/content';
 import { Link } from '@/i18n/navigation';
+import { careerYears } from '@/lib/dates';
 import { splitGraphemes } from '@/lib/split-text';
 
 export default function Hero() {
   const msg = useTranslations('Hero');
   const locale = useLocale();
-  const roles = t(profile.rotatingRoles, locale);
   const letters = splitGraphemes(profile.name);
 
   return (
@@ -44,19 +43,14 @@ export default function Hero() {
           </span>
         </h1>
 
-        <p className="mt-8 flex flex-wrap items-baseline gap-x-3 font-mono text-sm text-muted-foreground sm:text-base">
-          <span aria-hidden className="text-accent">
-            ~/
-          </span>
-          <span className="text-foreground">
-            <WordRotate words={roles} />
-          </span>
+        <p className="mt-8 text-sm text-muted-foreground sm:text-base">
+          {msg('facts', {
+            years: careerYears(profile.careerStart),
+            role: t(profile.role, locale),
+            company: profile.currentCompany,
+            city: t(profile.city, locale),
+          })}
         </p>
-        <ul aria-label={msg('rolesLabel')} className="sr-only">
-          {roles.map((role) => (
-            <li key={role}>{role}</li>
-          ))}
-        </ul>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
           <Button

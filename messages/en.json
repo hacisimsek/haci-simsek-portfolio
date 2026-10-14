@@ -54,17 +54,10 @@
   },
   "Hero": {
     "eyebrow": "Software engineer · Istanbul",
-    "rolesLabel": "Roles",
+    "facts": "{years}+ years of experience · {role} at {company} · {city}",
     "viewProjects": "View Projects",
     "startConversation": "Start a Conversation",
     "paletteHint": "Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> to jump anywhere"
-  },
-  "Stats": {
-    "label": "At a glance",
-    "years": "Years of experience",
-    "companies": "Companies",
-    "articles": "Articles",
-    "repos": "Open-source repos"
   },
   "About": {
     "title": "Backend engineer for systems that have to stay up",
