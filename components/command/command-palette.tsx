@@ -1,6 +1,6 @@
 'use client';
 
-import { Command as CommandIcon } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import {
   lazy,
@@ -58,7 +58,7 @@ export default function CommandPalette() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="inline-flex h-9 items-center gap-2 rounded-full border border-input bg-background/80 px-3 text-muted-foreground transition hover:text-foreground">
-        <CommandIcon aria-hidden className="h-3.5 w-3.5" />
+        <Search aria-hidden className="h-3.5 w-3.5" />
         <span className="sr-only">{t('title')}</span>
         <kbd aria-hidden className="hidden font-mono text-xs sm:inline">
           {apple ? '⌘K' : 'Ctrl K'}

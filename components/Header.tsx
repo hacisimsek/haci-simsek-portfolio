@@ -25,9 +25,12 @@ export default function Header() {
 
   return (
     <header className="sticky top-4 z-50 mb-10 fade-up">
-      <div className="flex min-h-[88px] items-center justify-between gap-4 surface-card px-5 py-4 sm:px-6">
+      <div
+        data-glass
+        className="flex min-h-[76px] items-center justify-between gap-4 glass px-5 py-3 sm:px-6"
+      >
         <Link href="/" className="min-w-0">
-          <div className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
+          <div className="font-display text-lg font-semibold tracking-tight whitespace-nowrap sm:text-2xl">
             {profile.name}
           </div>
         </Link>
@@ -44,7 +47,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <CommandPalette />
           <LanguageSwitcher />
 
@@ -85,8 +88,9 @@ export default function Header() {
       </div>
 
       <div
+        data-glass
         className={cn(
-          'mt-3 overflow-hidden surface-card px-4 transition-all duration-200 md:hidden',
+          'mt-3 overflow-hidden glass px-4 transition-all duration-200 md:hidden',
           isMenuOpen
             ? 'max-h-80 py-4 opacity-100'
             : 'max-h-0 border-transparent py-0 opacity-0'
