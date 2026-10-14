@@ -29,6 +29,46 @@ describe('Career', () => {
   });
 });
 
+describe('Career layout', () => {
+  it('is titled honestly in both languages', () => {
+    render(<Career />);
+    expect(
+      screen.getByRole('heading', { level: 2, name: "Where I've worked" })
+    ).toBeInTheDocument();
+    render(<Career />, { locale: 'tr' });
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Çalıştığım yerler' })
+    ).toBeInTheDocument();
+  });
+
+  it('opens the current employer and folds earlier highlights', () => {
+    render(<Career />);
+    const roles = screen.getAllByRole('article');
+    // Sisal (current): highlights are on the page, not folded.
+    for (const role of roles.slice(0, 2)) {
+      expect(role.querySelector('details')).toBeNull();
+      expect(role.querySelectorAll('li').length).toBeGreaterThan(0);
+    }
+    // Earlier roles keep their highlights one click away.
+    for (const role of roles.slice(2)) {
+      const details = role.querySelector('details')!;
+      expect(details).not.toBeNull();
+      expect(details).not.toHaveAttribute('open');
+      const summary = details.querySelector('summary')!;
+      expect(summary).toHaveTextContent('What I did');
+      // A visible cue that it opens, not the engine-dependent marker.
+      expect(summary.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
+      expect(summary).toHaveClass('list-none');
+    }
+  });
+
+  it('keeps role text to a readable measure', () => {
+    render(<Career />);
+    for (const role of screen.getAllByRole('article'))
+      expect(role).toHaveClass('max-w-[70ch]');
+  });
+});
+
 describe('Career timeline', () => {
   it('groups the Sisal promotion and labels non-employment roles', () => {
     render(<Career />);

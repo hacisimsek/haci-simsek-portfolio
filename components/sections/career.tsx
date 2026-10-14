@@ -1,3 +1,4 @@
+import { ChevronRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { experience, t } from '@/content';
 import { formatPeriod } from '@/lib/dates';
@@ -22,7 +23,9 @@ export default function Career() {
 
       <TimelineTrack>
         <ol className="space-y-12">
-          {groups.map((group) => {
+          {groups.map((group, groupIndex) => {
+            // Only the current employer is open; earlier highlights fold.
+            const current = groupIndex === 0;
             const first = group.roles[0];
             const last = group.roles.at(-1)!;
             const labelId = `company-${first.id}`;
@@ -56,7 +59,7 @@ export default function Career() {
                   {group.roles.map((role) => (
                     <article
                       key={role.id}
-                      className="border-t border-border/70 pt-6 first:border-t-0 first:pt-0"
+                      className="max-w-[70ch] border-t border-border/70 pt-6 first:border-t-0 first:pt-0"
                     >
                       <h3 className="text-xl font-semibold">
                         {t(role.title, locale)}
@@ -86,16 +89,20 @@ export default function Career() {
                         {t(role.summary, locale)}
                       </p>
 
-                      <ul className="mt-4 space-y-2">
-                        {t(role.highlights, locale).map((bullet) => (
-                          <li
-                            key={bullet}
-                            className="relative pl-5 text-sm leading-7 text-muted-foreground before:absolute before:top-3 before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-accent"
-                          >
-                            <RichText text={bullet} />
-                          </li>
-                        ))}
-                      </ul>
+                      {current ? (
+                        <Highlights items={t(role.highlights, locale)} />
+                      ) : (
+                        <details className="group/more mt-3">
+                          <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-foreground hover:text-accent [&::-webkit-details-marker]:hidden">
+                            <ChevronRight
+                              aria-hidden
+                              className="h-4 w-4 transition-transform group-open/more:rotate-90"
+                            />
+                            {msg('more')}
+                          </summary>
+                          <Highlights items={t(role.highlights, locale)} />
+                        </details>
+                      )}
                     </article>
                   ))}
                 </div>
@@ -105,5 +112,20 @@ export default function Career() {
         </ol>
       </TimelineTrack>
     </section>
+  );
+}
+
+function Highlights({ items }: { items: string[] }) {
+  return (
+    <ul className="mt-4 space-y-2">
+      {items.map((bullet) => (
+        <li
+          key={bullet}
+          className="relative pl-5 text-sm leading-7 text-muted-foreground before:absolute before:top-3 before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-accent"
+        >
+          <RichText text={bullet} />
+        </li>
+      ))}
+    </ul>
   );
 }

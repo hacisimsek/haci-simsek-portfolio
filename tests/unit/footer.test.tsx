@@ -1,7 +1,12 @@
-import { screen } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import { renderWithIntl as render } from './render';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import Footer from '@/components/Footer';
+import { openMailto } from '@/lib/mailto';
+import en from '../../messages/en.json';
+import tr from '../../messages/tr.json';
+
+vi.mock('@/lib/mailto', () => ({ openMailto: vi.fn() }));
 
 describe('Footer', () => {
   it('links each social icon to the right profile in a new tab', () => {
@@ -65,5 +70,49 @@ describe('Footer', () => {
     expect(
       screen.getByRole('link', { name: /derleme 662ca9c/ })
     ).toBeInTheDocument();
+  });
+
+  it('closes the page with an honest, open invitation', () => {
+    const { container } = render(<Footer />);
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'Open to the right conversation',
+      })
+    ).toBeInTheDocument();
+    expect(screen.getByText(/not actively looking/)).toBeInTheDocument();
+    expect(container.querySelector('.surface-card')).toBeNull();
+    expect(container.textContent).not.toMatch(/templates|selective/i);
+  });
+
+  it('copies the email address and confirms it', async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.assign(navigator, { clipboard: { writeText } });
+    render(<Footer />);
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Copy email' }));
+    });
+    expect(writeText).toHaveBeenCalledWith('hacisimsek23@gmail.com');
+    expect(screen.getByRole('status')).toHaveTextContent('Email copied');
+  });
+
+  it('opens the mail client when the clipboard is blocked', async () => {
+    Object.assign(navigator, {
+      clipboard: { writeText: vi.fn().mockRejectedValue(new Error('no')) },
+    });
+    render(<Footer />, { locale: 'tr' });
+    await act(async () => {
+      fireEvent.click(
+        screen.getByRole('button', { name: 'E-postayı kopyala' })
+      );
+    });
+    expect(openMailto).toHaveBeenCalledWith('hacisimsek23@gmail.com');
+  });
+
+  it('takes the employer from the profile, not from the copy', () => {
+    expect(en.Footer.text).toContain('{company}');
+    expect(tr.Footer.text).toContain('{company}');
+    render(<Footer />, { locale: 'tr' });
+    expect(screen.getByText(/Sisal’deyim/)).toBeInTheDocument();
   });
 });

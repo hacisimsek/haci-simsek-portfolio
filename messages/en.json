@@ -96,15 +96,13 @@
     "outcome": "Inventory failed. Payment refunded and order cancelled."
   },
   "About": {
-    "title": "Backend engineer for systems that have to stay up",
-    "currentlyAt": "Currently at {company}",
-    "localTime": "Local time in Istanbul",
-    "email": "Email"
+    "title": "Backend engineer for systems that have to stay up"
   },
   "Career": {
-    "title": "Experience with visible product impact",
+    "title": "Where I've worked",
     "copy": "Most of my recent work sits in backend-heavy systems where scale, release confidence, observability, and service reliability matter as much as implementation itself.",
     "promoted": "Promoted",
+    "more": "What I did",
     "kind": {
       "internship": "Internship",
       "leadership": "Leadership"
@@ -185,10 +183,12 @@
     }
   },
   "Footer": {
-    "availability": "Available for selective collaborations",
-    "text": "Building robust backend systems, distributed platform capabilities, and architecture that remains operable under real production load.",
+    "title": "Open to the right conversation",
+    "text": "I'm at {company} and not actively looking, but I'm always glad to talk about the right role or a hard backend problem.",
     "cta": "Start a conversation",
-    "copyright": "© {year} {name}. Designed with intent, not templates.",
+    "copyEmail": "Copy email",
+    "copied": "Email copied",
+    "copyright": "© {year} {name}.",
     "build": "build {sha}"
   },
   "NotFound": {
