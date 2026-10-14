@@ -150,7 +150,9 @@
     "eyebrow": "Seçili iş birliklerine açığım",
     "text": "Güçlü backend sistemler, dağıtık platform yetenekleri ve gerçek üretim yükü altında işletilebilir kalan mimariler geliştiriyorum.",
     "cta": "Bir konuşma başlat",
-    "copyright": "© {year} {name}. Şablonla değil, özenle tasarlandı."
+    "copyright": "© {year} {name}. Şablonla değil, özenle tasarlandı.",
+    "localTime": "İstanbul",
+    "build": "sürüm {sha}"
   },
   "NotFound": {
     "eyebrow": "404",

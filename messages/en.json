@@ -150,7 +150,9 @@
     "eyebrow": "Available for selective collaborations",
     "text": "Building robust backend systems, distributed platform capabilities, and architecture that remains operable under real production load.",
     "cta": "Start a conversation",
-    "copyright": "© {year} {name}. Designed with intent, not templates."
+    "copyright": "© {year} {name}. Designed with intent, not templates.",
+    "localTime": "Istanbul",
+    "build": "build {sha}"
   },
   "NotFound": {
     "eyebrow": "404",
