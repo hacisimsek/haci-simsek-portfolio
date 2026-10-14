@@ -19,13 +19,13 @@ export async function pageMetadata(
 ): Promise<Metadata> {
   const msg = await getTranslations({ locale, namespace: 'Metadata' });
   const description = msg('description', {
-    name: profile.asciiName,
+    name: profile.name,
     years: careerYears(profile.careerStart),
   });
   const pageTitle = titleKey ? msg(titleKey) : undefined;
   const socialTitle = pageTitle
-    ? `${pageTitle} | ${profile.asciiName}`
-    : `${profile.asciiName} · ${t(profile.role, locale)}`;
+    ? `${pageTitle} | ${profile.name}`
+    : `${profile.name} · ${t(profile.role, locale)}`;
   const alternates = alternatesFor(path, locale);
   // A page-level openGraph block drops the file-based image from
   // app/[locale]/opengraph-image, so name it explicitly.
@@ -34,7 +34,7 @@ export async function pageMetadata(
       url: `/${locale}/opengraph-image/card`,
       width: 1200,
       height: 630,
-      alt: `${profile.asciiName} · ${t(profile.role, locale)}`,
+      alt: `${profile.name} · ${t(profile.role, locale)}`,
     },
   ];
 
@@ -44,7 +44,7 @@ export async function pageMetadata(
     alternates,
     openGraph: {
       type: 'website',
-      siteName: profile.asciiName,
+      siteName: profile.name,
       title: socialTitle,
       description,
       url: alternates.canonical,

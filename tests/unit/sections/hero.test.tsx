@@ -25,7 +25,7 @@ describe('Hero', () => {
     render(<Hero />);
     expect(
       screen.getByText(
-        /^\d+\+ years of experience · Software Development Senior Specialist at Sisal · Istanbul$/
+        /^\d+\+ years of experience\s·\sSoftware Development Senior Specialist at Sisal\s·\sIstanbul$/
       )
     ).toBeInTheDocument();
   });
@@ -34,7 +34,7 @@ describe('Hero', () => {
     render(<Hero />, { locale: 'tr' });
     expect(
       screen.getByText(
-        /^\d+\+ yıl deneyim · Sisal bünyesinde Kıdemli Yazılım Geliştirme Uzmanı · İstanbul$/
+        /^\d+\+ yıl deneyim\s·\sSisal bünyesinde Kıdemli Yazılım Geliştirme Uzmanı\s·\sİstanbul$/
       )
     ).toBeInTheDocument();
   });
@@ -46,7 +46,7 @@ describe('Hero', () => {
       '/projects'
     );
     expect(
-      screen.getByRole('link', { name: /Start a Conversation/ })
+      screen.getByRole('link', { name: /Start a conversation/ })
     ).toHaveAttribute('href', '/contact');
   });
 

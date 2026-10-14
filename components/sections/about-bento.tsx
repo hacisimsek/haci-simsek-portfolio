@@ -58,7 +58,7 @@ export default function AboutBento() {
       <div className={cn(tile, 'p-3 lg:col-span-2 lg:row-span-2')}>
         <Image
           src={portrait}
-          alt={profile.asciiName}
+          alt={profile.name}
           placeholder="blur"
           sizes="(min-width: 1024px) 380px, 100vw"
           className="aspect-4/5 h-full w-full rounded-[1.4rem] object-cover"

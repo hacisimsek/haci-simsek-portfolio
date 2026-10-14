@@ -11,7 +11,7 @@ test('the below-the-fold portrait is not preloaded', async ({ page }) => {
       )
     );
   expect(preloads.filter((src) => /portrait/.test(src))).toEqual([]);
-  await expect(page.getByRole('img', { name: 'Haci Simsek' })).toHaveAttribute(
+  await expect(page.getByRole('img', { name: 'Hacı Şimşek' })).toHaveAttribute(
     'loading',
     'lazy'
   );

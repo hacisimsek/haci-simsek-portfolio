@@ -50,9 +50,9 @@ describe('Footer', () => {
     expect(screen.queryByRole('link', { name: /build/i })).toBeNull();
   });
 
-  it('leaves the name and the local time to the hero and About', () => {
-    render(<Footer />);
-    expect(screen.queryByText('Hacı Şimşek')).toBeNull();
+  it('leaves the wordmark and the local time to the hero and About', () => {
+    const { container } = render(<Footer />);
+    expect(container.querySelector('footer > p')).toBeNull();
     expect(screen.queryByText(/Istanbul/)).toBeNull();
   });
 

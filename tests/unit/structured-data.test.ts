@@ -44,7 +44,7 @@ describe('websiteJsonLd', () => {
   it('names the site and its languages', () => {
     expect(websiteJsonLd()).toMatchObject({
       '@type': 'WebSite',
-      name: 'Haci Simsek',
+      name: 'Hacı Şimşek',
       url: 'https://hacisimsek.com',
       inLanguage: ['en', 'tr'],
     });

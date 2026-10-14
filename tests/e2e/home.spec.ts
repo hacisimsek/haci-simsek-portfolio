@@ -5,7 +5,7 @@ test('home has no stats strip and no rotating words', async ({ page }) => {
   await expect(page.getByRole('region', { name: 'At a glance' })).toHaveCount(
     0
   );
-  await expect(page.getByText(/\d+\+ years of experience · /)).toBeVisible();
+  await expect(page.getByText(/\d+\+ years of experience\s·\s/)).toBeVisible();
   await page.waitForTimeout(3500);
   await expect(page.locator('.word-in')).toHaveCount(0);
 });
@@ -16,7 +16,8 @@ test('home shows each fact once', async ({ page }) => {
     page.getByRole('link', { name: /What is the Saga Pattern\?/ })
   ).toHaveCount(1);
   await expect(page.getByText(/Local time in Istanbul/)).toHaveCount(1);
-  await expect(page.locator('footer').getByText('Hacı Şimşek')).toHaveCount(0);
+  // No wordmark in the footer; the name appears only in the copyright line.
+  await expect(page.locator('footer > p')).toHaveCount(0);
 });
 
 test('home features fixture projects and articles', async ({ page }) => {

@@ -39,7 +39,7 @@ test('crawl files are served at the site root', async ({ request }) => {
   );
 
   const manifest = await request.get('/manifest.webmanifest');
-  expect((await manifest.json()).name).toBe('Haci Simsek');
+  expect((await manifest.json()).name).toBe('Hacı Şimşek');
 });
 
 test('generated icons are linked and served without a redirect', async ({
