@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 const pages = [
   { path: '/', heading: /Software engineer building backend/ },
@@ -20,4 +20,14 @@ for (const { path, heading } of pages) {
 test('unknown routes return 404', async ({ page }) => {
   const response = await page.goto('/this-page-does-not-exist');
   expect(response?.status()).toBe(404);
+});
+
+test('projects and articles render the stubbed feeds', async ({ page }) => {
+  await page.goto('/projects');
+  await expect(page.getByText('ecommerce-microservices')).toBeVisible();
+
+  await page.goto('/articles');
+  await expect(
+    page.getByText('Understanding Circuit Breaker Pattern in Microservices')
+  ).toBeVisible();
 });

@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test, waitForEntranceAnimations } from './fixtures';
 
 // Known issue: accent buttons (#fffbf5 on #ed7035) reach a 2.92:1 contrast
 // ratio. The redesign replaces these tokens; until then only these exact
@@ -15,9 +15,7 @@ for (const path of ['/', '/projects', '/articles', '/contact']) {
     page,
   }) => {
     await page.goto(path);
-    await page.waitForFunction(() =>
-      document.getAnimations().every((a) => a.playState !== 'running')
-    );
+    await waitForEntranceAnimations(page);
 
     const { violations } = await new AxeBuilder({ page }).analyze();
     const unexpected = violations.flatMap((v) =>
