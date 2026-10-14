@@ -93,3 +93,17 @@ describe('profile and socials', () => {
     for (const s of socials) expect(s.href.startsWith('https://')).toBe(true);
   });
 });
+
+describe('accuracy guards', () => {
+  it('describes lottery and terminals as past work and AreaPrivata as current', () => {
+    const [sisal] = profile.bio.en;
+    expect(sisal).toMatch(/first on the lottery and terminals platform/);
+    expect(sisal).toMatch(/now on .*AreaPrivata/);
+  });
+
+  it('lists only skills backed by the CV or confirmed by the owner', () => {
+    const all = skills.flatMap((c) => c.items);
+    expect(all).not.toContain('TypeScript');
+    expect(all).not.toContain('API gateway');
+  });
+});

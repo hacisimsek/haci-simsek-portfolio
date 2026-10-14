@@ -18,6 +18,10 @@ const jetBrainsMono = JetBrains_Mono({
   variable: '--font-mono',
 });
 
+// Daily regeneration keeps the computed years of experience and the footer
+// year current without a redeploy.
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
   title: profile.asciiName,
   description: `Portfolio of ${profile.asciiName}, a software engineer with ${careerYears(profile.careerStart)} years of experience building Java, Spring Boot, distributed systems, and cloud-native solutions in regulated, high-traffic environments.`,

@@ -4,7 +4,7 @@ export const skills: SkillCategory[] = [
   {
     id: 'languages',
     title: { en: 'Languages' },
-    items: ['Java', 'TypeScript', 'JavaScript'],
+    items: ['Java', 'JavaScript'],
   },
   {
     id: 'backend',
@@ -38,7 +38,6 @@ export const skills: SkillCategory[] = [
       'Microservices',
       'Saga pattern',
       'Circuit breaker',
-      'API gateway',
       'Backend for frontend',
       'Clean architecture',
     ],
