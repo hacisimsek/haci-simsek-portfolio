@@ -192,3 +192,21 @@ test.describe('phone primary actions', () => {
     ).toBeGreaterThanOrEqual(44);
   });
 });
+
+test.describe('collapsed phone menu', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('cannot be reached by keyboard until it is opened', async ({ page }) => {
+    await page.goto('/');
+    const hiddenLink = page
+      .locator('header')
+      .getByRole('link', { name: 'Projects', includeHidden: true })
+      .last();
+    await hiddenLink.evaluate((el) => (el as HTMLElement).focus());
+    await expect(hiddenLink).not.toBeFocused();
+
+    await page.getByRole('button', { name: 'Toggle navigation' }).click();
+    await hiddenLink.focus();
+    await expect(hiddenLink).toBeFocused();
+  });
+});

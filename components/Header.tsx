@@ -80,6 +80,9 @@ export default function Header() {
 
       <div
         data-glass
+        // Collapsed, the panel is only visually hidden; inert keeps its links
+        // out of the tab order and the accessibility tree.
+        inert={!isMenuOpen}
         className={cn(
           'mt-3 overflow-hidden glass px-4 transition-all duration-200 md:hidden',
           isMenuOpen
