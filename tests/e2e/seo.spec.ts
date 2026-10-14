@@ -55,3 +55,31 @@ test('generated icons are linked and served without a redirect', async ({
     expect(response.headers()['content-type']).toBe('image/png');
   }
 });
+
+test('each language has its own Open Graph image, served without a redirect', async ({
+  page,
+  request,
+}) => {
+  const urls: string[] = [];
+  for (const path of ['/', '/tr']) {
+    await page.goto(path);
+    const image = await page
+      .locator('meta[property="og:image"]')
+      .getAttribute('content');
+    expect(image, path).toMatch(/^https:\/\/hacisimsek\.com\//);
+    await expect(
+      page.locator('meta[property="og:image:width"]')
+    ).toHaveAttribute('content', '1200');
+    await expect(
+      page.locator('meta[property="og:image:height"]')
+    ).toHaveAttribute('content', '630');
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveCount(1);
+
+    const local = new URL(image!).pathname + new URL(image!).search;
+    const response = await request.get(local, { maxRedirects: 0 });
+    expect(response.status(), local).toBe(200);
+    expect(response.headers()['content-type']).toBe('image/png');
+    urls.push(local);
+  }
+  expect(urls[0]).not.toBe(urls[1]);
+});
