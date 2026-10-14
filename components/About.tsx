@@ -1,10 +1,8 @@
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
-import { ArrowRight, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons/brand-icons';
-import { Button } from '@/components/ui/button';
 import { profile, socials, t } from '@/content';
-import { Link } from '@/i18n/navigation';
 import { careerYears } from '@/lib/dates';
 
 function socialHref(id: 'github' | 'linkedin') {
@@ -26,8 +24,7 @@ export default function About() {
         <div className="section-shell">
           <div className="mb-6 eyebrow">{msg('eyebrow')}</div>
           <div className="max-w-3xl">
-            <h1 className="page-title">{t(profile.headline, locale)}</h1>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg sm:leading-7">
+            <p className="max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg sm:leading-7">
               {t(profile.intro, locale).replace('{years}', String(years))}
             </p>
             {t(profile.bio, locale).map((paragraph) => (
@@ -46,21 +43,6 @@ export default function About() {
                 {item}
               </span>
             ))}
-          </div>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button
-              asChild
-              className="rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90"
-            >
-              <Link href="/projects">
-                {msg('viewProjects')}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" className="rounded-full px-6">
-              <Link href="/contact">{msg('startConversation')}</Link>
-            </Button>
           </div>
 
           <div className="mt-10 grid gap-3 border-t border-border/70 pt-6 sm:grid-cols-2">

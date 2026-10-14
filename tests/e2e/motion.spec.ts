@@ -1,4 +1,9 @@
-import { expect, test, waitForEntranceAnimations } from './fixtures';
+import {
+  expect,
+  test,
+  waitForEntranceAnimations,
+  waitForHydration,
+} from './fixtures';
 
 test.describe('with motion', () => {
   test.use({ reducedMotion: 'no-preference' });
@@ -67,6 +72,7 @@ test.describe('smooth scrolling side effects', () => {
     await page.waitForFunction(() =>
       document.documentElement.classList.contains('lenis')
     );
+    await waitForHydration(page);
     await page.keyboard.press('Control+k');
     await expect(page.getByRole('combobox')).toBeFocused();
 

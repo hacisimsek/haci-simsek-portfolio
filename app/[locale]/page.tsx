@@ -7,6 +7,7 @@ import About from '@/components/About';
 import Career from '@/components/Career';
 import Education from '@/components/Education';
 import Skills from '@/components/Skills';
+import Hero from '@/components/sections/hero';
 import { Link } from '@/i18n/navigation';
 
 const featuredAreas = [
@@ -29,6 +30,7 @@ export default async function Home({
 
   return (
     <div className="space-y-6 pb-6">
+      <Hero />
       <About />
       <Career />
       <Skills />

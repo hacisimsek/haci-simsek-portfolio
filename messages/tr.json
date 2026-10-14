@@ -51,10 +51,15 @@
       "tr": "Türkçe"
     }
   },
-  "About": {
-    "eyebrow": "Teknik portfolyo",
+  "Hero": {
+    "eyebrow": "Yazılım mühendisi · İstanbul",
+    "rolesLabel": "Roller",
     "viewProjects": "Projeleri gör",
     "startConversation": "Bir konuşma başlat",
+    "paletteHint": "Her yere atlamak için <kbd>⌘K</kbd> veya <kbd>Ctrl K</kbd>"
+  },
+  "About": {
+    "eyebrow": "Teknik portfolyo",
     "experienceLabel": "Deneyim",
     "experienceValue": "Üretim ortamında {years} yıl",
     "environmentLabel": "Ortam",
