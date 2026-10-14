@@ -51,9 +51,7 @@ describe('Education', () => {
 describe('Skills', () => {
   it('groups the tools by category', () => {
     render(<Skills />);
-    const group = screen
-      .getByRole('heading', { name: 'Messaging and data' })
-      .closest('article')!;
+    const group = screen.getByText('Messaging and data').closest('div')!;
     expect(within(group).getByText('Kafka')).toBeInTheDocument();
   });
 });

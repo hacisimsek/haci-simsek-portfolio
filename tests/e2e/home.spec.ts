@@ -95,3 +95,34 @@ test.describe('project rows on a phone', () => {
     }
   });
 });
+
+test('career, skills and education are set as type, not cards', async ({
+  page,
+}) => {
+  await page.goto('/');
+  for (const id of ['career', 'skills', 'education']) {
+    const section = page.locator(`section#${id}`);
+    await expect(section).toHaveCount(1);
+    await expect(section.locator('.surface-card, .meta-chip')).toHaveCount(0);
+  }
+});
+
+test('no wide-tracked uppercase labels and no monospace chips', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const offenders = await page.evaluate(() =>
+    [...document.querySelectorAll('main *')]
+      .filter((el) => {
+        const style = getComputedStyle(el);
+        const tracked =
+          style.textTransform === 'uppercase' &&
+          parseFloat(style.letterSpacing) > 1;
+        const monoChip =
+          el.classList.contains('meta-chip') && /mono/i.test(style.fontFamily);
+        return tracked || monoChip;
+      })
+      .map((el) => el.textContent?.trim())
+  );
+  expect(offenders).toEqual([]);
+});
