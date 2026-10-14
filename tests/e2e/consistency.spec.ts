@@ -96,3 +96,27 @@ test.describe('on a phone', () => {
     }
   });
 });
+
+test('keyboard focus is clearly visible on list rows and disclosures', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await page.keyboard.press('Tab');
+  for (const target of [
+    page
+      .getByRole('region', { name: 'Featured projects' })
+      .getByRole('link', { name: /^NotifyHub/ }),
+    page.locator('#career summary').first(),
+  ]) {
+    await target.focus();
+    const outline = await target.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return {
+        style: style.outlineStyle,
+        width: parseFloat(style.outlineWidth),
+      };
+    });
+    expect(outline.style).toBe('solid');
+    expect(outline.width).toBeGreaterThanOrEqual(2);
+  }
+});

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import CommandPalette from '@/components/command/command-palette';
@@ -27,6 +27,19 @@ export default function Header() {
   const t = useTranslations('Nav');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // Escape closes the open phone menu and hands focus back to its button.
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      setIsMenuOpen(false);
+      toggleRef.current?.focus();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isMenuOpen]);
 
   return (
     <header className="sticky top-4 z-50 mb-10">
@@ -72,6 +85,9 @@ export default function Header() {
           <Button
             variant="outline"
             size="icon"
+            ref={toggleRef}
+            aria-expanded={isMenuOpen}
+            aria-controls="phone-menu"
             className="h-11 w-11 rounded-full md:hidden"
             onClick={() => setIsMenuOpen((open) => !open)}
           >
@@ -86,6 +102,7 @@ export default function Header() {
       </div>
 
       <div
+        id="phone-menu"
         data-glass
         // Collapsed, the panel is only visually hidden; inert keeps its links
         // out of the tab order and the accessibility tree.

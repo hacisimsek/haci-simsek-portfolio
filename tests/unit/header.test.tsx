@@ -60,4 +60,23 @@ describe('Header', () => {
     await user.click(toggle);
     expect(mobileMenu).toHaveClass('max-h-0');
   });
+
+  it('announces the menu state and closes it with Escape', async () => {
+    const user = userEvent.setup();
+    render(<Header />);
+    const toggle = screen.getByRole('button', { name: 'Toggle navigation' });
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    const panel = document.getElementById(
+      toggle.getAttribute('aria-controls')!
+    );
+    expect(panel).not.toBeNull();
+
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await user.tab();
+    await user.keyboard('{Escape}');
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(panel).toHaveClass('max-h-0');
+    expect(toggle).toHaveFocus();
+  });
 });
