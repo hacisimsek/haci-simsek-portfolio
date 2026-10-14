@@ -53,7 +53,7 @@ describe('Hero', () => {
   it('shows the live saga instead of the sphere', () => {
     const { container } = render(<Hero />);
     expect(
-      screen.getByRole('figure', { name: 'An order saga, running live' })
+      screen.getByRole('figure', { name: 'An order saga' })
     ).toBeInTheDocument();
     expect(container.querySelector('canvas, .orb')).toBeNull();
   });

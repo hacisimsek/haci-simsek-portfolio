@@ -437,8 +437,16 @@ section[id] {
 }
 
 /* The token travelling through the hero saga: it sits in the current step's
-   ring (each step is 4.5rem tall) and turns to the destructive colour while
-   the saga compensates. */
+   ring and turns to the destructive colour while the saga compensates. Rows
+   and the pulse share one row height. */
+.saga {
+  --saga-row: 4.5rem;
+}
+
+.saga-row {
+  height: var(--saga-row);
+}
+
 .saga-pulse {
   position: absolute;
   top: 12px;
@@ -447,7 +455,7 @@ section[id] {
   height: 8px;
   border-radius: 9999px;
   background-color: var(--accent);
-  transform: translateY(calc(var(--step, 0) * 4.5rem));
+  transform: translateY(calc(var(--step, 0) * var(--saga-row)));
   transition:
     transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1),
     background-color 200ms ease;
