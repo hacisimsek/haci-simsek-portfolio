@@ -28,12 +28,12 @@ export default function Footer() {
   const sha = process.env.VERCEL_GIT_COMMIT_SHA;
   return (
     <footer className="mt-24">
-      <p className="mb-8 text-aurora pb-[0.12em] font-display text-[clamp(3rem,12vw,9rem)] leading-none font-bold tracking-tighter break-words">
+      <p className="mb-8 font-display text-[clamp(3rem,12vw,9rem)] leading-none font-bold tracking-tighter break-words">
         {profile.name}
       </p>
       <div className="flex flex-col gap-6 surface-card px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-2">
-          <div className="eyebrow">{msg('eyebrow')}</div>
+          <p className="font-medium">{msg('eyebrow')}</p>
           <p className="max-w-xl text-sm leading-7 text-muted-foreground">
             {msg('text')}
           </p>

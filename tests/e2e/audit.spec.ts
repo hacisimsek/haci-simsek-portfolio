@@ -143,3 +143,23 @@ test.describe('reduced motion', () => {
     expect(moving).toEqual([]);
   });
 });
+
+test('no eyebrow labels or gradient text on any page', async ({ page }) => {
+  for (const path of [
+    '/',
+    '/tr',
+    '/projects',
+    '/articles',
+    '/contact',
+    '/does-not-exist',
+  ]) {
+    await page.goto(path);
+    const found = await page.evaluate(() => ({
+      eyebrows: document.querySelectorAll('.eyebrow').length,
+      gradientText: [...document.querySelectorAll('body *')].filter(
+        (el) => getComputedStyle(el).backgroundClip === 'text'
+      ).length,
+    }));
+    expect(found, path).toEqual({ eyebrows: 0, gradientText: 0 });
+  }
+});

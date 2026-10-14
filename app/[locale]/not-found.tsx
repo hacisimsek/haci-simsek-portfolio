@@ -8,7 +8,6 @@ export default function NotFoundPage() {
   return (
     <section className="space-y-6 pb-6">
       <div className="section-shell">
-        <div className="mb-4 eyebrow">{msg('eyebrow')}</div>
         <h1 className="page-title">{msg('title')}</h1>
         <p className="mt-5 page-subtitle">{msg('text')}</p>
         <NotFoundTerminal />

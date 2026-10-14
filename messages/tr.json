@@ -67,7 +67,6 @@
     "repos": "Açık kaynak repo"
   },
   "About": {
-    "eyebrow": "Hakkımda",
     "title": "Ayakta kalması gereken sistemler için backend mühendisi",
     "currentlyAt": "Şu an {company} bünyesinde",
     "localTime": "İstanbul’da saat",
@@ -78,7 +77,6 @@
     "email": "E-posta"
   },
   "Career": {
-    "eyebrow": "Kariyer",
     "title": "Ürüne görünür etkisi olan deneyim",
     "copy": "Son dönemdeki işlerimin çoğu, ölçek, güvenli yayın, gözlemlenebilirlik ve servis güvenilirliğinin en az geliştirmenin kendisi kadar önemli olduğu backend ağırlıklı sistemlerde.",
     "promoted": "Terfi",
@@ -88,35 +86,29 @@
     }
   },
   "Skills": {
-    "eyebrow": "Yetkinlikler",
     "title": "Sistemleri geliştirip işletirken kullandığım araçlar",
     "copy": "Yukarıdaki rollerin arkasındaki teknoloji yığını: servis kodu ve mesajlaşmadan teslimat süreçlerine ve hakkında yazdığım mimari desenlere kadar.",
     "rowCore": "Diller, framework’ler ve veri",
     "rowDelivery": "Teslimat, gözlemlenebilirlik ve mimari"
   },
   "Education": {
-    "eyebrow": "Eğitim",
     "title": "Donanımdan yazılıma uzanan mühendislik temeli",
     "copy": "Yazılım sistemleri düşüncesini elektrik-elektronik temelleriyle birleştiren bir geçmişim var; bu da mimariyi, kısıtları ve güvenilirliği nasıl ele aldığımı hâlâ etkiliyor."
   },
   "Home": {
-    "projectsEyebrow": "Seçili işler",
     "projectsTitle": "Öne çıkan projeler",
     "allProjects": "Tüm projeler",
     "flagship": "Amiral gemisi",
-    "writingEyebrow": "Yazılar",
     "writingTitle": "Son yazılar",
     "allArticles": "Tüm yazılar"
   },
   "Projects": {
-    "eyebrow": "Projeler",
     "title": "Seçme işler, deneyler ve mühendislik merakları",
     "subtitle": "Açık kaynakta nasıl geliştirdiğimi yansıtan, GitHub’dan canlı alınan bir liste. Odak yalnızca kod miktarında değil; her reponun arkasındaki desenlerde, fikirlerde ve ürün sezgisinde.",
     "errorTitle": "Proje listesi şu anda yüklenemedi.",
     "errorText": "Birazdan tekrar deneyin ya da doğrudan GitHub profilini ziyaret edin."
   },
   "Articles": {
-    "eyebrow": "Yazılar",
     "title": "Uygulama ayrıntısının net düşünceyle buluştuğu yazılar",
     "subtitle": "Notlar, eğitimler ve pratik mühendislik çözümlemeleri. Yazmayı ödünleşimleri netleştirmek, dersleri kayda geçirmek ve karmaşık işleri anlaşılır kılmak için kullanıyorum.",
     "errorTitle": "Yazı listesi şu anda yüklenemedi.",
@@ -140,10 +132,8 @@
     "reset": "Filtreleri sıfırla"
   },
   "Contact": {
-    "successEyebrow": "Mesajınız alındı",
     "successTitle": "Teşekkürler, en kısa sürede dönüş yapacağım.",
     "successText": "Konu uygunsa, genel geçer bir yanıt yerine somut sonraki adımlarla dönüş yapıyorum.",
-    "eyebrow": "İletişim",
     "title": "Mimari, platformlar veya backend sistemler hakkında konuşalım",
     "subtitle": "Backend ağırlıklı ürünler, dağıtık sistemler, platform dönüşümü veya bulut teslimatı üzerinde çalışıyorsanız bir not bırakın. En çok değer kattığım alanlar bunlar.",
     "bestFitTitle": "En uygun işler",
@@ -152,7 +142,6 @@
     "helpsText": "Problemin kısa bir özeti, mevcut teknoloji yığını ve sorunun mikroservisler, buluta hazırlık, ölçeklenebilirlik ya da mimari dönüşümle ilgili olup olmadığı.",
     "emailTitle": "Doğrudan e-posta",
     "emailText": "Bana {email} adresinden de ulaşabilirsiniz.",
-    "formEyebrow": "Mesaj gönder",
     "formTitle": "Başlamak için kısa bir özet yeterli",
     "namePlaceholder": "Adınız",
     "emailPlaceholder": "E-posta adresiniz",
@@ -181,7 +170,6 @@
     "build": "derleme {sha}"
   },
   "NotFound": {
-    "eyebrow": "404",
     "title": "Sayfa bulunamadı",
     "text": "Aradığınız sayfa mevcut değil ya da taşınmış.",
     "home": "Ana sayfaya dön",

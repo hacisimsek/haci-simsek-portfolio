@@ -48,7 +48,6 @@ export default async function Contact({
   return (
     <section className="grid gap-6 pb-6 lg:grid-cols-[0.9fr_1.1fr]">
       <div className="section-shell">
-        <div className="mb-4 eyebrow">{msg('eyebrow')}</div>
         <h1 className="page-title">{msg('title')}</h1>
         <p className="mt-5 page-subtitle">{msg('subtitle')}</p>
 
@@ -71,7 +70,6 @@ export default async function Contact({
 
       <div className="section-shell">
         <div className="mb-6">
-          <div className="mb-4 eyebrow">{msg('formEyebrow')}</div>
           <h2 className="section-title">{msg('formTitle')}</h2>
         </div>
         <ContactForm />

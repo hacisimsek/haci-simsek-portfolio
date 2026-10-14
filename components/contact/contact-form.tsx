@@ -95,7 +95,6 @@ export default function ContactForm() {
         tabIndex={-1}
         className="rounded-3xl border border-accent/40 bg-accent/10 p-6 outline-none"
       >
-        <div className="mb-3 eyebrow w-fit">{msg('successEyebrow')}</div>
         <h3 id="contact-success" className="section-title">
           {msg('successTitle')}
         </h3>

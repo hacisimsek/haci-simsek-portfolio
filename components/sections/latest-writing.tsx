@@ -16,7 +16,6 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
     <section aria-labelledby="latest-writing">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="mb-4 eyebrow w-fit">{msg('writingEyebrow')}</div>
           <h2 id="latest-writing" className="section-title">
             {msg('writingTitle')}
           </h2>

@@ -41,7 +41,6 @@ export default function AboutBento({
       <Spotlight
         className={cn(tile, 'border-beam sm:p-8 lg:col-span-4 lg:row-span-2')}
       >
-        <div className="mb-5 eyebrow w-fit">{msg('eyebrow')}</div>
         <h2 id="about-title" className="max-w-2xl section-title">
           {msg('title')}
         </h2>
@@ -77,7 +76,7 @@ export default function AboutBento({
       </div>
 
       <Spotlight className={cn(tile, 'lg:col-span-2')}>
-        <p className="eyebrow w-fit">
+        <p className="text-sm text-muted-foreground">
           {msg('currentlyAt', { company: profile.currentCompany })}
         </p>
         <p className="mt-4 text-lg leading-snug font-semibold">
