@@ -14,7 +14,7 @@ import {
   WebGLRenderer,
 } from 'three';
 import { degrade, isSlow, POINTS, type Quality } from '@/lib/perf';
-import { cssColorToRgb } from '@/lib/three/colors';
+import { paletteFromStyle } from '@/lib/three/palette';
 import { fibonacciSphere } from '@/lib/three/fibonacci';
 import { fragmentShader, vertexShader } from './shaders';
 
@@ -30,13 +30,10 @@ function makeGeometry(count: number) {
 
 function readPalette() {
   const root = document.documentElement;
-  const style = getComputedStyle(root);
-  const token = (name: string) => style.getPropertyValue(name).trim();
-  return {
-    dark: root.classList.contains('dark'),
-    a: cssColorToRgb(token('--primary')),
-    b: cssColorToRgb(token('--accent')),
-  };
+  return paletteFromStyle(
+    getComputedStyle(root),
+    root.classList.contains('dark')
+  );
 }
 
 export default function ParticleSphere({
@@ -91,6 +88,7 @@ export default function ParticleSphere({
         uOpacity: { value: 1 },
         uColorA: { value: new Color() },
         uColorB: { value: new Color() },
+        uColorC: { value: new Color() },
       },
     });
     const points = new Points(makeGeometry(POINTS[tier]), material);
@@ -106,6 +104,7 @@ export default function ParticleSphere({
       const palette = readPalette();
       material.uniforms.uColorA.value.setRGB(...palette.a);
       material.uniforms.uColorB.value.setRGB(...palette.b);
+      material.uniforms.uColorC.value.setRGB(...palette.c);
       material.blending = palette.dark ? AdditiveBlending : NormalBlending;
       material.uniforms.uOpacity.value = palette.dark ? 0.9 : 0.75;
       canvas.dataset.palette = palette.dark ? 'dark' : 'light';
@@ -165,6 +164,16 @@ export default function ParticleSphere({
     section.addEventListener('pointermove', onPointerMove as EventListener);
     window.addEventListener('scroll', measure, { passive: true });
     section.addEventListener('pointerleave', onPointerLeave);
+    // Layout above the hero can shift without a scroll or resize; re-measure
+    // whenever the pointer comes in.
+    section.addEventListener('pointerenter', measure);
+
+    // Reduced motion switched on mid-session: hand back to the static orb.
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    function onMotionChange() {
+      if (motion.matches) fallback();
+    }
+    motion.addEventListener('change', onMotionChange);
 
     let visible = true;
     let frame = 0;
@@ -277,13 +286,16 @@ export default function ParticleSphere({
         onPointerMove as EventListener
       );
       section.removeEventListener('pointerleave', onPointerLeave);
+      section.removeEventListener('pointerenter', measure);
+      motion.removeEventListener('change', onMotionChange);
       canvas.removeEventListener('webglcontextlost', onContextLost);
       window.removeEventListener('scroll', measure);
       points.geometry.dispose();
       material.dispose();
       renderer.dispose();
       // dispose() keeps the GL context; release it so remounts don't pile up.
-      renderer.forceContextLoss();
+      // Already lost (the fallback path): releasing it again only warns.
+      if (!renderer.getContext().isContextLost()) renderer.forceContextLoss();
       canvas.remove();
     };
   }, [tier]);

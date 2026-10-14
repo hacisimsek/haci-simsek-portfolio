@@ -240,3 +240,47 @@ test.describe('phone orb', () => {
     expect(orb!.y + orb!.height).toBeGreaterThan(name!.y);
   });
 });
+
+test.describe('sphere and live preference changes', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  test.beforeEach(({ viewport }) => {
+    test.skip((viewport?.width ?? 0) < 1024, 'phones only get the CSS orb');
+  });
+
+  test('turning on reduced motion stops the sphere', async ({ page }) => {
+    const errors: string[] = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.goto('/');
+    await expect(page.locator('canvas[data-sphere]')).toBeVisible({
+      timeout: 8000,
+    });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect(page.locator('canvas[data-sphere]')).toHaveCount(0);
+    await expect(page.locator('[data-orb]:visible').first()).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
+  test('losing the GPU context logs nothing', async ({ page }) => {
+    const messages: string[] = [];
+    page.on('console', (message) => {
+      if (['warning', 'error'].includes(message.type())) {
+        messages.push(message.text());
+      }
+    });
+    await page.goto('/');
+    await expect(page.locator('canvas[data-sphere]')).toBeVisible({
+      timeout: 8000,
+    });
+    await page.locator('canvas[data-sphere]').evaluate((canvas) => {
+      (canvas as HTMLCanvasElement)
+        .getContext('webgl2')
+        ?.getExtension('WEBGL_lose_context')
+        ?.loseContext();
+    });
+    await expect(page.locator('canvas[data-sphere]')).toHaveCount(0);
+    await page.waitForTimeout(300);
+    // SwiftShader also logs driver performance notes; only three.js warnings count.
+    expect(messages.filter((text) => /THREE\./.test(text))).toEqual([]);
+  });
+});
