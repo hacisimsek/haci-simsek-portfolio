@@ -193,4 +193,6 @@ test('separators never start a line', async ({ page }) => {
 test('each contact note is a heading', async ({ page }) => {
   await page.goto('/contact');
   await expect(page.getByRole('heading', { level: 2 })).toHaveCount(4);
+  // Headings are not allowed inside a definition term.
+  await expect(page.locator('dt :is(h1, h2, h3, h4, h5, h6)')).toHaveCount(0);
 });
