@@ -1,7 +1,7 @@
 import { act, fireEvent, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import SagaFlow, { TICK_MS } from '@/components/saga/saga-flow';
-import { HOLD_TICKS } from '@/lib/saga';
+import { HOLD_TICKS, VISITOR_HOLD_TICKS } from '@/lib/saga';
 import { renderWithIntl as render } from '../render';
 
 function advance(ticks: number) {
@@ -58,7 +58,7 @@ describe('SagaFlow', () => {
     expect(payment).toHaveAttribute('data-status', 'compensated');
     expect(payment).toHaveTextContent('Refund payment');
     expect(order).toHaveTextContent('Cancel order');
-    expect(shipping).toHaveAttribute('data-status', 'idle');
+    expect(shipping).toHaveAttribute('data-status', 'skipped');
     expect(screen.getByRole('status')).toHaveTextContent(
       'Inventory failed. Payment refunded and order cancelled.'
     );
@@ -145,5 +145,61 @@ describe('SagaFlow', () => {
     expect(screen.getByText('Karttan tahsil et')).toBeInTheDocument();
     for (const label of screen.getAllByText('Tamam'))
       expect(label).toHaveClass('shrink-0');
+  });
+
+  it('marks shipping skipped and keeps the result long enough to read', () => {
+    render(<SagaFlow />);
+    fireEvent.click(screen.getByRole('button', { name: 'Run with a failure' }));
+    advance(5);
+    const shipping = screen.getAllByRole('listitem')[3];
+    expect(shipping).toHaveAttribute('data-status', 'skipped');
+    expect(shipping).toHaveTextContent('Skipped');
+    advance(VISITOR_HOLD_TICKS - 1);
+    expect(screen.getByRole('status')).toHaveTextContent('Inventory failed.');
+  });
+
+  it('can be paused and played', () => {
+    render(<SagaFlow />);
+    const pause = screen.getByRole('button', { name: 'Pause' });
+    expect(pause).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.click(pause);
+    expect(pause).toHaveAttribute('aria-pressed', 'true');
+    // The latched state is visible, not only announced.
+    expect(pause).toHaveClass('aria-pressed:bg-secondary');
+    advance(HOLD_TICKS + 2);
+    for (const step of screen.getAllByRole('listitem'))
+      expect(step).toHaveAttribute('data-status', 'done');
+    fireEvent.click(pause);
+    advance(HOLD_TICKS);
+    expect(screen.getAllByRole('listitem')[0]).toHaveAttribute(
+      'data-status',
+      'running'
+    );
+  });
+
+  it('still plays a visitor run while auto-play is paused', () => {
+    render(<SagaFlow />);
+    fireEvent.click(screen.getByRole('button', { name: 'Pause' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Run with a failure' }));
+    advance(5);
+    expect(screen.getAllByRole('listitem')[2]).toHaveAttribute(
+      'data-status',
+      'failed'
+    );
+  });
+
+  it('offers no pause control when nothing moves on its own', () => {
+    const matchMedia = vi.spyOn(window, 'matchMedia').mockImplementation(
+      (query) =>
+        ({
+          matches: query.includes('reduce'),
+          media: query,
+          addEventListener() {},
+          removeEventListener() {},
+        }) as unknown as MediaQueryList
+    );
+    render(<SagaFlow />);
+    expect(screen.queryByRole('button', { name: 'Pause' })).toBeNull();
+    matchMedia.mockRestore();
   });
 });

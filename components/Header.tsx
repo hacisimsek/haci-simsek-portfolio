@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import CommandPalette from '@/components/command/command-palette';
@@ -27,9 +27,32 @@ export default function Header() {
   const t = useTranslations('Nav');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const headerRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // Escape closes the open phone menu. A dialog above it (the command
+  // palette) claims Escape first, and focus only returns to the button when
+  // it was in the header, so a visitor typing elsewhere is not moved.
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || event.defaultPrevented) return;
+      setIsMenuOpen(false);
+      const active = document.activeElement;
+      if (
+        !active ||
+        active === document.body ||
+        headerRef.current?.contains(active)
+      ) {
+        toggleRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isMenuOpen]);
 
   return (
-    <header className="sticky top-4 z-50 mb-10">
+    <header ref={headerRef} className="sticky top-4 z-50 mb-10">
       <div
         data-glass
         className="flex min-h-[76px] items-center justify-between gap-4 glass px-5 py-3 sm:px-6"
@@ -72,6 +95,9 @@ export default function Header() {
           <Button
             variant="outline"
             size="icon"
+            ref={toggleRef}
+            aria-expanded={isMenuOpen}
+            aria-controls="phone-menu"
             className="h-11 w-11 rounded-full md:hidden"
             onClick={() => setIsMenuOpen((open) => !open)}
           >
@@ -86,6 +112,7 @@ export default function Header() {
       </div>
 
       <div
+        id="phone-menu"
         data-glass
         // Collapsed, the panel is only visually hidden; inert keeps its links
         // out of the tab order and the accessibility tree.

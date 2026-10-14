@@ -60,4 +60,53 @@ describe('Header', () => {
     await user.click(toggle);
     expect(mobileMenu).toHaveClass('max-h-0');
   });
+
+  it('announces the menu state and closes it with Escape', async () => {
+    const user = userEvent.setup();
+    render(<Header />);
+    const toggle = screen.getByRole('button', { name: 'Toggle navigation' });
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    const panel = document.getElementById(
+      toggle.getAttribute('aria-controls')!
+    );
+    expect(panel).not.toBeNull();
+
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await user.tab();
+    await user.keyboard('{Escape}');
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(panel).toHaveClass('max-h-0');
+    expect(toggle).toHaveFocus();
+  });
+
+  it('leaves Escape to an open dialog above the menu', async () => {
+    const user = userEvent.setup();
+    render(<Header />);
+    const toggle = screen.getByRole('button', { name: 'Toggle navigation' });
+    await user.click(toggle);
+    // A dialog (e.g. the command palette) handles Escape first.
+    const claim = (event: KeyboardEvent) => event.preventDefault();
+    document.addEventListener('keydown', claim, { capture: true });
+    await user.keyboard('{Escape}');
+    document.removeEventListener('keydown', claim, { capture: true });
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('does not pull focus out of the page when Escape closes the menu', async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <Header />
+        <input aria-label="Elsewhere" />
+      </>
+    );
+    const toggle = screen.getByRole('button', { name: 'Toggle navigation' });
+    await user.click(toggle);
+    const field = screen.getByRole('textbox', { name: 'Elsewhere' });
+    field.focus();
+    await user.keyboard('{Escape}');
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(field).toHaveFocus();
+  });
 });

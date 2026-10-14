@@ -4,7 +4,14 @@ export const STEPS = ['order', 'payment', 'inventory', 'shipping'] as const;
 export type StepId = (typeof STEPS)[number];
 
 export type StepStatus =
-  'idle' | 'running' | 'done' | 'failed' | 'compensating' | 'compensated';
+  | 'idle'
+  | 'running'
+  | 'done'
+  | 'failed'
+  | 'compensating'
+  | 'compensated'
+  /** Never ran because the saga rolled back before reaching it. */
+  | 'skipped';
 
 export type SagaPhase = 'forward' | 'compensating' | 'completed' | 'rolledBack';
 
@@ -24,6 +31,9 @@ export const FAILING_STEP = STEPS.indexOf('inventory');
 
 /** How long a finished saga stays on screen, in ticks. */
 export const HOLD_TICKS = 3;
+
+/** A failed run is always the visitor's; it stays long enough to read. */
+export const VISITOR_HOLD_TICKS = 8;
 
 export function start(failAt: number | null = null): SagaState {
   return {
@@ -55,7 +65,15 @@ function compensateFrom(
   statuses: StepStatus[],
   index: number
 ): Pick<SagaState, 'phase' | 'index' | 'statuses'> {
-  if (index < 0) return { phase: 'rolledBack', index: 0, statuses };
+  if (index < 0) {
+    return {
+      phase: 'rolledBack',
+      index: 0,
+      statuses: statuses.map((status) =>
+        status === 'idle' ? 'skipped' : status
+      ),
+    };
+  }
   statuses[index] = 'compensating';
   return { phase: 'compensating', index, statuses };
 }
@@ -82,7 +100,8 @@ export function tick(state: SagaState): SagaState {
       return { ...state, ...compensateFrom(statuses, index - 1) };
     }
     default:
-      return state.held + 1 >= HOLD_TICKS
+      return state.held + 1 >=
+        (state.failAt === null ? HOLD_TICKS : VISITOR_HOLD_TICKS)
         ? start()
         : { ...state, held: state.held + 1 };
   }
