@@ -458,6 +458,7 @@
   }
 
   .aurora-blob,
+  .check-draw,
   .fade-up,
   .letter,
   .word-in,
@@ -566,4 +567,15 @@ section[id] {
   transform: perspective(900px) rotateX(var(--rx, 0deg))
     rotateY(var(--ry, 0deg));
   transition: transform 180ms ease-out;
+}
+
+.check-draw {
+  stroke-dasharray: 24;
+  animation: check-draw 400ms ease-out backwards;
+}
+
+@keyframes check-draw {
+  from {
+    stroke-dashoffset: 24;
+  }
 }

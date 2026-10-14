@@ -122,6 +122,22 @@
     "errorText": "Medium may be temporarily unavailable.",
     "readArticle": "Read article"
   },
+  "Collections": {
+    "search": "Search",
+    "searchProjects": "Name, topic or language",
+    "searchArticles": "Title or topic",
+    "language": "Language",
+    "category": "Topic",
+    "all": "All",
+    "sort": "Sort",
+    "sortRecent": "Recently updated",
+    "sortName": "Name (A–Z)",
+    "sortNewest": "Newest first",
+    "sortOldest": "Oldest first",
+    "showing": "Showing {shown} of {total}",
+    "empty": "No matches.",
+    "reset": "Reset filters"
+  },
   "Contact": {
     "successEyebrow": "Message received",
     "successTitle": "Thanks, I'll get back to you soon.",
@@ -140,11 +156,20 @@
     "namePlaceholder": "Your name",
     "emailPlaceholder": "Your email",
     "messagePlaceholder": "What are you building and where do you need help?",
-    "messageLabel": "Your message",
-    "emailPrefix": "Email",
-    "messagePrefix": "Message",
+    "messageLabel": "Message",
     "sending": "Sending...",
-    "send": "Send Message"
+    "send": "Send Message",
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "honeypotLabel": "Leave this field empty",
+    "sent": "Sent",
+    "failed": "Your message could not be sent. Please try again, or email me directly.",
+    "errors": {
+      "nameRequired": "Please enter at least 2 characters.",
+      "emailInvalid": "Please enter a valid email address.",
+      "messageShort": "Please write at least 20 characters.",
+      "messageLong": "Please keep it under 5,000 characters."
+    }
   },
   "Footer": {
     "eyebrow": "Available for selective collaborations",
