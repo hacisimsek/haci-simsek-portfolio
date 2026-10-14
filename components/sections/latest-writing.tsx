@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
+import ArticleRow from '@/components/articles/article-row';
 import { Link } from '@/i18n/navigation';
 import type { Article } from '@/lib/feeds/medium';
 
@@ -14,7 +15,7 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
 
   return (
     <section aria-labelledby="latest-writing">
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 id="latest-writing" className="section-title">
             {msg('writingTitle')}
@@ -22,7 +23,7 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
         </div>
         <Link
           href="/articles"
-          className="group inline-flex items-center gap-2 text-sm font-medium hover:text-accent"
+          className="group inline-flex min-h-11 items-center gap-2 text-sm font-medium hover:text-accent"
         >
           {msg('allArticles')}
           <ArrowRight
@@ -32,40 +33,15 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
         </Link>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <ol className="divide-y divide-border/70 border-y border-border/70">
         {articles.map((article) => (
-          <a
+          <ArticleRow
             key={article.url}
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex flex-col overflow-hidden surface-card transition-colors hover:border-accent/40"
-          >
-            <div className="overflow-hidden">
-              {/* Medium thumbnails come from several CDN hosts; next/image
-                  would need each one allow-listed for little gain here. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={article.thumbnail}
-                alt=""
-                loading="lazy"
-                className="aspect-16/9 w-full object-cover transition duration-500 group-hover:scale-105"
-              />
-            </div>
-            <div className="flex flex-1 flex-col p-5">
-              <time
-                dateTime={article.publishedAt}
-                className="text-xs text-muted-foreground"
-              >
-                {date.format(new Date(article.publishedAt))}
-              </time>
-              <h3 className="mt-2 leading-snug font-semibold break-words group-hover:text-accent">
-                {article.title}
-              </h3>
-            </div>
-          </a>
+            article={article}
+            date={date.format(new Date(article.publishedAt))}
+          />
         ))}
-      </div>
+      </ol>
     </section>
   );
 }

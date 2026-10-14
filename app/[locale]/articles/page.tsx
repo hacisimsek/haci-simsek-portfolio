@@ -37,10 +37,10 @@ export default async function Articles({
 
   return (
     <section className="space-y-6 pb-6">
-      <div className="section-shell">
-        <h1 className="page-title">{msg('title')}</h1>
+      <header className="pt-2 pb-4">
+        <h1 className="max-w-4xl page-title">{msg('title')}</h1>
         <p className="mt-5 page-subtitle">{msg('subtitle')}</p>
-      </div>
+      </header>
 
       {!feed.ok ? (
         <div className="section-shell">

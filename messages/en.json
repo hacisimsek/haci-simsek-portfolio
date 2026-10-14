@@ -99,8 +99,7 @@
     "title": "Writing where implementation detail meets clear thinking",
     "subtitle": "Notes, tutorials, and practical engineering breakdowns. I use writing to clarify tradeoffs, capture lessons, and make complex work easier to reason about.",
     "errorTitle": "Article feed could not be loaded right now.",
-    "errorText": "Medium may be temporarily unavailable.",
-    "readArticle": "Read article"
+    "errorText": "Medium may be temporarily unavailable."
   },
   "Collections": {
     "search": "Search",

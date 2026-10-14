@@ -126,3 +126,46 @@ test('no wide-tracked uppercase labels and no monospace chips', async ({
   );
   expect(offenders).toEqual([]);
 });
+
+test('articles are typographic rows without stock thumbnails', async ({
+  page,
+}) => {
+  for (const [path, scope] of [
+    ['/', page.getByRole('region', { name: 'Latest writing' })],
+    ['/articles', page.locator('main ol')],
+  ] as const) {
+    await page.goto(path);
+    await expect(scope.getByRole('link').first()).toBeVisible();
+    await expect(scope.locator('img, .surface-card, .meta-chip')).toHaveCount(
+      0
+    );
+  }
+});
+
+test('page headings are not boxed', async ({ page }) => {
+  for (const path of [
+    '/projects',
+    '/articles',
+    '/contact',
+    '/does-not-exist',
+  ]) {
+    await page.goto(path);
+    const boxed = await page
+      .getByRole('heading', { level: 1 })
+      .evaluate((h1) => Boolean(h1.closest('.section-shell, .surface-card')));
+    expect(boxed, path).toBe(false);
+  }
+});
+
+test('contact notes are not cards inside a card', async ({ page }) => {
+  await page.goto('/contact');
+  const nested = await page
+    .locator('.surface-card, .section-shell')
+    .evaluateAll(
+      (cards) =>
+        cards.filter((card) =>
+          card.parentElement?.closest('.surface-card, .section-shell')
+        ).length
+    );
+  expect(nested).toBe(0);
+});
