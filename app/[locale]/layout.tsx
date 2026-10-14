@@ -1,5 +1,7 @@
 import 'lenis/dist/lenis.css';
 import '../globals.css';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono, Space_Grotesk } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
@@ -40,6 +42,10 @@ const geistMono = Geist_Mono({
 // Daily regeneration keeps the computed years of experience and the footer
 // year current without a redeploy.
 export const revalidate = 86400;
+
+// Only Vercel serves the /_vercel/insights endpoints; elsewhere the scripts
+// would just 404.
+const onVercel = process.env.VERCEL === '1';
 
 // The --background tokens (oklch 0.985 0.004 275 / 0.13 0.02 275) in sRGB, for
 // the browser chrome.
@@ -138,6 +144,12 @@ export default async function LocaleLayout({
             </MotionProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
+        {onVercel ? (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        ) : null}
       </body>
     </html>
   );

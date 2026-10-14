@@ -83,3 +83,27 @@ test('each language has its own Open Graph image, served without a redirect', as
   }
   expect(urls[0]).not.toBe(urls[1]);
 });
+
+test('pages and metadata files carry the security headers', async ({
+  request,
+}) => {
+  for (const path of ['/', '/tr/contact', '/sitemap.xml']) {
+    const headers = (await request.get(path)).headers();
+    expect(headers['x-content-type-options'], path).toBe('nosniff');
+    expect(headers['referrer-policy'], path).toBe(
+      'strict-origin-when-cross-origin'
+    );
+    expect(headers['x-frame-options'], path).toBe('DENY');
+    expect(headers['permissions-policy'], path).toContain('camera=()');
+  }
+});
+
+test('analytics stay off outside Vercel', async ({ page }) => {
+  const insights: string[] = [];
+  page.on('request', (request) => {
+    if (request.url().includes('/_vercel/')) insights.push(request.url());
+  });
+  await page.goto('/');
+  await page.waitForTimeout(1500);
+  expect(insights).toEqual([]);
+});
