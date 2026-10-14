@@ -163,3 +163,32 @@ test('no eyebrow labels or gradient text on any page', async ({ page }) => {
     expect(found, path).toEqual({ eyebrows: 0, gradientText: 0 });
   }
 });
+
+test.describe('phone primary actions', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('logo, menu call to action and form submit are at least 44px', async ({
+    page,
+  }) => {
+    const size = (locator: import('@playwright/test').Locator) =>
+      locator.evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        return Math.min(r.width, r.height);
+      });
+    await page.goto('/');
+    expect(await size(page.locator('header a').first())).toBeGreaterThanOrEqual(
+      44
+    );
+    await page.getByRole('button', { name: 'Toggle navigation' }).click();
+    const cta = page
+      .locator('header')
+      .getByRole('link', { name: "Let's Talk" })
+      .last();
+    await expect(cta).toBeVisible();
+    expect(await size(cta)).toBeGreaterThanOrEqual(44);
+    await page.goto('/contact');
+    expect(
+      await size(page.getByRole('button', { name: 'Send Message' }))
+    ).toBeGreaterThanOrEqual(44);
+  });
+});

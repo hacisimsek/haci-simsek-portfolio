@@ -28,7 +28,7 @@ export default function Header() {
         data-glass
         className="flex min-h-[76px] items-center justify-between gap-4 glass px-5 py-3 sm:px-6"
       >
-        <Link href="/" className="min-w-0">
+        <Link href="/" className="flex min-h-11 min-w-0 items-center">
           <div className="font-display text-lg font-semibold tracking-tight whitespace-nowrap sm:text-2xl">
             {profile.name}
           </div>
@@ -100,7 +100,7 @@ export default function Header() {
           ))}
           <Button
             asChild
-            className="mt-2 rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
+            className="mt-2 h-11 rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
           >
             <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
               {t('letsTalk')}
