@@ -1,10 +1,17 @@
+import { setRequestLocale } from 'next-intl/server';
 import { ArrowUpRight, Clock3, FolderGit2 } from 'lucide-react';
 import { getRepos } from '@/lib/feeds/github';
 import { loadFeed } from '@/lib/feeds/load';
 
 export const revalidate = 3600;
 
-export default async function Projects() {
+export default async function Projects({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const feed = await loadFeed(getRepos);
 
   return (

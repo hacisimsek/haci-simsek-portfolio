@@ -1,3 +1,4 @@
+import { setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { ArrowRight, FileText, FolderGit2, Layers3 } from 'lucide-react';
 import About from '@/components/About';
@@ -29,7 +30,14 @@ const featuredAreas = [
   },
 ];
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <div className="space-y-6 pb-6">
       <About />

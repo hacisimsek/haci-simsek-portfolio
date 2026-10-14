@@ -1,10 +1,17 @@
+import { setRequestLocale } from 'next-intl/server';
 import { ArrowUpRight, BookOpenText } from 'lucide-react';
 import { loadFeed } from '@/lib/feeds/load';
 import { getArticles } from '@/lib/feeds/medium';
 
 export const revalidate = 21600;
 
-export default async function Articles() {
+export default async function Articles({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const feed = await loadFeed(getArticles);
 
   return (
