@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Menu, MoonIcon, SunIcon, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
+import CommandPalette from '@/components/command/command-palette';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import { profile } from '@/content';
@@ -44,6 +45,7 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <CommandPalette />
           <LanguageSwitcher />
 
           <Button

@@ -22,3 +22,14 @@ vi.mock('next/navigation', async (importOriginal) => ({
   notFound: vi.fn(),
   redirect: vi.fn(),
 }));
+
+// cmdk measures its list and scrolls the active item into view; jsdom has
+// neither API.
+globalThis.ResizeObserver ??= class {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
+if (typeof Element !== 'undefined') {
+  Element.prototype.scrollIntoView ??= function scrollIntoView() {};
+}

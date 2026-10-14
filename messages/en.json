@@ -19,6 +19,38 @@
     "en": "English",
     "tr": "Türkçe"
   },
+  "Command": {
+    "title": "Command palette",
+    "description": "Search pages, switch theme or language, and open links.",
+    "placeholder": "Type a command or search…",
+    "empty": "No results.",
+    "copied": "Copied",
+    "copyEmail": "Copy email",
+    "groups": {
+      "navigate": "Navigate",
+      "preferences": "Preferences",
+      "contact": "Contact",
+      "links": "Links"
+    },
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "career": "Experience",
+      "skills": "Skills",
+      "projects": "Projects",
+      "articles": "Articles",
+      "contact": "Contact"
+    },
+    "theme": {
+      "dark": "Dark theme",
+      "light": "Light theme",
+      "system": "System theme"
+    },
+    "locale": {
+      "en": "English",
+      "tr": "Türkçe"
+    }
+  },
   "About": {
     "eyebrow": "Editorial tech portfolio",
     "viewProjects": "View Projects",

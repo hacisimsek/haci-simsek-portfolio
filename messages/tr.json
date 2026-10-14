@@ -19,6 +19,38 @@
     "en": "English",
     "tr": "Türkçe"
   },
+  "Command": {
+    "title": "Komut paleti",
+    "description": "Sayfalarda arayın, tema veya dil değiştirin, bağlantıları açın.",
+    "placeholder": "Bir komut yazın veya arayın…",
+    "empty": "Sonuç bulunamadı.",
+    "copied": "Kopyalandı",
+    "copyEmail": "E-postayı kopyala",
+    "groups": {
+      "navigate": "Gezinme",
+      "preferences": "Tercihler",
+      "contact": "İletişim",
+      "links": "Bağlantılar"
+    },
+    "nav": {
+      "home": "Ana sayfa",
+      "about": "Hakkımda",
+      "career": "Deneyim",
+      "skills": "Yetkinlikler",
+      "projects": "Projeler",
+      "articles": "Yazılar",
+      "contact": "İletişim"
+    },
+    "theme": {
+      "dark": "Koyu tema",
+      "light": "Açık tema",
+      "system": "Sistem teması"
+    },
+    "locale": {
+      "en": "English",
+      "tr": "Türkçe"
+    }
+  },
   "About": {
     "eyebrow": "Teknik portfolyo",
     "viewProjects": "Projeleri gör",

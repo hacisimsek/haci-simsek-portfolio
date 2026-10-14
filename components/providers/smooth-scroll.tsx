@@ -10,6 +10,8 @@ function ResetOnNavigate() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Hash links (/#about) scroll to their section instead.
+    if (window.location.hash) return;
     lenis?.scrollTo(0, { immediate: true });
   }, [lenis, pathname]);
 
