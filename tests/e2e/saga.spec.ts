@@ -45,8 +45,8 @@ test.describe('with reduced motion', () => {
       timeout: 6000,
     });
     await expect(
-      page.getByRole('status').filter({ hasText: 'refunded' })
-    ).toHaveText('Inventory failed. Payment refunded and order cancelled.', {
+      page.getByRole('status').filter({ hasText: 'declined' })
+    ).toHaveText('Payment declined. Stock released and order cancelled.', {
       timeout: 6000,
     });
     // The result stays on screen.

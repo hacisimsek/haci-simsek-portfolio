@@ -1,6 +1,7 @@
 // A four-step order saga. Each tick moves it one step: forward through the
 // services, or, after a failure, backwards through their compensations.
-export const STEPS = ['order', 'payment', 'inventory', 'shipping'] as const;
+// Same order as the flagship repo (ecommerce-microservices).
+export const STEPS = ['order', 'inventory', 'payment', 'shipping'] as const;
 export type StepId = (typeof STEPS)[number];
 
 export type StepStatus =
@@ -26,8 +27,8 @@ export interface SagaState {
   held: number;
 }
 
-/** Inventory runs out of stock, so payment and order are compensated. */
-export const FAILING_STEP = STEPS.indexOf('inventory');
+/** The payment is declined, so stock is released and the order cancelled. */
+export const FAILING_STEP = STEPS.indexOf('payment');
 
 /** How long a finished saga stays on screen, in ticks. */
 export const HOLD_TICKS = 3;
@@ -56,7 +57,7 @@ export function completed(): SagaState {
   };
 }
 
-/** A fresh run in which inventory fails, whatever was on screen before. */
+/** A fresh run in which the payment fails, whatever was on screen before. */
 export function withFailure(): SagaState {
   return start(FAILING_STEP);
 }

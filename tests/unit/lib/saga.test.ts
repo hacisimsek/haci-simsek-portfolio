@@ -30,7 +30,7 @@ describe('saga', () => {
     expect(state.statuses).toEqual(['done', 'done', 'done', 'done']);
   });
 
-  it('fails inventory and compensates the earlier steps in reverse', () => {
+  it('fails the payment and compensates the earlier steps in reverse', () => {
     let state = run(start(FAILING_STEP), 2);
     expect(state.statuses).toEqual(['done', 'done', 'running', 'idle']);
     state = tick(state);
@@ -60,8 +60,9 @@ describe('saga', () => {
     expect(restarted.statuses[0]).toBe('running');
   });
 
-  it('runs the failure scenario from the inventory step', () => {
-    expect(STEPS[FAILING_STEP]).toBe('inventory');
+  it('runs the failure scenario from the payment step', () => {
+    expect(STEPS).toEqual(['order', 'inventory', 'payment', 'shipping']);
+    expect(STEPS[FAILING_STEP]).toBe('payment');
     expect(withFailure()).toEqual(start(FAILING_STEP));
   });
 
