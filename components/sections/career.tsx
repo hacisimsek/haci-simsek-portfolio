@@ -36,7 +36,11 @@ export default function Career() {
                 className="relative grid gap-5 sm:grid-cols-[140px_1fr] sm:gap-8"
               >
                 <div className="relative z-10 flex items-start gap-4 sm:block">
-                  <span className="mt-1.5 block h-6 w-6 shrink-0 rounded-full border-4 border-background bg-primary sm:absolute sm:top-0 sm:left-[144px]" />
+                  {/* The saga's step ring: accent is structure, purple means undo. */}
+                  <span
+                    data-career-dot
+                    className="mt-1.5 block h-6 w-6 shrink-0 rounded-full border-2 border-accent bg-background sm:absolute sm:top-0 sm:left-[144px]"
+                  />
                   <div>
                     <p
                       id={labelId}

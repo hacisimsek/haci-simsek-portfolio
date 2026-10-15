@@ -39,6 +39,7 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
 
+  /* Purple (primary) only means "undo" in the saga; accent is structure. */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
 
@@ -199,7 +200,7 @@
     --destructive-foreground: oklch(0.99 0 0);
     --border: oklch(0.18 0.03 275 / 0.1);
     --input: oklch(0.18 0.03 275 / 0.16);
-    --ring: oklch(0.5 0.23 290);
+    --ring: var(--accent);
     --chart-1: oklch(0.5 0.23 290);
     --chart-2: oklch(0.52 0.12 215);
     --chart-3: oklch(0.6 0.17 45);
@@ -228,7 +229,7 @@
     --destructive-foreground: oklch(0.99 0 0);
     --border: oklch(1 0 0 / 0.09);
     --input: oklch(1 0 0 / 0.14);
-    --ring: oklch(0.75 0.16 290);
+    --ring: var(--accent);
     --chart-1: oklch(0.7 0.2 290);
     --chart-2: oklch(0.82 0.13 195);
     --chart-3: oklch(0.72 0.17 45);

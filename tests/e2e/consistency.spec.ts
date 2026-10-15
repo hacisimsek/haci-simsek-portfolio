@@ -208,3 +208,44 @@ test.describe('section headers on a wide screen', () => {
     for (const count of lines) expect(Math.round(count)).toBeLessThanOrEqual(2);
   });
 });
+
+test.describe('one accent for structure', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  for (const theme of ['dark', 'light'] as const) {
+    test(`purple is kept for undo in the ${theme} theme`, async ({ page }) => {
+      await page.goto('/');
+      await page.evaluate((name) => {
+        document.documentElement.classList.remove('dark', 'light');
+        document.documentElement.classList.add(name);
+      }, theme);
+      const result = await page.evaluate(() => {
+        const probe = (value: string) => {
+          const el = document.createElement('span');
+          el.style.color = value;
+          document.body.append(el);
+          const colour = getComputedStyle(el).color;
+          el.remove();
+          return colour;
+        };
+        const dots = [
+          ...document.querySelectorAll<HTMLElement>('[data-career-dot]'),
+        ].map((dot) => getComputedStyle(dot).borderTopColor);
+        const fill = document.querySelector('[data-timeline-fill]');
+        const bar = document.querySelector('[data-scroll-progress]');
+        return {
+          accent: probe('var(--accent)'),
+          ring: probe('var(--ring)'),
+          dots,
+          fillGradient: fill ? getComputedStyle(fill).backgroundImage : 'none',
+          barGradient: bar ? getComputedStyle(bar).backgroundImage : 'none',
+        };
+      });
+      expect(result.dots.length).toBeGreaterThan(3);
+      for (const dot of result.dots) expect(dot).toBe(result.accent);
+      expect(result.ring).toBe(result.accent);
+      expect(result.fillGradient).toBe('none');
+      expect(result.barGradient).toBe('none');
+    });
+  }
+});

@@ -19,7 +19,7 @@ export default function ScrollProgress() {
     <m.div
       data-scroll-progress
       aria-hidden="true"
-      className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-gradient-to-r from-primary via-accent to-primary"
+      className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-accent"
       style={{ scaleX }}
     />
   );
