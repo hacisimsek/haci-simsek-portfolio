@@ -7,7 +7,7 @@ export type FeaturedRepo = Repo & { flagship: boolean };
 // updated others. Picks missing from the feed are skipped, never invented.
 export function selectFeatured(
   repos: Repo[],
-  featured: FeaturedProject[],
+  featured: Pick<FeaturedProject, 'name' | 'flagship'>[],
   limit = 6
 ): FeaturedRepo[] {
   const byName = new Map(repos.map((repo) => [repo.name, repo]));

@@ -74,4 +74,6 @@ export interface Profile {
 export interface FeaturedProject {
   name: string;
   flagship?: boolean;
+  /** Authored from the repo's README; replaces the GitHub description. */
+  summary: L10n;
 }

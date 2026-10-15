@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
+import { featuredProjects, t, type Locale } from '@/content';
 import { projectTitle } from '@/lib/project-title';
 import type { Repo } from '@/lib/feeds/github';
 import { cn, SEPARATOR } from '@/lib/utils';
@@ -35,6 +36,13 @@ export default function ProjectRow({
 }) {
   const msg = useTranslations('Collections');
   const locale = useLocale();
+  // Featured repos carry an authored line; others keep GitHub's description.
+  const authored = featuredProjects.find(
+    (project) => project.name === repo.name
+  );
+  const summary = authored
+    ? t(authored.summary, locale as Locale)
+    : repo.description;
   const updated = monthYear(locale).format(new Date(repo.updatedAt));
   const meta = [repo.language, msg('updated', { date: updated })]
     .filter(Boolean)
@@ -65,7 +73,7 @@ export default function ProjectRow({
               label ? 'text-base' : 'text-sm'
             )}
           >
-            {repo.description}
+            {summary}
           </p>
           {label ? (
             <p className="order-first mb-2 text-sm font-medium text-accent">
