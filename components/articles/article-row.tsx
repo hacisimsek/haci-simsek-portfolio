@@ -19,6 +19,11 @@ export default function ArticleRow({
    *  truncated and repeat the title, so they are not shown. */
   detailed?: boolean;
 }) {
+  const topics = article.categories
+    .filter((topic) => !HIDDEN_TOPICS.has(topic))
+    .slice(0, 4)
+    .map(projectTitle);
+
   return (
     <li>
       <a
@@ -37,13 +42,9 @@ export default function ArticleRow({
           >
             {article.title}
           </Heading>
-          {detailed && article.categories.length > 0 ? (
+          {detailed && topics.length > 0 ? (
             <p className="mt-2 text-sm text-muted-foreground">
-              {article.categories
-                .filter((topic) => !HIDDEN_TOPICS.has(topic))
-                .slice(0, 4)
-                .map(projectTitle)
-                .join(SEPARATOR)}
+              {topics.join(SEPARATOR)}
             </p>
           ) : null}
         </div>

@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import Footer from '@/components/Footer';
 import { renderWithIntl as render } from './render';
 
@@ -11,6 +11,10 @@ vi.mock('@/i18n/navigation', async (importOriginal) => ({
 }));
 
 describe('Footer on the contact page', () => {
+  beforeEach(() => {
+    path.current = '/contact';
+  });
+
   it('drops the closing band that would point back to this page', () => {
     render(<Footer />);
     expect(

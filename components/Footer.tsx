@@ -32,32 +32,33 @@ export default function Footer() {
   return (
     <footer className="mt-24">
       <HideOnPath path="/contact">
-        <section
-          aria-labelledby="closing-title"
-          className="max-w-3xl border-t border-border/70 pt-14"
-        >
-          <h2
-            id="closing-title"
-            className="font-display text-3xl font-semibold tracking-tight sm:text-5xl"
-          >
-            {msg('title')}
-          </h2>
-          <p className="mt-4 text-base leading-8 text-muted-foreground sm:text-lg">
-            {msg('text', { company: profile.currentCompany })}
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Button asChild size="lg" className="rounded-full px-7">
-              <Link href="/contact">
-                {msg('cta')}
-                <ArrowRight aria-hidden className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <CopyEmailButton email={profile.email} />
-          </div>
-        </section>
+        {/* Full-width rule; the band brings its own space below, so the
+            bottom row sits close on /contact, where the band is hidden. */}
+        <div className="border-t border-border/70 pt-14 pb-14">
+          <section aria-labelledby="closing-title" className="max-w-3xl">
+            <h2
+              id="closing-title"
+              className="font-display text-3xl font-semibold tracking-tight sm:text-5xl"
+            >
+              {msg('title')}
+            </h2>
+            <p className="mt-4 text-base leading-8 text-muted-foreground sm:text-lg">
+              {msg('text', { company: profile.currentCompany })}
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Button asChild size="lg" className="rounded-full px-7">
+                <Link href="/contact">
+                  {msg('cta')}
+                  <ArrowRight aria-hidden className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <CopyEmailButton email={profile.email} />
+            </div>
+          </section>
+        </div>
       </HideOnPath>
 
-      <div className="mt-14 flex flex-col gap-4 border-t border-border/70 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 border-t border-border/70 py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <span>
             {msg('copyright', {

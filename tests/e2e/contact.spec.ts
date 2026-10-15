@@ -82,3 +82,12 @@ test('the contact page leads with the email and has no closing band', async ({
     page.getByRole('heading', { name: 'Open to the right conversation' })
   ).toHaveCount(0);
 });
+
+test('the Turkish contact page has no closing band either', async ({
+  page,
+}) => {
+  await page.goto('/tr/contact');
+  await expect(
+    page.getByRole('heading', { name: 'Doğru tekliflere açığım' })
+  ).toHaveCount(0);
+});

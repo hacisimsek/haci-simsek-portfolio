@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import { renderWithIntl as render } from './render';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import Header from '@/components/Header';
 
 describe('Header', () => {
@@ -141,5 +141,14 @@ describe('Header', () => {
       .find((link) => link.className.includes('md:inline-flex'))!;
     expect(desktop).toHaveClass('border');
     expect(desktop).not.toHaveClass('bg-accent');
+  });
+
+  it('marks Contact as the current page on /contact', async () => {
+    const navigation = await import('@/i18n/navigation');
+    const spy = vi.spyOn(navigation, 'usePathname').mockReturnValue('/contact');
+    render(<Header />);
+    for (const link of screen.getAllByRole('link', { name: 'Contact' }))
+      expect(link).toHaveAttribute('aria-current', 'page');
+    spy.mockRestore();
   });
 });
