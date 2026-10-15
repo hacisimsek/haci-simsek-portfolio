@@ -80,7 +80,7 @@ export default function Career() {
                         ]
                           .filter((part): part is string => Boolean(part))
                           .map((part, index) => (
-                            <span key={part}>
+                            <span key={index}>
                               {index > 0 ? SEPARATOR : null}
                               {part}
                             </span>

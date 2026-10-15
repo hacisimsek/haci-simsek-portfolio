@@ -143,7 +143,7 @@ export default function ContactForm() {
                 value={topic}
                 // In the HTML too, so a post without JavaScript has a topic.
                 defaultChecked={topic === defaultValues.topic}
-                className="accent-[var(--accent)]"
+                className="accent-accent"
                 {...register('topic')}
               />
               {topic === 'role' ? msg('topicRole') : msg('topicTechnical')}
@@ -245,7 +245,7 @@ export default function ContactForm() {
       <Button
         type="submit"
         disabled={status === 'sending' || status === 'sent'}
-        className="h-11 min-w-44 rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90"
+        className="h-11 min-w-44 rounded-full px-6"
       >
         {status === 'sending' ? (
           <>

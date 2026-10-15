@@ -41,10 +41,14 @@ export default async function Home({
       <FeaturedProjects
         repos={
           repos.ok
-            ? selectFeatured(
+            ? // Only authored picks; a missing one shortens the list.
+              selectFeatured(
                 repos.data,
                 featuredProjects,
-                featuredProjects.length
+                featuredProjects.length,
+                {
+                  fill: false,
+                }
               )
             : []
         }

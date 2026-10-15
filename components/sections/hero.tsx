@@ -50,11 +50,7 @@ export default function Hero() {
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
-          <Button
-            asChild
-            size="lg"
-            className="rounded-full bg-accent px-7 text-accent-foreground hover:bg-accent/90"
-          >
+          <Button asChild size="lg" className="rounded-full px-7">
             <Link href="/projects">
               {msg('viewProjects')}
               <ArrowRight className="ml-2 h-4 w-4" />

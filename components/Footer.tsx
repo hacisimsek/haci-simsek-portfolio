@@ -41,11 +41,7 @@ export default function Footer() {
           {msg('text', { company: profile.currentCompany })}
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Button
-            asChild
-            size="lg"
-            className="rounded-full bg-accent px-7 text-accent-foreground hover:bg-accent/90"
-          >
+          <Button asChild size="lg" className="rounded-full px-7">
             <Link href="/contact">
               {msg('cta')}
               <ArrowRight aria-hidden className="ml-2 h-4 w-4" />

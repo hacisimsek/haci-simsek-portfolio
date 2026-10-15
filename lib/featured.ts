@@ -13,13 +13,16 @@ export type FeaturedRepo = Repo & { flagship: boolean };
 export function selectFeatured(
   repos: Repo[],
   featured: Pick<FeaturedProject, 'name' | 'flagship'>[],
-  limit = 6
+  limit = 6,
+  /** Fill up to the limit with recent repos; off where only picks belong. */
+  { fill = true }: { fill?: boolean } = {}
 ): FeaturedRepo[] {
   const byName = new Map(repos.map((repo) => [repo.name, repo]));
   const picked: FeaturedRepo[] = featured.flatMap(({ name, flagship }) => {
     const repo = byName.get(name);
     return repo ? [{ ...repo, flagship: flagship ?? false }] : [];
   });
+  if (!fill) return picked.slice(0, limit);
   const taken = new Set(picked.map((repo) => repo.name));
   const rest = repos
     .filter((repo) => !taken.has(repo.name))

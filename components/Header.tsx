@@ -57,6 +57,8 @@ export default function Header() {
       <a
         href="#main"
         onClick={(event) => {
+          // A modified click (new tab, new window) is the browser's.
+          if (event.metaKey || event.ctrlKey || event.shiftKey) return;
           event.preventDefault();
           document.getElementById('main')?.focus();
         }}
@@ -96,10 +98,7 @@ export default function Header() {
             <ThemeToggle />
           </div>
 
-          <Button
-            asChild
-            className="hidden rounded-full bg-accent px-5 text-accent-foreground hover:bg-accent/90 md:inline-flex"
-          >
+          <Button asChild className="hidden rounded-full px-5 md:inline-flex">
             <Link href="/contact">{t('contact')}</Link>
           </Button>
 
@@ -147,10 +146,7 @@ export default function Header() {
               {t(link.key)}
             </Link>
           ))}
-          <Button
-            asChild
-            className="mt-2 h-11 rounded-full bg-accent text-accent-foreground hover:bg-accent/90"
-          >
+          <Button asChild className="mt-2 h-11 rounded-full">
             <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
               {t('contact')}
             </Link>

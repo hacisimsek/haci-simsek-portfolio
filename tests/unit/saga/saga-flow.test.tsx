@@ -228,4 +228,26 @@ describe('SagaFlow', () => {
       'done'
     );
   });
+
+  it('labels a failure for the step that failed, in both languages', async () => {
+    const en = (await import('../../../messages/en.json')).default;
+    const tr = (await import('../../../messages/tr.json')).default;
+    expect(en.Saga.steps.payment.failed).toBe('Declined');
+    expect(tr.Saga.steps.payment.failed).toBe('Reddedildi');
+    for (const messages of [en, tr])
+      for (const step of Object.values(messages.Saga.steps))
+        expect(step.failed.length).toBeGreaterThan(2);
+    expect('failed' in en.Saga.status).toBe(false);
+  });
+
+  it('is named once, by its visible title', () => {
+    render(<SagaFlow />);
+    const figure = screen.getByRole('figure', { name: 'An order saga' });
+    expect(figure).not.toHaveAttribute('aria-label');
+    const title = document.getElementById(
+      figure.getAttribute('aria-labelledby')!
+    );
+    expect(title).toHaveTextContent('An order saga');
+    expect(figure.querySelector('figcaption')).toContainElement(title);
+  });
 });
