@@ -158,3 +158,18 @@ for (const { path, width } of [
     }
   });
 }
+
+test.describe('phone menu', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('Escape closes it and returns focus to the button', async ({ page }) => {
+    await page.goto('/');
+    const toggle = page.getByRole('button', { name: 'Toggle navigation' });
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Escape');
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(toggle).toBeFocused();
+  });
+});
