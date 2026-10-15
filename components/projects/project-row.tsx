@@ -31,8 +31,8 @@ export default function ProjectRow({
         rel="noopener noreferrer"
         className="group grid gap-x-10 gap-y-3 py-7 transition-colors sm:grid-cols-[minmax(0,1fr)_auto]"
       >
-        {/* The label sits after the title in the DOM so the link's name
-            starts with the title, and is moved above it visually. */}
+        {/* The label follows the title, so the link's name starts with the
+            title and no kicker sits above it. */}
         <div className="flex min-w-0 flex-col">
           <Heading
             className={cn(
@@ -42,6 +42,9 @@ export default function ProjectRow({
           >
             {projectTitle(repo.name)}
           </Heading>
+          {label ? (
+            <p className="mt-1 text-sm font-medium text-accent">{label}</p>
+          ) : null}
           <p
             className={cn(
               'mt-2 max-w-2xl leading-7 text-muted-foreground',
@@ -50,11 +53,6 @@ export default function ProjectRow({
           >
             {summary}
           </p>
-          {label ? (
-            <p className="order-first mb-2 text-sm font-medium text-accent">
-              {label}
-            </p>
-          ) : null}
         </div>
         <p className="flex items-start gap-3 text-sm text-muted-foreground sm:justify-end sm:pt-1.5">
           <span>{meta}</span>

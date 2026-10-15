@@ -142,4 +142,10 @@ describe('ProjectBrowser', () => {
       screen.getByRole('heading', { level: 2, name: 'Other repositories' })
     ).toBeInTheDocument();
   });
+
+  it('rings filter chips with the site focus style', () => {
+    render(<ProjectBrowser repos={repos} />);
+    const chip = screen.getByRole('button', { name: 'TypeScript' });
+    expect(chip).toHaveClass('focus-visible:ring-2', 'focus-visible:ring-ring');
+  });
 });

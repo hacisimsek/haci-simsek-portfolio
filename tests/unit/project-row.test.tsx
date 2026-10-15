@@ -55,4 +55,14 @@ describe('ProjectRow', () => {
     );
     expect(screen.getByText('Reminder platform')).toBeInTheDocument();
   });
+
+  it('puts the Flagship label after the title, not above it', () => {
+    render(<ProjectRow repo={repo} label="Flagship" />);
+    const label = screen.getByText('Flagship');
+    const title = screen.getByRole('heading', { name: 'NotifyHub' });
+    expect(
+      title.compareDocumentPosition(label) & Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(label).not.toHaveClass('order-first');
+  });
 });

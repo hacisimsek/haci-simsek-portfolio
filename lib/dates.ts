@@ -22,7 +22,7 @@ export function formatPeriod(
   locale: Locale = 'en'
 ) {
   const to = end ? formatYearMonth(end, locale) : PRESENT[locale];
-  return `${formatYearMonth(start, locale)} - ${to}`;
+  return `${formatYearMonth(start, locale)} – ${to}`;
 }
 
 export function careerYears(start: YearMonth, today: Date = new Date()) {
