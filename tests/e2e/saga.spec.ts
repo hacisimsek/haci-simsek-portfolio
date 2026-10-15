@@ -93,6 +93,8 @@ test.describe('pausing', () => {
   test('Pause holds the saga still in a real browser', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Pause' }).click();
+    // The press landed: the toggle now offers to resume.
+    await expect(page.getByRole('button', { name: 'Resume' })).toBeVisible();
     const before = await steps(page).evaluateAll((items) =>
       items.map((item) => item.getAttribute('data-status'))
     );
