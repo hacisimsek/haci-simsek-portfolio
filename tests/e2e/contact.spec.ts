@@ -19,6 +19,7 @@ test('sends a message from the keyboard', async ({ page }) => {
 
   await expect(page.getByRole('status', { name: /Thanks/ })).toBeFocused();
   expect(JSON.parse(body)).toEqual({
+    topic: 'role',
     name: 'Ada',
     email: 'ada@example.com',
     message,
@@ -53,4 +54,19 @@ test('the error state has no accessibility violations', async ({ page }) => {
     .include('form')
     .analyze();
   expect(violations.map((v) => v.id)).toEqual([]);
+});
+
+test('the contact page speaks to roles and technical conversations', async ({
+  page,
+}) => {
+  await page.goto('/contact');
+  const main = page.locator('main');
+  await expect(
+    main.getByRole('heading', { level: 2, name: 'About a role' })
+  ).toBeVisible();
+  await expect(
+    main.getByRole('heading', { level: 2, name: 'A technical conversation' })
+  ).toBeVisible();
+  await expect(main).toContainText('not actively looking');
+  await expect(main).not.toContainText('create the most value');
 });

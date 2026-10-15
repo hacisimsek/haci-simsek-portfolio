@@ -9,6 +9,7 @@ import {
 
 const t = (key: string) => `[${key}]`;
 const valid: ContactValues = {
+  topic: 'role',
   name: 'Ada',
   email: 'ada@example.com',
   message: 'We need help moving our checkout to services.',
@@ -50,6 +51,7 @@ describe('submitContact', () => {
       'Content-Type': 'application/json',
     });
     expect(JSON.parse(init.body)).toEqual({
+      topic: 'role',
       name: 'Ada',
       email: 'ada@example.com',
       message: valid.message,
