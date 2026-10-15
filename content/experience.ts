@@ -22,14 +22,14 @@ export const experience: Role[] = [
     },
     highlights: {
       en: [
-        'Build backend microservices in the **AreaPrivata** ecosystem with **Java 11**, **Spring Boot** and **Maven**, across authentication, account, session, profile and content domains.',
+        'Build backend microservices for **AreaPrivata**, Sisal’s customer account area, with **Java 11**, **Spring Boot** and **Maven**, across authentication, account, session, profile and content domains.',
         'Designed and optimized core services for registration, profile management and gateway communication.',
         'Built resilient integrations with asynchronous messaging over **RabbitMQ**, retry strategies and caching with **Redis Sentinel**.',
         'Led the migration of the infrastructure to a new API-driven model, defining standards and best practices for consistency across services.',
         'Work with DevOps on deployment and monitoring with **Kubernetes** and **ArgoCD**, plus observability, load testing and performance tuning.',
       ],
       tr: [
-        '**AreaPrivata** ekosisteminde **Java 11**, **Spring Boot** ve **Maven** ile kimlik doğrulama, hesap, oturum, profil ve içerik alanlarında backend mikroservisleri geliştiriyorum.',
+        'Sisal’in müşteri hesap alanı **AreaPrivata** için **Java 11**, **Spring Boot** ve **Maven** ile kimlik doğrulama, hesap, oturum, profil ve içerik alanlarında backend mikroservisleri geliştiriyorum.',
         'Kayıt, profil yönetimi ve gateway iletişimi için temel servisleri tasarlayıp optimize ettim.',
         '**RabbitMQ** üzerinden asenkron mesajlaşma, yeniden deneme stratejileri ve **Redis Sentinel** ile önbellekleme kullanarak dayanıklı entegrasyonlar kurdum.',
         'Altyapının yeni API odaklı modele geçişine liderlik ettim; servisler arasında tutarlılık için standartları ve en iyi uygulamaları belirledim.',
@@ -55,12 +55,12 @@ export const experience: Role[] = [
     },
     highlights: {
       en: [
-        'Designed and implemented the **Orion** module, a new authentication infrastructure integrated with the full-stack application, using **React.js**, **Java** and **OSGi** for scalability, security and compatibility.',
+        'Designed and implemented the **Orion** module, a new authentication infrastructure integrated with the full-stack application, using **React.js**, **Java** and **OSGi** (a modular Java platform) for scalability, security and compatibility.',
         'Member of the Lottery and Terminals team, developing applications end to end with **React.js** and **OSGi**.',
         'Collaborated on global projects, joining international meetings and business trips that fed into strategic decisions.',
       ],
       tr: [
-        'Full-stack uygulamayla entegre çalışan yeni kimlik doğrulama altyapısı **Orion** modülünü **React.js**, **Java** ve **OSGi** kullanarak ölçeklenebilirlik, güvenlik ve uyumluluk odağıyla tasarlayıp geliştirdim.',
+        'Full-stack uygulamayla entegre çalışan yeni kimlik doğrulama altyapısı **Orion** modülünü **React.js**, **Java** ve **OSGi** (modüler Java platformu) kullanarak ölçeklenebilirlik, güvenlik ve uyumluluk odağıyla tasarlayıp geliştirdim.',
         'Piyango ve Terminaller ekibinde **React.js** ve **OSGi** ile uçtan uca uygulama geliştirdim.',
         'Global projelerde uluslararası toplantılara ve iş seyahatlerine katılarak stratejik kararlara katkı verdim.',
       ],

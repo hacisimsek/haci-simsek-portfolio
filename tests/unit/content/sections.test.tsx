@@ -41,16 +41,14 @@ describe('Career layout', () => {
     ).toBeInTheDocument();
   });
 
-  it('opens the current employer and folds earlier highlights', () => {
+  it('opens the current role and folds earlier highlights', () => {
     render(<Career />);
     const roles = screen.getAllByRole('article');
-    // Sisal (current): highlights are on the page, not folded.
-    for (const role of roles.slice(0, 2)) {
-      expect(role.querySelector('details')).toBeNull();
-      expect(role.querySelectorAll('li').length).toBeGreaterThan(0);
-    }
+    // Only the current role is open; even the earlier Sisal role folds.
+    expect(roles[0].querySelector('details')).toBeNull();
+    expect(roles[0].querySelectorAll('li').length).toBeGreaterThan(0);
     // Earlier roles keep their highlights one click away.
-    for (const role of roles.slice(2)) {
+    for (const role of roles.slice(1)) {
       const details = role.querySelector('details')!;
       expect(details).not.toBeNull();
       expect(details).not.toHaveAttribute('open');

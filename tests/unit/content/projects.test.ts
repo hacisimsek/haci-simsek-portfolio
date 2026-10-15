@@ -30,3 +30,24 @@ describe('featured projects', () => {
     expect(line).not.toMatch(/stok bırakılıyor/);
   });
 });
+
+describe('career glossary', () => {
+  it('explains AreaPrivata and OSGi where they first appear', async () => {
+    const { profile, experience } = await import('@/content');
+    expect(profile.bio.en.join(' ')).toMatch(
+      /AreaPrivata, Sisal’s customer account area/
+    );
+    expect(profile.bio.tr.join(' ')).toMatch(
+      /Sisal’in müşteri hesap alanı AreaPrivata/
+    );
+    const [senior, engineer] = experience;
+    expect(senior.highlights.en[0]).toMatch(/Sisal’s customer account area/);
+    expect(senior.highlights.tr[0]).toMatch(/Sisal’in müşteri hesap alanı/);
+    expect(engineer.highlights.en[0]).toMatch(
+      /\*\*OSGi\*\* \(a modular Java platform\)/
+    );
+    expect(engineer.highlights.tr[0]).toMatch(
+      /\*\*OSGi\*\* \(modüler Java platformu\)/
+    );
+  });
+});
