@@ -16,4 +16,14 @@ describe('Button', () => {
     render(<Button variant="link">Go</Button>);
     expect(screen.getByRole('button')).toHaveClass('text-accent');
   });
+
+  it.each(['outline', 'ghost'] as const)(
+    'keeps %s quiet on hover so it never looks like the primary action',
+    (variant) => {
+      render(<Button variant={variant}>Go</Button>);
+      const button = screen.getByRole('button');
+      expect(button.className).not.toMatch(/hover:bg-accent\b/);
+      expect(button).toHaveClass('hover:bg-secondary');
+    }
+  );
 });
