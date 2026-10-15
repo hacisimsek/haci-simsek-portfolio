@@ -34,3 +34,13 @@ test('articles can be filtered by topic', async ({ page }) => {
     page.getByRole('link', { name: /Circuit Breaker/ })
   ).toBeVisible();
 });
+
+test('the projects page leads with the flagship and shows no bulk dates', async ({
+  page,
+}) => {
+  await page.goto('/projects');
+  const first = page.locator('main a[href^="https://github.com/"]').first();
+  await expect(first).toContainText('E-commerce microservices');
+  await expect(first).toContainText('Flagship');
+  await expect(page.locator('main')).not.toContainText('Updated');
+});

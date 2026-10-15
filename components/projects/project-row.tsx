@@ -1,29 +1,13 @@
 import { ArrowUpRight } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { authoredSummary } from '@/lib/featured';
 import { projectTitle } from '@/lib/project-title';
 import type { Repo } from '@/lib/feeds/github';
-import { cn, SEPARATOR } from '@/lib/utils';
-
-const formatters = new Map<string, Intl.DateTimeFormat>();
-
-// One formatter per locale, shared by every row.
-function monthYear(locale: string) {
-  let format = formatters.get(locale);
-  if (!format) {
-    format = new Intl.DateTimeFormat(locale, {
-      month: 'short',
-      year: 'numeric',
-      timeZone: 'Europe/Istanbul',
-    });
-    formatters.set(locale, format);
-  }
-  return format;
-}
+import { cn } from '@/lib/utils';
 
 // One repo as a ruled list row: the readable title leads, its summary
-// (authored for featured repos, GitHub's otherwise) follows, and language and last update (month and year, the
-// same on every page) sit in a quiet meta column.
+// (authored for featured repos, GitHub's otherwise) follows, and the language
+// sits in a quiet meta column. No "updated" date: bulk pushes made it noise.
 export default function ProjectRow({
   repo,
   heading: Heading = 'h3',
@@ -34,14 +18,10 @@ export default function ProjectRow({
   /** Plain accent text above the title, e.g. "Flagship". */
   label?: string;
 }) {
-  const msg = useTranslations('Collections');
   const locale = useLocale();
   // Featured repos carry an authored line; others keep GitHub's description.
   const summary = authoredSummary(repo.name, locale) ?? repo.description;
-  const updated = monthYear(locale).format(new Date(repo.updatedAt));
-  const meta = [repo.language, msg('updated', { date: updated })]
-    .filter(Boolean)
-    .join(SEPARATOR);
+  const meta = repo.language;
 
   return (
     <li>

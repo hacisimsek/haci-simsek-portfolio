@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import ProjectRow from '@/components/projects/project-row';
 import { renderWithIntl as render } from './render';
 
@@ -12,32 +12,18 @@ const repo = {
 };
 
 describe('ProjectRow', () => {
-  it('writes its own meta line with the separator kept on the line', () => {
+  it('shows the language and no bulk "updated" date', () => {
     render(<ProjectRow repo={repo} />);
-    // The default matcher collapses whitespace, so check the raw text.
-    expect(screen.getByText(/^Java.· Updated Oct 2026$/).textContent).toBe(
-      'Java\u00a0· Updated Oct 2026'
-    );
+    expect(screen.getByText('Java')).toBeInTheDocument();
+    expect(screen.queryByText(/Updated|Oct 2026/)).toBeNull();
   });
 
-  it('drops the language when GitHub has none', () => {
-    render(<ProjectRow repo={{ ...repo, language: null }} />, {
-      locale: 'tr',
-    });
-    expect(screen.getByText('Güncelleme: Eki 2026')).toBeInTheDocument();
-  });
-
-  it('builds one date formatter per locale, not one per row', () => {
-    const spy = vi.spyOn(Intl, 'DateTimeFormat');
-    render(
-      <ul>
-        <ProjectRow repo={repo} />
-        <ProjectRow repo={{ ...repo, name: 'other', url: repo.url + '2' }} />
-      </ul>,
+  it('shows no meta when GitHub has no language', () => {
+    const { container } = render(
+      <ProjectRow repo={{ ...repo, language: null }} />,
       { locale: 'tr' }
     );
-    expect(spy.mock.calls.length).toBeLessThanOrEqual(1);
-    spy.mockRestore();
+    expect(container.textContent).not.toMatch(/Güncelleme|Java/);
   });
 
   it('shows the authored line for a featured repo, in each language', () => {

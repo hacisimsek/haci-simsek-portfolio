@@ -29,8 +29,9 @@ const repos = [
   },
 ];
 
+// Rows are h3 under the "Selected projects" / "Other repositories" h2s.
 const cards = () =>
-  screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent);
+  screen.getAllByRole('heading', { level: 3 }).map((h) => h.textContent);
 
 describe('ProjectBrowser', () => {
   it('filters by search and announces the count', async () => {
@@ -66,7 +67,7 @@ describe('ProjectBrowser', () => {
     const user = userEvent.setup();
     render(<ProjectBrowser repos={repos} />);
     await user.selectOptions(screen.getByLabelText('Sort'), 'name');
-    expect(cards()).toEqual(['BFF application', 'NotifyHub', 'Wordly']);
+    expect(cards()).toEqual(['NotifyHub', 'BFF application', 'Wordly']);
   });
 
   it('offers a reset when nothing matches, in Turkish too', async () => {
@@ -107,5 +108,38 @@ describe('ProjectBrowser', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it('leads with the authored picks, then the other repositories', () => {
+    render(<ProjectBrowser repos={repos} />);
+    const groups = screen.getAllByRole('heading', { level: 2 });
+    expect(groups.map((h) => h.textContent)).toEqual([
+      'Selected projects',
+      'Other repositories',
+    ]);
+    const selected = groups[0].closest('section')!;
+    expect(within(selected).getAllByRole('heading', { level: 3 })).toHaveLength(
+      1
+    );
+    expect(selected).toHaveTextContent(/RabbitMQ with retries/);
+    const others = groups[1].closest('section')!;
+    expect(
+      within(others)
+        .getAllByRole('heading', { level: 3 })
+        .map((h) => h.textContent)
+    ).toEqual(['BFF application', 'Wordly']);
+    expect(screen.queryByText(/Updated/)).toBeNull();
+  });
+
+  it('drops a group that a filter empties', async () => {
+    const user = userEvent.setup();
+    render(<ProjectBrowser repos={repos} />);
+    await user.type(screen.getByLabelText('Search'), 'word game');
+    expect(
+      screen.queryByRole('heading', { level: 2, name: 'Selected projects' })
+    ).toBeNull();
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Other repositories' })
+    ).toBeInTheDocument();
   });
 });
