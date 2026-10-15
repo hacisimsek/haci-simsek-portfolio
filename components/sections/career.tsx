@@ -23,9 +23,9 @@ export default function Career() {
 
       <TimelineTrack>
         <ol className="space-y-12">
-          {groups.map((group, groupIndex) => {
+          {groups.map((group) => {
             // Only the current employer is open; earlier highlights fold.
-            const current = groupIndex === 0;
+            const current = group.roles.some((role) => role.end === null);
             const first = group.roles[0];
             const last = group.roles.at(-1)!;
             const labelId = `company-${first.id}`;
@@ -99,6 +99,10 @@ export default function Career() {
                               className="h-4 w-4 transition-transform group-open/more:rotate-90"
                             />
                             {msg('more')}
+                            <span className="sr-only">
+                              {SEPARATOR}
+                              {t(role.title, locale)}
+                            </span>
                           </summary>
                           <Highlights items={t(role.highlights, locale)} />
                         </details>

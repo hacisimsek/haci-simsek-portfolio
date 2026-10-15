@@ -96,6 +96,41 @@ describe('Footer', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Email copied');
   });
 
+  it('says so when it opens the mail client instead', async () => {
+    Object.assign(navigator, {
+      clipboard: { writeText: vi.fn().mockRejectedValue(new Error('no')) },
+    });
+    render(<Footer />);
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Copy email' }));
+    });
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Opening your mail app'
+    );
+  });
+
+  it('clears the confirmation so a second copy is announced again', async () => {
+    vi.useFakeTimers();
+    Object.assign(navigator, {
+      clipboard: { writeText: vi.fn().mockResolvedValue(undefined) },
+    });
+    render(<Footer />);
+    const button = screen.getByRole('button', { name: 'Copy email' });
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    expect(screen.getByRole('status')).toHaveTextContent('Email copied');
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(screen.getByRole('status')).toBeEmptyDOMElement();
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    expect(screen.getByRole('status')).toHaveTextContent('Email copied');
+    vi.useRealTimers();
+  });
+
   it('opens the mail client when the clipboard is blocked', async () => {
     Object.assign(navigator, {
       clipboard: { writeText: vi.fn().mockRejectedValue(new Error('no')) },

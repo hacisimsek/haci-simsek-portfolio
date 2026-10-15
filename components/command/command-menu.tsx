@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/command';
 import { profile, socials } from '@/content';
 import { usePathname, useRouter } from '@/i18n/navigation';
+import { copyEmail } from '@/lib/copy-email';
 import { fold } from '@/lib/fold';
 import { openTerminal } from '@/lib/terminal/open';
 import {
@@ -105,16 +106,10 @@ export default function CommandMenu({
   async function run(item: Item) {
     const { action } = item;
     if (action.type === 'copy-email') {
-      try {
-        await navigator.clipboard.writeText(profile.email);
-        setCopied(true);
-        return;
-      } catch {
-        // Clipboard blocked: fall back to the mail client.
-        onDone();
-        window.location.assign(`mailto:${profile.email}`);
-        return;
-      }
+      // Clipboard blocked: copyEmail opens the mail client instead.
+      if ((await copyEmail(profile.email)) === 'copied') setCopied(true);
+      else onDone();
+      return;
     }
 
     if (action.type === 'terminal') {

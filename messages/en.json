@@ -190,6 +190,7 @@
     "cta": "Start a conversation",
     "copyEmail": "Copy email",
     "copied": "Email copied",
+    "openingMail": "Opening your mail app",
     "copyright": "© {year} {name}.",
     "build": "build {sha}"
   },

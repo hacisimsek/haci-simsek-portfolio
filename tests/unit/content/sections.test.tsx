@@ -60,6 +60,12 @@ describe('Career layout', () => {
       expect(summary.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
       expect(summary).toHaveClass('list-none');
     }
+    // Each disclosure names its role, so they differ out of context.
+    const names = roles
+      .slice(2)
+      .map((role) => role.querySelector('summary')!.textContent);
+    expect(new Set(names).size).toBe(names.length);
+    expect(names[0]).toContain('Software Engineer');
   });
 
   it('keeps role text to a readable measure', () => {

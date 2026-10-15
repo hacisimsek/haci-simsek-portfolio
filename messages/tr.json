@@ -190,6 +190,7 @@
     "cta": "Bir konuşma başlat",
     "copyEmail": "E-postayı kopyala",
     "copied": "E-posta kopyalandı",
+    "openingMail": "E-posta uygulamanız açılıyor",
     "copyright": "© {year} {name}.",
     "build": "derleme {sha}"
   },
