@@ -78,8 +78,8 @@ export const experience: Role[] = [
     start: '2021-09',
     end: '2022-06',
     summary: {
-      en: 'Delivered end-to-end web applications for enterprise clients across multiple industries.',
-      tr: 'Farklı sektörlerdeki kurumsal müşteriler için uçtan uca web uygulamaları teslim ettim.',
+      en: 'Delivered end-to-end web applications for enterprise clients such as Türk Petrol, AvivaSA, Kordsa and Tavuk Dünyası.',
+      tr: 'Türk Petrol, AvivaSA, Kordsa ve Tavuk Dünyası gibi kurumsal müşteriler için uçtan uca web uygulamaları teslim ettim.',
     },
     highlights: {
       en: [

@@ -43,7 +43,7 @@ export default function TimelineTrack({ children }: { children: ReactNode }) {
         <div
           ref={fill}
           data-timeline-fill
-          className="h-full w-full origin-top bg-gradient-to-b from-primary via-accent to-primary transition-transform duration-200 ease-out"
+          className="h-full w-full origin-top bg-accent transition-transform duration-200 ease-out"
         />
       </div>
       {children}
