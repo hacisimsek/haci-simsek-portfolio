@@ -143,7 +143,7 @@ export default function ContactForm() {
                 value={topic}
                 // In the HTML too, so a post without JavaScript has a topic.
                 defaultChecked={topic === defaultValues.topic}
-                className="accent-[var(--accent)]"
+                className="accent-accent"
                 {...register('topic')}
               />
               {topic === 'role' ? msg('topicRole') : msg('topicTechnical')}

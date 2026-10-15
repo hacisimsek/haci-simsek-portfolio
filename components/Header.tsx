@@ -57,6 +57,8 @@ export default function Header() {
       <a
         href="#main"
         onClick={(event) => {
+          // A modified click (new tab, new window) is the browser's.
+          if (event.metaKey || event.ctrlKey || event.shiftKey) return;
           event.preventDefault();
           document.getElementById('main')?.focus();
         }}

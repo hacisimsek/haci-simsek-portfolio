@@ -109,4 +109,16 @@ describe('Header', () => {
     expect(toggle).toHaveAttribute('aria-expanded', 'false');
     expect(field).toHaveFocus();
   });
+
+  it('leaves a modified click on the skip link to the browser', () => {
+    render(<Header />);
+    const skip = screen.getByRole('link', { name: 'Skip to content' });
+    const event = new MouseEvent('click', {
+      bubbles: true,
+      cancelable: true,
+      ctrlKey: true,
+    });
+    skip.dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(false);
+  });
 });
