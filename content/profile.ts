@@ -22,7 +22,7 @@ export const profile: Profile = {
       'I graduated from Bahçeşehir University on a full scholarship, with a major in Electrical and Electronics Engineering and a minor in Software Engineering, and I share what I learn about architecture patterns through technical articles.',
     ],
     tr: [
-      "Sisal'de uluslararası bir kitle için uçtan uca geliştirme yaptım; önce piyango ve terminaller platformunda, şimdi ise Sisal’in müşteri hesap alanı AreaPrivata için kimlik doğrulama ve hesap servislerinde çalışıyorum.",
+      'Sisal’de uluslararası bir kitle için uçtan uca geliştirme yaptım; önce piyango ve terminaller platformunda, şimdi ise Sisal’in müşteri hesap alanı AreaPrivata için kimlik doğrulama ve hesap servislerinde çalışıyorum.',
       'Bahçeşehir Üniversitesi Elektrik-Elektronik Mühendisliği bölümünden tam burslu olarak, Yazılım Mühendisliği yan dalıyla mezun oldum; mimari desenler hakkında öğrendiklerimi teknik yazılarla paylaşıyorum.',
     ],
   },

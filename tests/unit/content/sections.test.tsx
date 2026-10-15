@@ -41,7 +41,7 @@ describe('Career layout', () => {
     ).toBeInTheDocument();
   });
 
-  it('opens the current employer and folds earlier highlights', () => {
+  it('opens the current role and folds earlier highlights', () => {
     render(<Career />);
     const roles = screen.getAllByRole('article');
     // Only the current role is open; even the earlier Sisal role folds.
