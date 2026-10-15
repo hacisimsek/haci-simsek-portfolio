@@ -105,3 +105,25 @@ test.describe('pausing', () => {
     expect(after).toEqual(before);
   });
 });
+
+test('the saga token is purple while undoing and gone at rest', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const result = await page.evaluate(() => {
+    const pulse = document.querySelector<HTMLElement>('.saga-pulse')!;
+    const probe = document.createElement('span');
+    probe.style.color = 'var(--primary)';
+    document.body.append(probe);
+    const primary = getComputedStyle(probe).color;
+    probe.remove();
+    pulse.style.transition = 'none';
+    pulse.dataset.state = 'undo';
+    const undo = getComputedStyle(pulse).backgroundColor;
+    pulse.dataset.state = 'rest';
+    const rest = getComputedStyle(pulse).opacity;
+    return { primary, undo, rest };
+  });
+  expect(result.undo).toBe(result.primary);
+  expect(result.rest).toBe('0');
+});
