@@ -176,9 +176,12 @@ test.describe('phone primary actions', () => {
         return Math.min(r.width, r.height);
       });
     await page.goto('/');
-    expect(await size(page.locator('header a').first())).toBeGreaterThanOrEqual(
-      44
-    );
+    // The logo, not the skip link that precedes it.
+    expect(
+      await size(
+        page.locator('header').getByRole('link', { name: 'Hacı Şimşek' })
+      )
+    ).toBeGreaterThanOrEqual(44);
     await page.getByRole('button', { name: 'Toggle navigation' }).click();
     const cta = page
       .locator('header')

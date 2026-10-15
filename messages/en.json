@@ -11,7 +11,8 @@
     "articles": "Articles",
     "contact": "Contact",
     "toggleTheme": "Toggle theme",
-    "toggleNavigation": "Toggle navigation"
+    "toggleNavigation": "Toggle navigation",
+    "skip": "Skip to content"
   },
   "LanguageSwitcher": {
     "label": "Language",

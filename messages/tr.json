@@ -11,7 +11,8 @@
     "articles": "Yazılar",
     "contact": "İletişim",
     "toggleTheme": "Temayı değiştir",
-    "toggleNavigation": "Menüyü aç/kapat"
+    "toggleNavigation": "Menüyü aç/kapat",
+    "skip": "İçeriğe geç"
   },
   "LanguageSwitcher": {
     "label": "Dil",

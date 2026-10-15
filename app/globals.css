@@ -160,7 +160,7 @@
 }
 
 @utility section-copy {
-  @apply max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base sm:leading-6;
+  @apply max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base sm:leading-6 lg:max-w-md;
 }
 
 @utility meta-chip {

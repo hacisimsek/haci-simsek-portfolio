@@ -32,9 +32,14 @@ describe('ArticleBrowser', () => {
 
     const topics = screen.getByRole('group', { name: 'Topic' });
     await user.click(
-      within(topics).getByRole('button', { name: 'resilience' })
+      within(topics).getByRole('button', { name: 'Resilience' })
     );
     expect(titles()).toEqual(['Breaker']);
+    // Topics read as words, while filtering still uses the slug.
+    await user.click(
+      within(topics).getByRole('button', { name: 'Saga pattern' })
+    );
+    expect(titles()).toEqual(['Saga']);
   });
 
   it('sorts oldest first', async () => {

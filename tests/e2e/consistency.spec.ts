@@ -173,3 +173,31 @@ test.describe('phone menu', () => {
     await expect(toggle).toBeFocused();
   });
 });
+
+test('the first Tab offers a skip link to the content', async ({ page }) => {
+  await page.goto('/');
+  await page.keyboard.press('Tab');
+  const skip = page.getByRole('link', { name: 'Skip to content' });
+  await expect(skip).toBeFocused();
+  await expect(skip).toBeVisible();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('main')).toBeFocused();
+});
+
+test.describe('section headers on a wide screen', () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+
+  test('titles wrap to at most two lines', async ({ page }) => {
+    await page.goto('/');
+    const lines = await page
+      .locator('main h2.section-title')
+      .evaluateAll((titles) =>
+        titles.map(
+          (title) =>
+            title.getBoundingClientRect().height /
+            parseFloat(getComputedStyle(title).lineHeight)
+        )
+      );
+    for (const count of lines) expect(Math.round(count)).toBeLessThanOrEqual(2);
+  });
+});

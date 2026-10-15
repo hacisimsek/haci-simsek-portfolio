@@ -1,12 +1,14 @@
-// Repo slugs are not titles. Words with a fixed spelling are listed here;
+// Repo slugs and Medium topic slugs are not titles. Words with a fixed spelling are listed here;
 // words typed in lowercase stay lowercase (sentence case), and words the
 // author capitalised, as in CamelCase names, keep their capitals.
 const SPELLING: Record<string, string> = {
   api: 'API',
+  bdd: 'BDD',
   bff: 'BFF',
   ecommerce: 'E-commerce',
   ios: 'iOS',
   notifyhub: 'NotifyHub',
+  sisal: 'Sisal',
   springboot: 'Spring Boot',
   url: 'URL',
   youtube: 'YouTube',
