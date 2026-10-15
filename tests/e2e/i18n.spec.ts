@@ -42,7 +42,7 @@ test('the switcher keeps the current page', async ({ page }) => {
     .click();
   await expect(page).toHaveURL(/\/tr\/projects$/);
   await expect(
-    page.getByRole('heading', { level: 1, name: /Seçme işler/ })
+    page.getByRole('heading', { level: 1, name: /göz atmaya değer projeler/ })
   ).toBeVisible();
 });
 

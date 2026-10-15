@@ -88,3 +88,13 @@ describe('CommandPalette shortcut', () => {
     ).toBeInTheDocument();
   });
 });
+
+describe('CommandPalette trigger', () => {
+  it('uses the site focus ring', () => {
+    render(<CommandPalette />);
+    expect(screen.getByRole('button', { name: /Command palette/ })).toHaveClass(
+      'focus-visible:ring-2',
+      'focus-visible:ring-ring'
+    );
+  });
+});

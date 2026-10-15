@@ -131,8 +131,8 @@
     "allArticles": "All articles"
   },
   "Projects": {
-    "title": "Selected builds, experiments, and engineering curiosities",
-    "subtitle": "A live pull from GitHub that reflects how I build in the open. The focus is not just code volume, but the patterns, ideas, and product instincts behind each repo.",
+    "title": "Projects worth a look, then the rest of my GitHub",
+    "subtitle": "The ones I'd show first come with a line on what they do; the rest are pulled live from GitHub as they are.",
     "errorTitle": "Project feed could not be loaded right now.",
     "errorText": "Try again in a moment or visit the GitHub profile directly."
   },
@@ -156,7 +156,8 @@
     "sortOldest": "Oldest first",
     "showing": "Showing {shown} of {total}",
     "empty": "No matches.",
-    "updated": "Updated {date}",
+    "selected": "Selected projects",
+    "others": "Other repositories",
     "reset": "Reset filters"
   },
   "Contact": {

@@ -28,7 +28,7 @@ describe('Turkish interface', () => {
         name: 'Kıdemli Yazılım Geliştirme Uzmanı',
       })
     ).toBeInTheDocument();
-    expect(within(current).getByText('Oca 2025 - Halen')).toBeInTheDocument();
+    expect(within(current).getByText('Oca 2025 – Halen')).toBeInTheDocument();
   });
 
   it('keeps the same social links in Turkish', () => {

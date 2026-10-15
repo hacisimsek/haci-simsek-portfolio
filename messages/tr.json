@@ -131,8 +131,8 @@
     "allArticles": "Tüm yazılar"
   },
   "Projects": {
-    "title": "Seçme işler, deneyler ve mühendislik merakları",
-    "subtitle": "Açık kaynakta nasıl geliştirdiğimi yansıtan, GitHub’dan canlı alınan bir liste. Odak yalnızca kod miktarında değil; her reponun arkasındaki desenlerde, fikirlerde ve ürün sezgisinde.",
+    "title": "Önce göz atmaya değer projeler, sonra GitHub’ın geri kalanı",
+    "subtitle": "İlk göstereceğim projelerin ne yaptığını kısaca yazdım; diğerleri GitHub’dan olduğu gibi geliyor.",
     "errorTitle": "Proje listesi şu anda yüklenemedi.",
     "errorText": "Birazdan tekrar deneyin ya da doğrudan GitHub profilini ziyaret edin."
   },
@@ -156,7 +156,8 @@
     "sortOldest": "Önce en eski",
     "showing": "{total} sonuçtan {shown} tanesi gösteriliyor",
     "empty": "Eşleşen sonuç yok.",
-    "updated": "Güncelleme: {date}",
+    "selected": "Öne çıkan projeler",
+    "others": "Diğer repolar",
     "reset": "Filtreleri sıfırla"
   },
   "Contact": {

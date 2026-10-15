@@ -131,7 +131,7 @@
    sequence of steps. The ring is centred on the first line of the title. */
 @utility section-title {
   font-family: var(--font-space-grotesk), var(--font-geist), sans-serif;
-  @apply flex items-start gap-3 text-2xl font-semibold tracking-tight sm:text-3xl;
+  @apply flex items-start gap-3 text-2xl font-semibold tracking-tight text-balance sm:text-3xl;
 
   &::before {
     content: '';
@@ -353,7 +353,7 @@ section[id] {
 }
 
 /* The token travelling through the hero saga: it sits in the current step's
-   ring and turns to the destructive colour while the saga compensates. Rows
+   ring, turns purple while the saga compensates and fades out at rest. Rows
    and the pulse share one row height. */
 .saga {
   --saga-row: 4.5rem;
@@ -374,10 +374,16 @@ section[id] {
   transform: translateY(calc(var(--step, 0) * var(--saga-row)));
   transition:
     transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    background-color 200ms ease;
+    background-color 200ms ease,
+    opacity 200ms ease;
   z-index: 1;
 }
 
-.saga-pulse[data-backwards] {
-  background-color: var(--destructive);
+/* Purple only means undo; red stays on the step that failed. */
+.saga-pulse[data-state='undo'] {
+  background-color: var(--primary);
+}
+
+.saga-pulse[data-state='rest'] {
+  opacity: 0;
 }

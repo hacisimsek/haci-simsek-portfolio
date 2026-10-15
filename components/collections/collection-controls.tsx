@@ -53,7 +53,7 @@ export default function CollectionControls<Sort extends string>({
       onClick={() => onChip(value)}
       className={cn(
         // 44px tall on phones, compact where a pointer is likely.
-        'min-h-11 min-w-11 rounded-full border px-3 py-1.5 text-sm transition md:min-h-0 md:min-w-0',
+        'min-h-11 min-w-11 rounded-full border px-3 py-1.5 text-sm transition focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-hidden md:min-h-0 md:min-w-0',
         active === value
           ? 'border-accent bg-accent text-accent-foreground'
           : 'border-border/70 bg-background/60 text-muted-foreground hover:text-foreground'

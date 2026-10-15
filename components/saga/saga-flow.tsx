@@ -114,8 +114,14 @@ export default function SagaFlow({ className }: { className?: string }) {
   // sentence stays as long as the result does.
   const outcome =
     saga.failAt !== null && saga.phase === 'rolledBack' ? msg('outcome') : '';
-  const backwards =
-    saga.phase === 'compensating' || saga.phase === 'rolledBack';
+  // The token follows the colour rule: accent going forward, purple while
+  // undoing, and gone once the saga has rolled back.
+  const pulse =
+    saga.phase === 'compensating'
+      ? 'undo'
+      : saga.phase === 'rolledBack'
+        ? 'rest'
+        : 'forward';
 
   return (
     <figure
@@ -141,11 +147,7 @@ export default function SagaFlow({ className }: { className?: string }) {
           aria-hidden
           className="absolute top-4 bottom-4 left-[11.5px] w-px bg-border"
         />
-        <span
-          aria-hidden
-          data-backwards={backwards || undefined}
-          className="saga-pulse"
-        />
+        <span aria-hidden data-state={pulse} className="saga-pulse" />
         {STEPS.map((id, index) => {
           const status = saga.statuses[index];
           const undoing = status === 'compensating' || status === 'compensated';

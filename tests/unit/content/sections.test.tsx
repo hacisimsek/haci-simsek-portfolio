@@ -11,10 +11,10 @@ describe('Career', () => {
     const roles = screen.getAllByRole('article');
     expect(roles).toHaveLength(5);
     expect(
-      within(roles[0]).getByText('Jan 2025 - Present')
+      within(roles[0]).getByText('Jan 2025 – Present')
     ).toBeInTheDocument();
     expect(
-      within(roles[1]).getByText('Jun 2022 - Jan 2025')
+      within(roles[1]).getByText('Jun 2022 – Jan 2025')
     ).toBeInTheDocument();
     expect(
       within(roles[4]).getByRole('heading', { name: 'Project Manager' })
@@ -99,7 +99,7 @@ describe('Career typography', () => {
   it('does not repeat the company period on a single-role company', () => {
     render(<Career />);
     const telenity = screen.getByRole('listitem', { name: 'Telenity' });
-    expect(telenity.textContent!.split('Jun 2021 - Aug 2021')).toHaveLength(2);
+    expect(telenity.textContent!.split('Jun 2021 – Aug 2021')).toHaveLength(2);
   });
 });
 

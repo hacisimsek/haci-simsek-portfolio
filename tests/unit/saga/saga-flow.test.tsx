@@ -263,4 +263,16 @@ describe('SagaFlow', () => {
       .map((figure) => figure.getAttribute('aria-labelledby'));
     expect(new Set(ids).size).toBe(2);
   });
+
+  it('moves its token as forward, undo, then rest', () => {
+    render(<SagaFlow />);
+    const pulse = () =>
+      document.querySelector('.saga-pulse')!.getAttribute('data-state');
+    fireEvent.click(screen.getByRole('button', { name: 'Run with a failure' }));
+    expect(pulse()).toBe('forward');
+    advance(3);
+    expect(pulse()).toBe('undo');
+    advance(2);
+    expect(pulse()).toBe('rest');
+  });
 });

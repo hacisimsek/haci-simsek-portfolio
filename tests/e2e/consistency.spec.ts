@@ -252,3 +252,13 @@ test.describe('one accent for structure', () => {
     });
   }
 });
+
+test('section titles balance their lines', async ({ page }) => {
+  await page.goto('/');
+  const wraps = await page
+    .locator('main h2.section-title')
+    .evaluateAll((titles) =>
+      titles.map((title) => getComputedStyle(title).textWrap)
+    );
+  for (const wrap of wraps) expect(wrap).toBe('balance');
+});

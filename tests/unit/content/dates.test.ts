@@ -11,11 +11,11 @@ describe('formatYearMonth', () => {
 
 describe('formatPeriod', () => {
   it('joins start and end', () => {
-    expect(formatPeriod('2022-06', '2025-01')).toBe('Jun 2022 - Jan 2025');
+    expect(formatPeriod('2022-06', '2025-01')).toBe('Jun 2022 – Jan 2025');
   });
 
   it('shows Present for an ongoing role', () => {
-    expect(formatPeriod('2025-01', null)).toBe('Jan 2025 - Present');
+    expect(formatPeriod('2025-01', null)).toBe('Jan 2025 – Present');
   });
 });
 
@@ -30,6 +30,6 @@ describe('careerYears', () => {
 describe('Turkish dates', () => {
   it('uses Turkish month names and "Halen" for ongoing roles', () => {
     expect(formatYearMonth('2022-06', 'tr')).toBe('Haz 2022');
-    expect(formatPeriod('2025-01', null, 'tr')).toBe('Oca 2025 - Halen');
+    expect(formatPeriod('2025-01', null, 'tr')).toBe('Oca 2025 – Halen');
   });
 });
