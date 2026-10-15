@@ -70,29 +70,32 @@
       "order": {
         "name": "Order service",
         "action": "Create order",
-        "undo": "Cancel order"
+        "undo": "Cancel order",
+        "failed": "Not created"
       },
       "inventory": {
         "name": "Inventory",
         "action": "Reserve stock",
-        "undo": "Release stock"
+        "undo": "Release stock",
+        "failed": "Out of stock"
       },
       "payment": {
         "name": "Payment",
         "action": "Charge card",
-        "undo": "Refund payment"
+        "undo": "Refund payment",
+        "failed": "Declined"
       },
       "shipping": {
         "name": "Shipping",
         "action": "Book courier",
-        "undo": "Cancel courier"
+        "undo": "Cancel courier",
+        "failed": "Not booked"
       }
     },
     "status": {
       "idle": "Waiting",
       "running": "Running",
       "done": "Done",
-      "failed": "Declined",
       "compensating": "Undoing",
       "compensated": "Undone",
       "skipped": "Skipped"

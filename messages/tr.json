@@ -70,29 +70,32 @@
       "order": {
         "name": "Sipariş servisi",
         "action": "Sipariş oluştur",
-        "undo": "Siparişi iptal et"
+        "undo": "Siparişi iptal et",
+        "failed": "Oluşturulamadı"
       },
       "inventory": {
         "name": "Stok",
         "action": "Stok ayır",
-        "undo": "Stoğu serbest bırak"
+        "undo": "Stoğu serbest bırak",
+        "failed": "Stok yok"
       },
       "payment": {
         "name": "Ödeme",
         "action": "Karttan tahsil et",
-        "undo": "Ödemeyi iade et"
+        "undo": "Ödemeyi iade et",
+        "failed": "Reddedildi"
       },
       "shipping": {
         "name": "Kargo",
         "action": "Kurye ayarla",
-        "undo": "Kuryeyi iptal et"
+        "undo": "Kuryeyi iptal et",
+        "failed": "Ayarlanamadı"
       }
     },
     "status": {
       "idle": "Bekliyor",
       "running": "Çalışıyor",
       "done": "Tamam",
-      "failed": "Reddedildi",
       "compensating": "Geri alınıyor",
       "compensated": "Geri alındı",
       "skipped": "Atlandı"

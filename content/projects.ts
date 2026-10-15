@@ -8,7 +8,7 @@ export const featuredProjects: FeaturedProject[] = [
     flagship: true,
     summary: {
       en: 'Order, inventory, payment and shipping services kept consistent by an event-driven saga over Kafka: a failed payment releases the stock, a failed shipment refunds and releases it.',
-      tr: 'Sipariş, stok, ödeme ve kargo servisleri Kafka üzerinde olay tabanlı bir saga ile tutarlı kalıyor: ödeme başarısız olursa stok serbest bırakılıyor, kargo başarısız olursa ödeme iade edilip stok bırakılıyor.',
+      tr: 'Sipariş, stok, ödeme ve kargo servisleri Kafka üzerinde olay tabanlı bir saga ile tutarlı kalıyor: ödeme başarısız olursa stok serbest bırakılıyor, kargo başarısız olursa ödeme iade edilip stok serbest bırakılıyor.',
     },
   },
   {

@@ -118,13 +118,15 @@ export default function SagaFlow({ className }: { className?: string }) {
   return (
     <figure
       ref={figure}
-      aria-label={msg('label')}
+      aria-labelledby="saga-title"
       className={cn('w-full max-w-md', className)}
     >
       {/* Title and explanation come first, so the steps and controls are
           read with their meaning. */}
       <figcaption className="mb-6">
-        <p className="font-display font-semibold">{msg('label')}</p>
+        <p id="saga-title" className="font-display font-semibold">
+          {msg('label')}
+        </p>
         <p className="mt-1 text-sm leading-6 text-muted-foreground">
           {msg('caption')}
         </p>
@@ -177,7 +179,9 @@ export default function SagaFlow({ className }: { className?: string }) {
                   STATUS_COLOUR[status]
                 )}
               >
-                {msg(`status.${status}`)}
+                {status === 'failed'
+                  ? msg(`steps.${id}.failed`)
+                  : msg(`status.${status}`)}
               </p>
             </li>
           );
