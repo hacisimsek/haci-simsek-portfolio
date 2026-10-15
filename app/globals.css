@@ -143,11 +143,18 @@
   }
 
   /* Browsers without the lh unit (Safari < 16.4, Firefox < 120) get the
-     offset for a text-2xl line. A plain duplicate declaration would be
-     merged away by the CSS minifier, so it lives in @supports. */
+     offsets for the text-2xl and sm:text-3xl lines. A plain duplicate
+     declaration would be merged away by the CSS minifier, so it lives in
+     @supports. */
   @supports not (margin-top: 1lh) {
     &::before {
       margin-top: 0.625rem;
+    }
+
+    @variant sm {
+      &::before {
+        margin-top: 0.75rem;
+      }
     }
   }
 }

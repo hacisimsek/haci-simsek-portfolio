@@ -26,7 +26,12 @@ export default function CopyEmailButton({ email }: { email: string }) {
         size="lg"
         variant="outline"
         className="rounded-full px-6"
-        onClick={async () => setResult(await copyEmail(email))}
+        onClick={async () => {
+          // Empty the status first so a repeat copy is announced again and
+          // its message gets a fresh two seconds.
+          setResult(null);
+          setResult(await copyEmail(email));
+        }}
       >
         {result === 'copied' ? (
           <Check aria-hidden className="mr-2 h-4 w-4 text-accent" />

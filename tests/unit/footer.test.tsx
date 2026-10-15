@@ -160,4 +160,28 @@ describe('Footer', () => {
     expect(contact.querySelector('.lucide-arrow-right')).not.toBeNull();
     expect(container.querySelector('.lucide-arrow-up-right')).toBeNull();
   });
+
+  it('re-announces a quick second copy and keeps it on screen', async () => {
+    vi.useFakeTimers();
+    Object.assign(navigator, {
+      clipboard: { writeText: vi.fn().mockResolvedValue(undefined) },
+    });
+    render(<Footer />);
+    const button = screen.getByRole('button', { name: 'Copy email' });
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    act(() => {
+      vi.advanceTimersByTime(1000);
+    });
+    // The second copy restarted the message, so it has not cleared yet.
+    expect(screen.getByRole('status')).toHaveTextContent('Email copied');
+    vi.useRealTimers();
+  });
 });
