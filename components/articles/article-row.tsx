@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import type { Article } from '@/lib/feeds/medium';
+import { projectTitle } from '@/lib/project-title';
 import { cn, SEPARATOR } from '@/lib/utils';
 
 // One article as a ruled list row. The date sits after the title in the DOM
@@ -44,7 +45,7 @@ export default function ArticleRow({
           ) : null}
           {detailed && article.categories.length > 0 ? (
             <p className="mt-2 text-sm text-muted-foreground">
-              {article.categories.slice(0, 4).join(SEPARATOR)}
+              {article.categories.slice(0, 4).map(projectTitle).join(SEPARATOR)}
             </p>
           ) : null}
         </div>

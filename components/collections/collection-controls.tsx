@@ -13,6 +13,7 @@ export default function CollectionControls<Sort extends string>({
   placeholder,
   chips,
   chipsLabel,
+  chipLabel = (value) => value,
   active,
   onChip,
   sort,
@@ -26,6 +27,8 @@ export default function CollectionControls<Sort extends string>({
   placeholder: string;
   chips: string[];
   chipsLabel: string;
+  /** How a chip value is shown; filtering always uses the value. */
+  chipLabel?: (value: string) => string;
   active: string | null;
   onChip: (value: string | null) => void;
   sort: Sort;
@@ -103,7 +106,7 @@ export default function CollectionControls<Sort extends string>({
           className="flex flex-wrap gap-2"
         >
           {chip(msg('all'), null)}
-          {chips.map((value) => chip(value, value))}
+          {chips.map((value) => chip(chipLabel(value), value))}
         </div>
       ) : null}
       <p aria-hidden="true" className="text-sm text-muted-foreground">

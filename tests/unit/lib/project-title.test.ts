@@ -14,6 +14,9 @@ describe('projectTitle', () => {
     ['SwiftAndIOSApplications', 'Swift And iOS Applications'],
     ['100DaysOfJava', '100 Days Of Java'],
     ['movieApp', 'Movie App'],
+    ['bdd', 'BDD'],
+    ['we-are-sisal', 'We are Sisal'],
+    ['api-gateway-pattern', 'API gateway pattern'],
     ['springboot-microservice-app', 'Spring Boot microservice app'],
   ])('turns %s into "%s"', (slug, title) => {
     expect(projectTitle(slug)).toBe(title);

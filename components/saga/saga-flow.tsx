@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight, Pause } from 'lucide-react';
+import { ArrowUpRight, Pause, Play } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import {
   useEffect,
@@ -121,6 +121,14 @@ export default function SagaFlow({ className }: { className?: string }) {
       aria-label={msg('label')}
       className={cn('w-full max-w-md', className)}
     >
+      {/* Title and explanation come first, so the steps and controls are
+          read with their meaning. */}
+      <figcaption className="mb-6">
+        <p className="font-display font-semibold">{msg('label')}</p>
+        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+          {msg('caption')}
+        </p>
+      </figcaption>
       <ol
         className="saga relative"
         style={{ '--step': saga.index } as CSSProperties}
@@ -195,12 +203,15 @@ export default function SagaFlow({ className }: { className?: string }) {
           <Button
             type="button"
             variant="ghost"
-            aria-pressed={paused}
-            className="h-11 rounded-full px-4 text-muted-foreground aria-pressed:bg-secondary aria-pressed:text-foreground"
+            className="h-11 rounded-full px-4 text-muted-foreground"
             onClick={() => setPaused((value) => !value)}
           >
-            <Pause aria-hidden className="mr-2 h-4 w-4" />
-            {msg('pause')}
+            {paused ? (
+              <Play aria-hidden className="mr-2 h-4 w-4" />
+            ) : (
+              <Pause aria-hidden className="mr-2 h-4 w-4" />
+            )}
+            {msg(paused ? 'resume' : 'pause')}
           </Button>
         )}
         <a
@@ -216,9 +227,6 @@ export default function SagaFlow({ className }: { className?: string }) {
       <p role="status" className="mt-2 min-h-5 text-sm text-foreground">
         {outcome}
       </p>
-      <figcaption className="mt-3 text-sm leading-6 text-muted-foreground">
-        {msg('caption')}
-      </figcaption>
     </figure>
   );
 }

@@ -4,7 +4,7 @@ const pages = [
   { path: '/', heading: /Software engineer building backend/ },
   { path: '/projects', heading: /Selected builds/ },
   { path: '/articles', heading: /Writing where implementation detail/ },
-  { path: '/contact', heading: /Let.s talk about architecture/ },
+  { path: '/contact', heading: /^Let.s talk$/ },
 ];
 
 for (const { path, heading } of pages) {

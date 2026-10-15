@@ -6,7 +6,10 @@ export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xanyoozp';
 export type ContactErrorKey =
   'nameRequired' | 'emailInvalid' | 'messageShort' | 'messageLong';
 
+export type ContactTopic = 'role' | 'technical';
+
 export type ContactValues = {
+  topic: ContactTopic;
   name: string;
   email: string;
   message: string;
@@ -17,6 +20,7 @@ export type ContactValues = {
 
 export function contactSchema(t: (key: ContactErrorKey) => string) {
   return z.object({
+    topic: z.enum(['role', 'technical']),
     name: z.string().check(z.trim(), z.minLength(2, t('nameRequired'))),
     email: z.pipe(z.string().check(z.trim()), z.email(t('emailInvalid'))),
     message: z
@@ -33,7 +37,7 @@ export function contactSchema(t: (key: ContactErrorKey) => string) {
 export type SubmitResult = 'sent' | 'failed';
 
 export async function submitContact(
-  { name, email, message, _gotcha }: ContactValues,
+  { topic, name, email, message, _gotcha }: ContactValues,
   fetchImpl: typeof fetch = fetch
 ): Promise<SubmitResult> {
   // Report success to bots so they don't retry, but send nothing.
@@ -45,7 +49,7 @@ export async function submitContact(
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email, message }),
+      body: JSON.stringify({ topic, name, email, message }),
     });
     return response.ok ? 'sent' : 'failed';
   } catch {

@@ -9,6 +9,7 @@ import {
   type ArticleSort,
 } from '@/lib/collections';
 import type { Article } from '@/lib/feeds/medium';
+import { projectTitle } from '@/lib/project-title';
 import CollectionControls from './collection-controls';
 import EmptyResults from './empty-results';
 
@@ -37,6 +38,7 @@ export default function ArticleBrowser({ articles }: { articles: Article[] }) {
         placeholder={msg('searchArticles')}
         chips={categoriesOf(articles)}
         chipsLabel={msg('category')}
+        chipLabel={projectTitle}
         active={category}
         onChip={setCategory}
         sort={sort}

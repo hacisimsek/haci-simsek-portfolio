@@ -11,7 +11,8 @@
     "articles": "Articles",
     "contact": "Contact",
     "toggleTheme": "Toggle theme",
-    "toggleNavigation": "Toggle navigation"
+    "toggleNavigation": "Toggle navigation",
+    "skip": "Skip to content"
   },
   "LanguageSwitcher": {
     "label": "Language",
@@ -63,6 +64,7 @@
     "caption": "A saga keeps an order consistent across services without one big transaction. Each service commits its own step; when one fails, the steps before it are undone by compensating actions.",
     "run": "Run with a failure",
     "pause": "Pause",
+    "resume": "Resume",
     "code": "See it in code",
     "steps": {
       "order": {
@@ -155,20 +157,15 @@
     "reset": "Reset filters"
   },
   "Contact": {
-    "successTitle": "Thanks, I'll get back to you soon.",
-    "successText": "If the topic is a good fit, I usually respond with concrete next steps instead of a generic placeholder reply.",
-    "title": "Let's talk about architecture, platforms, or backend systems",
-    "subtitle": "If you are working on backend-heavy products, distributed systems, platform evolution, or cloud delivery challenges, send a note. That is where I create the most value.",
-    "bestFitTitle": "Best fit",
-    "bestFitText": "Platform engineering, distributed backend systems, architecture cleanup, cloud migration, and production reliability work.",
-    "helpsTitle": "What helps",
-    "helpsText": "A short summary of the problem, the current stack, and whether the challenge is around microservices, cloud readiness, scalability, or architecture evolution.",
+    "successTitle": "Thanks for writing",
+    "successText": "Your message arrived. I'll reply by email.",
+    "title": "Let's talk",
     "emailTitle": "Direct email",
-    "emailText": "You can also reach me at {email}.",
-    "formTitle": "A concise brief is enough to start",
+    "emailText": "You can also write to me at <link>{email}</link>.",
+    "formTitle": "A few lines are enough",
     "namePlaceholder": "Your name",
     "emailPlaceholder": "Your email",
-    "messagePlaceholder": "What are you building and where do you need help?",
+    "messagePlaceholder": "What would you like to talk about?",
     "messageLabel": "Message",
     "sending": "Sending...",
     "send": "Send Message",
@@ -176,13 +173,20 @@
     "emailLabel": "Email",
     "honeypotLabel": "Leave this field empty",
     "sent": "Sent",
-    "failed": "Your message could not be sent. Please try again, or email me directly.",
+    "failed": "Your message could not be sent. Please try again, or write to me at <link>{email}</link>.",
     "errors": {
       "nameRequired": "Please enter at least 2 characters.",
       "emailInvalid": "Please enter a valid email address.",
       "messageShort": "Please write at least 20 characters.",
       "messageLong": "Please keep it under 5,000 characters."
-    }
+    },
+    "roleTitle": "About a role",
+    "roleText": "If you're hiring for a senior backend or platform role, a few lines on the team, the problem and the timing are plenty.",
+    "techTitle": "A technical conversation",
+    "techText": "Sagas, resilience patterns, messaging or anything I've written about: I'm always happy to compare notes.",
+    "topicLabel": "What is it about?",
+    "topicRole": "A role",
+    "topicTechnical": "A technical conversation"
   },
   "Footer": {
     "title": "Open to the right conversation",

@@ -111,4 +111,45 @@ describe('ContactForm', () => {
     expect(form).toHaveAttribute('method', 'POST');
     expect(form).toHaveAttribute('action', 'https://formspree.io/f/xanyoozp');
   });
+
+  it('asks what the message is about and sends the choice', async () => {
+    const fetchMock = vi.fn(async () => new Response('{}'));
+    vi.stubGlobal('fetch', fetchMock);
+    const user = userEvent.setup();
+    render(<ContactForm />);
+
+    const topic = screen.getByRole('radiogroup', {
+      name: 'What is it about?',
+    });
+    const role = screen.getByRole('radio', { name: 'A role' });
+    expect(role).toBeChecked();
+    // Checked in the HTML too, so a post without JavaScript has a topic.
+    expect(role).toHaveAttribute('checked');
+    expect(topic).toContainElement(role);
+    await user.click(
+      screen.getByRole('radio', { name: 'A technical conversation' })
+    );
+
+    await fill(user);
+    await user.click(screen.getByRole('button', { name: 'Send Message' }));
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    const [, init] = fetchMock.mock.calls[0] as unknown as [
+      string,
+      RequestInit,
+    ];
+    expect(JSON.parse(String(init.body))).toMatchObject({ topic: 'technical' });
+  });
+
+  it('offers the email address when sending fails', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => new Response('{}', { status: 500 }))
+    );
+    const user = userEvent.setup();
+    render(<ContactForm />);
+    await fill(user);
+    await user.click(screen.getByRole('button', { name: 'Send Message' }));
+    const alert = await screen.findByRole('alert');
+    expect(alert.querySelector('a[href^="mailto:"]')).not.toBeNull();
+  });
 });

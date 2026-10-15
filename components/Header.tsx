@@ -53,6 +53,17 @@ export default function Header() {
 
   return (
     <header ref={headerRef} className="sticky top-4 z-50 mb-10">
+      {/* First stop for keyboard users: straight past the header. */}
+      <a
+        href="#main"
+        onClick={(event) => {
+          event.preventDefault();
+          document.getElementById('main')?.focus();
+        }}
+        className="sr-only rounded-full bg-accent text-sm font-medium text-accent-foreground focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[80] focus:px-4 focus:py-2"
+      >
+        {t('skip')}
+      </a>
       <div
         data-glass
         className="flex min-h-[76px] items-center justify-between gap-4 glass px-5 py-3 sm:px-6"

@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
+import { profile } from '@/content';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -19,6 +20,7 @@ import { cn } from '@/lib/utils';
 type Status = 'idle' | 'sending' | 'sent' | 'done' | 'failed';
 
 const defaultValues: ContactValues = {
+  topic: 'role',
   name: '',
   email: '',
   message: '',
@@ -122,6 +124,34 @@ export default function ContactForm() {
       onSubmit={(event) => handleSubmit(onValid)(event)}
       className="space-y-5"
     >
+      <div>
+        <p id="contact-topic" className="mb-2 text-sm font-medium">
+          {msg('topicLabel')}
+        </p>
+        <div
+          role="radiogroup"
+          aria-labelledby="contact-topic"
+          className="flex flex-wrap gap-2"
+        >
+          {(['role', 'technical'] as const).map((topic) => (
+            <label
+              key={topic}
+              className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-border/70 px-4 text-sm has-checked:border-accent has-checked:text-foreground"
+            >
+              <input
+                type="radio"
+                value={topic}
+                // In the HTML too, so a post without JavaScript has a topic.
+                defaultChecked={topic === defaultValues.topic}
+                className="accent-[var(--accent)]"
+                {...register('topic')}
+              />
+              {topic === 'role' ? msg('topicRole') : msg('topicTechnical')}
+            </label>
+          ))}
+        </div>
+      </div>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label
@@ -201,7 +231,14 @@ export default function ContactForm() {
           tabIndex={-1}
           className="rounded-2xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm"
         >
-          {msg('failed')}
+          {msg.rich('failed', {
+            email: profile.email,
+            link: (chunks) => (
+              <a href={`mailto:${profile.email}`} className="underline">
+                {chunks}
+              </a>
+            ),
+          })}
         </p>
       ) : null}
 

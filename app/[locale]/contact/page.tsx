@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import { hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -30,12 +31,18 @@ export default async function Contact({
   }
   setRequestLocale(locale);
   const msg = await getTranslations({ locale, namespace: 'Contact' });
+  const footer = await getTranslations({ locale, namespace: 'Footer' });
+  const email = (chunks: ReactNode) => (
+    <a href={`mailto:${profile.email}`} className="text-foreground underline">
+      {chunks}
+    </a>
+  );
   const notes = [
-    { title: msg('bestFitTitle'), text: msg('bestFitText') },
-    { title: msg('helpsTitle'), text: msg('helpsText') },
+    { title: msg('roleTitle'), text: msg('roleText') },
+    { title: msg('techTitle'), text: msg('techText') },
     {
       title: msg('emailTitle'),
-      text: msg('emailText', { email: profile.email }),
+      text: msg.rich('emailText', { email: profile.email, link: email }),
     },
   ];
 
@@ -43,7 +50,9 @@ export default async function Contact({
     <section className="grid gap-6 pb-6 lg:grid-cols-[0.9fr_1.1fr]">
       <div className="pt-2">
         <h1 className="page-title">{msg('title')}</h1>
-        <p className="mt-5 page-subtitle">{msg('subtitle')}</p>
+        <p className="mt-5 page-subtitle">
+          {footer('text', { company: profile.currentCompany })}
+        </p>
 
         <div className="mt-8 divide-y divide-border/70 border-y border-border/70">
           {notes.map(({ title, text }) => (
