@@ -5,6 +5,7 @@ import { useState } from 'react';
 import ProjectRow from '@/components/projects/project-row';
 import { featuredProjects } from '@/content';
 import { filterRepos, languagesOf, type RepoSort } from '@/lib/collections';
+import { selectFeatured } from '@/lib/featured';
 import type { Repo } from '@/lib/feeds/github';
 import CollectionControls from './collection-controls';
 import EmptyResults from './empty-results';
@@ -18,12 +19,16 @@ export default function ProjectBrowser({ repos }: { repos: Repo[] }) {
   const home = useTranslations('Home');
   const shown = filterRepos(repos, { query, language, sort, locale });
   // The authored picks lead, in their curated order; the rest follow sorted.
-  const picks = featuredProjects.flatMap((pick) => {
-    const repo = shown.find((candidate) => candidate.name === pick.name);
-    return repo ? [{ repo, flagship: pick.flagship ?? false }] : [];
-  });
+  const picks = selectFeatured(
+    shown,
+    featuredProjects,
+    featuredProjects.length,
+    {
+      fill: false,
+    }
+  );
   const others = shown.filter(
-    (repo) => !featuredProjects.some((pick) => pick.name === repo.name)
+    (repo) => !picks.some((pick) => pick.name === repo.name)
   );
 
   function reset() {
@@ -61,11 +66,11 @@ export default function ProjectBrowser({ repos }: { repos: Repo[] }) {
                 {msg('selected')}
               </h2>
               <ol className="divide-y divide-border/70 border-y border-border/70">
-                {picks.map(({ repo, flagship }) => (
+                {picks.map((repo) => (
                   <ProjectRow
                     key={repo.url}
                     repo={repo}
-                    label={flagship ? home('flagship') : undefined}
+                    label={repo.flagship ? home('flagship') : undefined}
                   />
                 ))}
               </ol>

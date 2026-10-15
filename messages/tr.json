@@ -131,8 +131,8 @@
     "allArticles": "Tüm yazılar"
   },
   "Projects": {
-    "title": "Önce göz atmaya değer projeler, sonra GitHub'ın geri kalanı",
-    "subtitle": "İlk göstereceğim dört projenin ne yaptığını kısaca yazdım; diğerleri GitHub'dan olduğu gibi geliyor.",
+    "title": "Önce göz atmaya değer projeler, sonra GitHub’ın geri kalanı",
+    "subtitle": "İlk göstereceğim projelerin ne yaptığını kısaca yazdım; diğerleri GitHub’dan olduğu gibi geliyor.",
     "errorTitle": "Proje listesi şu anda yüklenemedi.",
     "errorText": "Birazdan tekrar deneyin ya da doğrudan GitHub profilini ziyaret edin."
   },

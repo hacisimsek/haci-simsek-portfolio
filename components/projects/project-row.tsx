@@ -10,12 +10,10 @@ import { cn } from '@/lib/utils';
 // sits in a quiet meta column. No "updated" date: bulk pushes made it noise.
 export default function ProjectRow({
   repo,
-  heading: Heading = 'h3',
   label,
 }: {
   repo: Repo;
-  heading?: 'h2' | 'h3';
-  /** Plain accent text above the title, e.g. "Flagship". */
+  /** Plain accent text after the title, e.g. "Flagship". */
   label?: string;
 }) {
   const locale = useLocale();
@@ -34,14 +32,14 @@ export default function ProjectRow({
         {/* The label follows the title, so the link's name starts with the
             title and no kicker sits above it. */}
         <div className="flex min-w-0 flex-col">
-          <Heading
+          <h3
             className={cn(
               'font-display font-semibold tracking-tight break-words transition-colors group-hover:text-accent',
               label ? 'text-3xl sm:text-4xl' : 'text-xl sm:text-2xl'
             )}
           >
             {projectTitle(repo.name)}
-          </Heading>
+          </h3>
           {label ? (
             <p className="mt-1 text-sm font-medium text-accent">{label}</p>
           ) : null}

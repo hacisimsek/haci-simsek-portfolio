@@ -132,7 +132,7 @@
   },
   "Projects": {
     "title": "Projects worth a look, then the rest of my GitHub",
-    "subtitle": "The four I'd show first come with a line on what they do; the rest are pulled live from GitHub as they are.",
+    "subtitle": "The ones I'd show first come with a line on what they do; the rest are pulled live from GitHub as they are.",
     "errorTitle": "Project feed could not be loaded right now.",
     "errorText": "Try again in a moment or visit the GitHub profile directly."
   },
