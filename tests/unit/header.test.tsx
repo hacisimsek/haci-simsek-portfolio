@@ -133,4 +133,13 @@ describe('Header', () => {
     skip.dispatchEvent(event);
     expect(event.defaultPrevented).toBe(false);
   });
+
+  it("keeps the desktop Contact quiet beside the page's primary action", () => {
+    render(<Header />);
+    const desktop = screen
+      .getAllByRole('link', { name: 'Contact' })
+      .find((link) => link.className.includes('md:inline-flex'))!;
+    expect(desktop).toHaveClass('border');
+    expect(desktop).not.toHaveClass('bg-accent');
+  });
 });

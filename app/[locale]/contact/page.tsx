@@ -37,13 +37,14 @@ export default async function Contact({
       {chunks}
     </a>
   );
+  // Direct email first: the quickest route for a recruiter.
   const notes = [
-    { title: msg('roleTitle'), text: msg('roleText') },
-    { title: msg('techTitle'), text: msg('techText') },
     {
       title: msg('emailTitle'),
       text: msg.rich('emailText', { email: profile.email, link: email }),
     },
+    { title: msg('roleTitle'), text: msg('roleText') },
+    { title: msg('techTitle'), text: msg('techText') },
   ];
 
   return (

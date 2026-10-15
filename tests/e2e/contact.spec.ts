@@ -70,3 +70,15 @@ test('the contact page speaks to roles and technical conversations', async ({
   await expect(main).toContainText('not actively looking');
   await expect(main).not.toContainText('create the most value');
 });
+
+test('the contact page leads with the email and has no closing band', async ({
+  page,
+}) => {
+  await page.goto('/contact');
+  await expect(
+    page.locator('main').getByRole('heading', { level: 2 }).first()
+  ).toHaveText('Direct email');
+  await expect(
+    page.getByRole('heading', { name: 'Open to the right conversation' })
+  ).toHaveCount(0);
+});

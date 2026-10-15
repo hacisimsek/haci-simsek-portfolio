@@ -99,7 +99,12 @@ export default function Header() {
             <ThemeToggle />
           </div>
 
-          <Button asChild className="hidden rounded-full px-5 md:inline-flex">
+          {/* Quiet beside each page's own primary action. */}
+          <Button
+            asChild
+            variant="outline"
+            className="hidden rounded-full px-5 md:inline-flex"
+          >
             <Link href="/contact">{t('contact')}</Link>
           </Button>
 
