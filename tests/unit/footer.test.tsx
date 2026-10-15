@@ -184,4 +184,17 @@ describe('Footer', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Email copied');
     vi.useRealTimers();
   });
+
+  it('draws the band rule full width and lets the bottom row follow it', () => {
+    render(<Footer />);
+    const band = screen
+      .getByRole('heading', { name: 'Open to the right conversation' })
+      .closest('section')!;
+    expect(band).not.toHaveClass('border-t');
+    expect(band.parentElement).toHaveClass('border-t');
+    const bottom = screen
+      .getByRole('link', { name: 'GitHub' })
+      .closest('div')!.parentElement!;
+    expect(bottom.className).not.toMatch(/\bmt-14\b/);
+  });
 });

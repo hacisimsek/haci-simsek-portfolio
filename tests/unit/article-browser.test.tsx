@@ -48,4 +48,30 @@ describe('ArticleBrowser', () => {
     await user.selectOptions(screen.getByLabelText('Sort'), 'oldest');
     expect(titles()).toEqual(['Breaker', 'Saga']);
   });
+
+  it('shows title, date and topics, not the raw Medium excerpt', () => {
+    render(<ArticleBrowser articles={articles} />);
+    expect(screen.queryByText('Saga excerpt')).toBeNull();
+    const row = screen.getByRole('heading', {
+      level: 2,
+      name: 'Saga',
+    }).parentElement!;
+    expect(row).toHaveTextContent(/Microservices/);
+  });
+
+  it('leaves no empty topic line when every topic is hidden', () => {
+    const { container } = render(
+      <ArticleBrowser
+        articles={[
+          article('Sisal only', ['we-are-sisal'], '2026-01-01T00:00:00Z'),
+        ]}
+      />
+    );
+    const heading = screen.getByRole('heading', {
+      level: 2,
+      name: 'Sisal only',
+    });
+    expect(heading.nextElementSibling).toBeNull();
+    expect(container.textContent).not.toMatch(/We are Sisal/);
+  });
 });

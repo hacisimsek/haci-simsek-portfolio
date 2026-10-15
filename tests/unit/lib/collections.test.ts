@@ -201,3 +201,21 @@ describe('categoriesOf', () => {
     expect(categoriesOf(articles, 1)).toEqual(['microservices']);
   });
 });
+
+describe('categoriesOf on a busy feed', () => {
+  it('offers at most five topics and never the company blog tag', () => {
+    const many = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'we-are-sisal'].map(
+      (topic, index) => ({
+        title: `Post ${index}`,
+        url: `https://medium.com/p/${index}`,
+        excerpt: '',
+        categories: [topic, 'we-are-sisal'],
+        thumbnail: '',
+        publishedAt: '2026-01-01T00:00:00Z',
+      })
+    );
+    const topics = categoriesOf(many);
+    expect(topics.length).toBeLessThanOrEqual(5);
+    expect(topics).not.toContain('we-are-sisal');
+  });
+});

@@ -99,8 +99,20 @@ export default function Header() {
             <ThemeToggle />
           </div>
 
-          <Button asChild className="hidden rounded-full px-5 md:inline-flex">
-            <Link href="/contact">{t('contact')}</Link>
+          {/* Quiet beside each page's own primary action. */}
+          <Button
+            asChild
+            variant="outline"
+            className="hidden rounded-full px-5 aria-[current=page]:bg-secondary md:inline-flex"
+          >
+            <Link
+              href="/contact"
+              aria-current={
+                isCurrent(pathname, '/contact') ? 'page' : undefined
+              }
+            >
+              {t('contact')}
+            </Link>
           </Button>
 
           <Button
@@ -148,7 +160,13 @@ export default function Header() {
             </Link>
           ))}
           <Button asChild className="mt-2 h-11 rounded-full">
-            <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
+            <Link
+              href="/contact"
+              aria-current={
+                isCurrent(pathname, '/contact') ? 'page' : undefined
+              }
+              onClick={() => setIsMenuOpen(false)}
+            >
               {t('contact')}
             </Link>
           </Button>

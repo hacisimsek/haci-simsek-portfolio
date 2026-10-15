@@ -93,9 +93,12 @@ export function filterArticles(
     );
 }
 
-export function categoriesOf(articles: Article[], limit = 8): string[] {
-  return byFrequency(articles.flatMap((article) => article.categories)).slice(
-    0,
-    limit
-  );
+// Topics that say where a post was published, not what it is about.
+export const HIDDEN_TOPICS = new Set(['we-are-sisal']);
+
+/** The few most-used topics, for the filter chips; search still sees all. */
+export function categoriesOf(articles: Article[], limit = 5): string[] {
+  return byFrequency(articles.flatMap((article) => article.categories))
+    .filter((topic) => !HIDDEN_TOPICS.has(topic))
+    .slice(0, limit);
 }
