@@ -1,4 +1,6 @@
 import type { Repo } from '@/lib/feeds/github';
+import type { Locale } from '@/content';
+import { authoredSummary } from '@/lib/featured';
 import { projectTitle } from '@/lib/project-title';
 import type { Article } from '@/lib/feeds/medium';
 import { fold } from '@/lib/fold';
@@ -23,13 +25,25 @@ export function filterRepos(
     query,
     language,
     sort,
-  }: { query: string; language: string | null; sort: RepoSort }
+    locale = 'en',
+  }: {
+    query: string;
+    language: string | null;
+    sort: RepoSort;
+    /** Searches the text each row shows, authored lines included. */
+    locale?: Locale;
+  }
 ): Repo[] {
   return repos
     .filter((repo) => !language || repo.language === language)
     .filter((repo) =>
       matchesQuery(
-        [repo.name, projectTitle(repo.name), repo.description, repo.language],
+        [
+          repo.name,
+          projectTitle(repo.name),
+          authoredSummary(repo.name, locale) ?? repo.description,
+          repo.language,
+        ],
         query
       )
     )

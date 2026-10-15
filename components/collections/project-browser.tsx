@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import ProjectRow from '@/components/projects/project-row';
 import { filterRepos, languagesOf, type RepoSort } from '@/lib/collections';
@@ -10,10 +10,11 @@ import EmptyResults from './empty-results';
 
 export default function ProjectBrowser({ repos }: { repos: Repo[] }) {
   const msg = useTranslations('Collections');
+  const locale = useLocale();
   const [query, setQuery] = useState('');
   const [language, setLanguage] = useState<string | null>(null);
   const [sort, setSort] = useState<RepoSort>('recent');
-  const shown = filterRepos(repos, { query, language, sort });
+  const shown = filterRepos(repos, { query, language, sort, locale });
 
   function reset() {
     setQuery('');

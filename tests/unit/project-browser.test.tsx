@@ -72,7 +72,7 @@ describe('ProjectBrowser', () => {
   it('offers a reset when nothing matches, in Turkish too', async () => {
     const user = userEvent.setup();
     render(<ProjectBrowser repos={repos} />, { locale: 'tr' });
-    await user.type(screen.getByLabelText('Ara'), 'kafka');
+    await user.type(screen.getByLabelText('Ara'), 'xyzzy');
 
     await waitFor(() =>
       expect(screen.getByRole('status')).toHaveTextContent(

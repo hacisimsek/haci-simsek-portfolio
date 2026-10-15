@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { featuredProjects, t, type Locale } from '@/content';
+import { authoredSummary } from '@/lib/featured';
 import { projectTitle } from '@/lib/project-title';
 import type { Repo } from '@/lib/feeds/github';
 import { cn, SEPARATOR } from '@/lib/utils';
@@ -21,8 +21,8 @@ function monthYear(locale: string) {
   return format;
 }
 
-// One repo as a ruled list row: the readable title leads, the GitHub
-// description follows, and language and last update (month and year, the
+// One repo as a ruled list row: the readable title leads, its summary
+// (authored for featured repos, GitHub's otherwise) follows, and language and last update (month and year, the
 // same on every page) sit in a quiet meta column.
 export default function ProjectRow({
   repo,
@@ -37,12 +37,7 @@ export default function ProjectRow({
   const msg = useTranslations('Collections');
   const locale = useLocale();
   // Featured repos carry an authored line; others keep GitHub's description.
-  const authored = featuredProjects.find(
-    (project) => project.name === repo.name
-  );
-  const summary = authored
-    ? t(authored.summary, locale as Locale)
-    : repo.description;
+  const summary = authoredSummary(repo.name, locale) ?? repo.description;
   const updated = monthYear(locale).format(new Date(repo.updatedAt));
   const meta = [repo.language, msg('updated', { date: updated })]
     .filter(Boolean)
