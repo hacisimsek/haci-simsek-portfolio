@@ -1,4 +1,4 @@
-import { ArrowUpRight, GitCommitHorizontal } from 'lucide-react';
+import { ArrowRight, GitCommitHorizontal } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import CopyEmailButton from '@/components/copy-email-button';
 import {
@@ -48,7 +48,7 @@ export default function Footer() {
           >
             <Link href="/contact">
               {msg('cta')}
-              <ArrowUpRight aria-hidden className="ml-2 h-4 w-4" />
+              <ArrowRight aria-hidden className="ml-2 h-4 w-4" />
             </Link>
           </Button>
           <CopyEmailButton email={profile.email} />

@@ -150,4 +150,14 @@ describe('Footer', () => {
     render(<Footer />, { locale: 'tr' });
     expect(screen.getByText(/Sisal’deyim/)).toBeInTheDocument();
   });
+
+  it('uses the internal arrow and the Turkish title', () => {
+    const { container } = render(<Footer />, { locale: 'tr' });
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Doğru tekliflere açığım' })
+    ).toBeInTheDocument();
+    const contact = screen.getByRole('link', { name: /Bir konuşma başlat/ });
+    expect(contact.querySelector('.lucide-arrow-right')).not.toBeNull();
+    expect(container.querySelector('.lucide-arrow-up-right')).toBeNull();
+  });
 });

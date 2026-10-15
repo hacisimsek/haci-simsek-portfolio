@@ -31,4 +31,9 @@ describe('About', () => {
     expect(screen.queryByText(/Local time/)).toBeNull();
     expect(screen.queryByRole('link', { name: 'GitHub' })).toBeNull();
   });
+
+  it('keeps to the two text tones', () => {
+    const { container } = render(<About />);
+    expect(container.querySelector('[class*="text-foreground/"]')).toBeNull();
+  });
 });

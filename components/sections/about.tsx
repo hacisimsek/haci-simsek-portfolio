@@ -21,7 +21,7 @@ export default function About() {
         <h2 id="about-title" className="section-title">
           {msg('title')}
         </h2>
-        <p className="mt-5 text-base leading-8 text-foreground/90">
+        <p className="mt-5 text-base leading-8 text-foreground">
           {t(profile.intro, locale).replace('{years}', years)}
         </p>
         {t(profile.bio, locale).map((paragraph) => (
