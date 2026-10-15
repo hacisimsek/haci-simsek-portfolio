@@ -2,23 +2,22 @@
 
 import { Check, Copy } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { openMailto } from '@/lib/mailto';
+import { copyEmail } from '@/lib/copy-email';
+
+type Result = 'copied' | 'mailto' | null;
 
 export default function CopyEmailButton({ email }: { email: string }) {
   const msg = useTranslations('Footer');
-  const [copied, setCopied] = useState(false);
+  const [result, setResult] = useState<Result>(null);
 
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(email);
-      setCopied(true);
-    } catch {
-      // Clipboard blocked: fall back to the mail client.
-      openMailto(email);
-    }
-  }
+  // Clear the message so the next copy is announced again.
+  useEffect(() => {
+    if (!result) return;
+    const timer = window.setTimeout(() => setResult(null), 2000);
+    return () => window.clearTimeout(timer);
+  }, [result]);
 
   return (
     <>
@@ -27,9 +26,14 @@ export default function CopyEmailButton({ email }: { email: string }) {
         size="lg"
         variant="outline"
         className="rounded-full px-6"
-        onClick={copy}
+        onClick={async () => {
+          // Empty the status first so a repeat copy is announced again and
+          // its message gets a fresh two seconds.
+          setResult(null);
+          setResult(await copyEmail(email));
+        }}
       >
-        {copied ? (
+        {result === 'copied' ? (
           <Check aria-hidden className="mr-2 h-4 w-4 text-accent" />
         ) : (
           <Copy aria-hidden className="mr-2 h-4 w-4" />
@@ -37,7 +41,8 @@ export default function CopyEmailButton({ email }: { email: string }) {
         {msg('copyEmail')}
       </Button>
       <p role="status" className="text-sm text-muted-foreground">
-        {copied ? msg('copied') : ''}
+        {result === 'copied' ? msg('copied') : null}
+        {result === 'mailto' ? msg('openingMail') : null}
       </p>
     </>
   );

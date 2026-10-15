@@ -86,7 +86,7 @@
 /* clip, not hidden: hidden makes this a scroll container and breaks the
    sticky header. */
 @utility app-shell {
-  @apply relative overflow-x-clip;
+  @apply overflow-x-clip;
 }
 
 /* Frosted bar over the content scrolling beneath it; see the
@@ -140,6 +140,22 @@
     margin-top: calc((1lh - 0.75rem) / 2);
     border: 2px solid var(--accent);
     border-radius: 9999px;
+  }
+
+  /* Browsers without the lh unit (Safari < 16.4, Firefox < 120) get the
+     offsets for the text-2xl and sm:text-3xl lines. A plain duplicate
+     declaration would be merged away by the CSS minifier, so it lives in
+     @supports. */
+  @supports not (margin-top: 1lh) {
+    &::before {
+      margin-top: 0.625rem;
+    }
+
+    @variant sm {
+      &::before {
+        margin-top: 0.75rem;
+      }
+    }
   }
 }
 

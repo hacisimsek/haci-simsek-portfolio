@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 import { brand } from './brand';
 import { DISPLAY_FONT_FAMILY, loadDisplayFont } from './font';
 
-// "HŞ" on the aurora gradient, used for the favicon and the Apple touch icon.
+// "HŞ" on the brand gradient, used for the favicon and the Apple touch icon.
 export async function monogram(size: number) {
   return new ImageResponse(
     <div

@@ -103,7 +103,7 @@ export default async function LocaleLayout({
               <SmoothScroll />
               <ScrollProgress />
               <div className="app-shell">
-                <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-6 pb-10 sm:px-6 lg:px-8">
+                <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-6 pb-10 sm:px-6 lg:px-8">
                   <Header />
                   <main id="main" tabIndex={-1} className="flex-1 outline-none">
                     {children}

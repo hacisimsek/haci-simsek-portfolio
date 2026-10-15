@@ -1,7 +1,7 @@
 import { act, fireEvent, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import SagaFlow, { TICK_MS } from '@/components/saga/saga-flow';
-import { HOLD_TICKS, VISITOR_HOLD_TICKS } from '@/lib/saga';
+import { HOLD_TICKS, FAILED_HOLD_TICKS } from '@/lib/saga';
 import { renderWithIntl as render } from '../render';
 
 function advance(ticks: number) {
@@ -154,7 +154,7 @@ describe('SagaFlow', () => {
     const shipping = screen.getAllByRole('listitem')[3];
     expect(shipping).toHaveAttribute('data-status', 'skipped');
     expect(shipping).toHaveTextContent('Skipped');
-    advance(VISITOR_HOLD_TICKS - 1);
+    advance(FAILED_HOLD_TICKS - 1);
     expect(screen.getByRole('status')).toHaveTextContent('Inventory failed.');
   });
 
@@ -201,5 +201,22 @@ describe('SagaFlow', () => {
     render(<SagaFlow />);
     expect(screen.queryByRole('button', { name: 'Pause' })).toBeNull();
     matchMedia.mockRestore();
+  });
+
+  it('keeps the beat when Pause is pressed during a visitor run', () => {
+    render(<SagaFlow />);
+    fireEvent.click(screen.getByRole('button', { name: 'Run with a failure' }));
+    act(() => {
+      vi.advanceTimersByTime(TICK_MS / 2);
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Pause' }));
+    act(() => {
+      vi.advanceTimersByTime(TICK_MS / 2);
+    });
+    // The first step finishes on the original beat, not a full tick later.
+    expect(screen.getAllByRole('listitem')[0]).toHaveAttribute(
+      'data-status',
+      'done'
+    );
   });
 });

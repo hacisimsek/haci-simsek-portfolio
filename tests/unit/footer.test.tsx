@@ -96,6 +96,41 @@ describe('Footer', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Email copied');
   });
 
+  it('says so when it opens the mail client instead', async () => {
+    Object.assign(navigator, {
+      clipboard: { writeText: vi.fn().mockRejectedValue(new Error('no')) },
+    });
+    render(<Footer />);
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Copy email' }));
+    });
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Opening your mail app'
+    );
+  });
+
+  it('clears the confirmation so a second copy is announced again', async () => {
+    vi.useFakeTimers();
+    Object.assign(navigator, {
+      clipboard: { writeText: vi.fn().mockResolvedValue(undefined) },
+    });
+    render(<Footer />);
+    const button = screen.getByRole('button', { name: 'Copy email' });
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    expect(screen.getByRole('status')).toHaveTextContent('Email copied');
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(screen.getByRole('status')).toBeEmptyDOMElement();
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    expect(screen.getByRole('status')).toHaveTextContent('Email copied');
+    vi.useRealTimers();
+  });
+
   it('opens the mail client when the clipboard is blocked', async () => {
     Object.assign(navigator, {
       clipboard: { writeText: vi.fn().mockRejectedValue(new Error('no')) },
@@ -114,5 +149,39 @@ describe('Footer', () => {
     expect(tr.Footer.text).toContain('{company}');
     render(<Footer />, { locale: 'tr' });
     expect(screen.getByText(/Sisal’deyim/)).toBeInTheDocument();
+  });
+
+  it('uses the internal arrow and the Turkish title', () => {
+    const { container } = render(<Footer />, { locale: 'tr' });
+    expect(
+      screen.getByRole('heading', { level: 2, name: 'Doğru tekliflere açığım' })
+    ).toBeInTheDocument();
+    const contact = screen.getByRole('link', { name: /Bir konuşma başlat/ });
+    expect(contact.querySelector('.lucide-arrow-right')).not.toBeNull();
+    expect(container.querySelector('.lucide-arrow-up-right')).toBeNull();
+  });
+
+  it('re-announces a quick second copy and keeps it on screen', async () => {
+    vi.useFakeTimers();
+    Object.assign(navigator, {
+      clipboard: { writeText: vi.fn().mockResolvedValue(undefined) },
+    });
+    render(<Footer />);
+    const button = screen.getByRole('button', { name: 'Copy email' });
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    act(() => {
+      vi.advanceTimersByTime(1000);
+    });
+    // The second copy restarted the message, so it has not cleared yet.
+    expect(screen.getByRole('status')).toHaveTextContent('Email copied');
+    vi.useRealTimers();
   });
 });

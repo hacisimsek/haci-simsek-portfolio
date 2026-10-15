@@ -31,7 +31,9 @@ test.describe('with motion', () => {
 test.describe('with reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
 
-  test('everything holds still and content is visible', async ({ page }) => {
+  test('Lenis and the progress bar are off and content is visible', async ({
+    page,
+  }) => {
     await page.goto('/');
     await expect(page.locator('html')).not.toHaveClass(/\blenis\b/);
     await expect(page.locator('[data-scroll-progress]')).toHaveCount(0);

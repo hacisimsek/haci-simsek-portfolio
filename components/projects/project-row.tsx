@@ -4,6 +4,22 @@ import { projectTitle } from '@/lib/project-title';
 import type { Repo } from '@/lib/feeds/github';
 import { cn, SEPARATOR } from '@/lib/utils';
 
+const formatters = new Map<string, Intl.DateTimeFormat>();
+
+// One formatter per locale, shared by every row.
+function monthYear(locale: string) {
+  let format = formatters.get(locale);
+  if (!format) {
+    format = new Intl.DateTimeFormat(locale, {
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'Europe/Istanbul',
+    });
+    formatters.set(locale, format);
+  }
+  return format;
+}
+
 // One repo as a ruled list row: the readable title leads, the GitHub
 // description follows, and language and last update (month and year, the
 // same on every page) sit in a quiet meta column.
@@ -19,11 +35,7 @@ export default function ProjectRow({
 }) {
   const msg = useTranslations('Collections');
   const locale = useLocale();
-  const updated = new Intl.DateTimeFormat(locale, {
-    month: 'short',
-    year: 'numeric',
-    timeZone: 'Europe/Istanbul',
-  }).format(new Date(repo.updatedAt));
+  const updated = monthYear(locale).format(new Date(repo.updatedAt));
   const meta = [repo.language, msg('updated', { date: updated })]
     .filter(Boolean)
     .join(SEPARATOR);

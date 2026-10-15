@@ -86,3 +86,20 @@ test.describe('without the WebGL sphere', () => {
     await expect(page.locator('.orb, .orb-core')).toHaveCount(0);
   });
 });
+
+test.describe('pausing', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  test('Pause holds the saga still in a real browser', async ({ page }) => {
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Pause' }).click();
+    const before = await steps(page).evaluateAll((items) =>
+      items.map((item) => item.getAttribute('data-status'))
+    );
+    await page.waitForTimeout(4000);
+    const after = await steps(page).evaluateAll((items) =>
+      items.map((item) => item.getAttribute('data-status'))
+    );
+    expect(after).toEqual(before);
+  });
+});

@@ -185,11 +185,12 @@
     }
   },
   "Footer": {
-    "title": "Doğru konuşmaya açığım",
+    "title": "Doğru tekliflere açığım",
     "text": "Şu an {company}’deyim ve aktif olarak iş aramıyorum, ama doğru bir rol ya da zorlu bir backend problemi için konuşmaktan her zaman memnuniyet duyarım.",
     "cta": "Bir konuşma başlat",
     "copyEmail": "E-postayı kopyala",
     "copied": "E-posta kopyalandı",
+    "openingMail": "E-posta uygulamanız açılıyor",
     "copyright": "© {year} {name}.",
     "build": "derleme {sha}"
   },

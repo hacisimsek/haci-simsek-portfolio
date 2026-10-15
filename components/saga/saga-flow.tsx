@@ -6,6 +6,7 @@ import {
   useEffect,
   useRef,
   useState,
+  useEffectEvent,
   useSyncExternalStore,
   type CSSProperties,
 } from 'react';
@@ -88,19 +89,23 @@ export default function SagaFlow({ className }: { className?: string }) {
   const autoPlay = !reduceMotion && !paused;
   const playing = active && (run.byVisitor || autoPlay);
 
+  // Reads the latest autoPlay without restarting the interval, so pressing
+  // Pause during a visitor run keeps the beat.
+  const advance = useEffectEvent(() => {
+    setRun((current) => {
+      const next = tick(current.saga);
+      if (!isRestart(current.saga, next)) return { ...current, saga: next };
+      // Without auto-play a finished visitor run stays on screen.
+      if (!autoPlay) return { ...current, byVisitor: false };
+      return { ...current, saga: next, byVisitor: false };
+    });
+  });
+
   useEffect(() => {
     if (!playing) return;
-    const id = setInterval(() => {
-      setRun((current) => {
-        const next = tick(current.saga);
-        if (!isRestart(current.saga, next)) return { ...current, saga: next };
-        // Without auto-play a finished visitor run stays on screen.
-        if (!autoPlay) return { ...current, byVisitor: false };
-        return { ...current, saga: next, byVisitor: false };
-      });
-    }, TICK_MS);
+    const id = setInterval(advance, TICK_MS);
     return () => clearInterval(id);
-  }, [playing, autoPlay, run.runId]);
+  }, [playing, run.runId]);
 
   const { saga } = run;
   // Only a visitor run can fail, so a rolled-back saga is always theirs; the

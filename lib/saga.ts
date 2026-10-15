@@ -32,8 +32,8 @@ export const FAILING_STEP = STEPS.indexOf('inventory');
 /** How long a finished saga stays on screen, in ticks. */
 export const HOLD_TICKS = 3;
 
-/** A failed run is always the visitor's; it stays long enough to read. */
-export const VISITOR_HOLD_TICKS = 8;
+/** A failed run (only visitors start one) stays long enough to read. */
+export const FAILED_HOLD_TICKS = 8;
 
 export function start(failAt: number | null = null): SagaState {
   return {
@@ -101,7 +101,7 @@ export function tick(state: SagaState): SagaState {
     }
     default:
       return state.held + 1 >=
-        (state.failAt === null ? HOLD_TICKS : VISITOR_HOLD_TICKS)
+        (state.failAt === null ? HOLD_TICKS : FAILED_HOLD_TICKS)
         ? start()
         : { ...state, held: state.held + 1 };
   }

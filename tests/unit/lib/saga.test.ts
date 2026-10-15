@@ -6,7 +6,7 @@ import {
   STEPS,
   start,
   tick,
-  VISITOR_HOLD_TICKS,
+  FAILED_HOLD_TICKS,
   withFailure,
   type SagaState,
 } from '@/lib/saga';
@@ -68,9 +68,9 @@ describe('saga', () => {
   it('holds a failed run longer so it can be read', () => {
     const rolledBack = run(start(FAILING_STEP), 5);
     expect(rolledBack.phase).toBe('rolledBack');
-    expect(VISITOR_HOLD_TICKS).toBeGreaterThan(HOLD_TICKS);
-    expect(run(rolledBack, VISITOR_HOLD_TICKS - 1).phase).toBe('rolledBack');
-    expect(run(rolledBack, VISITOR_HOLD_TICKS).phase).toBe('forward');
+    expect(FAILED_HOLD_TICKS).toBeGreaterThan(HOLD_TICKS);
+    expect(run(rolledBack, FAILED_HOLD_TICKS - 1).phase).toBe('rolledBack');
+    expect(run(rolledBack, FAILED_HOLD_TICKS).phase).toBe('forward');
   });
 
   it('never skips a step in a happy run', () => {
