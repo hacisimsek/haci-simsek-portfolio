@@ -215,6 +215,9 @@ test.describe('one accent for structure', () => {
   for (const theme of ['dark', 'light'] as const) {
     test(`purple is kept for undo in the ${theme} theme`, async ({ page }) => {
       await page.goto('/');
+      // The progress bar mounts after hydration, once the motion preference
+      // is read; on a slow runner it is not there yet right after load.
+      await expect(page.locator('[data-scroll-progress]')).toHaveCount(1);
       await page.evaluate((name) => {
         document.documentElement.classList.remove('dark', 'light');
         document.documentElement.classList.add(name);
