@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import type { Article } from '@/lib/feeds/medium';
+import { HIDDEN_TOPICS } from '@/lib/collections';
 import { projectTitle } from '@/lib/project-title';
 import { cn, SEPARATOR } from '@/lib/utils';
 
@@ -14,7 +15,8 @@ export default function ArticleRow({
   article: Article;
   date: string;
   heading?: 'h2' | 'h3';
-  /** Adds the excerpt and topics, for the full article list. */
+  /** Adds the topics, for the full article list. Medium's excerpts are
+   *  truncated and repeat the title, so they are not shown. */
   detailed?: boolean;
 }) {
   return (
@@ -35,17 +37,13 @@ export default function ArticleRow({
           >
             {article.title}
           </Heading>
-          {detailed && article.excerpt ? (
-            <p
-              lang="en"
-              className="mt-2 line-clamp-3 max-w-3xl text-sm leading-7 text-muted-foreground"
-            >
-              {article.excerpt}
-            </p>
-          ) : null}
           {detailed && article.categories.length > 0 ? (
             <p className="mt-2 text-sm text-muted-foreground">
-              {article.categories.slice(0, 4).map(projectTitle).join(SEPARATOR)}
+              {article.categories
+                .filter((topic) => !HIDDEN_TOPICS.has(topic))
+                .slice(0, 4)
+                .map(projectTitle)
+                .join(SEPARATOR)}
             </p>
           ) : null}
         </div>

@@ -48,4 +48,10 @@ describe('ArticleBrowser', () => {
     await user.selectOptions(screen.getByLabelText('Sort'), 'oldest');
     expect(titles()).toEqual(['Breaker', 'Saga']);
   });
+
+  it('shows title, date and topics, not the raw Medium excerpt', () => {
+    render(<ArticleBrowser articles={articles} />);
+    expect(screen.queryByText('Saga excerpt')).toBeNull();
+    expect(screen.getAllByText(/Microservices/).length).toBeGreaterThan(0);
+  });
 });
