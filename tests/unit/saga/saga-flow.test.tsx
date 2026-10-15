@@ -158,23 +158,31 @@ describe('SagaFlow', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Inventory failed.');
   });
 
-  it('can be paused and played', () => {
+  it('can be paused and resumed, and says which', () => {
     render(<SagaFlow />);
-    const pause = screen.getByRole('button', { name: 'Pause' });
-    expect(pause).toHaveAttribute('aria-pressed', 'false');
-    fireEvent.click(pause);
-    expect(pause).toHaveAttribute('aria-pressed', 'true');
-    // The latched state is visible, not only announced.
-    expect(pause).toHaveClass('aria-pressed:bg-secondary');
+    const toggle = screen.getByRole('button', { name: 'Pause' });
+    expect(toggle).not.toHaveAttribute('aria-pressed');
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAccessibleName('Resume');
     advance(HOLD_TICKS + 2);
     for (const step of screen.getAllByRole('listitem'))
       expect(step).toHaveAttribute('data-status', 'done');
-    fireEvent.click(pause);
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAccessibleName('Pause');
     advance(HOLD_TICKS);
     expect(screen.getAllByRole('listitem')[0]).toHaveAttribute(
       'data-status',
       'running'
     );
+  });
+
+  it('shows its title and explanation before the steps and controls', () => {
+    render(<SagaFlow />);
+    const figure = screen.getByRole('figure', { name: 'An order saga' });
+    const caption = figure.querySelector('figcaption')!;
+    expect(figure.firstElementChild).toBe(caption);
+    expect(caption).toHaveTextContent('An order saga');
+    expect(caption).toHaveTextContent(/compensating actions/);
   });
 
   it('still plays a visitor run while auto-play is paused', () => {

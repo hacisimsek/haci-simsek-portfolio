@@ -63,6 +63,7 @@
     "caption": "Saga, bir siparişi tek büyük transaction olmadan servisler arasında tutarlı tutar. Her servis kendi adımını işler; biri başarısız olursa önceki adımlar telafi işlemleriyle geri alınır.",
     "run": "Hata senaryosunu çalıştır",
     "pause": "Duraklat",
+    "resume": "Sürdür",
     "code": "Kodda incele",
     "steps": {
       "order": {

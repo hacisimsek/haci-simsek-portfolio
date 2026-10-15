@@ -63,6 +63,7 @@
     "caption": "A saga keeps an order consistent across services without one big transaction. Each service commits its own step; when one fails, the steps before it are undone by compensating actions.",
     "run": "Run with a failure",
     "pause": "Pause",
+    "resume": "Resume",
     "code": "See it in code",
     "steps": {
       "order": {
