@@ -123,6 +123,8 @@ describe('ContactForm', () => {
     });
     const role = screen.getByRole('radio', { name: 'A role' });
     expect(role).toBeChecked();
+    // Checked in the HTML too, so a post without JavaScript has a topic.
+    expect(role).toHaveAttribute('checked');
     expect(topic).toContainElement(role);
     await user.click(
       screen.getByRole('radio', { name: 'A technical conversation' })

@@ -60,7 +60,7 @@ export default function Header() {
           event.preventDefault();
           document.getElementById('main')?.focus();
         }}
-        className="sr-only rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[80]"
+        className="sr-only rounded-full bg-accent text-sm font-medium text-accent-foreground focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[80] focus:px-4 focus:py-2"
       >
         {t('skip')}
       </a>

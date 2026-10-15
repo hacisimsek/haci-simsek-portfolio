@@ -141,6 +141,8 @@ export default function ContactForm() {
               <input
                 type="radio"
                 value={topic}
+                // In the HTML too, so a post without JavaScript has a topic.
+                defaultChecked={topic === defaultValues.topic}
                 className="accent-[var(--accent)]"
                 {...register('topic')}
               />

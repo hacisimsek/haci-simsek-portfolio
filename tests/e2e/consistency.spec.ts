@@ -180,6 +180,13 @@ test('the first Tab offers a skip link to the content', async ({ page }) => {
   const skip = page.getByRole('link', { name: 'Skip to content' });
   await expect(skip).toBeFocused();
   await expect(skip).toBeVisible();
+  // A pill, not bare text: not-sr-only must not wipe its padding.
+  const padding = await skip.evaluate((el) => {
+    const style = getComputedStyle(el);
+    return [parseFloat(style.paddingLeft), parseFloat(style.paddingTop)];
+  });
+  expect(padding[0]).toBeGreaterThanOrEqual(12);
+  expect(padding[1]).toBeGreaterThanOrEqual(6);
   await page.keyboard.press('Enter');
   await expect(page.locator('main')).toBeFocused();
 });
