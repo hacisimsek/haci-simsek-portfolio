@@ -24,8 +24,6 @@ export default function Career() {
       <TimelineTrack>
         <ol className="space-y-12">
           {groups.map((group) => {
-            // Only the current employer is open; earlier highlights fold.
-            const current = group.roles.some((role) => role.end === null);
             const first = group.roles[0];
             const last = group.roles.at(-1)!;
             const labelId = `company-${first.id}`;
@@ -96,7 +94,8 @@ export default function Career() {
                         {t(role.summary, locale)}
                       </p>
 
-                      {current ? (
+                      {/* Only the current role is open; earlier ones fold. */}
+                      {role.end === null ? (
                         <Highlights items={t(role.highlights, locale)} />
                       ) : (
                         <details className="group/more mt-3">

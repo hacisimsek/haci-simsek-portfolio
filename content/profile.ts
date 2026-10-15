@@ -18,11 +18,11 @@ export const profile: Profile = {
   },
   bio: {
     en: [
-      'At Sisal I have worked on end-to-end development for an international audience, first on the lottery and terminals platform and now on authentication and account services in the AreaPrivata ecosystem.',
+      'At Sisal I have worked on end-to-end development for an international audience, first on the lottery and terminals platform and now on authentication and account services for AreaPrivata, Sisal’s customer account area.',
       'I graduated from Bahçeşehir University on a full scholarship, with a major in Electrical and Electronics Engineering and a minor in Software Engineering, and I share what I learn about architecture patterns through technical articles.',
     ],
     tr: [
-      "Sisal'de uluslararası bir kitle için uçtan uca geliştirme yaptım; önce piyango ve terminaller platformunda, şimdi ise AreaPrivata ekosisteminde kimlik doğrulama ve hesap servislerinde çalışıyorum.",
+      "Sisal'de uluslararası bir kitle için uçtan uca geliştirme yaptım; önce piyango ve terminaller platformunda, şimdi ise Sisal’in müşteri hesap alanı AreaPrivata için kimlik doğrulama ve hesap servislerinde çalışıyorum.",
       'Bahçeşehir Üniversitesi Elektrik-Elektronik Mühendisliği bölümünden tam burslu olarak, Yazılım Mühendisliği yan dalıyla mezun oldum; mimari desenler hakkında öğrendiklerimi teknik yazılarla paylaşıyorum.',
     ],
   },
