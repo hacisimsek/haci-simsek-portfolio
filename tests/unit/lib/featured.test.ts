@@ -44,3 +44,15 @@ describe('selectFeatured', () => {
     expect(selectFeatured(many, featured)).toHaveLength(6);
   });
 });
+
+describe('selectFeatured without fill', () => {
+  it('returns only the picks the feed has, never a stand-in', () => {
+    const result = selectFeatured(
+      [repo('x', '2026-05-01T00:00:00Z'), repo('notifyhub')],
+      featured,
+      featured.length,
+      { fill: false }
+    );
+    expect(result.map((r) => r.name)).toEqual(['notifyhub']);
+  });
+});

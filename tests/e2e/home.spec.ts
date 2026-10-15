@@ -210,7 +210,11 @@ test('featured projects carry authored lines', async ({ page }) => {
   await page.goto('/');
   const region = page.getByRole('region', { name: 'Featured projects' });
   const rows = region.locator('a[href^="https://github.com/"]');
-  expect(await rows.count()).toBeLessThanOrEqual(4);
+  const count = await rows.count();
+  expect(count).toBeGreaterThan(0);
+  expect(count).toBeLessThanOrEqual(4);
+  // Only authored picks: no stand-in row with a raw GitHub description.
+  await expect(region).not.toContainText('URL shortener');
   await expect(region).toContainText('event-driven saga');
   await expect(region).not.toContainText('orchestration-based');
 });
