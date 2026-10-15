@@ -200,6 +200,8 @@
     --destructive-foreground: oklch(0.99 0 0);
     --border: oklch(0.18 0.03 275 / 0.1);
     --input: oklch(0.18 0.03 275 / 0.16);
+    /* Resolved on <html>, where .dark also sits, so it follows the theme's
+       accent; a descendant re-declaring --accent would not move it. */
     --ring: var(--accent);
     --chart-1: oklch(0.5 0.23 290);
     --chart-2: oklch(0.52 0.12 215);

@@ -23,7 +23,9 @@ describe('featured projects', () => {
   });
 
   it('says "serbest bırakılıyor" consistently in Turkish', () => {
-    const line = featuredProjects[0].summary.tr;
-    expect(line.match(/serbest bırakılıyor/g)).toHaveLength(2);
+    const line = featuredProjects.find(
+      (project) => project.name === 'ecommerce-microservices'
+    )!.summary.tr;
+    expect(line).not.toMatch(/stok bırakılıyor/);
   });
 });

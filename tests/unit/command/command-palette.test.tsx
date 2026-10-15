@@ -1,9 +1,12 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import CommandPalette from '@/components/command/command-palette';
 import { profile } from '@/content';
+import { openMailto } from '@/lib/mailto';
 import { renderWithIntl as render } from '../render';
+
+vi.mock('@/lib/mailto', () => ({ openMailto: vi.fn() }));
 
 describe('CommandPalette', () => {
   it('opens with Ctrl+K as a dialog named by the translated title', async () => {
@@ -56,6 +59,20 @@ describe('CommandPalette', () => {
 
     expect(await navigator.clipboard.readText()).toBe(profile.email);
     expect(screen.getByRole('option', { name: 'Copied' })).toBeInTheDocument();
+  });
+
+  it('opens the mail app and closes when the clipboard is blocked', async () => {
+    const user = userEvent.setup();
+    render(<CommandPalette />);
+    vi.spyOn(navigator.clipboard, 'writeText').mockRejectedValue(
+      new Error('blocked')
+    );
+
+    await user.click(screen.getByRole('button', { name: /Command palette/ }));
+    await user.click(await screen.findByRole('option', { name: 'Copy email' }));
+
+    expect(openMailto).toHaveBeenCalledWith(profile.email);
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
   });
 });
 

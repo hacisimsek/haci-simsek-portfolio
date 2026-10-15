@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
   useEffectEvent,
+  useId,
   useSyncExternalStore,
   type CSSProperties,
 } from 'react';
@@ -76,6 +77,7 @@ function useActive<T extends Element>() {
 // request, fails at payment and compensates the earlier steps in reverse.
 export default function SagaFlow({ className }: { className?: string }) {
   const msg = useTranslations('Saga');
+  const titleId = useId();
   const reduceMotion = usePrefersReducedMotion();
   const [figure, active] = useActive<HTMLElement>();
   const [run, setRun] = useState<Run>({
@@ -118,13 +120,13 @@ export default function SagaFlow({ className }: { className?: string }) {
   return (
     <figure
       ref={figure}
-      aria-labelledby="saga-title"
+      aria-labelledby={titleId}
       className={cn('w-full max-w-md', className)}
     >
       {/* Title and explanation come first, so the steps and controls are
           read with their meaning. */}
       <figcaption className="mb-6">
-        <p id="saga-title" className="font-display font-semibold">
+        <p id={titleId} className="font-display font-semibold">
           {msg('label')}
         </p>
         <p className="mt-1 text-sm leading-6 text-muted-foreground">

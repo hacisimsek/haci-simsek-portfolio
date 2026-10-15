@@ -14,7 +14,8 @@ export function selectFeatured(
   repos: Repo[],
   featured: Pick<FeaturedProject, 'name' | 'flagship'>[],
   limit = 6,
-  /** Fill up to the limit with recent repos; off where only picks belong. */
+  /** Fill up to the limit with recent repos; off where only picks belong
+   *  (the limit still caps the picks). */
   { fill = true }: { fill?: boolean } = {}
 ): FeaturedRepo[] {
   const byName = new Map(repos.map((repo) => [repo.name, repo]));

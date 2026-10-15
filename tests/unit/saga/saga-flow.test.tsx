@@ -250,4 +250,17 @@ describe('SagaFlow', () => {
     expect(title).toHaveTextContent('An order saga');
     expect(figure.querySelector('figcaption')).toContainElement(title);
   });
+
+  it('gives each figure its own title id', () => {
+    render(
+      <>
+        <SagaFlow />
+        <SagaFlow />
+      </>
+    );
+    const ids = screen
+      .getAllByRole('figure')
+      .map((figure) => figure.getAttribute('aria-labelledby'));
+    expect(new Set(ids).size).toBe(2);
+  });
 });
