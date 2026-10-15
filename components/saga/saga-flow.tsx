@@ -73,7 +73,7 @@ function useActive<T extends Element>() {
 }
 
 // The hero's signature piece: an order saga that runs by itself and, on
-// request, fails at inventory and compensates the earlier steps in reverse.
+// request, fails at payment and compensates the earlier steps in reverse.
 export default function SagaFlow({ className }: { className?: string }) {
   const msg = useTranslations('Saga');
   const reduceMotion = usePrefersReducedMotion();

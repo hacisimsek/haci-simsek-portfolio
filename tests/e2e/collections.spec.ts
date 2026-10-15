@@ -13,7 +13,10 @@ test('projects can be searched', async ({ page }) => {
 test('the Turkish projects page explains an empty result', async ({ page }) => {
   await page.goto('/tr/projects');
   await waitForHydration(page);
+  // Search reads the text each row shows, authored lines included.
   await page.getByLabel('Ara').fill('kafka');
+  await expect(page.locator('main a[target="_blank"]')).toHaveCount(2);
+  await page.getByLabel('Ara').fill('xyzzy');
   await expect(page.getByText('Eşleşen sonuç yok.')).toBeVisible();
   await page.getByRole('button', { name: 'Filtreleri sıfırla' }).click();
   await expect(page.locator('main a[target="_blank"]')).toHaveCount(3);

@@ -92,6 +92,20 @@ describe('filterRepos', () => {
     ).toEqual(['springboot-app', 'spring-cloud']);
   });
 
+  it('searches the authored line a featured repo shows', () => {
+    // notifyhub shows "…Kafka…" instead of its GitHub description.
+    expect(
+      names(
+        filterRepos(repos, {
+          query: 'kafka',
+          language: null,
+          sort: 'recent',
+          locale: 'tr',
+        })
+      )
+    ).toEqual(['notifyhub']);
+  });
+
   it('filters by language and sorts by recency or name', () => {
     expect(
       names(filterRepos(repos, { query: '', language: 'Java', sort: 'recent' }))

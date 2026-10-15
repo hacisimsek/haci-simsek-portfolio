@@ -72,15 +72,15 @@
         "action": "Create order",
         "undo": "Cancel order"
       },
-      "payment": {
-        "name": "Payment",
-        "action": "Charge card",
-        "undo": "Refund payment"
-      },
       "inventory": {
         "name": "Inventory",
         "action": "Reserve stock",
         "undo": "Release stock"
+      },
+      "payment": {
+        "name": "Payment",
+        "action": "Charge card",
+        "undo": "Refund payment"
       },
       "shipping": {
         "name": "Shipping",
@@ -92,12 +92,12 @@
       "idle": "Waiting",
       "running": "Running",
       "done": "Done",
-      "failed": "Out of stock",
+      "failed": "Declined",
       "compensating": "Undoing",
       "compensated": "Undone",
       "skipped": "Skipped"
     },
-    "outcome": "Inventory failed. Payment refunded and order cancelled."
+    "outcome": "Payment declined. Stock released and order cancelled."
   },
   "About": {
     "title": "Backend engineer for systems that have to stay up"

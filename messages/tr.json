@@ -72,15 +72,15 @@
         "action": "Sipariş oluştur",
         "undo": "Siparişi iptal et"
       },
-      "payment": {
-        "name": "Ödeme",
-        "action": "Karttan tahsil et",
-        "undo": "Ödemeyi iade et"
-      },
       "inventory": {
         "name": "Stok",
         "action": "Stok ayır",
         "undo": "Stoğu serbest bırak"
+      },
+      "payment": {
+        "name": "Ödeme",
+        "action": "Karttan tahsil et",
+        "undo": "Ödemeyi iade et"
       },
       "shipping": {
         "name": "Kargo",
@@ -92,12 +92,12 @@
       "idle": "Bekliyor",
       "running": "Çalışıyor",
       "done": "Tamam",
-      "failed": "Stok yok",
+      "failed": "Reddedildi",
       "compensating": "Geri alınıyor",
       "compensated": "Geri alındı",
       "skipped": "Atlandı"
     },
-    "outcome": "Stok yetersiz. Ödeme iade edildi, sipariş iptal edildi."
+    "outcome": "Ödeme reddedildi. Stok serbest bırakıldı, sipariş iptal edildi."
   },
   "About": {
     "title": "Ayakta kalması gereken sistemler için backend mühendisi"

@@ -1,4 +1,9 @@
-import type { FeaturedProject } from '@/content';
+import {
+  featuredProjects,
+  t,
+  type FeaturedProject,
+  type Locale,
+} from '@/content';
 import type { Repo } from '@/lib/feeds/github';
 
 export type FeaturedRepo = Repo & { flagship: boolean };
@@ -7,7 +12,7 @@ export type FeaturedRepo = Repo & { flagship: boolean };
 // updated others. Picks missing from the feed are skipped, never invented.
 export function selectFeatured(
   repos: Repo[],
-  featured: FeaturedProject[],
+  featured: Pick<FeaturedProject, 'name' | 'flagship'>[],
   limit = 6
 ): FeaturedRepo[] {
   const byName = new Map(repos.map((repo) => [repo.name, repo]));
@@ -21,4 +26,14 @@ export function selectFeatured(
     .sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
     .map((repo) => ({ ...repo, flagship: false }));
   return [...picked, ...rest].slice(0, limit);
+}
+
+const authored = new Map(
+  featuredProjects.map((project) => [project.name, project.summary])
+);
+
+/** The authored line a featured repo shows instead of its GitHub description. */
+export function authoredSummary(name: string, locale: Locale) {
+  const summary = authored.get(name);
+  return summary ? t(summary, locale) : undefined;
 }

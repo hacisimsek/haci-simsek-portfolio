@@ -205,3 +205,12 @@ test('about is prose, not cards', async ({ page }) => {
   await expect(page.locator('#about')).toBeVisible();
   await expect(page.locator('#about .surface-card')).toHaveCount(0);
 });
+
+test('featured projects carry authored lines', async ({ page }) => {
+  await page.goto('/');
+  const region = page.getByRole('region', { name: 'Featured projects' });
+  const rows = region.locator('a[href^="https://github.com/"]');
+  expect(await rows.count()).toBeLessThanOrEqual(4);
+  await expect(region).toContainText('event-driven saga');
+  await expect(region).not.toContainText('orchestration-based');
+});

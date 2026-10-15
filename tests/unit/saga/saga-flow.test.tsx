@@ -46,21 +46,22 @@ describe('SagaFlow', () => {
     expect(screen.getByRole('status')).toBeEmptyDOMElement();
   });
 
-  it('fails inventory on demand and undoes the earlier steps', () => {
+  it('declines the payment on demand and undoes the earlier steps', () => {
     render(<SagaFlow />);
     advance(1);
     fireEvent.click(screen.getByRole('button', { name: 'Run with a failure' }));
     advance(5);
-    const [order, payment, inventory, shipping] =
+    // The flagship repo's order: order, inventory, payment, shipping.
+    const [order, inventory, payment, shipping] =
       screen.getAllByRole('listitem');
-    expect(inventory).toHaveAttribute('data-status', 'failed');
-    expect(inventory).toHaveTextContent('Out of stock');
-    expect(payment).toHaveAttribute('data-status', 'compensated');
-    expect(payment).toHaveTextContent('Refund payment');
+    expect(payment).toHaveAttribute('data-status', 'failed');
+    expect(payment).toHaveTextContent('Declined');
+    expect(inventory).toHaveAttribute('data-status', 'compensated');
+    expect(inventory).toHaveTextContent('Release stock');
     expect(order).toHaveTextContent('Cancel order');
     expect(shipping).toHaveAttribute('data-status', 'skipped');
     expect(screen.getByRole('status')).toHaveTextContent(
-      'Inventory failed. Payment refunded and order cancelled.'
+      'Payment declined. Stock released and order cancelled.'
     );
   });
 
@@ -105,7 +106,7 @@ describe('SagaFlow', () => {
       'data-status',
       'failed'
     );
-    expect(screen.getByRole('status')).toHaveTextContent('Inventory failed.');
+    expect(screen.getByRole('status')).toHaveTextContent('Payment declined.');
     matchMedia.mockRestore();
   });
 
@@ -155,7 +156,7 @@ describe('SagaFlow', () => {
     expect(shipping).toHaveAttribute('data-status', 'skipped');
     expect(shipping).toHaveTextContent('Skipped');
     advance(FAILED_HOLD_TICKS - 1);
-    expect(screen.getByRole('status')).toHaveTextContent('Inventory failed.');
+    expect(screen.getByRole('status')).toHaveTextContent('Payment declined.');
   });
 
   it('can be paused and resumed, and says which', () => {

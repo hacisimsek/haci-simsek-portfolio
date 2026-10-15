@@ -39,7 +39,15 @@ export default async function Home({
       <Hero />
       <About />
       <FeaturedProjects
-        repos={repos.ok ? selectFeatured(repos.data, featuredProjects) : []}
+        repos={
+          repos.ok
+            ? selectFeatured(
+                repos.data,
+                featuredProjects,
+                featuredProjects.length
+              )
+            : []
+        }
       />
       <Career />
       <Skills />
