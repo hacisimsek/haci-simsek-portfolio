@@ -93,7 +93,7 @@ describe('Career typography', () => {
   it('sets every role summary at 15px', () => {
     render(<Career />);
     for (const role of screen.getAllByRole('article'))
-      expect(role.querySelector('[class*="text-[0.9375rem]"]')).not.toBeNull();
+      expect(role.querySelector('p[class*="text-[0.9375rem]"]')).not.toBeNull();
   });
 
   it('does not repeat the company period on a single-role company', () => {

@@ -237,8 +237,8 @@ test.describe('one accent for structure', () => {
           accent: probe('var(--accent)'),
           ring: probe('var(--ring)'),
           dots,
-          fillGradient: fill ? getComputedStyle(fill).backgroundImage : 'none',
-          barGradient: bar ? getComputedStyle(bar).backgroundImage : 'none',
+          fillGradient: fill && getComputedStyle(fill).backgroundImage,
+          barGradient: bar && getComputedStyle(bar).backgroundImage,
         };
       });
       expect(result.dots.length).toBeGreaterThan(3);
