@@ -71,6 +71,7 @@ describe('CommandPalette', () => {
     await user.click(screen.getByRole('button', { name: /Command palette/ }));
     await user.click(await screen.findByRole('option', { name: 'Copy email' }));
 
+    expect(openMailto).toHaveBeenCalledTimes(1);
     expect(openMailto).toHaveBeenCalledWith(profile.email);
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
   });

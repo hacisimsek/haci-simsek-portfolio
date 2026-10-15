@@ -26,6 +26,7 @@ describe('featured projects', () => {
     const line = featuredProjects.find(
       (project) => project.name === 'ecommerce-microservices'
     )!.summary.tr;
+    expect(line.match(/serbest bırakılıyor/g)).toHaveLength(2);
     expect(line).not.toMatch(/stok bırakılıyor/);
   });
 });
