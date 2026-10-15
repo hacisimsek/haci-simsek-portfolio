@@ -65,19 +65,22 @@ export default function Career() {
                         {t(role.title, locale)}
                       </h3>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        <span>
-                          {formatPeriod(role.start, role.end, locale)}
-                        </span>
-                        {role.team ? (
-                          <span>
-                            {SEPARATOR}
-                            {t(role.team, locale)}
-                          </span>
-                        ) : null}
-                        <span>
-                          {SEPARATOR}
-                          {t(role.focus, locale)}
-                        </span>
+                        {[
+                          // A single role's period is the company's, already
+                          // shown beside the timeline.
+                          group.roles.length > 1
+                            ? formatPeriod(role.start, role.end, locale)
+                            : null,
+                          role.team ? t(role.team, locale) : null,
+                          t(role.focus, locale),
+                        ]
+                          .filter((part): part is string => Boolean(part))
+                          .map((part, index) => (
+                            <span key={part}>
+                              {index > 0 ? SEPARATOR : null}
+                              {part}
+                            </span>
+                          ))}
                       </p>
                       {role.kind !== 'employment' ? (
                         <p className="mt-1 text-sm font-medium text-accent">
@@ -85,7 +88,7 @@ export default function Career() {
                         </p>
                       ) : null}
 
-                      <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                      <p className="mt-4 text-[0.9375rem] leading-7 text-muted-foreground">
                         {t(role.summary, locale)}
                       </p>
 
@@ -125,7 +128,7 @@ function Highlights({ items }: { items: string[] }) {
       {items.map((bullet) => (
         <li
           key={bullet}
-          className="relative pl-5 text-sm leading-7 text-muted-foreground before:absolute before:top-3 before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-accent"
+          className="relative pl-5 text-[0.9375rem] leading-7 text-muted-foreground before:absolute before:top-3 before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-accent"
         >
           <RichText text={bullet} />
         </li>

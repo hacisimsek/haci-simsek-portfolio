@@ -75,6 +75,34 @@ describe('Career layout', () => {
   });
 });
 
+describe('Career typography', () => {
+  it('names the Nuevo clients in the summary, not only in the fold', () => {
+    for (const locale of ['en', 'tr'] as const) {
+      const { unmount } = render(<Career />, { locale });
+      const nuevo = screen.getByRole('listitem', {
+        name: 'Nuevo Software House',
+      });
+      const summary = [...nuevo.querySelectorAll('p')].find(
+        (p) => !p.closest('details') && /Türk Petrol/.test(p.textContent ?? '')
+      );
+      expect(summary?.textContent).toMatch(/AvivaSA.*Kordsa.*Tavuk Dünyası/);
+      unmount();
+    }
+  });
+
+  it('sets every role summary at 15px', () => {
+    render(<Career />);
+    for (const role of screen.getAllByRole('article'))
+      expect(role.querySelector('[class*="text-[0.9375rem]"]')).not.toBeNull();
+  });
+
+  it('does not repeat the company period on a single-role company', () => {
+    render(<Career />);
+    const telenity = screen.getByRole('listitem', { name: 'Telenity' });
+    expect(telenity.textContent!.split('Jun 2021 - Aug 2021')).toHaveLength(2);
+  });
+});
+
 describe('Career timeline', () => {
   it('groups the Sisal promotion and labels non-employment roles', () => {
     render(<Career />);
