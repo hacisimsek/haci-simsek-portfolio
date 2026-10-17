@@ -33,7 +33,6 @@ describe('experience', () => {
     const text = JSON.stringify(experience);
     for (const term of [
       'AreaPrivata',
-      'Orion',
       'RabbitMQ',
       'Redis Sentinel',
       'OSGi',
@@ -42,9 +41,27 @@ describe('experience', () => {
       'Lottery and Terminals',
       'AvivaSA',
       'Tavuk Dünyası',
+      'VAS and Messaging',
+      'Java 21',
+      'SOAP',
+      'Argo CD',
+      'NestJS',
+      'MongoDB',
     ]) {
       expect(text).toContain(term);
     }
+  });
+
+  it('drops the Orion module', () => {
+    expect(JSON.stringify({ profile, experience })).not.toMatch(/Orion/);
+  });
+
+  it('leads the current role with the Java 21 migration', () => {
+    const [senior] = experience;
+    expect(senior.highlights.en[0]).toMatch(
+      /Spring Boot 2\.x.*3\.x.*Java 11.*21.*31 modules.*\*\*Java 21\*\*/
+    );
+    expect(senior.highlights.tr[0]).toMatch(/31 modül.*\*\*Java 21\*\*/);
   });
 });
 
@@ -60,12 +77,30 @@ describe('skills', () => {
   it('includes the confirmed tools exactly once', () => {
     const all = skills.flatMap((c) => c.items.en);
     for (const tool of [
-      'Java',
+      'Java 11/17/21',
       'Spring Boot',
+      'Spring MVC',
+      'Spring Data JPA',
+      'Spring Security',
+      'Hibernate',
+      'JDBC',
+      'TypeScript',
+      'NestJS',
+      'SOAP',
+      'Idempotency',
+      'MongoDB',
+      'Jenkins',
+      'GitLab CI/CD',
+      'SonarQube',
+      'JUnit 5',
+      'Mockito',
+      'TDD',
+      'Splunk',
+      'Dynatrace',
       'RabbitMQ',
       'Redis',
       'Kubernetes',
-      'ArgoCD',
+      'Argo CD',
       'Docker',
       'Kafka',
       'PostgreSQL',
@@ -78,6 +113,29 @@ describe('skills', () => {
       expect(all).toContain(tool);
     }
     expect(new Set(all).size).toBe(all.length);
+  });
+});
+
+describe('profile', () => {
+  it('leads with the CV title and keeps the Sisal title as the role', () => {
+    expect(profile.title).toEqual({
+      en: 'Java Backend Developer',
+      tr: 'Java Backend Geliştirici',
+    });
+    expect(profile.role.en).toBe('Software Development Senior Specialist');
+    expect(profile.headline.en).toMatch(/^Java backend developer/);
+  });
+
+  it('records the certification and languages from the CV', () => {
+    expect(profile.certifications.en).toEqual([
+      'Advanced Java Programming (TDD)',
+    ]);
+    expect(profile.languages.en).toEqual(['Turkish (native)', 'English (B2)']);
+    expect(profile.languages.tr).toEqual(['Türkçe (anadil)', 'İngilizce (B2)']);
+  });
+
+  it('never publishes a phone number', () => {
+    expect(JSON.stringify(profile)).not.toMatch(/\+?\d[\d ()-]{8,}\d/);
   });
 });
 
@@ -103,8 +161,8 @@ describe('accuracy guards', () => {
 
   it('lists only skills backed by the CV or confirmed by the owner', () => {
     const all = skills.flatMap((c) => c.items.en);
-    expect(all).not.toContain('TypeScript');
     expect(all).not.toContain('API gateway');
+    expect(all).not.toContain('ArgoCD');
   });
 });
 

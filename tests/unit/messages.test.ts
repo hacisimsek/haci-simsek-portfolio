@@ -44,7 +44,7 @@ describe('Turkish metadata', () => {
     expect(tr.Metadata.description.startsWith('{name} portfolyosu')).toBe(
       false
     );
-    expect(tr.Metadata.description).toMatch(/mühendisinin portfolyosu\.$/);
+    expect(tr.Metadata.description).toMatch(/geliştiricinin portfolyosu\.$/);
   });
 
   it('keep "eyebrow" only for the hero line the OG image prints', () => {

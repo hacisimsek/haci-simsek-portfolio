@@ -24,7 +24,7 @@ describe('Career', () => {
   it('renders highlighted technologies in bold', () => {
     render(<Career />);
     expect(
-      screen.getByText('Orion', { selector: 'strong' })
+      screen.getAllByText('Java 21', { selector: 'strong' })[0]
     ).toBeInTheDocument();
   });
 });
@@ -118,12 +118,34 @@ describe('Education', () => {
     expect(screen.getByText('Major')).toBeInTheDocument();
     expect(screen.getByText('Minor')).toBeInTheDocument();
   });
+
+  it('lists the certification and languages after the degrees', () => {
+    render(<Education />);
+    const certification = screen.getByText('Certification', { selector: 'dt' });
+    expect(certification.nextElementSibling).toHaveTextContent(
+      'Advanced Java Programming (TDD)'
+    );
+    const languages = screen.getByText('Languages', { selector: 'dt' });
+    expect(languages.nextElementSibling).toHaveTextContent(
+      'Turkish (native) · English (B2)'
+    );
+    render(<Education />, { locale: 'tr' });
+    expect(
+      screen.getByText('Sertifika', { selector: 'dt' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Diller', { selector: 'dt' }).nextElementSibling
+    ).toHaveTextContent('Türkçe (anadil) · İngilizce (B2)');
+  });
 });
 
 describe('Skills', () => {
   it('groups the tools by category', () => {
     render(<Skills />);
-    const group = screen.getByText('Messaging and data').closest('div')!;
+    const group = screen.getByText('Messaging and databases').closest('div')!;
     expect(within(group).getByText('Kafka')).toBeInTheDocument();
+    expect(within(group).getByText('MongoDB')).toBeInTheDocument();
+    const testing = screen.getByText('Testing and quality').closest('div')!;
+    expect(within(testing).getByText('JUnit 5')).toBeInTheDocument();
   });
 });
