@@ -41,13 +41,17 @@ export default function About() {
         </ul>
       </div>
 
-      <Image
-        src={portrait}
-        alt={profile.name}
-        placeholder="blur"
-        sizes="(min-width: 1024px) 320px, 100vw"
-        className="aspect-4/5 w-full max-w-sm rounded-[1.4rem] object-cover lg:max-w-none"
-      />
+      {/* The photo is a wide travel shot; zoom in on the person so the face
+          reads at portrait size. */}
+      <div className="aspect-4/5 w-full max-w-sm overflow-hidden rounded-[1.4rem] lg:max-w-none">
+        <Image
+          src={portrait}
+          alt={profile.name}
+          placeholder="blur"
+          sizes="(min-width: 1024px) 640px, 200vw"
+          className="h-full w-full origin-[50%_95%] scale-200 object-cover"
+        />
+      </div>
     </section>
   );
 }

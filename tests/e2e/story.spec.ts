@@ -215,3 +215,23 @@ test.describe('the still terminal on narrow screens', () => {
     });
   }
 });
+
+test.describe('the first screen', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  for (const viewport of [
+    { width: 1280, height: 720 },
+    { width: 1366, height: 768 },
+    { width: 1440, height: 900 },
+  ]) {
+    test(`shows the whole story headline at ${viewport.width}×${viewport.height}`, async ({
+      page,
+    }, testInfo) => {
+      test.skip(testInfo.project.name !== 'desktop', 'Desktop only.');
+      await page.setViewportSize(viewport);
+      await page.goto('/');
+      const box = (await page.locator('#story-title').boundingBox())!;
+      expect(box.y + box.height).toBeLessThanOrEqual(viewport.height);
+    });
+  }
+});

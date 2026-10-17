@@ -83,12 +83,12 @@ export const experience: Role[] = [
     },
     highlights: {
       en: [
-        'Built business-facing applications with **React.js** and **SharePoint** for clients including **Türk Petrol**, **AvivaSA**, **Kordsa** and **Tavuk Dünyası**.',
+        'Built business-facing applications with React.js and SharePoint for clients including **Türk Petrol**, **AvivaSA**, **Kordsa** and **Tavuk Dünyası**.',
         'Balanced maintainability, user experience and client-specific workflows across enterprise implementations.',
         'Supported the design, implementation and release of tailored solutions with product and delivery teams.',
       ],
       tr: [
-        '**Türk Petrol**, **AvivaSA**, **Kordsa** ve **Tavuk Dünyası** gibi müşteriler için **React.js** ve **SharePoint** ile iş uygulamaları geliştirdim.',
+        '**Türk Petrol**, **AvivaSA**, **Kordsa** ve **Tavuk Dünyası** gibi müşteriler için React.js ve SharePoint ile iş uygulamaları geliştirdim.',
         'Kurumsal projelerde sürdürülebilirlik, kullanıcı deneyimi ve müşteriye özel iş akışları arasında denge kurdum.',
         'Ürün ve teslimat ekipleriyle birlikte müşteriye özel çözümlerin tasarımına, geliştirilmesine ve yayına alınmasına destek verdim.',
       ],

@@ -395,7 +395,7 @@ section[id] {
    fit together on short laptop screens too. */
 .story-track {
   position: relative;
-  height: 180svh;
+  height: 140svh;
 }
 
 /* Sticky, and the full window width, so the light fades out on its own
@@ -430,7 +430,7 @@ section[id] {
 
 .story-headline {
   position: absolute;
-  top: 7rem;
+  top: 6.25rem;
   right: 0;
   left: 0;
   padding-inline: 1rem;
@@ -460,11 +460,6 @@ section[id] {
     0 0 90px -20px
       color-mix(in oklab, var(--accent) calc(var(--glow) * 55%), transparent),
     0 60px 120px -50px var(--color-terminal);
-}
-
-/* On a light page a dimmed dark window turns muddy grey, so it dims less. */
-:root:not(.dark) .story-window {
-  opacity: calc(0.45 + var(--window) * 0.55);
 }
 
 /* A sheen that slides across the glass as the window turns. */

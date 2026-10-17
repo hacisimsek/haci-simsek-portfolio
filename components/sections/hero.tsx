@@ -13,13 +13,13 @@ export default function Hero() {
   const letters = splitGraphemes(profile.name);
 
   return (
-    <section id="top" className="relative grid gap-8 pt-4 pb-4 lg:pt-16">
+    <section id="top" className="relative grid gap-8 pt-4 pb-4 lg:pt-8">
       <div className="relative min-w-0">
         <h1 className="max-w-5xl page-title">
           <span className="sr-only">{profile.name}. </span>
           <span
             aria-hidden
-            className="block pb-[0.12em] text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.95] font-bold tracking-tighter lg:text-[clamp(4rem,7.5vw,7.25rem)]"
+            className="block pb-[0.12em] text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.95] font-bold tracking-tighter lg:text-[clamp(4rem,min(7.5vw,11svh),7.25rem)]"
           >
             {letters.map((letter, index) => (
               <span
@@ -31,12 +31,12 @@ export default function Hero() {
               </span>
             ))}
           </span>
-          <span className="mt-6 block max-w-3xl text-2xl leading-snug font-medium text-muted-foreground sm:text-3xl">
+          <span className="mt-5 block max-w-4xl text-2xl leading-snug font-medium text-muted-foreground sm:text-3xl [@media(max-height:52rem)]:lg:text-2xl">
             {t(profile.headline, locale)}
           </span>
         </h1>
 
-        <p className="mt-8 text-sm text-muted-foreground sm:text-base">
+        <p className="mt-6 text-sm text-muted-foreground sm:text-base">
           {msg('facts', {
             years: careerYears(profile.careerStart),
             role: t(profile.role, locale),
@@ -45,7 +45,7 @@ export default function Hero() {
           })}
         </p>
 
-        <div className="mt-10 flex flex-wrap items-center gap-3">
+        <div className="mt-8 flex flex-wrap items-center gap-3">
           <Button asChild size="lg" className="rounded-full px-7">
             <Link href="/projects">
               {msg('viewProjects')}

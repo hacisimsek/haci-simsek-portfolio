@@ -46,8 +46,8 @@ describe('track', () => {
 describe('terminal content', () => {
   it('runs the proof of concept, then moves every module to Java 21', () => {
     const text = LINES.map((line) => line.text).join('\n');
-    expect(text).toMatch(/Spring Boot 2\.x → 3\.x\s+Java 11 → 21/);
-    expect(text).toMatch(/proof of concept/);
+    expect(text).toMatch(/Spring\sBoot\s2\.x\s→\s3\.x\s+Java\s11\s→\s21/);
+    expect(text).toMatch(/proof\sof\sconcept/);
     expect(text).toMatch(/migrate --all --to java21/);
   });
 
@@ -122,6 +122,17 @@ describe('storyAt', () => {
     expect(storyAt(firstLine).headline).toBeGreaterThan(0.3);
   });
 
+  it('counts only the module lines already typed, never ahead of them', () => {
+    const groups = TOTAL_LINES - BAR_LINE;
+    for (let p = 0; p <= 1; p += 0.003) {
+      const frame = storyAt(p);
+      const done = Math.floor(
+        Math.min(groups, Math.max(0, frame.lines - BAR_LINE))
+      );
+      expect(frame.migrated).toBeCloseTo((MODULES * done) / groups);
+    }
+  });
+
   it('counts modules, then settles on the honest 30+', () => {
     expect(counterText(0)).toBe('0');
     expect(counterText(14.6)).toBe('14');
@@ -131,7 +142,9 @@ describe('storyAt', () => {
   it('clears the headline early and dims the window for the numbers', () => {
     expect(storyAt(0.2).headline).toBe(0);
     expect(storyAt(0.5).window).toBe(1);
-    expect(storyAt(1).window).toBeLessThan(0.5);
+    expect(storyAt(1).window).toBeLessThan(1);
+    // Dimmed, not gone: the terminal stays readable behind the numbers.
+    expect(storyAt(1).window).toBeGreaterThanOrEqual(0.55);
   });
 
   it('moves continuously: a small scroll never jumps the window', () => {
