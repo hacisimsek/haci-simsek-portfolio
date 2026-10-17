@@ -3,18 +3,19 @@ import type { Profile } from './types';
 export const profile: Profile = {
   name: 'Hacı Şimşek',
   asciiName: 'Haci Simsek',
+  title: { en: 'Java Backend Developer', tr: 'Java Backend Geliştirici' },
   role: {
     en: 'Software Development Senior Specialist',
     tr: 'Kıdemli Yazılım Geliştirme Uzmanı',
   },
   currentCompany: 'Sisal',
   headline: {
-    en: 'Software engineer building backend and distributed systems for high-traffic environments.',
-    tr: 'Yüksek trafikli ortamlar için backend ve dağıtık sistemler geliştiren yazılım mühendisi.',
+    en: 'Java backend developer building Spring Boot microservices and distributed systems for high-traffic environments.',
+    tr: 'Yüksek trafikli ortamlar için Spring Boot mikroservisleri ve dağıtık sistemler geliştiren Java backend geliştirici.',
   },
   intro: {
-    en: 'Software engineer with {years} years of experience building backend and full-stack solutions across regulated, high-traffic environments. Strong in Java, Spring Boot, distributed systems, CI/CD, and cloud-native delivery, with additional frontend experience in React and Next.js.',
-    tr: 'Regülasyona tabi, yüksek trafikli ortamlarda backend ve full-stack çözümler geliştirme konusunda {years} yıllık deneyime sahip yazılım mühendisi. Java, Spring Boot, dağıtık sistemler, CI/CD ve cloud-native teslimat konularında güçlü; React ve Next.js ile frontend deneyimi de var.',
+    en: 'Java backend developer with {years} years of experience building Spring Boot microservices in regulated, high-traffic environments: REST and SOAP APIs, JPA/Hibernate, Kafka and RabbitMQ, SQL, and delivery through CI/CD, Docker and Kubernetes. I test with JUnit and Mockito, review code, troubleshoot production and tune performance, and also build TypeScript/NestJS services on MongoDB and React frontends.',
+    tr: 'Regülasyona tabi, yüksek trafikli ortamlarda Spring Boot mikroservisleri geliştiren, {years} yıllık deneyime sahip Java backend geliştirici: REST ve SOAP API’ler, JPA/Hibernate, Kafka ve RabbitMQ, SQL; CI/CD, Docker ve Kubernetes ile teslimat. JUnit ve Mockito ile test yazıyor, code review yapıyor, production sorunlarını çözüp performansı iyileştiriyorum; MongoDB üzerinde TypeScript/NestJS servisleri ve React arayüzleri de geliştiriyorum.',
   },
   bio: {
     en: [
@@ -36,19 +37,29 @@ export const profile: Profile = {
   expertise: {
     en: [
       'Java & Spring Boot',
-      'Distributed systems',
-      'CI/CD and observability',
-      'Cloud-native architecture',
+      'Microservices & event-driven design',
+      'Kafka & RabbitMQ',
+      'CI/CD & Kubernetes',
+      'Observability & performance',
     ],
     tr: [
       'Java ve Spring Boot',
-      'Dağıtık sistemler',
-      'CI/CD ve gözlemlenebilirlik',
-      'Cloud-native mimari',
+      'Mikroservisler ve event-driven tasarım',
+      'Kafka ve RabbitMQ',
+      'CI/CD ve Kubernetes',
+      'Gözlemlenebilirlik ve performans',
     ],
   },
   environment: {
     en: 'Regulated, high-traffic systems',
     tr: 'Regülasyona tabi, yüksek trafikli sistemler',
+  },
+  certifications: {
+    en: ['Advanced Java Programming (TDD)'],
+    tr: ['Advanced Java Programming (TDD)'],
+  },
+  languages: {
+    en: ['Turkish (native)', 'English (B2)'],
+    tr: ['Türkçe (anadil)', 'İngilizce (B2)'],
   },
 };

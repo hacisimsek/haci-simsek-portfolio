@@ -17,7 +17,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { profile } from '@/content';
+import { profile, t } from '@/content';
 import { brand } from '@/lib/og/brand';
 import { SITE_URL } from '@/lib/seo';
 import { pageMetadata } from '@/lib/page-metadata';
@@ -60,7 +60,7 @@ export async function generateMetadata({
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      default: profile.name,
+      default: `${profile.name} · ${t(profile.title, locale)}`,
       template: `%s | ${profile.name}`,
     },
     ...(await pageMetadata(locale, '/')),

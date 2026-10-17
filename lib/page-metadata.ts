@@ -25,7 +25,7 @@ export async function pageMetadata(
   const pageTitle = titleKey ? msg(titleKey) : undefined;
   const socialTitle = pageTitle
     ? `${pageTitle} | ${profile.name}`
-    : `${profile.name} · ${t(profile.role, locale)}`;
+    : `${profile.name} · ${t(profile.title, locale)}`;
   const alternates = alternatesFor(path, locale);
   // A page-level openGraph block drops the file-based image from
   // app/[locale]/opengraph-image, so name it explicitly.
@@ -34,7 +34,7 @@ export async function pageMetadata(
       url: `/${locale}/opengraph-image/card`,
       width: 1200,
       height: 630,
-      alt: `${profile.name} · ${t(profile.role, locale)}`,
+      alt: `${profile.name} · ${t(profile.title, locale)}`,
     },
   ];
 

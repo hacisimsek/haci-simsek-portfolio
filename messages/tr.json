@@ -1,6 +1,6 @@
 {
   "Metadata": {
-    "description": "{name}: regülasyona tabi, yüksek trafikli ortamlarda Java, Spring Boot, dağıtık sistemler ve cloud-native çözümler geliştiren, {years} yıllık deneyime sahip yazılım mühendisinin portfolyosu.",
+    "description": "{name}: regülasyona tabi, yüksek trafikli ortamlarda Spring Boot mikroservisleri ve event-driven, dağıtık sistemler geliştiren, {years} yıllık deneyime sahip Java backend geliştiricinin portfolyosu.",
     "projectsTitle": "Projeler",
     "articlesTitle": "Yazılar",
     "contactTitle": "İletişim"
@@ -53,7 +53,7 @@
     "openTerminal": "Terminali aç"
   },
   "Hero": {
-    "eyebrow": "Yazılım mühendisi · İstanbul",
+    "eyebrow": "Backend ve dağıtık sistemler · İstanbul",
     "facts": "{years}+ yıl deneyim\u00a0· {company} bünyesinde {role}\u00a0· {city}",
     "viewProjects": "Projeleri gör",
     "startConversation": "Bir konuşma başlat",
@@ -102,6 +102,14 @@
     },
     "outcome": "Ödeme reddedildi. Stok serbest bırakıldı, sipariş iptal edildi."
   },
+  "Story": {
+    "title": "Her sistem tek bir komutla başlar.",
+    "lead": "Sonra ayakta kalması gerekir.",
+    "summary": "Bir terminal Java 21 üzerinde bir sipariş servisini başlatıyor. Olaylar Kafka üzerinden akıyor, bir ödeme reddediliyor ve saga önceki adımları geri alarak durumu tutarlı bırakıyor. Ardından 31 modül Java 21’e taşınıyor.",
+    "outro": "Ayakta tutmak benim işim.",
+    "years": "yıl backend geliştirme",
+    "modules": "modül Java 21’e taşındı"
+  },
   "About": {
     "title": "Ayakta kalması gereken sistemler için backend mühendisi"
   },
@@ -121,7 +129,9 @@
   },
   "Education": {
     "title": "Donanımdan yazılıma uzanan mühendislik temeli",
-    "copy": "Yazılım sistemleri düşüncesini elektrik-elektronik temelleriyle birleştiren bir geçmişim var; bu da mimariyi, kısıtları ve güvenilirliği nasıl ele aldığımı hâlâ etkiliyor."
+    "copy": "Yazılım sistemleri düşüncesini elektrik-elektronik temelleriyle birleştiren bir geçmişim var; bu da mimariyi, kısıtları ve güvenilirliği nasıl ele aldığımı hâlâ etkiliyor.",
+    "certification": "Sertifika",
+    "languages": "Diller"
   },
   "Home": {
     "projectsTitle": "Öne çıkan projeler",

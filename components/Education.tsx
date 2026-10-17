@@ -1,5 +1,5 @@
 import { useLocale, useTranslations } from 'next-intl';
-import { education, t } from '@/content';
+import { education, profile, t } from '@/content';
 import { formatPeriod } from '@/lib/dates';
 import { SEPARATOR } from '@/lib/utils';
 
@@ -47,6 +47,25 @@ export default function Education() {
           </li>
         ))}
       </ol>
+
+      <dl className="divide-y divide-border/70 border-b border-border/70 text-sm">
+        {(
+          [
+            ['certification', profile.certifications],
+            ['languages', profile.languages],
+          ] as const
+        ).map(([key, items]) => (
+          <div
+            key={key}
+            className="grid gap-1 py-4 sm:grid-cols-[14rem_minmax(0,1fr)] sm:gap-8"
+          >
+            <dt className="font-medium text-accent">{msg(key)}</dt>
+            <dd className="text-muted-foreground">
+              {t(items, locale).join(SEPARATOR)}
+            </dd>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 }

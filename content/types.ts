@@ -58,6 +58,9 @@ export interface Social {
 export interface Profile {
   name: string;
   asciiName: string;
+  /** The headline title, from the CV. */
+  title: L10n;
+  /** The official title at the current company. */
   role: L10n;
   currentCompany: string;
   headline: L10n;
@@ -69,6 +72,8 @@ export interface Profile {
   careerStart: YearMonth;
   expertise: L10n<string[]>;
   environment: L10n;
+  certifications: L10n<string[]>;
+  languages: L10n<string[]>;
 }
 
 export interface FeaturedProject {

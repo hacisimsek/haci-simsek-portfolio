@@ -1,7 +1,7 @@
 import { expect, test } from './fixtures';
 
 const pages = [
-  { path: '/', heading: /Software engineer building backend/ },
+  { path: '/', heading: /Java backend developer building Spring Boot/ },
   { path: '/projects', heading: /Projects worth a look/ },
   { path: '/articles', heading: /Writing where implementation detail/ },
   { path: '/contact', heading: /^Let.s talk$/ },

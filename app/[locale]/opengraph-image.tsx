@@ -23,7 +23,7 @@ export function generateImageMetadata({
       id: 'card',
       size,
       contentType: 'image/png',
-      alt: `${profile.name} · ${t(profile.role, locale)}`,
+      alt: `${profile.name} · ${t(profile.title, locale)}`,
     },
   ];
 }

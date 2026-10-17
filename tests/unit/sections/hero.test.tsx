@@ -16,7 +16,7 @@ describe('Hero', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /Software engineer building backend/,
+        name: /Java backend developer building Spring Boot microservices/,
       })
     ).toBeInTheDocument();
   });

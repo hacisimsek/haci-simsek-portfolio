@@ -1,6 +1,6 @@
 {
   "Metadata": {
-    "description": "Portfolio of {name}, a software engineer with {years} years of experience building Java, Spring Boot, distributed systems, and cloud-native solutions in regulated, high-traffic environments.",
+    "description": "Portfolio of {name}, a Java backend developer with {years} years of experience building Spring Boot microservices and event-driven, distributed systems in regulated, high-traffic environments.",
     "projectsTitle": "Projects",
     "articlesTitle": "Articles",
     "contactTitle": "Contact"
@@ -53,7 +53,7 @@
     "openTerminal": "Open terminal"
   },
   "Hero": {
-    "eyebrow": "Software engineer · Istanbul",
+    "eyebrow": "Backend & distributed systems · Istanbul",
     "facts": "{years}+ years of experience\u00a0· {role} at {company}\u00a0· {city}",
     "viewProjects": "View Projects",
     "startConversation": "Start a conversation",
@@ -102,6 +102,14 @@
     },
     "outcome": "Payment declined. Stock released and order cancelled."
   },
+  "Story": {
+    "title": "Every system starts with one command.",
+    "lead": "Then it has to stay up.",
+    "summary": "A terminal starts an order service on Java 21. Events flow over Kafka, a payment is declined and the saga undoes the earlier steps, leaving the state consistent. Then 31 modules are migrated to Java 21.",
+    "outro": "Keeping it up is my job.",
+    "years": "years building backends",
+    "modules": "modules moved to Java 21"
+  },
   "About": {
     "title": "Backend engineer for systems that have to stay up"
   },
@@ -121,7 +129,9 @@
   },
   "Education": {
     "title": "Engineering foundation across hardware and software",
-    "copy": "My background combines software systems thinking with electrical and electronics fundamentals, which still influences how I reason about architecture, constraints, and reliability."
+    "copy": "My background combines software systems thinking with electrical and electronics fundamentals, which still influences how I reason about architecture, constraints, and reliability.",
+    "certification": "Certification",
+    "languages": "Languages"
   },
   "Home": {
     "projectsTitle": "Featured projects",

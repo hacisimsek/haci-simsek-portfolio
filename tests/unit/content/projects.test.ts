@@ -41,12 +41,18 @@ describe('career glossary', () => {
       /Sisal’in müşteri hesap alanı AreaPrivata/
     );
     const [senior, engineer] = experience;
-    expect(senior.highlights.en[0]).toMatch(/Sisal’s customer account area/);
-    expect(senior.highlights.tr[0]).toMatch(/Sisal’in müşteri hesap alanı/);
-    expect(engineer.highlights.en[0]).toMatch(
+    const first = (lines: string[], term: string) =>
+      lines.find((line) => line.includes(term)) ?? '';
+    expect(first(senior.highlights.en, 'AreaPrivata')).toMatch(
+      /Sisal’s customer account area/
+    );
+    expect(first(senior.highlights.tr, 'AreaPrivata')).toMatch(
+      /Sisal’in müşteri hesap alanı/
+    );
+    expect(first(engineer.highlights.en, 'OSGi')).toMatch(
       /\*\*OSGi\*\* \(a modular Java platform\)/
     );
-    expect(engineer.highlights.tr[0]).toMatch(
+    expect(first(engineer.highlights.tr, 'OSGi')).toMatch(
       /\*\*OSGi\*\* \(modüler Java platformu\)/
     );
   });

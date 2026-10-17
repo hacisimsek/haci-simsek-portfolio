@@ -6,7 +6,7 @@ test('the Turkish home page is translated', async ({ page }) => {
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: /Yüksek trafikli ortamlar için backend/,
+      name: /Yüksek trafikli ortamlar için Spring Boot/,
     })
   ).toBeVisible();
 });
