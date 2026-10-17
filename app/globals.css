@@ -2,10 +2,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Where the scroll story is drawn; lib/story.ts STORY_MEDIA must match
-   (tests/unit/story-media-sync.test.ts checks it). */
-@custom-variant story (@media (min-width: 64rem) and (min-height: 40rem) and (pointer: fine));
-
 @theme inline {
   /* The terminal is always dark, whatever the site theme. Keep in sync with
      lib/og/brand.ts (tests/unit/palette-sync.test.ts checks it). */
@@ -440,7 +436,6 @@ section[id] {
   padding-inline: 1rem;
   text-align: center;
   opacity: var(--headline);
-  transform: translateY(calc((1 - var(--headline)) * -2.5rem));
 }
 
 .story-camera {
@@ -457,6 +452,7 @@ section[id] {
   overflow: hidden;
   border-radius: 1rem;
   transform-origin: 50% 70%;
+  opacity: var(--window);
   transform: translateY(var(--lift)) scale(var(--scale)) rotateX(var(--rx))
     rotateY(var(--ry)) rotateZ(var(--rz));
   box-shadow:
@@ -562,9 +558,12 @@ section[id] {
   transform: translateY(calc((1 - var(--outro)) * 2.5rem));
 }
 
-/* Reduced motion: no pinned scene. The headline, the finished terminal and
-   the numbers sit in the page like any other section. */
-@media (prefers-reduced-motion: reduce) {
+/* Still layout: with reduced motion, and wherever the scroll story does not
+   play (lib/story.ts STORY_MEDIA, kept in step by
+   tests/unit/story-media-sync.test.ts). No pinned scene: the headline, the
+   finished terminal and the numbers sit in the page like any other section. */
+@media (prefers-reduced-motion: reduce),
+  not all and (min-width: 64rem) and (min-height: 40rem) and (pointer: fine) {
   .story-track {
     height: auto;
   }
@@ -576,7 +575,7 @@ section[id] {
     align-items: center;
     gap: 3rem;
     height: auto;
-    padding-block: 2rem;
+    padding: 2rem 1rem;
   }
 
   .story-headline,
@@ -596,6 +595,15 @@ section[id] {
     transform: none;
   }
 
+  .story-window {
+    width: min(38rem, 100%);
+  }
+
+  .story-body {
+    font-size: clamp(0.625rem, 2.6vw, 0.875rem);
+  }
+
+  .story-window,
   .story-line,
   .story-done {
     opacity: 1;

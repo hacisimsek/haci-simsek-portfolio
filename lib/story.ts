@@ -5,8 +5,8 @@
 // and never moves on its own. With reduced motion the CSS lays the same
 // content out statically instead.
 
-/** Where the story is drawn: wide enough screens with a fine pointer. Shorter
-    or narrower screens skip it; the Career entry carries the same facts. */
+/** Where the story plays: wide and tall enough screens with a fine pointer.
+    Everywhere else the CSS shows the same content as a still section. */
 export const STORY_MEDIA =
   '(min-width: 64rem) and (min-height: 40rem) and (pointer: fine)';
 
@@ -19,7 +19,7 @@ export type Tone = 'prompt' | 'dim' | 'text' | 'ok';
 export const LINES: readonly { text: string; tone: Tone }[] = [
   { text: '$ git switch -c poc/spring-boot-3', tone: 'prompt' },
   { text: '  Spring Boot 2.x → 3.x      Java 11 → 21', tone: 'dim' },
-  { text: '  javax.* → jakarta.*        done', tone: 'text' },
+  { text: '  javax.* → jakarta.*        done', tone: 'ok' },
   { text: '  build ok\u00a0· tests green     proof of concept ✓', tone: 'ok' },
   { text: '$ ./migrate --all --to java21', tone: 'prompt' },
   { text: '  auth                       ✓ Java 21', tone: 'ok' },
@@ -30,8 +30,14 @@ export const LINES: readonly { text: string; tone: Tone }[] = [
   { text: '  content                    ✓ Java 21', tone: 'ok' },
 ];
 
-/** Every printed line plus the migration bar. */
-export const TOTAL_LINES = LINES.length + 1;
+/** Lines the terminal types, one after another. */
+export const TOTAL_LINES = LINES.length;
+
+/** The migration bar shows up with the first module line and fills as the
+    module lines are typed. */
+export const BAR_LINE = LINES.findIndex((line) =>
+  line.text.includes('✓ Java 21')
+);
 
 /** Modules moved to Java 21: the bar fills to this count, and the copy
     says "MODULES+" because the exact number is not given. */
@@ -96,19 +102,28 @@ const GLOW: Key[] = [
   [0.8, 1],
   [1, 0.45],
 ];
+// Gone before the window, still turning, reaches the header.
 const HEADLINE: Key[] = [
-  [0.04, 1],
-  [0.18, 0],
+  [0.02, 1],
+  [0.12, 0],
+];
+// The terminal steps back and dims, so the numbers lead at the end.
+const WINDOW: Key[] = [
+  [0.82, 1],
+  [0.94, 0.35],
 ];
 const OUTRO: Key[] = [
   [0.84, 0],
   [0.95, 1],
 ];
 
-// Lines type out while the window turns and the camera is in, then the
-// migration bar fills.
+// Lines type out while the window turns and the camera is in; the bar fills
+// alongside the module lines.
 const TYPING = { from: 0.12, to: 0.66 };
-const MIGRATION = { from: 0.66, to: 0.8 };
+const MIGRATION = {
+  from: TYPING.from + (BAR_LINE / TOTAL_LINES) * (TYPING.to - TYPING.from),
+  to: TYPING.to,
+};
 
 export interface StoryFrame {
   /** 0 arrive, 1 inside, 2 numbers. */
@@ -121,6 +136,8 @@ export interface StoryFrame {
   scale: number;
   glow: number;
   headline: number;
+  /** The window's opacity. */
+  window: number;
   outro: number;
   /** Lines typed so far; the fraction is the line being typed. */
   lines: number;
@@ -142,6 +159,7 @@ export function storyAt(p: number): StoryFrame {
     scale: track(p, SCALE),
     glow: track(p, GLOW),
     headline: track(p, HEADLINE),
+    window: track(p, WINDOW),
     outro: track(p, OUTRO),
     lines: linear(p, TYPING) * TOTAL_LINES,
     migrated: linear(p, MIGRATION) * MODULES,
@@ -160,6 +178,7 @@ export function toVars(frame: StoryFrame): Record<string, string> {
     '--scale': `${round(frame.scale)}`,
     '--glow': `${round(frame.glow)}`,
     '--headline': `${round(frame.headline)}`,
+    '--window': `${round(frame.window)}`,
     '--outro': `${round(frame.outro)}`,
     '--lines': `${round(frame.lines)}`,
     '--migrated': `${round(frame.migrated / MODULES)}`,

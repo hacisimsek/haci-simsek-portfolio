@@ -50,11 +50,11 @@ describe('Hero', () => {
     ).toHaveAttribute('href', '/contact');
   });
 
-  it('shows the live saga instead of the sphere', () => {
+  it('makes one claim: the name and role, no demo beside them', () => {
     const { container } = render(<Hero />);
-    expect(
-      screen.getByRole('figure', { name: 'An order saga' })
-    ).toBeInTheDocument();
+    // The saga demo sits with its project; the story below the hero is the
+    // second beat.
+    expect(screen.queryByRole('figure')).toBeNull();
     expect(container.querySelector('canvas, .orb')).toBeNull();
   });
 

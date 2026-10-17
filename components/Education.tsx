@@ -8,7 +8,7 @@ export default function Education() {
   const locale = useLocale();
   return (
     <section id="education" aria-labelledby="education-title">
-      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <h2 id="education-title" className="section-title">
           {msg('title')}
         </h2>

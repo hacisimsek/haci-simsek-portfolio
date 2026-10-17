@@ -83,12 +83,9 @@ describe('RequestStory', () => {
     ).toBeInTheDocument();
   });
 
-  it('is drawn only where the story variant applies', () => {
+  it('is drawn everywhere; the CSS picks the scroll or the still layout', () => {
     render(<RequestStory />);
-    expect(document.querySelector('#story')).toHaveClass(
-      'hidden',
-      'story:block'
-    );
+    expect(document.querySelector('#story')).not.toHaveClass('hidden');
   });
 
   it('keeps the terminal decorative and apart from the hero saga', () => {
