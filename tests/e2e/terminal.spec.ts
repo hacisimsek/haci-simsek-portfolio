@@ -1,5 +1,11 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test, waitForHydration, type Page } from './fixtures';
+import {
+  expect,
+  test,
+  waitForEntranceAnimations,
+  waitForHydration,
+  type Page,
+} from './fixtures';
 
 async function openFromPalette(page: Page) {
   await waitForHydration(page);
@@ -68,6 +74,8 @@ for (const theme of ['dark', 'light'] as const) {
     const input = await openFromPalette(page);
     await input.fill('contact');
     await input.press('Enter');
+    // Measure the settled dialog, not a frame of its fade-in.
+    await waitForEntranceAnimations(page);
     const { violations } = await new AxeBuilder({ page })
       .include('[role="dialog"]')
       .analyze();

@@ -115,7 +115,7 @@
   },
   "Career": {
     "title": "Where I've worked",
-    "copy": "Most of my recent work sits in backend-heavy systems where scale, release confidence, observability, and service reliability matter as much as implementation itself.",
+    "copy": "From a telecom internship through enterprise web apps to Sisal’s regulated gaming platform, my work has moved steadily into the backend: services, messaging, releases and production.",
     "promoted": "Promoted",
     "more": "What I did",
     "kind": {

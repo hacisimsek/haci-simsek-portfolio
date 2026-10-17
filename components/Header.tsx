@@ -77,13 +77,15 @@ export default function Header() {
           </div>
         </Link>
 
+        {/* The current page is marked quietly (brighter text and an accent
+            rule), so the emphasis stays on where the visitor can go. */}
         <nav className="hidden items-center gap-2 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               aria-current={isCurrent(pathname, link.href) ? 'page' : undefined}
-              className="rounded-full px-4 py-2 text-sm text-muted-foreground transition hover:bg-secondary hover:text-foreground aria-[current=page]:bg-secondary aria-[current=page]:text-foreground"
+              className="relative rounded-full px-4 py-2 text-sm text-muted-foreground transition after:absolute after:inset-x-4 after:bottom-1 after:h-px after:bg-accent after:opacity-0 hover:bg-secondary hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:after:opacity-100"
             >
               {t(link.key)}
             </Link>
