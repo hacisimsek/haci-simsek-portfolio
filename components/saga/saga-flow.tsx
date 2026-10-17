@@ -222,16 +222,18 @@ export default function SagaFlow({ className }: { className?: string }) {
             {msg(paused ? 'resume' : 'pause')}
           </Button>
         )}
-        <a
-          href={FLAGSHIP}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
-          {msg('code')}
-          <ArrowUpRight aria-hidden className="h-4 w-4" />
-        </a>
       </div>
+      {/* On its own line, so the Pause button that appears after hydration
+          never wraps the row and shifts the hero (longer Turkish labels). */}
+      <a
+        href={FLAGSHIP}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-1 inline-flex min-h-11 items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        {msg('code')}
+        <ArrowUpRight aria-hidden className="h-4 w-4" />
+      </a>
       <p role="status" className="mt-2 min-h-5 text-sm text-foreground">
         {outcome}
       </p>

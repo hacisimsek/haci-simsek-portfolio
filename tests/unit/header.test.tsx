@@ -143,6 +143,19 @@ describe('Header', () => {
     expect(desktop).not.toHaveClass('bg-accent');
   });
 
+  it('marks the current page quietly: brighter text and an accent rule, no filled pill', () => {
+    render(<Header />);
+    const current = screen
+      .getAllByRole('link', { name: 'Home' })
+      .find((link) => link.getAttribute('aria-current') === 'page')!;
+    expect(current.className).not.toContain('aria-[current=page]:bg-secondary');
+    expect(current).toHaveClass(
+      'aria-[current=page]:text-foreground',
+      'aria-[current=page]:after:opacity-100',
+      'after:bg-accent'
+    );
+  });
+
   it('marks Contact as the current page on /contact', async () => {
     const navigation = await import('@/i18n/navigation');
     const spy = vi.spyOn(navigation, 'usePathname').mockReturnValue('/contact');

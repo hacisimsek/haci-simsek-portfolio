@@ -218,3 +218,30 @@ test('featured projects carry authored lines', async ({ page }) => {
   await expect(region).toContainText('event-driven saga');
   await expect(region).not.toContainText('orchestration-based');
 });
+
+test.describe('layout stability', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  for (const path of ['/', '/tr']) {
+    test(`${path} does not shift while the hero hydrates`, async ({ page }) => {
+      await page.addInitScript(() => {
+        (window as unknown as { cls: number }).cls = 0;
+        new PerformanceObserver((list) => {
+          for (const entry of list.getEntries() as (PerformanceEntry & {
+            value: number;
+            hadRecentInput: boolean;
+          })[]) {
+            if (!entry.hadRecentInput)
+              (window as unknown as { cls: number }).cls += entry.value;
+          }
+        }).observe({ type: 'layout-shift', buffered: true });
+      });
+      await page.goto(path);
+      await page.waitForTimeout(1500);
+      const cls = await page.evaluate(
+        () => (window as unknown as { cls: number }).cls
+      );
+      expect(cls).toBeLessThan(0.01);
+    });
+  }
+});
