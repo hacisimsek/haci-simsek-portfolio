@@ -103,12 +103,12 @@
     "outcome": "Ödeme reddedildi. Stok serbest bırakıldı, sipariş iptal edildi."
   },
   "Story": {
-    "title": "Her sistem tek bir komutla başlar.",
-    "lead": "Sonra ayakta kalması gerekir.",
-    "summary": "Bir terminal Java 21 üzerinde bir sipariş servisini başlatıyor. Olaylar Kafka üzerinden akıyor, bir ödeme reddediliyor ve saga önceki adımları geri alarak durumu tutarlı bırakıyor. Ardından 31 modül Java 21’e taşınıyor.",
-    "outro": "Ayakta tutmak benim işim.",
-    "years": "yıl backend geliştirme",
-    "modules": "modül Java 21’e taşındı"
+    "title": "Her büyük geçiş tek bir komutla başlar.",
+    "lead": "Spring Boot 2’den 3’e, Java 11’den 21’e, 30+ modül. Tek başıma.",
+    "summary": "Terminal, Sisal’de yürüttüğüm geçişi gösteriyor: Spring Boot 2.x’ten 3.x’e ve Java 11’den 21’e geçiş için bir PoC, ardından 30’dan fazla modülün tamamının Java 21’e taşınması.",
+    "outro": "Bir PoC’den tüm modüllere.",
+    "modules": "modül Java 21’e taşındı",
+    "java": "Java sürüm yükseltmesi"
   },
   "About": {
     "title": "Ayakta kalması gereken sistemler için backend mühendisi"

@@ -69,7 +69,7 @@ describe('Career layout', () => {
   it('keeps role text to a readable measure', () => {
     render(<Career />);
     for (const role of screen.getAllByRole('article'))
-      expect(role).toHaveClass('max-w-[70ch]');
+      expect(role).toHaveClass('max-w-[36rem]');
   });
 });
 

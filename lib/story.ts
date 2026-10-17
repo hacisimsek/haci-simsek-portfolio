@@ -1,37 +1,41 @@
 // The scroll story under the hero: a terminal window that turns to face the
-// visitor, pulls them in while a service boots and an order saga runs, then
-// steps back to the numbers. Everything on screen is a pure function of scroll
-// progress p, so the scene can be tested without a browser and never moves on
-// its own.
+// visitor and pulls them in while the Java 21 migration runs, module by
+// module, then steps back to the numbers. Everything on screen is a pure
+// function of scroll progress p, so the scene can be tested without a browser
+// and never moves on its own. With reduced motion the CSS lays the same
+// content out statically instead.
 
-/** Where the story is drawn: wide screens with a fine pointer. With reduced
-    motion it plays still (see storyAt). Elsewhere the hero saga carries the
-    same idea. */
-export const STORY_MEDIA = '(min-width: 64rem) and (pointer: fine)';
+/** Where the story is drawn: wide enough screens with a fine pointer. Shorter
+    or narrower screens skip it; the Career entry carries the same facts. */
+export const STORY_MEDIA =
+  '(min-width: 64rem) and (min-height: 40rem) and (pointer: fine)';
 
-export type Tone = 'prompt' | 'dim' | 'text' | 'ok' | 'fail' | 'undo';
+export type Tone = 'prompt' | 'dim' | 'text' | 'ok';
 
-/** What the terminal prints, top to bottom. Kept in English, as a terminal
-    would be. The migration bar after the last line is drawn by the scene. */
+/** What the terminal prints, top to bottom: the proof of concept, then the
+    migration. Kept in English, as a terminal would be. The module domains are
+    the ones named in the Career entry; the bar after the last line is drawn
+    by the scene. */
 export const LINES: readonly { text: string; tone: Tone }[] = [
-  { text: '$ ./mvnw spring-boot:run', tone: 'prompt' },
-  { text: '  :: Spring Boot ::  (v3.3)        Java 21', tone: 'dim' },
-  { text: 'INFO  Started OrderApplication in 2.4 s', tone: 'text' },
-  { text: 'INFO  Joined consumer group order-events', tone: 'text' },
-  { text: '→ OrderCreated     inventory   ok     11 ms', tone: 'ok' },
-  { text: '→ StockReserved    payment     ok      9 ms', tone: 'ok' },
-  { text: '✕ PaymentFailed    payment     declined', tone: 'fail' },
-  { text: '↺ StockReleased    inventory   compensated', tone: 'undo' },
-  { text: '↺ OrderCancelled   order       compensated', tone: 'undo' },
-  { text: 'INFO  Saga rolled back. State is consistent.', tone: 'text' },
-  { text: '$ ./migrate --to java21', tone: 'prompt' },
+  { text: '$ git switch -c poc/spring-boot-3', tone: 'prompt' },
+  { text: '  Spring Boot 2.x → 3.x      Java 11 → 21', tone: 'dim' },
+  { text: '  javax.* → jakarta.*        done', tone: 'text' },
+  { text: '  build ok\u00a0· tests green     proof of concept ✓', tone: 'ok' },
+  { text: '$ ./migrate --all --to java21', tone: 'prompt' },
+  { text: '  auth                       ✓ Java 21', tone: 'ok' },
+  { text: '  registration               ✓ Java 21', tone: 'ok' },
+  { text: '  account                    ✓ Java 21', tone: 'ok' },
+  { text: '  session                    ✓ Java 21', tone: 'ok' },
+  { text: '  profile                    ✓ Java 21', tone: 'ok' },
+  { text: '  content                    ✓ Java 21', tone: 'ok' },
 ];
 
 /** Every printed line plus the migration bar. */
 export const TOTAL_LINES = LINES.length + 1;
 
-/** Modules moved to Java 21: the count the migration bar fills to. */
-export const MODULES = 31;
+/** Modules moved to Java 21: the bar fills to this count, and the copy
+    says "MODULES+" because the exact number is not given. */
+export const MODULES = 30;
 
 type Key = readonly [p: number, value: number];
 
@@ -39,7 +43,7 @@ const smooth = (t: number) => t * t * (3 - 2 * t);
 const clamp = (value: number, min = 0, max = 1) =>
   Math.min(max, Math.max(min, value));
 
-/** 0 when the section's top meets the viewport's top, 1 when its bottom does. */
+/** 0 when the track's top meets the viewport's top, 1 when its bottom does. */
 export function progress(top: number, height: number, viewport: number) {
   const range = height - viewport;
   return range > 0 ? clamp(-top / range) : 0;
@@ -60,50 +64,51 @@ export function track(p: number, keys: readonly Key[]) {
 
 // Lying back, it rises and turns to face the visitor ...
 const TILT: Key[] = [
-  [0, 64],
-  [0.3, 0],
+  [0, 62],
+  [0.26, 0],
 ];
 const TURN: Key[] = [
-  [0, -18],
-  [0.3, 0],
+  [0, -16],
+  [0.26, 0],
 ];
 const ROLL: Key[] = [
-  [0, 8],
-  [0.3, 0],
+  [0, 7],
+  [0.26, 0],
 ];
+// In svh, so the window clears the outro on any screen height.
 const LIFT: Key[] = [
-  [0, 160],
-  [0.3, 0],
+  [0, 18],
+  [0.26, 0],
   [0.8, 0],
-  [0.92, -80],
+  [0.92, -14],
 ];
-// ... then the camera moves in, and out again for the numbers.
+// ... the camera moves in, then out again for the numbers.
 const SCALE: Key[] = [
-  [0, 0.78],
-  [0.3, 1],
-  [0.42, 1.22],
-  [0.8, 1.22],
-  [0.92, 0.66],
+  [0, 0.8],
+  [0.26, 1],
+  [0.38, 1.12],
+  [0.8, 1.12],
+  [0.92, 0.62],
 ];
 const GLOW: Key[] = [
   [0, 0.45],
-  [0.42, 1],
+  [0.38, 1],
   [0.8, 1],
   [1, 0.45],
 ];
 const HEADLINE: Key[] = [
   [0.04, 1],
-  [0.2, 0],
+  [0.18, 0],
 ];
 const OUTRO: Key[] = [
   [0.84, 0],
   [0.95, 1],
 ];
 
-// Lines type out one after another while the camera is in, then the
+// Lines type out while the window turns and the camera is in, then the
 // migration bar fills.
-const TYPING = { from: 0.2, to: 0.7 };
-const MIGRATION = { from: 0.7, to: 0.78 };
+const TYPING = { from: 0.12, to: 0.66 };
+const MIGRATION = { from: 0.66, to: 0.8 };
 
 export interface StoryFrame {
   /** 0 arrive, 1 inside, 2 numbers. */
@@ -111,6 +116,7 @@ export interface StoryFrame {
   rx: number;
   ry: number;
   rz: number;
+  /** Vertical offset in svh. */
   lift: number;
   scale: number;
   glow: number;
@@ -125,31 +131,10 @@ export interface StoryFrame {
 const linear = (p: number, { from, to }: { from: number; to: number }) =>
   clamp((p - from) / (to - from));
 
-/** The scene at scroll progress p. `still` (reduced motion) keeps the window
-    facing the visitor and fills the terminal in whole steps. */
-export function storyAt(p: number, still = false): StoryFrame {
-  const act = p < 0.3 ? 0 : p < 0.84 ? 1 : 2;
-  const lines = linear(p, TYPING) * TOTAL_LINES;
-  const migrated = linear(p, MIGRATION) * MODULES;
-
-  if (still) {
-    return {
-      act,
-      rx: 0,
-      ry: 0,
-      rz: 0,
-      lift: 0,
-      scale: 1,
-      glow: 0.6,
-      headline: p < 0.12 ? 1 : 0,
-      outro: p >= 0.9 ? 1 : 0,
-      lines: Math.floor(lines),
-      migrated: Math.floor(migrated),
-    };
-  }
-
+/** The scene at scroll progress p. */
+export function storyAt(p: number): StoryFrame {
   return {
-    act,
+    act: p < 0.26 ? 0 : p < 0.84 ? 1 : 2,
     rx: track(p, TILT),
     ry: track(p, TURN),
     rz: track(p, ROLL),
@@ -158,8 +143,8 @@ export function storyAt(p: number, still = false): StoryFrame {
     glow: track(p, GLOW),
     headline: track(p, HEADLINE),
     outro: track(p, OUTRO),
-    lines,
-    migrated,
+    lines: linear(p, TYPING) * TOTAL_LINES,
+    migrated: linear(p, MIGRATION) * MODULES,
   };
 }
 
@@ -171,7 +156,7 @@ export function toVars(frame: StoryFrame): Record<string, string> {
     '--rx': `${round(frame.rx)}deg`,
     '--ry': `${round(frame.ry)}deg`,
     '--rz': `${round(frame.rz)}deg`,
-    '--lift': `${round(frame.lift)}px`,
+    '--lift': `${round(frame.lift)}svh`,
     '--scale': `${round(frame.scale)}`,
     '--glow': `${round(frame.glow)}`,
     '--headline': `${round(frame.headline)}`,

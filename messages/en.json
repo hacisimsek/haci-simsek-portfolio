@@ -103,12 +103,12 @@
     "outcome": "Payment declined. Stock released and order cancelled."
   },
   "Story": {
-    "title": "Every system starts with one command.",
-    "lead": "Then it has to stay up.",
-    "summary": "A terminal starts an order service on Java 21. Events flow over Kafka, a payment is declined and the saga undoes the earlier steps, leaving the state consistent. Then 31 modules are migrated to Java 21.",
-    "outro": "Keeping it up is my job.",
-    "years": "years building backends",
-    "modules": "modules moved to Java 21"
+    "title": "Every upgrade starts with one command.",
+    "lead": "Spring Boot 2 to 3, Java 11 to 21, 30+ modules. On my own.",
+    "summary": "A terminal shows the migration I ran at Sisal: a proof of concept for Spring Boot 2.x to 3.x and Java 11 to 21, then every module moved to Java 21, more than 30 in all.",
+    "outro": "From a proof of concept to every module.",
+    "modules": "modules moved to Java 21",
+    "java": "the Java upgrade"
   },
   "About": {
     "title": "Backend engineer for systems that have to stay up"

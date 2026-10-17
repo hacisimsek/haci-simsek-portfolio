@@ -11,14 +11,14 @@ import { progress, storyAt, toVars } from '@/lib/story';
 export default function StoryScroller({ children }: { children: ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
   const enabled = useStoryEnabled();
-  // Reduced motion keeps the window facing the visitor; the terminal still
-  // fills as the page scrolls.
-  const still = usePrefersReducedMotion();
+  // With reduced motion the CSS shows a still layout and nothing follows
+  // the scroll.
+  const reduceMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const track = root.current?.firstElementChild;
     const scene = track?.querySelector<HTMLElement>('[data-story-scene]');
-    if (!enabled || !track || !scene) return;
+    if (!enabled || reduceMotion || !track || !scene) return;
     const section = track.closest('section') ?? track;
     const counter = scene.querySelector('[data-story-migrated]');
     let frame = 0;
@@ -28,8 +28,7 @@ export default function StoryScroller({ children }: { children: ReactNode }) {
       frame = 0;
       const rect = track.getBoundingClientRect();
       const story = storyAt(
-        progress(rect.top, rect.height, window.innerHeight),
-        still
+        progress(rect.top, rect.height, window.innerHeight)
       );
       for (const [name, value] of Object.entries(toVars(story))) {
         scene.style.setProperty(name, value);
@@ -73,7 +72,7 @@ export default function StoryScroller({ children }: { children: ReactNode }) {
       window.removeEventListener('resize', schedule);
       cancelAnimationFrame(frame);
     };
-  }, [enabled, still]);
+  }, [enabled, reduceMotion]);
 
   return <div ref={root}>{children}</div>;
 }

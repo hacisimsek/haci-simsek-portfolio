@@ -61,7 +61,7 @@ export default function Career() {
                   {group.roles.map((role) => (
                     <article
                       key={role.id}
-                      className="max-w-[70ch] border-t border-border/70 pt-6 first:border-t-0 first:pt-0"
+                      className="max-w-[36rem] border-t border-border/70 pt-6 first:border-t-0 first:pt-0"
                     >
                       <h3 className="text-xl font-semibold">
                         {t(role.title, locale)}

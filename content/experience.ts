@@ -22,7 +22,7 @@ export const experience: Role[] = [
     },
     highlights: {
       en: [
-        'Ran the proof of concept for moving from Spring Boot 2.x to 3.x and Java 11 to 21, then migrated all ~31 modules to **Java 21** on my own.',
+        'Ran the proof of concept for moving from Spring Boot 2.x to 3.x and Java 11 to 21, then migrated all 30+ modules to **Java 21** on my own.',
         'Build backend microservices for **AreaPrivata**, Sisal’s customer account area, with **Spring Boot**, **Spring MVC**, **JPA/Hibernate** and **Spring Security**, across authentication, registration, account, session, profile and content domains, plus **TypeScript**/**NestJS** services on **MongoDB**.',
         'Integrate third-party providers over **REST** and **SOAP**, with asynchronous messaging over **Kafka** and **RabbitMQ**, retry strategies and caching with **Redis Sentinel**.',
         'Led the migration of the infrastructure to a new API-driven model, defining standards and best practices for consistency across services.',
@@ -30,7 +30,7 @@ export const experience: Role[] = [
         'Troubleshoot production issues and tune SQL and JVM performance using logs, metrics and distributed tracing, plus load testing.',
       ],
       tr: [
-        'Spring Boot 2.x’ten 3.x’e ve Java 11’den 21’e geçişin PoC çalışmasını yürüttüm; ardından ~31 modülün tamamını tek başıma **Java 21**’e taşıdım.',
+        'Spring Boot 2.x’ten 3.x’e ve Java 11’den 21’e geçişin PoC çalışmasını yürüttüm; ardından 30’dan fazla modülün tamamını tek başıma **Java 21**’e taşıdım.',
         'Sisal’in müşteri hesap alanı **AreaPrivata** için **Spring Boot**, **Spring MVC**, **JPA/Hibernate** ve **Spring Security** ile kimlik doğrulama, kayıt, hesap, oturum, profil ve içerik alanlarında backend mikroservisleri, ayrıca **MongoDB** üzerinde **TypeScript**/**NestJS** servisleri geliştiriyorum.',
         'Üçüncü taraf sağlayıcıları **REST** ve **SOAP** üzerinden entegre ediyorum; **Kafka** ve **RabbitMQ** ile asenkron mesajlaşma, yeniden deneme stratejileri ve **Redis Sentinel** ile önbellekleme kullanıyorum.',
         'Altyapının yeni API odaklı modele geçişine liderlik ettim; servisler arasında tutarlılık için standartları ve en iyi uygulamaları belirledim.',

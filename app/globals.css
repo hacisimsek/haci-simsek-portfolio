@@ -4,7 +4,7 @@
 
 /* Where the scroll story is drawn; lib/story.ts STORY_MEDIA must match
    (tests/unit/story-media-sync.test.ts checks it). */
-@custom-variant story (@media (min-width: 64rem) and (pointer: fine));
+@custom-variant story (@media (min-width: 64rem) and (min-height: 40rem) and (pointer: fine));
 
 @theme inline {
   /* The terminal is always dark, whatever the site theme. Keep in sync with
@@ -395,16 +395,26 @@ section[id] {
 /* The scroll story (components/story). lib/story.ts writes the window's pose
    and the terminal's progress as custom properties for each scroll position;
    the CSS below only reads them. No transitions, keyframes or scroll
-   timelines, and with reduced motion the window simply faces the visitor. */
-/* Full window width, so the light fades out on its own instead of being
-   cut at the content column's edges. */
+   timelines. Sizes follow the viewport height, so the window and the outro
+   fit together on short laptop screens too. */
+.story-track {
+  position: relative;
+  height: 240svh;
+}
+
+/* Sticky, and the full window width, so the light fades out on its own
+   instead of being cut at the content column's edges. */
 .story-stage {
+  position: sticky;
+  top: 0;
   width: 100vw;
+  height: 100svh;
   margin-left: calc(50% - 50vw);
   overflow: clip;
 }
 
-/* Light behind the window that grows as the camera moves in. */
+/* Light behind the window that grows as the camera moves in. Accent only:
+   purple means undo on this site. */
 .story-glow {
   position: absolute;
   top: 58%;
@@ -416,7 +426,7 @@ section[id] {
   background: radial-gradient(
     closest-side,
     color-mix(in oklab, var(--accent) 30%, transparent),
-    color-mix(in oklab, var(--primary) 12%, transparent) 55%,
+    color-mix(in oklab, var(--accent) 8%, transparent) 55%,
     transparent
   );
   pointer-events: none;
@@ -424,9 +434,10 @@ section[id] {
 
 .story-headline {
   position: absolute;
-  top: 7.5rem;
+  top: 7rem;
   right: 0;
   left: 0;
+  padding-inline: 1rem;
   text-align: center;
   opacity: var(--headline);
   transform: translateY(calc((1 - var(--headline)) * -2.5rem));
@@ -442,7 +453,7 @@ section[id] {
 
 .story-window {
   position: relative;
-  width: min(52rem, 66vw);
+  width: min(38rem, 56vw);
   overflow: hidden;
   border-radius: 1rem;
   transform-origin: 50% 70%;
@@ -473,9 +484,9 @@ section[id] {
 
 /* Sized to hold every line, so the terminal ends full. */
 .story-body {
-  --line: 1.6rem;
-  padding: 1.25rem 1.5rem 1.5rem;
-  font-size: 0.875rem;
+  --line: min(1.6rem, 3.2svh);
+  padding: 1.1rem 1.5rem 1.35rem;
+  font-size: min(0.875rem, 1.8svh);
 }
 
 .story-line-static {
@@ -493,8 +504,7 @@ section[id] {
   clip-path: inset(0 calc((1 - var(--typed)) * 100%) 0 0);
 }
 
-/* Terminal colours: always dark, whatever the site theme. Purple only means
-   undo; red only the step that failed. */
+/* Terminal colours: always dark, whatever the site theme. */
 .story-line[data-tone='prompt'] {
   color: var(--color-terminal-foreground);
 }
@@ -511,14 +521,6 @@ section[id] {
   color: var(--color-terminal-prompt);
 }
 
-.story-line[data-tone='fail'] {
-  color: var(--color-terminal-error);
-}
-
-.story-line[data-tone='undo'] {
-  color: oklch(0.76 0.16 295);
-}
-
 .story-migration {
   display: flex;
   align-items: center;
@@ -526,7 +528,7 @@ section[id] {
 }
 
 .story-bar {
-  width: 14rem;
+  width: 12rem;
   height: 0.5rem;
   overflow: hidden;
   border-radius: 9999px;
@@ -553,9 +555,50 @@ section[id] {
 .story-outro {
   position: absolute;
   right: 0;
-  bottom: 9svh;
+  bottom: 7svh;
   left: 0;
   text-align: center;
   opacity: var(--outro);
   transform: translateY(calc((1 - var(--outro)) * 2.5rem));
+}
+
+/* Reduced motion: no pinned scene. The headline, the finished terminal and
+   the numbers sit in the page like any other section. */
+@media (prefers-reduced-motion: reduce) {
+  .story-track {
+    height: auto;
+  }
+
+  .story-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    height: auto;
+    padding-block: 2rem;
+  }
+
+  .story-headline,
+  .story-camera,
+  .story-outro {
+    position: static;
+    opacity: 1;
+    transform: none;
+  }
+
+  .story-camera {
+    display: block;
+  }
+
+  .story-window,
+  .story-bar-fill {
+    transform: none;
+  }
+
+  .story-line,
+  .story-done {
+    opacity: 1;
+    clip-path: none;
+  }
 }

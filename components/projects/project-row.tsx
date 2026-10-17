@@ -45,7 +45,7 @@ export default function ProjectRow({
           ) : null}
           <p
             className={cn(
-              'mt-2 max-w-2xl leading-7 text-muted-foreground',
+              'mt-2 max-w-[36rem] leading-7 text-muted-foreground',
               label ? 'text-base' : 'text-sm'
             )}
           >
