@@ -14,13 +14,20 @@ export type Tone = 'prompt' | 'dim' | 'text' | 'ok';
 
 /** What the terminal prints, top to bottom: the proof of concept, then the
     migration. Kept in English, as a terminal would be. The module domains are
-    the ones named in the Career entry; the bar after the last line is drawn
-    by the scene. */
+    the ones named in the Career entry; the bar after the last line is drawn by
+    the scene. Spaces inside a column are non-breaking, so on a narrow screen a
+    line wraps between its columns, never inside one. */
 export const LINES: readonly { text: string; tone: Tone }[] = [
   { text: '$ git switch -c poc/spring-boot-3', tone: 'prompt' },
-  { text: '  Spring Boot 2.x → 3.x      Java 11 → 21', tone: 'dim' },
-  { text: '  javax.* → jakarta.*        done', tone: 'ok' },
-  { text: '  build ok\u00a0· tests green     proof of concept ✓', tone: 'ok' },
+  {
+    text: '  Spring\u00a0Boot\u00a02.x\u00a0→\u00a03.x      Java\u00a011\u00a0→\u00a021',
+    tone: 'dim',
+  },
+  { text: '  javax.*\u00a0→\u00a0jakarta.*        done', tone: 'ok' },
+  {
+    text: '  build\u00a0ok\u00a0·\u00a0tests\u00a0green     proof\u00a0of\u00a0concept\u00a0✓',
+    tone: 'ok',
+  },
   { text: '$ ./migrate --all --to java21', tone: 'prompt' },
   { text: '  auth                       ✓ Java 21', tone: 'ok' },
   { text: '  registration               ✓ Java 21', tone: 'ok' },
@@ -111,21 +118,23 @@ const HEADLINE: Key[] = [
 // The terminal steps back and dims, so the numbers lead at the end.
 const WINDOW: Key[] = [
   [0.82, 1],
-  [0.94, 0.35],
+  [0.94, 0.55],
 ];
 const OUTRO: Key[] = [
   [0.84, 0],
   [0.95, 1],
 ];
 
-// Lines type out while the window turns and the camera is in; the bar fills
-// alongside the module lines.
 // Starts while the window is still turning, so no frame is an empty box.
 const TYPING = { from: 0.05, to: 0.66 };
-const MIGRATION = {
-  from: TYPING.from + (BAR_LINE / TOTAL_LINES) * (TYPING.to - TYPING.from),
-  to: TYPING.to,
-};
+
+/** Modules done: a share of MODULES for each module line already typed, so
+    the count never runs ahead of the lines on screen. */
+function migratedAt(lines: number) {
+  const groups = TOTAL_LINES - BAR_LINE;
+  const done = Math.floor(Math.min(groups, Math.max(0, lines - BAR_LINE)));
+  return (MODULES * done) / groups;
+}
 
 export interface StoryFrame {
   /** 0 arrive, 1 inside, 2 numbers. */
@@ -152,6 +161,7 @@ const linear = (p: number, { from, to }: { from: number; to: number }) =>
 
 /** The scene at scroll progress p. */
 export function storyAt(p: number): StoryFrame {
+  const lines = linear(p, TYPING) * TOTAL_LINES;
   return {
     act: p < 0.26 ? 0 : p < 0.84 ? 1 : 2,
     rx: track(p, TILT),
@@ -163,8 +173,8 @@ export function storyAt(p: number): StoryFrame {
     headline: track(p, HEADLINE),
     window: track(p, WINDOW),
     outro: track(p, OUTRO),
-    lines: linear(p, TYPING) * TOTAL_LINES,
-    migrated: linear(p, MIGRATION) * MODULES,
+    lines,
+    migrated: migratedAt(lines),
   };
 }
 

@@ -58,6 +58,21 @@ describe('experience', () => {
       expect(bold(line), line).toBeLessThanOrEqual(1);
   });
 
+  it('bolds only the client names in the Nuevo entry', () => {
+    const nuevo = experience.find(
+      (role) => role.id === 'nuevo-software-engineer'
+    )!;
+    const bolded = nuevo.highlights.en.flatMap(
+      (line) => line.match(/\*\*([^*]+)\*\*/g) ?? []
+    );
+    expect(bolded).toEqual([
+      '**Türk Petrol**',
+      '**AvivaSA**',
+      '**Kordsa**',
+      '**Tavuk Dünyası**',
+    ]);
+  });
+
   it('drops the Orion module', () => {
     expect(JSON.stringify({ profile, experience })).not.toMatch(/Orion/);
   });

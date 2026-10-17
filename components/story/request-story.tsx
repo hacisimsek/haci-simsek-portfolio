@@ -24,6 +24,8 @@ export default function RequestStory() {
       aria-labelledby="story-title"
       // Read by tests to follow the scroll; no style depends on it.
       data-act="0"
+      // Pulled up on desktop so the headline reaches the first screen.
+      className="lg:-mt-16 [@media(max-height:46rem)]:lg:-mt-20"
     >
       <StoryScroller>
         {/* Short enough that the story starts in the first screen. */}
@@ -38,13 +40,10 @@ export default function RequestStory() {
             <div className="story-headline">
               <h2
                 id="story-title"
-                className="mx-auto max-w-[18ch] font-display text-[clamp(2.75rem,5.2vw,5rem)] leading-[1.02] font-semibold tracking-tight text-balance"
+                className="mx-auto max-w-[18ch] font-display text-[clamp(2.75rem,min(5.2vw,7.5svh),5rem)] leading-[1.02] font-semibold tracking-tight text-balance"
               >
                 {msg('title')}
               </h2>
-              <p className="mt-4 text-xl text-muted-foreground lg:text-2xl">
-                {msg('lead')}
-              </p>
             </div>
 
             <p className="sr-only">{msg('summary')}</p>
@@ -56,7 +55,8 @@ export default function RequestStory() {
                   <span className="h-3 w-3 rounded-full bg-terminal-minimize" />
                   <span className="h-3 w-3 rounded-full bg-terminal-zoom" />
                   <span className="min-w-0 flex-1 truncate pr-14 text-center font-mono text-xs text-terminal-dim">
-                    account-platform — zsh
+                    account-platform
+                    <span className="hidden sm:inline"> — zsh</span>
                   </span>
                 </div>
                 <div className="story-body font-mono">
