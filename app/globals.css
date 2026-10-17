@@ -2,6 +2,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Where the scroll story is drawn; lib/story.ts STORY_MEDIA must match
+   (tests/unit/story-media-sync.test.ts checks it). */
+@custom-variant story (@media (min-width: 64rem) and (pointer: fine));
+
 @theme inline {
   /* The terminal is always dark, whatever the site theme. Keep in sync with
      lib/og/brand.ts (tests/unit/palette-sync.test.ts checks it). */
@@ -386,4 +390,172 @@ section[id] {
 
 .saga-pulse[data-state='rest'] {
   opacity: 0;
+}
+
+/* The scroll story (components/story). lib/story.ts writes the window's pose
+   and the terminal's progress as custom properties for each scroll position;
+   the CSS below only reads them. No transitions, keyframes or scroll
+   timelines, and with reduced motion the window simply faces the visitor. */
+/* Full window width, so the light fades out on its own instead of being
+   cut at the content column's edges. */
+.story-stage {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: clip;
+}
+
+/* Light behind the window that grows as the camera moves in. */
+.story-glow {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  width: min(90rem, 100vw);
+  aspect-ratio: 2;
+  transform: translate(-50%, -50%) scale(calc(0.7 + var(--glow) * 0.5));
+  opacity: var(--glow);
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklab, var(--accent) 30%, transparent),
+    color-mix(in oklab, var(--primary) 12%, transparent) 55%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.story-headline {
+  position: absolute;
+  top: 7.5rem;
+  right: 0;
+  left: 0;
+  text-align: center;
+  opacity: var(--headline);
+  transform: translateY(calc((1 - var(--headline)) * -2.5rem));
+}
+
+.story-camera {
+  position: absolute;
+  inset: 6rem 0 0;
+  display: grid;
+  place-items: center;
+  perspective: 1400px;
+}
+
+.story-window {
+  position: relative;
+  width: min(52rem, 66vw);
+  overflow: hidden;
+  border-radius: 1rem;
+  transform-origin: 50% 70%;
+  transform: translateY(var(--lift)) scale(var(--scale)) rotateX(var(--rx))
+    rotateY(var(--ry)) rotateZ(var(--rz));
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--accent) 28%, transparent),
+    0 0 90px -20px
+      color-mix(in oklab, var(--accent) calc(var(--glow) * 55%), transparent),
+    0 60px 120px -50px var(--color-terminal);
+}
+
+/* A sheen that slides across the glass as the window turns. */
+.story-window::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    color-mix(in oklab, white 9%, transparent) 48%,
+    transparent 60%
+  );
+  background-size: 300% 100%;
+  background-position: calc(30% + var(--rx) * 1.2%) 0;
+  pointer-events: none;
+}
+
+/* Sized to hold every line, so the terminal ends full. */
+.story-body {
+  --line: 1.6rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+  font-size: 0.875rem;
+}
+
+.story-line-static {
+  height: var(--line);
+  line-height: var(--line);
+}
+
+/* A line appears as it is typed, left to right. */
+.story-line {
+  --typed: clamp(0, calc(var(--lines) - var(--i)), 1);
+  height: var(--line);
+  line-height: var(--line);
+  white-space: pre;
+  opacity: clamp(0, calc((var(--lines) - var(--i)) * 6), 1);
+  clip-path: inset(0 calc((1 - var(--typed)) * 100%) 0 0);
+}
+
+/* Terminal colours: always dark, whatever the site theme. Purple only means
+   undo; red only the step that failed. */
+.story-line[data-tone='prompt'] {
+  color: var(--color-terminal-foreground);
+}
+
+.story-line[data-tone='prompt']::first-letter {
+  color: var(--color-terminal-prompt);
+}
+
+.story-line[data-tone='dim'] {
+  color: var(--color-terminal-dim);
+}
+
+.story-line[data-tone='ok'] {
+  color: var(--color-terminal-prompt);
+}
+
+.story-line[data-tone='fail'] {
+  color: var(--color-terminal-error);
+}
+
+.story-line[data-tone='undo'] {
+  color: oklch(0.76 0.16 295);
+}
+
+.story-migration {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.story-bar {
+  width: 14rem;
+  height: 0.5rem;
+  overflow: hidden;
+  border-radius: 9999px;
+  background-color: color-mix(
+    in oklab,
+    var(--color-terminal-dim) 20%,
+    transparent
+  );
+}
+
+.story-bar-fill {
+  display: block;
+  height: 100%;
+  transform-origin: left;
+  transform: scaleX(var(--migrated));
+  background-color: var(--color-terminal-prompt);
+}
+
+.story-done {
+  color: var(--color-terminal-prompt);
+  opacity: clamp(0, calc((var(--migrated) - 0.99) * 100), 1);
+}
+
+.story-outro {
+  position: absolute;
+  right: 0;
+  bottom: 9svh;
+  left: 0;
+  text-align: center;
+  opacity: var(--outro);
+  transform: translateY(calc((1 - var(--outro)) * 2.5rem));
 }
