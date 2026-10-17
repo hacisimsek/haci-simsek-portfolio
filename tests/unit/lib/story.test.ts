@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { experience } from '@/content';
 import {
   LINES,
+  BAR_LINE,
   MODULES,
   TOTAL_LINES,
   progress,
@@ -97,11 +98,22 @@ describe('storyAt', () => {
     expect(last.scale).toBeLessThan(1);
   });
 
-  it('fills the migration bar only after the command is typed', () => {
+  it('fills the migration bar while the module lines type, not after', () => {
     for (let p = 0; p <= 1; p += 0.005) {
       const frame = storyAt(p);
-      if (frame.migrated > 0) expect(frame.lines).toBe(TOTAL_LINES);
+      if (frame.migrated > 0) expect(frame.lines).toBeGreaterThan(BAR_LINE);
+      if (frame.lines < TOTAL_LINES - 0.5)
+        expect(frame.migrated).toBeLessThan(MODULES);
     }
+    const halfway = storyAt(0.5);
+    expect(halfway.migrated).toBeGreaterThan(0);
+    expect(halfway.lines).toBeLessThan(TOTAL_LINES);
+  });
+
+  it('clears the headline early and dims the window for the numbers', () => {
+    expect(storyAt(0.12).headline).toBe(0);
+    expect(storyAt(0.5).window).toBe(1);
+    expect(storyAt(1).window).toBeLessThan(0.5);
   });
 
   it('moves continuously: a small scroll never jumps the window', () => {

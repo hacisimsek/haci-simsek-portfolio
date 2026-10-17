@@ -14,7 +14,7 @@ export default function Career() {
 
   return (
     <section id="career" aria-labelledby="career-title">
-      <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <h2 id="career-title" className="section-title">
           {msg('title')}
         </h2>

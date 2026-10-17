@@ -8,8 +8,8 @@ import { STORY_MEDIA } from '@/lib/story';
 describe('story media query', () => {
   it('matches between globals.css and lib/story.ts', () => {
     const css = readFileSync('app/globals.css', 'utf8');
-    const variant = css.match(/@custom-variant story \(@media (.+)\);/)?.[1];
-    expect(variant).toBe(STORY_MEDIA);
+    // The still layout applies wherever the scroll story does not play.
+    expect(css).toContain(`not all and ${STORY_MEDIA} {`);
   });
 
   it('lights the story with the accent only: purple means undo', () => {

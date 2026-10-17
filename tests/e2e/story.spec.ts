@@ -125,11 +125,18 @@ test.describe('on short laptop screens', () => {
     });
   }
 
-  test('is skipped below 40rem of height', async ({ page }, testInfo) => {
+  test('falls back to the still layout below 40rem of height', async ({
+    page,
+  }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop only.');
     await page.setViewportSize({ width: 1440, height: 600 });
     await page.goto('/');
-    await expect(story(page)).toBeHidden();
+    await expect(story(page)).toBeVisible();
+    expect(
+      await page
+        .locator('.story-window')
+        .evaluate((element) => getComputedStyle(element).transform)
+    ).toBe('none');
   });
 });
 
@@ -161,12 +168,25 @@ test.describe('with reduced motion', () => {
   });
 });
 
-test('is not drawn on phones', async ({ page, isMobile }) => {
+test('phones get the still layout, with the numbers', async ({
+  page,
+  isMobile,
+}) => {
   test.skip(!isMobile, 'Covers the mobile project.');
   await page.goto('/');
-  await expect(story(page)).toBeHidden();
-  // The hero saga carries the idea instead.
+  await expect(story(page)).toBeVisible();
   await expect(
-    page.getByRole('figure', { name: 'An order saga' })
+    story(page).getByRole('heading', { name: /one command/ })
   ).toBeVisible();
+  expect(
+    await page
+      .locator('.story-window')
+      .evaluate((element) => getComputedStyle(element).transform)
+  ).toBe('none');
+  await expect(page.locator('[data-story-migrated]')).toHaveText('30');
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth
+    )
+  ).toBe(true);
 });

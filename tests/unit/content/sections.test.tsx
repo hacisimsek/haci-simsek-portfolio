@@ -148,4 +148,13 @@ describe('Skills', () => {
     const testing = screen.getByText('Testing and quality').closest('div')!;
     expect(within(testing).getByText('JUnit 5')).toBeInTheDocument();
   });
+
+  it('sets the lead tools of each row brighter than the rest', () => {
+    render(<Skills />);
+    const row = screen.getByText('DevOps and CI/CD').closest('div')!;
+    expect(within(row).getByText('Kubernetes')).toHaveClass('text-foreground');
+    expect(within(row).getByText('SonarQube')).not.toHaveClass(
+      'text-foreground'
+    );
+  });
 });

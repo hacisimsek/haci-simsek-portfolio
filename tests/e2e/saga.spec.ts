@@ -16,8 +16,12 @@ test('the hero shows the live saga, not a canvas', async ({ page }) => {
 test.describe('with motion', () => {
   test.use({ reducedMotion: 'no-preference' });
 
-  test('runs by itself', async ({ page }) => {
+  test('runs by itself once it is on screen', async ({ page }) => {
     await page.goto('/');
+    // It sits beside the flagship project and only ticks while visible.
+    await page
+      .getByRole('figure', { name: 'An order saga' })
+      .scrollIntoViewIfNeeded();
     await expect(steps(page).first()).toHaveAttribute(
       'data-status',
       'running',

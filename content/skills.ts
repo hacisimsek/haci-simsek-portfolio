@@ -1,7 +1,8 @@
 import type { SkillCategory } from './types';
 
 // Product and language names stay the same in both locales; generic
-// practices are translated. Grouped as on the CV.
+// practices are translated. Grouped as on the CV; each list starts with the
+// tools used most (the Skills section sets the first four brighter).
 export const skills: SkillCategory[] = [
   {
     id: 'languages-frameworks',
@@ -100,23 +101,23 @@ export const skills: SkillCategory[] = [
     title: { en: 'DevOps and CI/CD', tr: 'DevOps ve CI/CD' },
     items: {
       en: [
-        'Git',
-        'Jenkins',
-        'GitLab CI/CD',
-        'Maven',
         'Docker',
         'Kubernetes',
         'Argo CD',
+        'Jenkins',
+        'GitLab CI/CD',
+        'Maven',
+        'Git',
         'SonarQube',
       ],
       tr: [
-        'Git',
-        'Jenkins',
-        'GitLab CI/CD',
-        'Maven',
         'Docker',
         'Kubernetes',
         'Argo CD',
+        'Jenkins',
+        'GitLab CI/CD',
+        'Maven',
+        'Git',
         'SonarQube',
       ],
     },
@@ -151,19 +152,19 @@ export const skills: SkillCategory[] = [
     },
     items: {
       en: [
-        'ELK and Kibana',
-        'Splunk',
         'Prometheus',
         'Grafana',
+        'ELK and Kibana',
+        'Splunk',
         'Dynatrace',
         'Distributed tracing',
         'JVM and SQL tuning',
       ],
       tr: [
-        'ELK ve Kibana',
-        'Splunk',
         'Prometheus',
         'Grafana',
+        'ELK ve Kibana',
+        'Splunk',
         'Dynatrace',
         'Distributed tracing',
         'JVM ve SQL performans iyileştirme',

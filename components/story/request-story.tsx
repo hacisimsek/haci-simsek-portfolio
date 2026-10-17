@@ -1,13 +1,13 @@
 import { useTranslations } from 'next-intl';
 import type { CSSProperties } from 'react';
-import { LINES, MODULES, storyAt, toVars } from '@/lib/story';
+import { BAR_LINE, LINES, MODULES, storyAt, toVars } from '@/lib/story';
 import StoryScroller from './story-scroller';
 
 // A terminal window that turns to face the visitor as the page scrolls and
 // pulls them in while the Java 21 migration runs, then steps back to the
-// numbers. Drawn where the `story` variant applies; with reduced motion the
-// CSS lays it out as a still headline, terminal and numbers. Elsewhere the
-// Career entry carries the same facts.
+// numbers. It plays where STORY_MEDIA matches and motion is allowed;
+// everywhere else (phones, tablets, touch screens, short windows, reduced
+// motion) the CSS lays it out as a still headline, terminal and numbers.
 export default function RequestStory() {
   const msg = useTranslations('Story');
 
@@ -17,7 +17,6 @@ export default function RequestStory() {
       aria-labelledby="story-title"
       // Read by tests to follow the scroll; no style depends on it.
       data-act="0"
-      className="hidden story:block"
     >
       <StoryScroller>
         <div className="story-track">
@@ -68,7 +67,8 @@ export default function RequestStory() {
                   ))}
                   <div
                     className="story-line story-migration"
-                    style={{ '--i': LINES.length } as CSSProperties}
+                    // Appears with the first module line, fills as they type.
+                    style={{ '--i': BAR_LINE } as CSSProperties}
                   >
                     <span className="text-terminal-dim">modules</span>
                     <span className="story-bar">
@@ -89,7 +89,7 @@ export default function RequestStory() {
               <p className="font-display text-[clamp(2rem,3.4vw,3rem)] leading-tight font-semibold tracking-tight">
                 {msg('outro')}
               </p>
-              <ul className="mt-6 flex justify-center gap-16">
+              <ul className="mt-6 flex flex-wrap justify-center gap-x-16 gap-y-6">
                 <li className="flex flex-col items-center">
                   <span className="font-display text-6xl font-semibold text-accent">
                     {MODULES}+

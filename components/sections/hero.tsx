@@ -1,7 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import type { CSSProperties } from 'react';
-import SagaFlow from '@/components/saga/saga-flow';
 import { Button } from '@/components/ui/button';
 import { profile, t } from '@/content';
 import { Link } from '@/i18n/navigation';
@@ -16,7 +15,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative grid gap-8 pt-4 pb-12 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center lg:py-12"
+      className="relative grid gap-8 pt-4 pb-12 lg:min-h-[calc(100svh-9rem)] lg:items-center lg:py-12"
     >
       <div className="relative min-w-0">
         <h1 className="max-w-5xl page-title">
@@ -75,8 +74,6 @@ export default function Hero() {
           </p>
         </div>
       </div>
-
-      <SagaFlow className="lg:justify-self-end" />
     </section>
   );
 }

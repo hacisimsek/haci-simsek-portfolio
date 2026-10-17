@@ -104,7 +104,7 @@
   },
   "Story": {
     "title": "Every upgrade starts with one command.",
-    "lead": "Spring Boot 2 to 3, Java 11 to 21, 30+ modules. On my own.",
+    "lead": "Spring Boot 2 to 3 and Java 11 to 21, across 30+ modules.",
     "summary": "A terminal shows the migration I ran at Sisal: a proof of concept for Spring Boot 2.x to 3.x and Java 11 to 21, then every module moved to Java 21, more than 30 in all.",
     "outro": "From a proof of concept to every module.",
     "modules": "modules moved to Java 21",
