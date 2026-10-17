@@ -264,6 +264,21 @@ describe('SagaFlow', () => {
     expect(new Set(ids).size).toBe(2);
   });
 
+  it('rests its token once a run has finished', () => {
+    render(<SagaFlow />);
+    // The still picture is a completed happy run: no token left on a step.
+    expect(
+      document.querySelector('.saga-pulse')!.getAttribute('data-state')
+    ).toBe('rest');
+  });
+
+  it('is named by a heading, so heading navigation finds it', () => {
+    render(<SagaFlow />);
+    expect(
+      screen.getByRole('heading', { level: 3, name: 'An order saga' })
+    ).toBeInTheDocument();
+  });
+
   it('moves its token as forward, undo, then rest', () => {
     render(<SagaFlow />);
     const pulse = () =>

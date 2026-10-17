@@ -21,7 +21,9 @@ describe('About', () => {
   it('states the years the same way as the hero', () => {
     render(<About />);
     expect(
-      screen.getByText(/Java backend developer with \d+\+ years of experience/)
+      screen.getByText(
+        /^For \d+\+ years I have built Spring Boot microservices/
+      )
     ).toBeInTheDocument();
   });
 

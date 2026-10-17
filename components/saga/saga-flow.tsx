@@ -73,8 +73,9 @@ function useActive<T extends Element>() {
   return [ref, onScreen && tabVisible] as const;
 }
 
-// The hero's signature piece: an order saga that runs by itself and, on
-// request, fails at payment and compensates the earlier steps in reverse.
+// The flagship project's saga, beside it in Featured projects: an order saga
+// that runs by itself and, on request, fails at payment and compensates the
+// earlier steps in reverse.
 export default function SagaFlow({ className }: { className?: string }) {
   const msg = useTranslations('Saga');
   const titleId = useId();
@@ -115,11 +116,11 @@ export default function SagaFlow({ className }: { className?: string }) {
   const outcome =
     saga.failAt !== null && saga.phase === 'rolledBack' ? msg('outcome') : '';
   // The token follows the colour rule: accent going forward, purple while
-  // undoing, and gone once the saga has rolled back.
+  // undoing, and gone once the run has finished either way.
   const pulse =
     saga.phase === 'compensating'
       ? 'undo'
-      : saga.phase === 'rolledBack'
+      : saga.phase === 'rolledBack' || saga.phase === 'completed'
         ? 'rest'
         : 'forward';
 
@@ -132,9 +133,9 @@ export default function SagaFlow({ className }: { className?: string }) {
       {/* Title and explanation come first, so the steps and controls are
           read with their meaning. */}
       <figcaption className="mb-6">
-        <p id={titleId} className="font-display font-semibold">
+        <h3 id={titleId} className="font-display font-semibold">
           {msg('label')}
-        </p>
+        </h3>
         <p className="mt-1 text-sm leading-6 text-muted-foreground">
           {msg('caption')}
         </p>

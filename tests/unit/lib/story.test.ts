@@ -4,6 +4,7 @@ import {
   LINES,
   BAR_LINE,
   MODULES,
+  counterText,
   TOTAL_LINES,
   progress,
   storyAt,
@@ -110,8 +111,25 @@ describe('storyAt', () => {
     expect(halfway.lines).toBeLessThan(TOTAL_LINES);
   });
 
+  it('has no dead middle: typing starts while the window is still turning', () => {
+    expect(storyAt(0.1).lines).toBeGreaterThan(0);
+    expect(storyAt(0.1).rx).toBeGreaterThan(0);
+  });
+
+  it('holds the headline until the first command has been typed', () => {
+    let firstLine = 0;
+    while (storyAt(firstLine).lines < 1) firstLine += 0.001;
+    expect(storyAt(firstLine).headline).toBeGreaterThan(0.3);
+  });
+
+  it('counts modules, then settles on the honest 30+', () => {
+    expect(counterText(0)).toBe('0');
+    expect(counterText(14.6)).toBe('14');
+    expect(counterText(MODULES)).toBe(`${MODULES}+`);
+  });
+
   it('clears the headline early and dims the window for the numbers', () => {
-    expect(storyAt(0.12).headline).toBe(0);
+    expect(storyAt(0.2).headline).toBe(0);
     expect(storyAt(0.5).window).toBe(1);
     expect(storyAt(1).window).toBeLessThan(0.5);
   });

@@ -1,6 +1,13 @@
 import { useTranslations } from 'next-intl';
 import type { CSSProperties } from 'react';
-import { BAR_LINE, LINES, MODULES, storyAt, toVars } from '@/lib/story';
+import {
+  BAR_LINE,
+  counterText,
+  LINES,
+  MODULES,
+  storyAt,
+  toVars,
+} from '@/lib/story';
 import StoryScroller from './story-scroller';
 
 // A terminal window that turns to face the visitor as the page scrolls and
@@ -19,6 +26,7 @@ export default function RequestStory() {
       data-act="0"
     >
       <StoryScroller>
+        {/* Short enough that the story starts in the first screen. */}
         <div className="story-track">
           <div
             data-story-scene
@@ -47,7 +55,7 @@ export default function RequestStory() {
                   <span className="h-3 w-3 rounded-full bg-terminal-close" />
                   <span className="h-3 w-3 rounded-full bg-terminal-minimize" />
                   <span className="h-3 w-3 rounded-full bg-terminal-zoom" />
-                  <span className="flex-1 pr-14 text-center font-mono text-xs text-terminal-dim">
+                  <span className="min-w-0 flex-1 truncate pr-14 text-center font-mono text-xs text-terminal-dim">
                     account-platform — zsh
                   </span>
                 </div>
@@ -77,7 +85,7 @@ export default function RequestStory() {
                     <span>
                       {/* Full by default: the static (reduced-motion) layout
                           shows the finished run; the scroller counts up. */}
-                      <span data-story-migrated>{MODULES}</span>/{MODULES}
+                      <span data-story-migrated>{counterText(MODULES)}</span>
                     </span>
                     <span className="story-done">✓ Java 21</span>
                   </div>

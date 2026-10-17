@@ -27,11 +27,14 @@ export default function Skills() {
             <dt className="font-semibold">{t(category.title, locale)}</dt>
             <dd>
               <ul className="flex flex-wrap gap-x-5 gap-y-1 leading-7 text-muted-foreground">
-                {t(category.items, locale).map((item, index) => (
+                {t(category.items, locale).map((item, index, items) => (
                   <li
                     key={item}
                     className={
-                      index < CORE ? 'font-medium text-foreground' : undefined
+                      // Short rows have nothing to rank.
+                      items.length > CORE && index < CORE
+                        ? 'font-medium text-foreground'
+                        : undefined
                     }
                   >
                     {item}

@@ -122,7 +122,7 @@ describe('RequestStory', () => {
     await scrollTo(1);
     expect(document.querySelector('#story')).toHaveAttribute('data-act', '2');
     expect(document.querySelector('[data-story-migrated]')).toHaveTextContent(
-      '30'
+      '30+'
     );
   });
 
@@ -133,7 +133,7 @@ describe('RequestStory', () => {
     // Nothing follows the scroll; the CSS shows the finished run.
     expect(vars('--lines')).toEqual(['0']);
     expect(document.querySelector('[data-story-migrated]')).toHaveTextContent(
-      '30'
+      '30+'
     );
   });
 

@@ -14,8 +14,8 @@ export const profile: Profile = {
     tr: 'Yüksek trafikli ortamlar için Spring Boot mikroservisleri ve dağıtık sistemler geliştiren Java backend geliştirici.',
   },
   intro: {
-    en: 'Java backend developer with {years} years of experience building Spring Boot microservices in regulated, high-traffic environments: REST and SOAP APIs, JPA/Hibernate, Kafka and RabbitMQ, SQL, and delivery through CI/CD, Docker and Kubernetes. I test with JUnit and Mockito, review code, troubleshoot production and tune performance, and also build TypeScript/NestJS services on MongoDB and React frontends.',
-    tr: 'Regülasyona tabi, yüksek trafikli ortamlarda Spring Boot mikroservisleri geliştiren, {years} yıllık deneyime sahip Java backend geliştirici: REST ve SOAP API’ler, JPA/Hibernate, Kafka ve RabbitMQ, SQL; CI/CD, Docker ve Kubernetes ile teslimat. JUnit ve Mockito ile test yazıyor, code review yapıyor, production sorunlarını çözüp performansı iyileştiriyorum; MongoDB üzerinde TypeScript/NestJS servisleri ve React arayüzleri de geliştiriyorum.',
+    en: 'For {years} years I have built Spring Boot microservices in regulated, high-traffic environments: REST and SOAP APIs, JPA/Hibernate, Kafka and RabbitMQ, SQL, and delivery through CI/CD, Docker and Kubernetes. I test with JUnit and Mockito, review code, troubleshoot production and tune performance, and also build TypeScript/NestJS services on MongoDB and React frontends.',
+    tr: '{years} yıldır regülasyona tabi, yüksek trafikli ortamlarda Spring Boot mikroservisleri geliştiriyorum: REST ve SOAP API’ler, JPA/Hibernate, Kafka ve RabbitMQ, SQL; CI/CD, Docker ve Kubernetes ile teslimat. JUnit ve Mockito ile test yazıyor, code review yapıyor, production sorunlarını çözüp performansı iyileştiriyorum; MongoDB üzerinde TypeScript/NestJS servisleri ve React arayüzleri de geliştiriyorum.',
   },
   bio: {
     en: [

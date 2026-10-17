@@ -108,7 +108,7 @@
     "summary": "A terminal shows the migration I ran at Sisal: a proof of concept for Spring Boot 2.x to 3.x and Java 11 to 21, then every module moved to Java 21, more than 30 in all.",
     "outro": "From a proof of concept to every module.",
     "modules": "modules moved to Java 21",
-    "java": "the Java upgrade"
+    "java": "Java LTS versions"
   },
   "About": {
     "title": "Backend engineer for systems that have to stay up"
