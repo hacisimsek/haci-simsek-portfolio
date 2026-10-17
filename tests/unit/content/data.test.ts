@@ -52,6 +52,12 @@ describe('experience', () => {
     }
   });
 
+  it('bolds at most one term per current-role bullet', () => {
+    const bold = (line: string) => (line.match(/\*\*[^*]+\*\*/g) ?? []).length;
+    for (const line of experience[0].highlights.en)
+      expect(bold(line), line).toBeLessThanOrEqual(1);
+  });
+
   it('drops the Orion module', () => {
     expect(JSON.stringify({ profile, experience })).not.toMatch(/Orion/);
   });

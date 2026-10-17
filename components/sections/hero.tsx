@@ -13,10 +13,7 @@ export default function Hero() {
   const letters = splitGraphemes(profile.name);
 
   return (
-    <section
-      id="top"
-      className="relative grid gap-8 pt-4 pb-12 lg:min-h-[calc(100svh-9rem)] lg:items-center lg:py-12"
-    >
+    <section id="top" className="relative grid gap-8 pt-4 pb-4 lg:pt-16">
       <div className="relative min-w-0">
         <h1 className="max-w-5xl page-title">
           <span className="sr-only">{profile.name}. </span>

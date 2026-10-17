@@ -395,7 +395,7 @@ section[id] {
    fit together on short laptop screens too. */
 .story-track {
   position: relative;
-  height: 240svh;
+  height: 180svh;
 }
 
 /* Sticky, and the full window width, so the light fades out on its own
@@ -460,6 +460,11 @@ section[id] {
     0 0 90px -20px
       color-mix(in oklab, var(--accent) calc(var(--glow) * 55%), transparent),
     0 60px 120px -50px var(--color-terminal);
+}
+
+/* On a light page a dimmed dark window turns muddy grey, so it dims less. */
+:root:not(.dark) .story-window {
+  opacity: calc(0.45 + var(--window) * 0.55);
 }
 
 /* A sheen that slides across the glass as the window turns. */
@@ -588,6 +593,7 @@ section[id] {
 
   .story-camera {
     display: block;
+    width: 100%;
   }
 
   .story-window,
@@ -597,10 +603,37 @@ section[id] {
 
   .story-window {
     width: min(38rem, 100%);
+    margin-inline: auto;
   }
 
+  /* On narrow screens a long line wraps instead of being cut off. */
   .story-body {
-    font-size: clamp(0.625rem, 2.6vw, 0.875rem);
+    padding-inline: clamp(0.875rem, 4vw, 1.5rem);
+    font-size: clamp(0.6875rem, 3vw, 0.875rem);
+  }
+
+  .story-line,
+  .story-line-static {
+    height: auto;
+    min-height: var(--line);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  /* The bar row wraps between its parts, never inside a word. */
+  .story-migration {
+    flex-wrap: wrap;
+    column-gap: 0.75rem;
+  }
+
+  .story-migration > * {
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+
+  .story-bar {
+    flex: 1 1 6rem;
+    width: auto;
   }
 
   .story-window,

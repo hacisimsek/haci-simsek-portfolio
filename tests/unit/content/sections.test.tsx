@@ -149,6 +149,12 @@ describe('Skills', () => {
     expect(within(testing).getByText('JUnit 5')).toBeInTheDocument();
   });
 
+  it('leaves short rows even: there is nothing to rank in three items', () => {
+    render(<Skills />);
+    const row = screen.getByText('Frontend').closest('div')!;
+    expect(within(row).getByText('React')).not.toHaveClass('text-foreground');
+  });
+
   it('sets the lead tools of each row brighter than the rest', () => {
     render(<Skills />);
     const row = screen.getByText('DevOps and CI/CD').closest('div')!;

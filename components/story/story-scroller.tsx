@@ -3,7 +3,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 import { useStoryEnabled } from '@/hooks/use-story-enabled';
-import { progress, storyAt, toVars } from '@/lib/story';
+import { counterText, progress, storyAt, toVars } from '@/lib/story';
 
 // Turns the scroll position into the scene's custom properties. No
 // transitions, keyframes or scroll timelines: the scene is exactly where the
@@ -37,7 +37,7 @@ export default function StoryScroller({ children }: { children: ReactNode }) {
       if (section.getAttribute('data-act') !== act) {
         section.setAttribute('data-act', act);
       }
-      const migrated = `${Math.round(story.migrated)}`;
+      const migrated = counterText(story.migrated);
       if (counter && counter.textContent !== migrated) {
         counter.textContent = migrated;
       }

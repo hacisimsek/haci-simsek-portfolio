@@ -50,7 +50,7 @@ test.describe('on a desktop with motion', () => {
     }
     // Sticky: the stage stays put while the page scrolls past.
     expect(Math.max(...tops) - Math.min(...tops)).toBeLessThan(2);
-    await expect(page.locator('[data-story-migrated]')).toHaveText('30');
+    await expect(page.locator('[data-story-migrated]')).toHaveText('30+');
   });
 
   test('turns the window to face the visitor before the terminal types', async ({
@@ -162,7 +162,7 @@ test.describe('with reduced motion', () => {
         .locator('[data-story-scene]')
         .evaluate((element) => getComputedStyle(element).position)
     ).not.toBe('sticky');
-    await expect(page.locator('[data-story-migrated]')).toHaveText('30');
+    await expect(page.locator('[data-story-migrated]')).toHaveText('30+');
     await expect(page.locator('.story-line').last()).toHaveCSS('opacity', '1');
     await expect(page.locator('.story-outro p')).toHaveCSS('opacity', '1');
   });
@@ -183,10 +183,35 @@ test('phones get the still layout, with the numbers', async ({
       .locator('.story-window')
       .evaluate((element) => getComputedStyle(element).transform)
   ).toBe('none');
-  await expect(page.locator('[data-story-migrated]')).toHaveText('30');
+  await expect(page.locator('[data-story-migrated]')).toHaveText('30+');
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth
     )
   ).toBe(true);
+});
+
+test.describe('the still terminal on narrow screens', () => {
+  for (const width of [320, 390]) {
+    test(`fits inside the screen at ${width}px`, async ({ page }, testInfo) => {
+      test.skip(
+        testInfo.project.name !== 'mobile',
+        'Covers the mobile project.'
+      );
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto('/');
+      const box = (await page.locator('.story-window').boundingBox())!;
+      expect(box.x).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width).toBeLessThanOrEqual(width);
+      // No terminal line is cut off inside the window either.
+      const clipped = await page
+        .locator('.story-window')
+        .evaluate((element) =>
+          [...element.querySelectorAll('.story-line, .story-line-static')].some(
+            (line) => line.scrollWidth > line.clientWidth + 1
+          )
+        );
+      expect(clipped).toBe(false);
+    });
+  }
 });

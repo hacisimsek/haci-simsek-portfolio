@@ -102,10 +102,11 @@ const GLOW: Key[] = [
   [0.8, 1],
   [1, 0.45],
 ];
-// Gone before the window, still turning, reaches the header.
+// Held until the first command has been typed, gone before the window
+// reaches the header.
 const HEADLINE: Key[] = [
-  [0.02, 1],
-  [0.12, 0],
+  [0.1, 1],
+  [0.18, 0],
 ];
 // The terminal steps back and dims, so the numbers lead at the end.
 const WINDOW: Key[] = [
@@ -119,7 +120,8 @@ const OUTRO: Key[] = [
 
 // Lines type out while the window turns and the camera is in; the bar fills
 // alongside the module lines.
-const TYPING = { from: 0.12, to: 0.66 };
+// Starts while the window is still turning, so no frame is an empty box.
+const TYPING = { from: 0.05, to: 0.66 };
 const MIGRATION = {
   from: TYPING.from + (BAR_LINE / TOTAL_LINES) * (TYPING.to - TYPING.from),
   to: TYPING.to,
@@ -164,6 +166,11 @@ export function storyAt(p: number): StoryFrame {
     lines: linear(p, TYPING) * TOTAL_LINES,
     migrated: linear(p, MIGRATION) * MODULES,
   };
+}
+
+/** The bar's count: modules as they move, then the honest "30+". */
+export function counterText(migrated: number) {
+  return migrated >= MODULES ? `${MODULES}+` : `${Math.floor(migrated)}`;
 }
 
 const round = (value: number) => Math.round(value * 1000) / 1000 || 0;

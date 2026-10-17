@@ -108,7 +108,7 @@
     "summary": "Terminal, Sisal’de yürüttüğüm geçişi gösteriyor: Spring Boot 2.x’ten 3.x’e ve Java 11’den 21’e geçiş için bir PoC, ardından 30’dan fazla modülün tamamının Java 21’e taşınması.",
     "outro": "Bir PoC’den tüm modüllere.",
     "modules": "modül Java 21’e taşındı",
-    "java": "Java sürüm yükseltmesi"
+    "java": "Java LTS sürümleri"
   },
   "About": {
     "title": "Ayakta kalması gereken sistemler için backend mühendisi"
