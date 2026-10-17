@@ -17,7 +17,7 @@ export default function About() {
       aria-labelledby="about-title"
       className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:items-start"
     >
-      <div className="max-w-[70ch]">
+      <div className="max-w-[36rem]">
         <h2 id="about-title" className="section-title">
           {msg('title')}
         </h2>

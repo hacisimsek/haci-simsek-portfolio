@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { experience } from '@/content';
 import {
   LINES,
   MODULES,
@@ -41,29 +42,30 @@ describe('track', () => {
 });
 
 describe('terminal content', () => {
-  it('boots on Java 21, fails at payment and compensates in reverse', () => {
+  it('runs the proof of concept, then moves every module to Java 21', () => {
     const text = LINES.map((line) => line.text).join('\n');
-    expect(text).toMatch(/Java 21/);
-    expect(LINES.find((line) => line.tone === 'fail')?.text).toMatch(
-      /PaymentFailed/
-    );
-    expect(
-      LINES.filter((line) => line.tone === 'undo').map((line) => line.text)
-    ).toEqual([
-      expect.stringMatching(/StockReleased/),
-      expect.stringMatching(/OrderCancelled/),
-    ]);
+    expect(text).toMatch(/Spring Boot 2\.x → 3\.x\s+Java 11 → 21/);
+    expect(text).toMatch(/proof of concept/);
+    expect(text).toMatch(/migrate --all --to java21/);
   });
 
-  it('never shows undo before the failure', () => {
-    const fail = LINES.findIndex((line) => line.tone === 'fail');
-    LINES.forEach((line, index) => {
-      if (line.tone === 'undo') expect(index).toBeGreaterThan(fail);
-    });
+  it('only names module domains the Career entry already mentions', () => {
+    const career = JSON.stringify(experience[0].highlights.en);
+    const modules = LINES.filter((line) => line.text.includes('✓ Java 21'));
+    expect(modules.length).toBeGreaterThan(0);
+    for (const line of modules) {
+      const name = line.text.trim().split(/\s+/)[0];
+      expect(career).toContain(name === 'auth' ? 'authentication' : name);
+    }
   });
 
-  it('migrates the 31 modules from the CV', () => {
-    expect(MODULES).toBe(31);
+  it('counts the same modules as the Career entry and the outro', () => {
+    expect(experience[0].highlights.en[0]).toContain(`${MODULES}+ modules`);
+  });
+
+  it('tells no saga: purple and red belong to the hero', () => {
+    expect(LINES.map((line) => line.tone)).not.toContain('fail');
+    expect(LINES.map((line) => line.tone)).not.toContain('undo');
   });
 });
 
@@ -78,8 +80,8 @@ describe('storyAt', () => {
   });
 
   it('faces the visitor, then moves in while the terminal types', () => {
-    expect(storyAt(0.3).rx).toBe(0);
-    expect(storyAt(0.5).scale).toBeGreaterThan(1.1);
+    expect(storyAt(0.26).rx).toBe(0);
+    expect(storyAt(0.5).scale).toBeGreaterThan(1.05);
     expect(storyAt(0.5).lines).toBeGreaterThan(0);
     expect(storyAt(0.5).lines).toBeLessThan(TOTAL_LINES);
     expect(storyAt(0.5).act).toBe(1);
@@ -114,36 +116,11 @@ describe('storyAt', () => {
   });
 });
 
-describe('storyAt, still (reduced motion)', () => {
-  it('keeps the window facing the visitor at every scroll position', () => {
-    for (let p = 0; p <= 1; p += 0.01) {
-      expect(storyAt(p, true)).toMatchObject({
-        rx: 0,
-        ry: 0,
-        rz: 0,
-        lift: 0,
-        scale: 1,
-      });
-    }
-  });
-
-  it('fills the terminal in whole lines and whole modules', () => {
-    for (let p = 0; p <= 1; p += 0.003) {
-      const frame = storyAt(p, true);
-      expect(Number.isInteger(frame.lines)).toBe(true);
-      expect(Number.isInteger(frame.migrated)).toBe(true);
-      expect([0, 1]).toContain(frame.headline);
-      expect([0, 1]).toContain(frame.outro);
-    }
-    expect(storyAt(1, true).lines).toBe(TOTAL_LINES);
-  });
-});
-
 describe('toVars', () => {
   it('writes the frame as CSS custom properties with units', () => {
     const vars = toVars(storyAt(0.1));
     expect(vars['--rx']).toMatch(/deg$/);
-    expect(vars['--lift']).toMatch(/px$/);
+    expect(vars['--lift']).toMatch(/svh$/);
     expect(vars['--scale']).toMatch(/^\d+(\.\d+)?$/);
     expect(vars['--migrated']).toBe('0');
   });

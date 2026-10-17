@@ -59,9 +59,11 @@ describe('experience', () => {
   it('leads the current role with the Java 21 migration', () => {
     const [senior] = experience;
     expect(senior.highlights.en[0]).toMatch(
-      /Spring Boot 2\.x.*3\.x.*Java 11.*21.*31 modules.*\*\*Java 21\*\*/
+      /Spring Boot 2\.x.*3\.x.*Java 11.*21.*30\+ modules.*\*\*Java 21\*\*/
     );
-    expect(senior.highlights.tr[0]).toMatch(/31 modül.*\*\*Java 21\*\*/);
+    expect(senior.highlights.tr[0]).toMatch(
+      /30’dan fazla modül.*\*\*Java 21\*\*/
+    );
   });
 });
 

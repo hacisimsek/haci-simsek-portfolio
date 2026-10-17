@@ -50,7 +50,7 @@ test.describe('on a desktop with motion', () => {
     }
     // Sticky: the stage stays put while the page scrolls past.
     expect(Math.max(...tops) - Math.min(...tops)).toBeLessThan(2);
-    await expect(page.locator('[data-story-migrated]')).toHaveText('31');
+    await expect(page.locator('[data-story-migrated]')).toHaveText('30');
   });
 
   test('turns the window to face the visitor before the terminal types', async ({
@@ -92,10 +92,51 @@ test.describe('on a desktop with motion', () => {
   });
 });
 
+test.describe('on short laptop screens', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  for (const viewport of [
+    { width: 1280, height: 720 },
+    { width: 1440, height: 680 },
+    { width: 1366, height: 768 },
+  ]) {
+    test(`keeps the window clear of the header and the outro at ${viewport.width}×${viewport.height}`, async ({
+      page,
+    }, testInfo) => {
+      test.skip(testInfo.project.name !== 'desktop', 'Desktop only.');
+      await page.setViewportSize(viewport);
+      await page.goto('/');
+      await waitForHydration(page);
+      const box = (selector: string) =>
+        page.locator(selector).first().boundingBox();
+
+      await scrollToProgress(page, 0.5);
+      await expect(story(page)).toHaveAttribute('data-act', '1');
+      const header = (await box('header'))!;
+      expect((await box('.story-window'))!.y).toBeGreaterThanOrEqual(
+        header.y + header.height
+      );
+
+      await scrollToProgress(page, 0.95);
+      await expect(story(page)).toHaveAttribute('data-act', '2');
+      const window = (await box('.story-window'))!;
+      const outro = (await box('.story-outro p'))!;
+      expect(window.y + window.height).toBeLessThanOrEqual(outro.y);
+    });
+  }
+
+  test('is skipped below 40rem of height', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop only.');
+    await page.setViewportSize({ width: 1440, height: 600 });
+    await page.goto('/');
+    await expect(story(page)).toBeHidden();
+  });
+});
+
 test.describe('with reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
 
-  test('keeps the window still while the terminal fills', async ({
+  test('lays the finished run out as a still section', async ({
     page,
   }, testInfo) => {
     test.skip(
@@ -104,13 +145,19 @@ test.describe('with reduced motion', () => {
     );
     await page.goto('/');
     await waitForHydration(page);
-    await scrollToProgress(page, 0.05);
-    await expect(story(page)).toHaveAttribute('data-act', '0');
-    expect(await sceneVar(page, '--rx')).toBe('0deg');
-    await scrollToProgress(page, 0.95);
-    await expect(story(page)).toHaveAttribute('data-act', '2');
-    expect(await sceneVar(page, '--scale')).toBe('1');
-    await expect(page.locator('[data-story-migrated]')).toHaveText('31');
+    await story(page).scrollIntoViewIfNeeded();
+    const window = page.locator('.story-window');
+    expect(
+      await window.evaluate((element) => getComputedStyle(element).transform)
+    ).toBe('none');
+    expect(
+      await page
+        .locator('[data-story-scene]')
+        .evaluate((element) => getComputedStyle(element).position)
+    ).not.toBe('sticky');
+    await expect(page.locator('[data-story-migrated]')).toHaveText('30');
+    await expect(page.locator('.story-line').last()).toHaveCSS('opacity', '1');
+    await expect(page.locator('.story-outro p')).toHaveCSS('opacity', '1');
   });
 });
 

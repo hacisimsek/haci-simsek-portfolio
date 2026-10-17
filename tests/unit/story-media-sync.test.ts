@@ -11,4 +11,11 @@ describe('story media query', () => {
     const variant = css.match(/@custom-variant story \(@media (.+)\);/)?.[1];
     expect(variant).toBe(STORY_MEDIA);
   });
+
+  it('lights the story with the accent only: purple means undo', () => {
+    const css = readFileSync('app/globals.css', 'utf8');
+    const glow = css.match(/\.story-glow \{[^}]*\}/)?.[0] ?? '';
+    expect(glow).toContain('--accent');
+    expect(glow).not.toContain('--primary');
+  });
 });

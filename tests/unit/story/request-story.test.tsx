@@ -68,14 +68,18 @@ describe('RequestStory', () => {
     const { unmount } = render(<RequestStory />);
     expect(
       screen.getByRole('region', {
-        name: 'Every system starts with one command.',
+        name: 'Every upgrade starts with one command.',
       })
     ).toBeInTheDocument();
-    expect(screen.getByText(/a payment is declined/)).toHaveClass('sr-only');
+    expect(screen.getByText(/the migration I ran at Sisal/)).toHaveClass(
+      'sr-only'
+    );
     unmount();
     render(<RequestStory />, { locale: 'tr' });
     expect(
-      screen.getByRole('region', { name: 'Her sistem tek bir komutla başlar.' })
+      screen.getByRole('region', {
+        name: 'Her büyük geçiş tek bir komutla başlar.',
+      })
     ).toBeInTheDocument();
   });
 
@@ -93,6 +97,8 @@ describe('RequestStory', () => {
     expect(window).toHaveAttribute('aria-hidden', 'true');
     expect(window.querySelector('a, button, input, [tabindex]')).toBeNull();
     expect(scene().querySelector('figure, .saga-pulse')).toBeNull();
+    // The terminal tells the migration; the saga stays in the hero.
+    expect(scene().textContent).not.toMatch(/PaymentFailed|compensated/);
   });
 
   it('starts with the headline and an empty terminal before any script runs', () => {
@@ -119,17 +125,19 @@ describe('RequestStory', () => {
     await scrollTo(1);
     expect(document.querySelector('#story')).toHaveAttribute('data-act', '2');
     expect(document.querySelector('[data-story-migrated]')).toHaveTextContent(
-      '31'
+      '30'
     );
   });
 
-  it('keeps the window facing the visitor with reduced motion', async () => {
+  it('leaves the still layout alone with reduced motion', async () => {
     storyPlays({ reduceMotion: true });
     render(<RequestStory />);
-    await scrollTo(0.1);
-    expect(vars('--rx', '--scale')).toEqual(['0deg', '1']);
-    await scrollTo(0.6);
-    expect(Number.isInteger(Number(vars('--lines')[0]))).toBe(true);
+    await scrollTo(0.5);
+    // Nothing follows the scroll; the CSS shows the finished run.
+    expect(vars('--lines')).toEqual(['0']);
+    expect(document.querySelector('[data-story-migrated]')).toHaveTextContent(
+      '30'
+    );
   });
 
   it('stops listening once unmounted', () => {
