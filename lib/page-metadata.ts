@@ -7,7 +7,8 @@ import { alternatesFor } from '@/lib/seo';
 
 const creator = xHandle(socials);
 
-type TitleKey = 'projectsTitle' | 'articlesTitle' | 'contactTitle';
+type TitleKey =
+  'projectsTitle' | 'articlesTitle' | 'radarTitle' | 'contactTitle';
 
 // Next merges metadata shallowly: a page that only set `title` would keep the
 // layout's whole openGraph block and share the home page's URL and title.
