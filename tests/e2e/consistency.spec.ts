@@ -3,13 +3,14 @@ import { expect, test } from './fixtures';
 test.describe('desktop header', () => {
   test.skip(({ isMobile }) => isMobile, 'the phone header has its own menu');
 
-  test('has three nav links and one contact button', async ({ page }) => {
+  test('has four nav links and one contact button', async ({ page }) => {
     await page.goto('/');
     const nav = page.locator('header nav').first();
     await expect(nav.getByRole('link')).toHaveText([
       'Home',
       'Projects',
       'Articles',
+      'Radar',
     ]);
     await expect(
       page.locator('header').getByRole('link', { name: 'Contact' }).first()

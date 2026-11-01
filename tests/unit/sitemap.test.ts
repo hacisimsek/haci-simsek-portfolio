@@ -14,10 +14,12 @@ describe('sitemapEntries', () => {
         'https://hacisimsek.com/articles',
         'https://hacisimsek.com/contact',
         'https://hacisimsek.com/projects',
+        'https://hacisimsek.com/radar',
         'https://hacisimsek.com/tr',
         'https://hacisimsek.com/tr/articles',
         'https://hacisimsek.com/tr/contact',
         'https://hacisimsek.com/tr/projects',
+        'https://hacisimsek.com/tr/radar',
       ].sort()
     );
   });

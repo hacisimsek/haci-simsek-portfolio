@@ -30,7 +30,7 @@ test('crawl files are served at the site root', async ({ request }) => {
   expect(sitemap.status()).toBe(200);
   expect(sitemap.headers()['content-type']).toContain('xml');
   const xml = await sitemap.text();
-  expect(xml.match(/<loc>/g)).toHaveLength(8);
+  expect(xml.match(/<loc>/g)).toHaveLength(10);
   expect(xml).toContain('hreflang="tr"');
 
   const robots = await request.get('/robots.txt');

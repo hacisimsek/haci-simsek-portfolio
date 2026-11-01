@@ -39,6 +39,7 @@ export default defineConfig({
       env: {
         GITHUB_API_URL: `http://localhost:${FEED_PORT}`,
         MEDIUM_FEED_URL: `http://localhost:${FEED_PORT}/feed/@hacisimsek`,
+        RADAR_FIXTURE_URL: `http://localhost:${FEED_PORT}`,
       },
     },
   ],
