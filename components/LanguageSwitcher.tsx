@@ -29,7 +29,6 @@ export default function LanguageSwitcher({
             locale={option}
             hrefLang={option}
             lang={option}
-            aria-label={t(option)}
             aria-current={active ? 'true' : undefined}
             className={cn(
               'rounded-full px-2.5 py-1 font-mono text-xs uppercase transition',
@@ -40,7 +39,9 @@ export default function LanguageSwitcher({
                 : 'text-muted-foreground hover:text-foreground'
             )}
           >
-            {option}
+            {/* The visible code starts the accessible name (WCAG 2.5.3); the
+                full language name follows for screen readers. */}
+            {option} <span className="sr-only">{t(option)}</span>
           </Link>
         );
       })}

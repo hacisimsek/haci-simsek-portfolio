@@ -3,12 +3,14 @@
     "description": "{name}: regülasyona tabi, yüksek trafikli ortamlarda Spring Boot mikroservisleri ve event-driven, dağıtık sistemler geliştiren, {years} yıllık deneyime sahip Java backend geliştiricinin portfolyosu.",
     "projectsTitle": "Projeler",
     "articlesTitle": "Yazılar",
-    "contactTitle": "İletişim"
+    "contactTitle": "İletişim",
+    "radarTitle": "Radar"
   },
   "Nav": {
     "home": "Ana sayfa",
     "projects": "Projeler",
     "articles": "Yazılar",
+    "radar": "Radar",
     "contact": "İletişim",
     "toggleTheme": "Temayı değiştir",
     "toggleNavigation": "Menüyü aç/kapat",
@@ -39,6 +41,7 @@
       "skills": "Yetkinlikler",
       "projects": "Projeler",
       "articles": "Yazılar",
+      "radar": "Radar",
       "contact": "İletişim"
     },
     "theme": {
@@ -251,6 +254,35 @@
     "languages": {
       "en": "İngilizce",
       "tr": "Türkçe"
+    }
+  },
+  "Radar": {
+    "title": "Yapay zekâda ve GitHub’da yükselenler",
+    "subtitle": "Yıldız toplayan yeni repolar, Hacker News’ten yapay zekâ haberleri, Hugging Face’te günün makaleleri ve takip ettiğim birkaç yazarın yazıları. Her yarım saatte yenilenir.",
+    "search": "Başlık, repo veya kaynak",
+    "kind": "Tür",
+    "kinds": {
+      "repo": "Repolar",
+      "news": "Haberler",
+      "paper": "Makaleler",
+      "post": "Yazılar"
+    },
+    "sortTop": "Her kaynakta öne çıkan",
+    "sortNewest": "En yeni",
+    "stars": "{count} yıldız",
+    "points": "{count} puan",
+    "comments": "{count} yorum",
+    "discuss": "Tartışma",
+    "unavailable": "{sources} şu an yanıt vermedi; diğerleri gösteriliyor.",
+    "errorTitle": "Radar şu an yüklenemedi.",
+    "errorText": "Kaynakların hiçbiri yanıt vermedi. Birkaç dakika sonra tekrar dene.",
+    "sources": {
+      "github": "GitHub",
+      "hn": "Hacker News",
+      "hf": "Hugging Face",
+      "devto": "DEV",
+      "lobsters": "Lobsters",
+      "simon": "Simon Willison"
     }
   }
 }

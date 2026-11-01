@@ -6,6 +6,7 @@ const pages = [
   { path: '/', priority: 1, changeFrequency: 'weekly' },
   { path: '/projects', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/articles', priority: 0.8, changeFrequency: 'weekly' },
+  { path: '/radar', priority: 0.6, changeFrequency: 'daily' },
   { path: '/contact', priority: 0.5, changeFrequency: 'yearly' },
 ] as const;
 

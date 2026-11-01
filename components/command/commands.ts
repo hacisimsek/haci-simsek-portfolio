@@ -31,6 +31,7 @@ const sections = [
   { id: 'nav-skills', key: 'nav.skills', href: '/#skills' },
   { id: 'nav-projects', key: 'nav.projects', href: '/projects' },
   { id: 'nav-articles', key: 'nav.articles', href: '/articles' },
+  { id: 'nav-radar', key: 'nav.radar', href: '/radar' },
   { id: 'nav-contact', key: 'nav.contact', href: '/contact' },
 ] as const;
 
