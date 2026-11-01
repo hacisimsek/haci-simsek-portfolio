@@ -13,11 +13,23 @@ describe('Turkish interface', () => {
     ).toBeInTheDocument();
     const switcher = screen.getByRole('navigation', { name: 'Dil' });
     expect(
-      within(switcher).getByRole('link', { name: 'Türkçe' })
+      within(switcher).getByRole('link', { name: /Türkçe/ })
     ).toHaveAttribute('aria-current', 'true');
     expect(
-      within(switcher).getByRole('link', { name: 'English' })
+      within(switcher).getByRole('link', { name: /English/ })
     ).not.toHaveAttribute('aria-current');
+  });
+
+  it('names each language with the code it shows, then the full name', () => {
+    renderWithIntl(<Header />, { locale: 'tr' });
+    const switcher = screen.getByRole('navigation', { name: 'Dil' });
+    // WCAG 2.5.3: the visible label must be part of the accessible name.
+    expect(
+      within(switcher).getByRole('link', { name: /Türkçe/ })
+    ).toHaveAccessibleName('tr Türkçe');
+    expect(
+      within(switcher).getByRole('link', { name: /English/ })
+    ).toHaveAccessibleName('en English');
   });
 
   it('shows Turkish role titles and periods', () => {

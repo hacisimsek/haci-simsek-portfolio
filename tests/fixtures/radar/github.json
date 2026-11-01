@@ -1,0 +1,21 @@
+{
+  "total_count": 2,
+  "items": [
+    {
+      "full_name": "acme/agent-kit",
+      "html_url": "https://github.com/acme/agent-kit",
+      "description": "A small toolkit for building LLM agents",
+      "language": "Python",
+      "stargazers_count": 4210,
+      "created_at": "2026-10-27T09:00:00Z"
+    },
+    {
+      "full_name": "orbit/vector-db",
+      "html_url": "https://github.com/orbit/vector-db",
+      "description": null,
+      "language": "Rust",
+      "stargazers_count": 1830,
+      "created_at": "2026-10-28T12:00:00Z"
+    }
+  ]
+}

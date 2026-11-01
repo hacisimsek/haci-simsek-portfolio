@@ -3,12 +3,14 @@
     "description": "Portfolio of {name}, a Java backend developer with {years} years of experience building Spring Boot microservices and event-driven, distributed systems in regulated, high-traffic environments.",
     "projectsTitle": "Projects",
     "articlesTitle": "Articles",
-    "contactTitle": "Contact"
+    "contactTitle": "Contact",
+    "radarTitle": "Radar"
   },
   "Nav": {
     "home": "Home",
     "projects": "Projects",
     "articles": "Articles",
+    "radar": "Radar",
     "contact": "Contact",
     "toggleTheme": "Toggle theme",
     "toggleNavigation": "Toggle navigation",
@@ -39,6 +41,7 @@
       "skills": "Skills",
       "projects": "Projects",
       "articles": "Articles",
+      "radar": "Radar",
       "contact": "Contact"
     },
     "theme": {
@@ -251,6 +254,35 @@
     "languages": {
       "en": "English",
       "tr": "Turkish"
+    }
+  },
+  "Radar": {
+    "title": "What’s rising in AI and on GitHub",
+    "subtitle": "New repositories gaining stars, AI stories from Hacker News, the day’s papers on Hugging Face and posts from a few writers I read. Refreshed every half hour.",
+    "search": "Title, repository or source",
+    "kind": "Type",
+    "kinds": {
+      "repo": "Repositories",
+      "news": "News",
+      "paper": "Papers",
+      "post": "Posts"
+    },
+    "sortTop": "Top in each source",
+    "sortNewest": "Newest first",
+    "stars": "{count} stars",
+    "points": "{count} points",
+    "comments": "{count} comments",
+    "discuss": "Discussion",
+    "unavailable": "Couldn’t reach {sources} just now; showing the rest.",
+    "errorTitle": "The radar couldn’t load right now.",
+    "errorText": "Every source failed to respond. Try again in a few minutes.",
+    "sources": {
+      "github": "GitHub",
+      "hn": "Hacker News",
+      "hf": "Hugging Face",
+      "devto": "DEV",
+      "lobsters": "Lobsters",
+      "simon": "Simon Willison"
     }
   }
 }

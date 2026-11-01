@@ -1,0 +1,22 @@
+{
+  "hits": [
+    {
+      "objectID": "50300001",
+      "title": "Running a 70B model on a laptop",
+      "url": "https://example.com/70b-laptop",
+      "points": 512,
+      "num_comments": 203,
+      "author": "alice",
+      "created_at": "2026-10-31T10:00:00Z"
+    },
+    {
+      "objectID": "50300002",
+      "title": "Ask HN: How do you evaluate LLM apps?",
+      "url": null,
+      "points": 140,
+      "num_comments": 88,
+      "author": "bob",
+      "created_at": "2026-10-30T08:00:00Z"
+    }
+  ]
+}

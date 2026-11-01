@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xml:lang="en-us" xmlns="http://www.w3.org/2005/Atom"><title>Simon Willison's Weblog</title>
+<entry><title>Notes on running models locally</title><link href="https://simonwillison.net/2026/Oct/31/local-models/" rel="alternate"/><published>2026-10-31T23:15:22+00:00</published><id>a</id></entry>
+<entry><title>An insecure link</title><link href="http://simonwillison.net/insecure/" rel="alternate"/><published>2026-10-30T10:00:00+00:00</published><id>b</id></entry>
+</feed>
