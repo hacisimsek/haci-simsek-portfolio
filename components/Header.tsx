@@ -15,6 +15,7 @@ const navLinks = [
   { href: '/', key: 'home' },
   { href: '/projects', key: 'projects' },
   { href: '/articles', key: 'articles' },
+  { href: '/radar', key: 'radar' },
 ] as const;
 
 function isCurrent(pathname: string, href: string) {

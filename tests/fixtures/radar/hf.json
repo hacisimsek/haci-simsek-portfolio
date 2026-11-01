@@ -1,0 +1,20 @@
+[
+  {
+    "paper": {
+      "id": "2610.00001",
+      "title": "Sparse Mixture of Agents",
+      "upvotes": 96,
+      "publishedAt": "2026-10-29T05:00:00.000Z"
+    },
+    "numComments": 4
+  },
+  {
+    "paper": {
+      "id": "2610.00002",
+      "title": "Long-Context Retrieval at Scale",
+      "upvotes": 41,
+      "publishedAt": "2026-10-28T05:00:00.000Z"
+    },
+    "numComments": 1
+  }
+]
