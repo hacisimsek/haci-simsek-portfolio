@@ -2,7 +2,9 @@ import { expect, test, waitForHydration } from './fixtures';
 
 // The build reads the radar fixtures (tests/fixtures/radar) via the feed
 // server, so these counts are stable.
-test('the radar lists every source and filters by type', async ({ page }) => {
+test('the radar lists every source in lanes and searches across them', async ({
+  page,
+}) => {
   await page.goto('/radar');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     'What’s rising in AI and on GitHub'
@@ -10,17 +12,31 @@ test('the radar lists every source and filters by type', async ({ page }) => {
   const rows = page.locator('main ol > li');
   await expect(rows).toHaveCount(10);
   await expect(
-    page.getByRole('link', { name: 'acme/agent-kit' })
+    page
+      .getByRole('region', { name: /^Repositories/ })
+      .getByRole('link', { name: 'acme/agent-kit' })
   ).toHaveAttribute('href', 'https://github.com/acme/agent-kit');
   // Ask HN has no link of its own; it opens the thread.
   await expect(
-    page.getByRole('link', { name: 'Ask HN: How do you evaluate LLM apps?' })
+    page
+      .getByRole('region', { name: /^News/ })
+      .getByRole('link', { name: 'Ask HN: How do you evaluate LLM apps?' })
   ).toHaveAttribute('href', 'https://news.ycombinator.com/item?id=50300002');
 
+  const papers = page.getByRole('region', { name: /^Papers/ });
+  await expect(papers.locator('li')).toHaveCount(2);
+  await expect(papers.locator('li').first()).toContainText(
+    'Sparse Mixture of Agents'
+  );
+  // One pick per kind that has a score.
+  await expect(
+    page.getByRole('region', { name: 'Worth a look' }).locator('li')
+  ).not.toHaveCount(0);
+
   await waitForHydration(page);
-  await page.getByRole('button', { name: 'Papers' }).click();
-  await expect(rows).toHaveCount(2);
-  await expect(rows.first()).toContainText('Sparse Mixture of Agents');
+  await page.getByRole('searchbox').fill('sparse');
+  await expect(rows).toHaveCount(1);
+  await expect(page.getByRole('region', { name: 'Worth a look' })).toBeHidden();
 });
 
 test('the radar is in the menu and in Turkish', async ({ page }) => {

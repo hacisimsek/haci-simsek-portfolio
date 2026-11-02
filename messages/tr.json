@@ -57,7 +57,7 @@
   },
   "Hero": {
     "eyebrow": "Backend ve dağıtık sistemler · İstanbul",
-    "facts": "{years}+ yıl deneyim\u00a0· {company} bünyesinde {role}\u00a0· {city}",
+    "facts": "{years}+ yıl deneyim · {company} bünyesinde {role} · {city}",
     "viewProjects": "Projeleri gör",
     "startConversation": "Bir konuşma başlat",
     "paletteHint": "Her yere atlamak için <kbd>⌘K</kbd> veya <kbd>Ctrl K</kbd>"
@@ -258,16 +258,15 @@
   },
   "Radar": {
     "title": "Yapay zekâda ve GitHub’da yükselenler",
-    "subtitle": "Yıldız toplayan yeni repolar, Hacker News’ten yapay zekâ haberleri, Hugging Face’te günün makaleleri ve takip ettiğim birkaç yazarın yazıları. Her yarım saatte yenilenir.",
+    "subtitle": "Yıldız toplayan repolar, yapay zekâ haberleri, günün makaleleri ve takip ettiğim yazarlar: altı ücretsiz kaynak, yarım saatte bir yenilenir.",
     "search": "Başlık, repo veya kaynak",
-    "kind": "Tür",
     "kinds": {
       "repo": "Repolar",
       "news": "Haberler",
       "paper": "Makaleler",
       "post": "Yazılar"
     },
-    "sortTop": "Her kaynakta öne çıkan",
+    "sortTop": "Öne çıkan",
     "sortNewest": "En yeni",
     "stars": "{count} yıldız",
     "points": "{count} puan",
@@ -283,6 +282,15 @@
       "devto": "DEV",
       "lobsters": "Lobsters",
       "simon": "Simon Willison"
-    }
+    },
+    "updated": "Güncellendi: {time}",
+    "picks": "Göz atmaya değer",
+    "sort": "Sıralama",
+    "perDay": "Günde {count} yıldız",
+    "perDayShort": "★ {count}/gün",
+    "showAll": "Tümünü göster ({count})",
+    "showLess": "Daha az göster",
+    "new": "Yeni",
+    "newSince": "Son ziyaretinden beri {count, plural, one {# yeni öğe} other {# yeni öğe}}"
   }
 }

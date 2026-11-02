@@ -14,6 +14,7 @@ import {
   parseHn,
   parseLobsters,
   parseSimon,
+  pickRadar,
 } from '@/lib/feeds/radar';
 
 const simon = readFileSync('tests/fixtures/radar/simon.xml', 'utf8');
@@ -92,6 +93,30 @@ describe('radar parsers', () => {
 
   it('rejects payloads that do not match the source shape', () => {
     expect(() => parseHn({ hits: [{ title: 1 }] })).toThrow();
+  });
+});
+
+describe('pickRadar', () => {
+  it('picks one item per kind: the fastest repo and the best scored rest', () => {
+    const now = Date.parse('2026-11-02T00:00:00Z');
+    const repo = (id: string, stars: number, created: string) => ({
+      ...parseGithub(github)[0],
+      id,
+      stars,
+      publishedAt: created,
+    });
+    const items = [
+      repo('old-big', 900, '2026-10-23T00:00:00Z'), // 100 a day
+      repo('new-small', 300, '2026-11-01T00:00:00Z'), // 300 a day
+      ...parseHn(hn),
+      ...parseSimon(simon),
+    ];
+    const picks = pickRadar(items, now);
+    expect(picks.map((pick) => pick.item.kind)).toEqual(['repo', 'news']);
+    expect(picks[0]).toMatchObject({ item: { id: 'new-small' }, signal: 300 });
+    expect(picks[1].signal).toBe(
+      Math.max(...parseHn(hn).map((i) => i.points!))
+    );
   });
 });
 

@@ -57,7 +57,7 @@
   },
   "Hero": {
     "eyebrow": "Backend & distributed systems · Istanbul",
-    "facts": "{years}+ years of experience\u00a0· {role} at {company}\u00a0· {city}",
+    "facts": "{years}+ years of experience · {role} at {company} · {city}",
     "viewProjects": "View Projects",
     "startConversation": "Start a conversation",
     "paletteHint": "Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> to jump anywhere"
@@ -258,17 +258,16 @@
   },
   "Radar": {
     "title": "What’s rising in AI and on GitHub",
-    "subtitle": "New repositories gaining stars, AI stories from Hacker News, the day’s papers on Hugging Face and posts from a few writers I read. Refreshed every half hour.",
+    "subtitle": "Repositories gaining stars, AI stories, the day’s papers and posts from writers I read: six free sources, refreshed every half hour.",
     "search": "Title, repository or source",
-    "kind": "Type",
     "kinds": {
       "repo": "Repositories",
       "news": "News",
       "paper": "Papers",
       "post": "Posts"
     },
-    "sortTop": "Top in each source",
-    "sortNewest": "Newest first",
+    "sortTop": "Top",
+    "sortNewest": "Newest",
     "stars": "{count} stars",
     "points": "{count} points",
     "comments": "{count} comments",
@@ -283,6 +282,15 @@
       "devto": "DEV",
       "lobsters": "Lobsters",
       "simon": "Simon Willison"
-    }
+    },
+    "updated": "Updated {time}",
+    "picks": "Worth a look",
+    "sort": "Order",
+    "perDay": "{count} stars a day",
+    "perDayShort": "★ {count}/day",
+    "showAll": "Show all {count}",
+    "showLess": "Show fewer",
+    "new": "New",
+    "newSince": "{count, plural, one {# new item} other {# new items}} since your last visit"
   }
 }
