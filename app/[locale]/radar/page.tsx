@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import RadarBrowser from '@/components/radar/radar-browser';
 import { routing } from '@/i18n/routing';
-import { getRadar } from '@/lib/feeds/radar';
+import { getRadar, pickRadar } from '@/lib/feeds/radar';
 import { pageMetadata } from '@/lib/page-metadata';
 
 // Same as RADAR_REVALIDATE; route config must be a literal.
@@ -33,16 +33,29 @@ export default async function Radar({
   }
   setRequestLocale(locale);
   const msg = await getTranslations({ locale, namespace: 'Radar' });
-  const { items, failed } = await getRadar();
+  const { items, failed, fetchedAt: now } = await getRadar();
+  const updated = new Intl.DateTimeFormat(locale, {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Europe/Istanbul',
+  }).format(now);
   const names = new Intl.ListFormat(locale, { type: 'conjunction' }).format(
     failed.map((source) => msg(`sources.${source}`))
   );
 
   return (
     <section className="space-y-6 pb-6">
-      <header className="pt-2 pb-4">
+      <header className="pt-2">
         <h1 className="max-w-4xl page-title">{msg('title')}</h1>
-        <p className="mt-5 page-subtitle">{msg('subtitle')}</p>
+        <p className="mt-3 page-subtitle">
+          {msg('subtitle')}{' '}
+          <time
+            dateTime={new Date(now).toISOString()}
+            className="text-foreground/80"
+          >
+            {msg('updated', { time: updated })}
+          </time>
+        </p>
       </header>
 
       {items.length === 0 ? (
@@ -59,7 +72,7 @@ export default async function Radar({
               {msg('unavailable', { sources: names })}
             </p>
           ) : null}
-          <RadarBrowser items={items} />
+          <RadarBrowser items={items} picks={pickRadar(items, now)} />
         </>
       )}
     </section>
