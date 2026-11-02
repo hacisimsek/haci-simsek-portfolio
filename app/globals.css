@@ -425,3 +425,8 @@ section[id] {
     display: none;
   }
 }
+
+/* The 404 already points home; the footer's invitation would repeat it. */
+body:has([data-not-found]) [data-closing] {
+  display: none;
+}

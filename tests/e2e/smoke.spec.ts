@@ -20,6 +20,9 @@ for (const { path, heading } of pages) {
 test('unknown routes return 404', async ({ page }) => {
   const response = await page.goto('/this-page-does-not-exist');
   expect(response?.status()).toBe(404);
+  await expect(page).toHaveTitle(/^Page not found/);
+  // The 404 points home itself; the footer's invitation stays out of it.
+  await expect(page.locator('#closing-title')).toBeHidden();
 });
 
 test('projects and articles render the feeds from the fixture server', async ({
