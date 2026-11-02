@@ -1,7 +1,15 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, waitForEntranceAnimations } from './fixtures';
 
-const paths = ['/', '/projects', '/articles', '/contact', '/tr', '/tr/contact'];
+const paths = [
+  '/',
+  '/projects',
+  '/articles',
+  '/contact',
+  '/radar',
+  '/tr',
+  '/tr/contact',
+];
 
 for (const theme of ['dark', 'light'] as const) {
   for (const path of paths) {
