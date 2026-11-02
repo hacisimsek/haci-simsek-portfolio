@@ -314,6 +314,7 @@ async function get(url: string, headers: Record<string, string> = {}) {
 export async function getRadar(): Promise<{
   items: RadarItem[];
   failed: RadarSource[];
+  fetchedAt: number;
 }> {
   const entries = Object.entries(sources()) as [
     RadarSource,
@@ -327,5 +328,32 @@ export async function getRadar(): Promise<{
     failed.push(entries[index][0]);
     return [];
   });
-  return { items, failed };
+  return { items, failed, fetchedAt: Date.now() };
+}
+
+export interface RadarPick {
+  item: RadarItem;
+  /** Stars a day for repos, points (or upvotes) for everything else. */
+  signal: number;
+}
+
+/** The strongest item of each kind: repos by stars a day, the rest by points. */
+export function pickRadar(items: RadarItem[], now: number): RadarPick[] {
+  const best = new Map<RadarKind, RadarPick>();
+  for (const item of items) {
+    const signal =
+      item.kind === 'repo'
+        ? Math.round(
+            (item.stars ?? 0) /
+              Math.max(1, (now - Date.parse(item.publishedAt)) / 86_400_000)
+          )
+        : (item.points ?? 0);
+    if (signal > (best.get(item.kind)?.signal ?? 0)) {
+      best.set(item.kind, { item, signal });
+    }
+  }
+  return (['repo', 'news', 'paper', 'post'] as const).flatMap((kind) => {
+    const pick = best.get(kind);
+    return pick ? [pick] : [];
+  });
 }
