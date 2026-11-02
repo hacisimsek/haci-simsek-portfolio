@@ -187,7 +187,7 @@ test('Open Graph image alt text follows the language', async ({ page }) => {
         .getAttribute('content')) ?? ''
     );
   }
-  expect(alts[0]).toBe('Hacı Şimşek · Java Backend Developer');
-  expect(alts[1]).toBe('Hacı Şimşek · Java Backend Geliştirici');
+  expect(alts[0]).toBe('Hacı Şimşek · Backend Engineer');
+  expect(alts[1]).toBe('Hacı Şimşek · Backend Mühendisi');
   expect(alts[2]).toBe(alts[1]);
 });

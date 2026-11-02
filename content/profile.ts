@@ -3,7 +3,7 @@ import type { Profile } from './types';
 export const profile: Profile = {
   name: 'Hacı Şimşek',
   asciiName: 'Haci Simsek',
-  title: { en: 'Java Backend Developer', tr: 'Java Backend Geliştirici' },
+  title: { en: 'Backend Engineer', tr: 'Backend Mühendisi' },
   role: {
     en: 'Software Development Senior Specialist',
     tr: 'Kıdemli Yazılım Geliştirme Uzmanı',
