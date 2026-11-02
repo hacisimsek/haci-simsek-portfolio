@@ -18,7 +18,7 @@ const SEEN_KEY = 'radar:seen';
 // Visits closer together than this count as one, so a reload keeps the dots.
 const VISIT_GAP = 30 * 60_000;
 
-export function filterRadar(
+function filterRadar(
   items: RadarItem[],
   {
     query,

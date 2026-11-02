@@ -34,7 +34,7 @@ export default function Footer() {
       <HideOnPath path="/contact">
         {/* Full-width rule; the band brings its own space below, so the
             bottom row sits close on /contact, where the band is hidden. */}
-        <div className="border-t border-border/70 pt-14 pb-14">
+        <div data-closing className="border-t border-border/70 pt-14 pb-14">
           <section aria-labelledby="closing-title" className="max-w-3xl">
             <h2
               id="closing-title"

@@ -62,7 +62,7 @@ export default function RadarRow({
           href={item.discussion}
           target="_blank"
           rel="noopener noreferrer"
-          className={`${stat} -my-3 py-3 transition-colors hover:text-foreground md:my-0 md:py-0`}
+          className={`${stat} -my-3 min-h-11 py-3 transition-colors hover:text-foreground md:my-0 md:min-h-0 md:py-0`}
         >
           {label}
         </a>
