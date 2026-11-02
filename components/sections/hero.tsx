@@ -1,37 +1,58 @@
 import { ArrowRight } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import type { CSSProperties } from 'react';
+import { Fragment, type CSSProperties } from 'react';
 import { Button } from '@/components/ui/button';
 import { profile, t } from '@/content';
 import { Link } from '@/i18n/navigation';
 import { careerYears } from '@/lib/dates';
 import { splitGraphemes } from '@/lib/split-text';
+import SystemDiagram from './system-diagram';
 
 export default function Hero() {
   const msg = useTranslations('Hero');
   const locale = useLocale();
-  const letters = splitGraphemes(profile.name);
+  // Letters are grouped by word so a line can only break between words;
+  // the stagger index keeps counting across the space.
+  const words = profile.name.split(' ').map((word, w, all) => {
+    const start = all
+      .slice(0, w)
+      .reduce((n, prev) => n + splitGraphemes(prev).length + 1, 0);
+    return splitGraphemes(word).map((letter, i) => ({
+      letter,
+      index: start + i,
+    }));
+  });
 
   return (
-    <section id="top" className="relative grid gap-8 pt-4 pb-4 lg:pt-8">
+    <section
+      id="top"
+      className="relative grid gap-8 pt-4 pb-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:pt-8"
+    >
       <div className="relative min-w-0">
         <h1 className="max-w-5xl page-title">
           <span className="sr-only">{profile.name}. </span>
           <span
             aria-hidden
-            className="block pb-[0.12em] text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.95] font-bold tracking-tighter lg:text-[clamp(4rem,min(7.5vw,11svh),7.25rem)]"
+            className="block pb-[0.12em] text-[clamp(3.25rem,11vw,8.5rem)] leading-[0.95] font-bold tracking-tighter lg:text-[clamp(3.5rem,min(7vw,12svh),6.75rem)]"
           >
-            {letters.map((letter, index) => (
-              <span
-                key={index}
-                className="letter"
-                style={{ '--i': index } as CSSProperties}
-              >
-                {letter === ' ' ? '\u00a0' : letter}
-              </span>
+            {words.map((letters, w) => (
+              <Fragment key={w}>
+                {w > 0 ? ' ' : null}
+                <span className="inline-block whitespace-nowrap">
+                  {letters.map(({ letter, index }) => (
+                    <span
+                      key={index}
+                      className="letter"
+                      style={{ '--i': index } as CSSProperties}
+                    >
+                      {letter}
+                    </span>
+                  ))}
+                </span>
+              </Fragment>
             ))}
           </span>
-          <span className="mt-5 block max-w-4xl text-2xl leading-snug font-medium text-muted-foreground sm:text-3xl [@media(max-height:52rem)]:lg:text-2xl">
+          <span className="mt-5 block max-w-4xl text-2xl leading-snug font-medium text-muted-foreground sm:text-3xl lg:text-2xl">
             {t(profile.headline, locale)}
           </span>
         </h1>
@@ -71,6 +92,7 @@ export default function Hero() {
           </p>
         </div>
       </div>
+      <SystemDiagram className="hidden w-full lg:block" />
     </section>
   );
 }

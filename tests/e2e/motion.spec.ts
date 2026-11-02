@@ -8,35 +8,23 @@ import {
 test.describe('with motion', () => {
   test.use({ reducedMotion: 'no-preference' });
 
-  test('no background layers, Lenis scrolls and the progress bar follows', async ({
-    page,
-  }) => {
+  test('no background layers and Lenis scrolls', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('[data-aurora], .grain, .page-grid')).toHaveCount(
       0
     );
     await expect(page.locator('html')).toHaveClass(/\blenis\b/);
-
-    const bar = page.locator('[data-scroll-progress]');
-    await expect(bar).toHaveCount(1);
-    await page.mouse.wheel(0, 2000);
-    await expect
-      .poll(() =>
-        bar.evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).a)
-      )
-      .toBeGreaterThan(0.05);
+    // The pinned story shows its own progress; there is no page-wide bar.
+    await expect(page.locator('[data-scroll-progress]')).toHaveCount(0);
   });
 });
 
 test.describe('with reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
 
-  test('Lenis and the progress bar are off and content is visible', async ({
-    page,
-  }) => {
+  test('Lenis is off and content is visible', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('html')).not.toHaveClass(/\blenis\b/);
-    await expect(page.locator('[data-scroll-progress]')).toHaveCount(0);
     expect(
       await page
         .locator('#about')

@@ -62,58 +62,8 @@
     "startConversation": "Start a conversation",
     "paletteHint": "Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> to jump anywhere"
   },
-  "Saga": {
-    "label": "An order saga",
-    "caption": "A saga keeps an order consistent across services without one big transaction. Each service commits its own step; when one fails, the steps before it are undone by compensating actions.",
-    "run": "Run with a failure",
-    "pause": "Pause",
-    "resume": "Resume",
-    "code": "See it in code",
-    "steps": {
-      "order": {
-        "name": "Order service",
-        "action": "Create order",
-        "undo": "Cancel order",
-        "failed": "Not created"
-      },
-      "inventory": {
-        "name": "Inventory",
-        "action": "Reserve stock",
-        "undo": "Release stock",
-        "failed": "Out of stock"
-      },
-      "payment": {
-        "name": "Payment",
-        "action": "Charge card",
-        "undo": "Refund payment",
-        "failed": "Declined"
-      },
-      "shipping": {
-        "name": "Shipping",
-        "action": "Book courier",
-        "undo": "Cancel courier",
-        "failed": "Not booked"
-      }
-    },
-    "status": {
-      "idle": "Waiting",
-      "running": "Running",
-      "done": "Done",
-      "compensating": "Undoing",
-      "compensated": "Undone",
-      "skipped": "Skipped"
-    },
-    "outcome": "Payment declined. Stock released and order cancelled."
-  },
-  "Story": {
-    "title": "Every upgrade starts with one command.",
-    "summary": "A terminal shows the migration I ran at Sisal: a proof of concept for Spring Boot 2.x to 3.x and Java 11 to 21, then every module moved to Java 21, more than 30 in all.",
-    "outro": "From a proof of concept to every module.",
-    "modules": "modules moved to Java 21",
-    "java": "Java LTS versions"
-  },
   "About": {
-    "title": "Backend engineer for systems that have to stay up"
+    "title": "Building at Sisal, travelling when I can"
   },
   "Career": {
     "title": "Where I've worked",
@@ -292,5 +242,35 @@
     "showLess": "Show fewer",
     "new": "New",
     "newSince": "{count, plural, one {# new item} other {# new items}} since your last visit"
+  },
+  "SystemStory": {
+    "title": "Designed for the day something breaks.",
+    "copy": "Event-driven services on Kafka and RabbitMQ: how I design them to keep their promises when parts of the system fail.",
+    "label": "A Kafka topic with idempotent consumers, a saga and a trace",
+    "topic": "topic",
+    "group": "consumer group",
+    "redelivered": "redelivered",
+    "skipped": "key seen, skipped",
+    "circuit": "circuit open",
+    "compensation": "stock.released (saga)",
+    "trace": "trace",
+    "steps": {
+      "log": {
+        "title": "Events, not calls",
+        "body": "Orders are written once to a partitioned Kafka log; services read at their own pace."
+      },
+      "idempotent": {
+        "title": "Safe to deliver twice",
+        "body": "Consumers are idempotent: a redelivered event is recognised by its key and skipped."
+      },
+      "failure": {
+        "title": "Failure has a plan",
+        "body": "Payment trips a circuit breaker; the saga publishes a compensation and stock is released."
+      },
+      "trace": {
+        "title": "One trace, end to end",
+        "body": "Every hop carries the same trace, so production questions get answers, not guesses."
+      }
+    }
   }
 }

@@ -14,20 +14,14 @@ const repo = (name: string, flagship = false): FeaturedRepo => ({
 });
 
 describe('FeaturedProjects', () => {
-  it('shows the saga demo beside the flagship it comes from', () => {
+  it('is a plain list: the system story above tells the saga', () => {
     render(
       <FeaturedProjects
         repos={[repo('ecommerce-microservices', true), repo('notifyhub')]}
       />
     );
     const section = screen.getByRole('region', { name: 'Featured projects' });
-    expect(
-      within(section).getByRole('figure', { name: 'An order saga' })
-    ).toBeInTheDocument();
-  });
-
-  it('leaves the demo out when the flagship is missing from the feed', () => {
-    render(<FeaturedProjects repos={[repo('notifyhub')]} />);
+    expect(within(section).getAllByRole('listitem')).toHaveLength(2);
     expect(screen.queryByRole('figure')).toBeNull();
   });
 

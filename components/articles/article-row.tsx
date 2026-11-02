@@ -30,7 +30,7 @@ export default function ArticleRow({
         href={article.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="group grid gap-x-8 gap-y-2 py-6 transition-colors sm:grid-cols-[9rem_minmax(0,1fr)_auto]"
+        className="group spotlight grid gap-x-8 gap-y-2 py-6 transition-colors sm:grid-cols-[9rem_minmax(0,1fr)_auto]"
       >
         <div className="min-w-0">
           <Heading
@@ -56,7 +56,7 @@ export default function ArticleRow({
         </time>
         <ArrowUpRight
           aria-hidden
-          className="hidden h-4 w-4 text-muted-foreground transition-colors group-hover:text-foreground sm:mt-1.5 sm:block"
+          className="hidden h-4 w-4 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground sm:mt-1.5 sm:block"
         />
       </a>
     </li>

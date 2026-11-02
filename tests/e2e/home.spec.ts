@@ -215,7 +215,7 @@ test('featured projects carry authored lines', async ({ page }) => {
   expect(count).toBeLessThanOrEqual(4);
   // Only authored picks: no stand-in row with a raw GitHub description.
   await expect(region).not.toContainText('URL shortener');
-  await expect(region).toContainText('event-driven saga');
+  await expect(region).toContainText('choreographed saga');
   await expect(region).not.toContainText('orchestration-based');
 });
 

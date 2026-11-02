@@ -22,12 +22,12 @@ describe('featured projects', () => {
     }
   });
 
-  it('says "serbest bırakılıyor" consistently in Turkish', () => {
-    const line = featuredProjects.find(
+  it('calls the flagship saga choreographed in both languages', () => {
+    const { summary } = featuredProjects.find(
       (project) => project.name === 'ecommerce-microservices'
-    )!.summary.tr;
-    expect(line.match(/serbest bırakılıyor/g)).toHaveLength(2);
-    expect(line).not.toMatch(/stok bırakılıyor/);
+    )!;
+    expect(summary.en).toMatch(/choreographed saga over Kafka/);
+    expect(summary.tr).toMatch(/koreografi tabanlı bir saga/);
   });
 });
 

@@ -62,58 +62,8 @@
     "startConversation": "Bir konuşma başlat",
     "paletteHint": "Her yere atlamak için <kbd>⌘K</kbd> veya <kbd>Ctrl K</kbd>"
   },
-  "Saga": {
-    "label": "Bir sipariş saga'sı",
-    "caption": "Saga, bir siparişi tek büyük transaction olmadan servisler arasında tutarlı tutar. Her servis kendi adımını işler; biri başarısız olursa önceki adımlar telafi işlemleriyle geri alınır.",
-    "run": "Hata senaryosunu çalıştır",
-    "pause": "Duraklat",
-    "resume": "Sürdür",
-    "code": "Kodda incele",
-    "steps": {
-      "order": {
-        "name": "Sipariş servisi",
-        "action": "Sipariş oluştur",
-        "undo": "Siparişi iptal et",
-        "failed": "Oluşturulamadı"
-      },
-      "inventory": {
-        "name": "Stok",
-        "action": "Stok ayır",
-        "undo": "Stoğu serbest bırak",
-        "failed": "Stok yok"
-      },
-      "payment": {
-        "name": "Ödeme",
-        "action": "Karttan tahsil et",
-        "undo": "Ödemeyi iade et",
-        "failed": "Reddedildi"
-      },
-      "shipping": {
-        "name": "Kargo",
-        "action": "Kurye ayarla",
-        "undo": "Kuryeyi iptal et",
-        "failed": "Ayarlanamadı"
-      }
-    },
-    "status": {
-      "idle": "Bekliyor",
-      "running": "Çalışıyor",
-      "done": "Tamam",
-      "compensating": "Geri alınıyor",
-      "compensated": "Geri alındı",
-      "skipped": "Atlandı"
-    },
-    "outcome": "Ödeme reddedildi. Stok serbest bırakıldı, sipariş iptal edildi."
-  },
-  "Story": {
-    "title": "Her büyük geçiş tek bir komutla başlar.",
-    "summary": "Terminal, Sisal’de yürüttüğüm geçişi gösteriyor: Spring Boot 2.x’ten 3.x’e ve Java 11’den 21’e geçiş için bir PoC, ardından 30’dan fazla modülün tamamının Java 21’e taşınması.",
-    "outro": "Bir PoC’den tüm modüllere.",
-    "modules": "modül Java 21’e taşındı",
-    "java": "Java LTS sürümleri"
-  },
   "About": {
-    "title": "Ayakta kalması gereken sistemler için backend mühendisi"
+    "title": "Sisal’de geliştiriyorum, fırsat buldukça geziyorum"
   },
   "Career": {
     "title": "Çalıştığım yerler",
@@ -292,5 +242,35 @@
     "showLess": "Daha az göster",
     "new": "Yeni",
     "newSince": "Son ziyaretinden beri {count, plural, one {# yeni öğe} other {# yeni öğe}}"
+  },
+  "SystemStory": {
+    "title": "Bir şeylerin bozulacağı gün için tasarlandı.",
+    "copy": "Kafka ve RabbitMQ üzerinde event-driven servisler: sistemin bir parçası çöktüğünde bile sözünü tutmaları için onları nasıl tasarlıyorum.",
+    "label": "Idempotent consumer’lar, saga ve trace ile bir Kafka topic’i",
+    "topic": "topic",
+    "group": "consumer group",
+    "redelivered": "tekrar geldi",
+    "skipped": "anahtar tanındı, atlandı",
+    "circuit": "circuit açık",
+    "compensation": "stock.released (saga)",
+    "trace": "trace",
+    "steps": {
+      "log": {
+        "title": "Çağrı değil, olay",
+        "body": "Siparişler bölümlenmiş bir Kafka log’una bir kez yazılır; servisler kendi hızlarında okur."
+      },
+      "idempotent": {
+        "title": "İki kez gelse de güvenli",
+        "body": "Consumer’lar idempotent: tekrar gelen olay anahtarından tanınır ve atlanır."
+      },
+      "failure": {
+        "title": "Hatanın bir planı var",
+        "body": "Payment circuit breaker’ı açar; saga bir telafi olayı yayınlar ve stok serbest bırakılır."
+      },
+      "trace": {
+        "title": "Uçtan uca tek trace",
+        "body": "Her adım aynı trace’i taşır; production’daki sorular tahminle değil, veriyle yanıtlanır."
+      }
+    }
   }
 }

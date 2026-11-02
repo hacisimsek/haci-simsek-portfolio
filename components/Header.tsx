@@ -30,6 +30,15 @@ export default function Header() {
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const [pill, setPill] = useState({ x: 0, w: 0, shown: false, slide: false });
+  // The pill slides between links, but appears in place after being hidden.
+  const movePill = (link: HTMLElement) =>
+    setPill((p) => ({
+      x: link.offsetLeft,
+      w: link.offsetWidth,
+      shown: true,
+      slide: p.shown,
+    }));
 
   // Escape closes the open phone menu. A dialog above it (the command
   // palette) claims Escape first, and focus only returns to the button when
@@ -80,13 +89,39 @@ export default function Header() {
 
         {/* The current page is marked quietly (brighter text and an accent
             rule), so the emphasis stays on where the visitor can go. */}
-        <nav className="hidden items-center gap-2 md:flex">
+        <nav
+          className="relative hidden items-center gap-2 md:flex"
+          onPointerLeave={() => setPill((p) => ({ ...p, shown: false }))}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              setPill((p) => ({ ...p, shown: false }));
+            }
+          }}
+        >
+          {/* One hover pill slides to whichever link is pointed at or
+              focused, instead of each link lighting up on its own. */}
+          <span
+            aria-hidden
+            className={cn(
+              'absolute inset-y-0 left-0 rounded-full bg-secondary duration-300 ease-out',
+              pill.slide
+                ? 'transition-[transform,width,opacity]'
+                : 'transition-opacity'
+            )}
+            style={{
+              transform: `translateX(${pill.x}px)`,
+              width: pill.w,
+              opacity: pill.shown ? 1 : 0,
+            }}
+          />
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               aria-current={isCurrent(pathname, link.href) ? 'page' : undefined}
-              className="relative rounded-full px-4 py-2 text-sm text-muted-foreground transition after:absolute after:inset-x-4 after:bottom-1 after:h-px after:bg-accent after:opacity-0 hover:bg-secondary hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:after:opacity-100"
+              onPointerEnter={(event) => movePill(event.currentTarget)}
+              onFocus={(event) => movePill(event.currentTarget)}
+              className="relative rounded-full px-4 py-2 text-sm text-muted-foreground transition-colors after:absolute after:inset-x-4 after:bottom-1 after:h-px after:bg-accent after:opacity-0 hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:after:opacity-100"
             >
               {t(link.key)}
             </Link>

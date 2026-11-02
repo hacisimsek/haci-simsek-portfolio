@@ -5,7 +5,7 @@ import { Geist, Geist_Mono, Space_Grotesk } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import React from 'react';
 import Header from '@/components/Header';
-import ScrollProgress from '@/components/effects/scroll-progress';
+import Spotlight from '@/components/effects/spotlight';
 import MotionProvider from '@/components/providers/motion-provider';
 import SmoothScroll from '@/components/providers/smooth-scroll';
 import Footer from '@/components/Footer';
@@ -101,7 +101,7 @@ export default async function LocaleLayout({
             <TerminalHost />
             <MotionProvider>
               <SmoothScroll />
-              <ScrollProgress />
+              <Spotlight />
               <div className="app-shell">
                 <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pt-6 pb-10 sm:px-6 lg:px-8">
                   <Header />
