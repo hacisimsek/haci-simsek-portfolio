@@ -75,7 +75,7 @@ export default function RadarRow({
   }
 
   return (
-    <li className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-2 py-3">
+    <li className="spotlight grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-2 py-3">
       <span
         aria-hidden
         className="pt-0.5 font-mono text-xs text-muted-foreground tabular-nums"

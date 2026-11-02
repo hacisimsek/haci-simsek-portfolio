@@ -134,7 +134,7 @@ export default function RadarBrowser({
             {picks.map(({ item, signal }) => (
               <li
                 key={item.id}
-                className="relative w-[78%] shrink-0 snap-start bg-background p-4 sm:w-auto"
+                className="spotlight relative w-[78%] shrink-0 snap-start bg-background p-4 [--spotlight-bleed:0] sm:w-auto"
               >
                 <p className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
                   <span>{msg(`kinds.${item.kind}`)}</span>

@@ -27,7 +27,7 @@ export default function ProjectRow({
         href={repo.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="group grid gap-x-10 gap-y-3 py-7 transition-colors sm:grid-cols-[minmax(0,1fr)_auto]"
+        className="group spotlight grid gap-x-10 gap-y-3 py-7 transition-colors sm:grid-cols-[minmax(0,1fr)_auto]"
       >
         {/* The label follows the title, so the link's name starts with the
             title and no kicker sits above it. */}
@@ -56,7 +56,7 @@ export default function ProjectRow({
           <span>{meta}</span>
           <ArrowUpRight
             aria-hidden
-            className="h-4 w-4 shrink-0 transition-colors group-hover:text-foreground"
+            className="h-4 w-4 shrink-0 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground"
           />
         </p>
       </a>

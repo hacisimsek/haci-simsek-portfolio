@@ -1,15 +1,10 @@
 import type { Page } from '@playwright/test';
-import {
-  expect,
-  test,
-  waitForEntranceAnimations,
-  waitForHydration,
-} from './fixtures';
+import { expect, test, waitForHydration } from './fixtures';
 
 // Scrolls so the story's track is at progress p (0 = pinned, 1 = released).
 async function scrollToProgress(page: Page, p: number) {
   await page.evaluate((p) => {
-    const track = document.querySelector('[data-story-scene]')!.parentElement!;
+    const track = document.querySelector('#story')!;
     const top = track.getBoundingClientRect().top + window.scrollY;
     const range = track.clientHeight - window.innerHeight;
     window.scrollTo({ top: top + p * range, behavior: 'instant' });
@@ -17,10 +12,6 @@ async function scrollToProgress(page: Page, p: number) {
 }
 
 const story = (page: Page) => page.locator('#story');
-const sceneVar = (page: Page, name: string) =>
-  page
-    .locator('[data-story-scene]')
-    .evaluate((element, name) => element.style.getPropertyValue(name), name);
 
 test.describe('on a desktop with motion', () => {
   test.use({ reducedMotion: 'no-preference' });
@@ -28,210 +19,77 @@ test.describe('on a desktop with motion', () => {
   test.beforeEach(async ({ page }, testInfo) => {
     test.skip(
       testInfo.project.name !== 'desktop',
-      'The full story plays on wide screens with a fine pointer and motion.'
+      'The story scrolls on wide screens with a fine pointer and motion.'
     );
     await page.goto('/');
     await waitForHydration(page);
   });
 
-  test('pins the window and plays the acts as the page scrolls', async ({
+  test('pins the stage and walks the four steps as the page scrolls', async ({
     page,
   }) => {
-    const scene = page.locator('[data-story-scene]');
+    const panel = story(page).locator('div.font-mono[aria-hidden="true"]');
     const tops: number[] = [];
-    for (const [p, act] of [
-      [0.1, '0'],
-      [0.5, '1'],
-      [0.95, '2'],
+    for (const [p, step] of [
+      [0.3, '0'],
+      [0.45, '1'],
+      [0.62, '2'],
+      [0.95, '3'],
     ] as const) {
       await scrollToProgress(page, p);
-      await expect(story(page)).toHaveAttribute('data-act', act);
-      tops.push((await scene.boundingBox())!.y);
+      await expect(story(page)).toHaveAttribute('data-step', step);
+      tops.push((await panel.boundingBox())!.y);
     }
     // Sticky: the stage stays put while the page scrolls past.
     expect(Math.max(...tops) - Math.min(...tops)).toBeLessThan(2);
-    await expect(page.locator('[data-story-migrated]')).toHaveText('30+');
   });
 
-  test('turns the window to face the visitor before the terminal types', async ({
+  test('marks the failure red and the compensation purple, never the reverse', async ({
     page,
   }) => {
-    await scrollToProgress(page, 0.05);
-    await expect(story(page)).toHaveAttribute('data-act', '0');
-    expect(parseFloat(await sceneVar(page, '--rx'))).toBeGreaterThan(40);
-    await scrollToProgress(page, 0.5);
-    await expect(story(page)).toHaveAttribute('data-act', '1');
-    expect(await sceneVar(page, '--rx')).toBe('0deg');
-    expect(Number(await sceneVar(page, '--lines'))).toBeGreaterThan(0);
-  });
-
-  test('never moves on its own and lets entrance animations settle', async ({
-    page,
-  }) => {
-    await scrollToProgress(page, 0.5);
-    await expect(story(page)).toHaveAttribute('data-act', '1');
-    await waitForEntranceAnimations(page);
-    const inStory = await page.evaluate(
-      () =>
-        document.getAnimations().filter((animation) => {
-          const target = (animation.effect as KeyframeEffect).target;
-          return target instanceof Element && target.closest('#story');
-        }).length
+    const failed = story(page).locator('[data-event="1049"]');
+    await scrollToProgress(page, 0.45);
+    await expect(failed).not.toHaveClass(/bg-destructive/);
+    await scrollToProgress(page, 0.66);
+    await expect(failed).toHaveClass(/bg-destructive/);
+    await expect(story(page).getByText(/stock\.released/)).toHaveClass(
+      /text-primary/
     );
-    expect(inStory).toBe(0);
   });
 
-  test('does not widen the page with the camera close in', async ({ page }) => {
-    await scrollToProgress(page, 0.5);
-    await expect(story(page)).toHaveAttribute('data-act', '1');
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= window.innerWidth
-      )
-    ).toBe(true);
+  test('scrolls back the way it came', async ({ page }) => {
+    await scrollToProgress(page, 0.95);
+    await expect(story(page)).toHaveAttribute('data-step', '3');
+    await scrollToProgress(page, 0.3);
+    await expect(story(page)).toHaveAttribute('data-step', '0');
   });
 });
 
-test.describe('on short laptop screens', () => {
-  test.use({ reducedMotion: 'no-preference' });
-
-  for (const viewport of [
-    { width: 1280, height: 720 },
-    { width: 1440, height: 680 },
-    { width: 1366, height: 768 },
-  ]) {
-    test(`keeps the window clear of the header and the outro at ${viewport.width}×${viewport.height}`, async ({
-      page,
-    }, testInfo) => {
-      test.skip(testInfo.project.name !== 'desktop', 'Desktop only.');
-      await page.setViewportSize(viewport);
-      await page.goto('/');
-      await waitForHydration(page);
-      const box = (selector: string) =>
-        page.locator(selector).first().boundingBox();
-
-      await scrollToProgress(page, 0.5);
-      await expect(story(page)).toHaveAttribute('data-act', '1');
-      const header = (await box('header'))!;
-      expect((await box('.story-window'))!.y).toBeGreaterThanOrEqual(
-        header.y + header.height
-      );
-
-      await scrollToProgress(page, 0.95);
-      await expect(story(page)).toHaveAttribute('data-act', '2');
-      const window = (await box('.story-window'))!;
-      const outro = (await box('.story-outro p'))!;
-      expect(window.y + window.height).toBeLessThanOrEqual(outro.y);
-    });
-  }
-
-  test('falls back to the still layout below 40rem of height', async ({
-    page,
-  }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Desktop only.');
-    await page.setViewportSize({ width: 1440, height: 600 });
-    await page.goto('/');
-    await expect(story(page)).toBeVisible();
-    expect(
-      await page
-        .locator('.story-window')
-        .evaluate((element) => getComputedStyle(element).transform)
-    ).toBe('none');
-  });
-});
-
-test.describe('with reduced motion', () => {
-  test.use({ reducedMotion: 'reduce' });
-
-  test('lays the finished run out as a still section', async ({
+test.describe('everywhere else', () => {
+  test('shows the finished story as a still section', async ({
     page,
   }, testInfo) => {
     test.skip(
-      testInfo.project.name === 'mobile',
-      'Phones get the hero saga instead.'
+      testInfo.project.name === 'desktop',
+      'Phones and reduced motion get the still layout.'
     );
     await page.goto('/');
     await waitForHydration(page);
-    await story(page).scrollIntoViewIfNeeded();
-    const window = page.locator('.story-window');
-    expect(
-      await window.evaluate((element) => getComputedStyle(element).transform)
-    ).toBe('none');
-    expect(
-      await page
-        .locator('[data-story-scene]')
-        .evaluate((element) => getComputedStyle(element).position)
-    ).not.toBe('sticky');
-    await expect(page.locator('[data-story-migrated]')).toHaveText('30+');
-    await expect(page.locator('.story-line').last()).toHaveCSS('opacity', '1');
-    await expect(page.locator('.story-outro p')).toHaveCSS('opacity', '1');
+    await expect(story(page)).toHaveAttribute('data-step', 'still');
+    const box = (await story(page).boundingBox())!;
+    const viewport = page.viewportSize()!;
+    // Not a tall scroll track: about as tall as its content.
+    expect(box.height).toBeLessThan(viewport.height * 2.2);
+    await expect(story(page).getByRole('heading', { level: 3 })).toHaveCount(4);
   });
 });
 
-test('phones get the still layout, with the numbers', async ({
-  page,
-  isMobile,
-}) => {
-  test.skip(!isMobile, 'Covers the mobile project.');
-  await page.goto('/');
-  await expect(story(page)).toBeVisible();
+test('reads the same in Turkish', async ({ page }) => {
+  await page.goto('/tr');
   await expect(
-    story(page).getByRole('heading', { name: /one command/ })
+    story(page).getByRole('heading', { level: 2 })
+  ).toHaveAccessibleName('Bir şeylerin bozulacağı gün için tasarlandı.');
+  await expect(
+    story(page).getByRole('heading', { name: 'Hatanın bir planı var' })
   ).toBeVisible();
-  expect(
-    await page
-      .locator('.story-window')
-      .evaluate((element) => getComputedStyle(element).transform)
-  ).toBe('none');
-  await expect(page.locator('[data-story-migrated]')).toHaveText('30+');
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= window.innerWidth
-    )
-  ).toBe(true);
-});
-
-test.describe('the still terminal on narrow screens', () => {
-  for (const width of [320, 390]) {
-    test(`fits inside the screen at ${width}px`, async ({ page }, testInfo) => {
-      test.skip(
-        testInfo.project.name !== 'mobile',
-        'Covers the mobile project.'
-      );
-      await page.setViewportSize({ width, height: 800 });
-      await page.goto('/');
-      const box = (await page.locator('.story-window').boundingBox())!;
-      expect(box.x).toBeGreaterThanOrEqual(0);
-      expect(box.x + box.width).toBeLessThanOrEqual(width);
-      // No terminal line is cut off inside the window either.
-      const clipped = await page
-        .locator('.story-window')
-        .evaluate((element) =>
-          [...element.querySelectorAll('.story-line, .story-line-static')].some(
-            (line) => line.scrollWidth > line.clientWidth + 1
-          )
-        );
-      expect(clipped).toBe(false);
-    });
-  }
-});
-
-test.describe('the first screen', () => {
-  test.use({ reducedMotion: 'no-preference' });
-
-  for (const viewport of [
-    { width: 1280, height: 720 },
-    { width: 1366, height: 768 },
-    { width: 1440, height: 900 },
-  ]) {
-    test(`shows the whole story headline at ${viewport.width}×${viewport.height}`, async ({
-      page,
-    }, testInfo) => {
-      test.skip(testInfo.project.name !== 'desktop', 'Desktop only.');
-      await page.setViewportSize(viewport);
-      await page.goto('/');
-      const box = (await page.locator('#story-title').boundingBox())!;
-      expect(box.y + box.height).toBeLessThanOrEqual(viewport.height);
-    });
-  }
 });

@@ -35,12 +35,12 @@ describe('ProjectRow', () => {
     };
     const { unmount } = render(<ProjectRow repo={flagship} />);
     expect(
-      screen.getByText(/event-driven saga over Kafka/)
+      screen.getByText(/choreographed saga over Kafka/)
     ).toBeInTheDocument();
     expect(screen.queryByText(/ACID/)).toBeNull();
     unmount();
     render(<ProjectRow repo={flagship} />, { locale: 'tr' });
-    expect(screen.getByText(/olay tabanlı bir saga/)).toBeInTheDocument();
+    expect(screen.getByText(/koreografi tabanlı bir saga/)).toBeInTheDocument();
   });
 
   it('keeps the GitHub description for other repos', () => {

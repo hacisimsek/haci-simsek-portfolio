@@ -77,12 +77,14 @@ describe('experience', () => {
     expect(JSON.stringify({ profile, experience })).not.toMatch(/Orion/);
   });
 
-  it('leads the current role with the Java 21 migration', () => {
+  it('leads the current role with the systems work, the migration after it', () => {
     const [senior] = experience;
-    expect(senior.highlights.en[0]).toMatch(
+    expect(senior.highlights.en[0]).toMatch(/\*\*AreaPrivata\*\*/);
+    expect(senior.highlights.en[1]).toMatch(/\*\*Kafka\*\*/);
+    expect(senior.highlights.en[2]).toMatch(
       /Spring Boot 2\.x.*3\.x.*Java 11.*21.*30\+ modules.*\*\*Java 21\*\*/
     );
-    expect(senior.highlights.tr[0]).toMatch(
+    expect(senior.highlights.tr[2]).toMatch(
       /30’dan fazla modül.*\*\*Java 21\*\*/
     );
   });
@@ -146,7 +148,10 @@ describe('profile', () => {
       tr: 'Java Backend Geliştirici',
     });
     expect(profile.role.en).toBe('Software Development Senior Specialist');
-    expect(profile.headline.en).toMatch(/^Java backend developer/);
+    // The headline leads with the systems work, not the stack.
+    expect(profile.headline.en).toMatch(
+      /^Backend engineer designing event-driven systems/
+    );
   });
 
   it('records the certification and languages from the CV', () => {

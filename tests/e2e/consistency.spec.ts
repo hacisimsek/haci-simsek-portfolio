@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures';
+import { expect, test, waitForHydration } from './fixtures';
 
 test.describe('desktop header', () => {
   test.skip(({ isMobile }) => isMobile, 'the phone header has its own menu');
@@ -216,9 +216,7 @@ test.describe('one accent for structure', () => {
   for (const theme of ['dark', 'light'] as const) {
     test(`purple is kept for undo in the ${theme} theme`, async ({ page }) => {
       await page.goto('/');
-      // The progress bar mounts after hydration, once the motion preference
-      // is read; on a slow runner it is not there yet right after load.
-      await expect(page.locator('[data-scroll-progress]')).toHaveCount(1);
+      await waitForHydration(page);
       await page.evaluate((name) => {
         document.documentElement.classList.remove('dark', 'light');
         document.documentElement.classList.add(name);
@@ -236,20 +234,17 @@ test.describe('one accent for structure', () => {
           ...document.querySelectorAll<HTMLElement>('[data-career-dot]'),
         ].map((dot) => getComputedStyle(dot).borderTopColor);
         const fill = document.querySelector('[data-timeline-fill]');
-        const bar = document.querySelector('[data-scroll-progress]');
         return {
           accent: probe('var(--accent)'),
           ring: probe('var(--ring)'),
           dots,
           fillGradient: fill && getComputedStyle(fill).backgroundImage,
-          barGradient: bar && getComputedStyle(bar).backgroundImage,
         };
       });
       expect(result.dots.length).toBeGreaterThan(3);
       for (const dot of result.dots) expect(dot).toBe(result.accent);
       expect(result.ring).toBe(result.accent);
       expect(result.fillGradient).toBe('none');
-      expect(result.barGradient).toBe('none');
     });
   }
 });
