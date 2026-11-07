@@ -10,7 +10,7 @@ test('the radar lists every source in lanes and searches across them', async ({
     'What’s rising in AI and on GitHub'
   );
   const rows = page.locator('main ol > li');
-  await expect(rows).toHaveCount(10);
+  await expect(rows).toHaveCount(11);
   await expect(
     page
       .getByRole('region', { name: /^Repositories/ })

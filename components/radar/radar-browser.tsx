@@ -1,6 +1,7 @@
 'use client';
 
-import { Search } from 'lucide-react';
+import { FileText, FolderGit2, Newspaper, PenLine, Search } from 'lucide-react';
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { useState, useSyncExternalStore } from 'react';
 import EmptyResults from '@/components/collections/empty-results';
@@ -10,6 +11,12 @@ import RadarRow from './radar-row';
 
 type Sort = 'top' | 'newest';
 const KINDS: RadarKind[] = ['repo', 'news', 'paper', 'post'];
+const LANE_ICONS = {
+  repo: FolderGit2,
+  news: Newspaper,
+  paper: FileText,
+  post: PenLine,
+};
 // "Top" mixes sources by their own rank; ties keep this order.
 const SOURCES = ['github', 'hn', 'hf', 'devto', 'lobsters', 'simon'];
 // Rows a lane shows before "Show all".
@@ -107,12 +114,12 @@ export default function RadarBrowser({
   })).filter((lane) => lane.items.length > 0);
   const freshCount = items.filter(fresh).length;
 
-  const row = (item: RadarItem, index: number) => (
+  const row = (item: RadarItem, max: number) => (
     <RadarRow
       key={item.id}
       item={item}
-      rank={sort === 'top' ? index + 1 : undefined}
-      source={sourceName(item)}
+      max={max}
+      source={item.kind === 'post' ? sourceName(item) : undefined}
       date={date.format(new Date(item.publishedAt))}
       count={(value) => count.format(value)}
       fresh={fresh(item)}
@@ -134,8 +141,33 @@ export default function RadarBrowser({
             {picks.map(({ item, signal }) => (
               <li
                 key={item.id}
-                className="spotlight relative w-[78%] shrink-0 snap-start bg-background p-4 [--spotlight-bleed:0] sm:w-auto"
+                className="group spotlight relative w-[78%] shrink-0 snap-start bg-card p-4 [--spotlight-bleed:0] sm:w-auto"
               >
+                {/* The picture when the source has one; otherwise, and if it
+                    fails to load, the site icon on a quiet tile. */}
+                <div className="relative -mx-4 -mt-4 mb-4 aspect-[2/1] overflow-hidden border-b border-border/60 bg-foreground/5">
+                  <Image
+                    src={item.icon}
+                    alt=""
+                    width={40}
+                    height={40}
+                    className="absolute inset-0 m-auto h-10 w-10 rounded-lg"
+                  />
+                  {item.image ? (
+                    <Image
+                      src={item.image}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 18rem, (min-width: 640px) 50vw, 78vw"
+                      // Screenshots of white pages glare in the dark theme;
+                      // they come up to full brightness on hover.
+                      className="object-cover transition-[filter] duration-300 dark:brightness-[0.72] dark:group-hover:brightness-100"
+                      onError={(event) => {
+                        event.currentTarget.hidden = true;
+                      }}
+                    />
+                  ) : null}
+                </div>
                 <p className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
                   <span>{msg(`kinds.${item.kind}`)}</span>
                   <span className="font-mono text-accent tabular-nums">
@@ -229,26 +261,43 @@ export default function RadarBrowser({
       {lanes.length === 0 ? (
         <EmptyResults onReset={() => setQuery('')} />
       ) : (
-        <div className="grid gap-x-8 gap-y-10 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-5 md:grid-cols-2">
           {lanes.map((lane) => {
             const all = searching || open.includes(lane.kind);
+            const Icon = LANE_ICONS[lane.kind];
+            const max = Math.max(
+              0,
+              ...lane.items.map((item) => item.stars ?? item.points ?? 0)
+            );
             return (
               <section
                 key={lane.kind}
                 aria-labelledby={`lane-${lane.kind}`}
-                className="min-w-0"
+                className="min-w-0 rounded-2xl border border-border bg-card px-5 pt-5 pb-3"
               >
-                <h2
-                  id={`lane-${lane.kind}`}
-                  className="flex items-baseline justify-between border-b border-border/70 pb-2 text-sm font-semibold"
-                >
-                  {msg(`kinds.${lane.kind}`)}
-                  <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums">
-                    {lane.items.length}
+                <header className="flex items-start gap-3 border-b border-border pb-4">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent">
+                    <Icon aria-hidden className="h-4.5 w-4.5" />
                   </span>
-                </h2>
-                <ol className="divide-y divide-border/50">
-                  {(all ? lane.items : lane.items.slice(0, LANE)).map(row)}
+                  <div className="min-w-0 flex-1">
+                    <h2
+                      id={`lane-${lane.kind}`}
+                      className="flex items-baseline justify-between gap-3 font-display text-lg font-semibold"
+                    >
+                      {msg(`kinds.${lane.kind}`)}
+                      <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums">
+                        {lane.items.length}
+                      </span>
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                      {msg(`lanes.${lane.kind}`)}
+                    </p>
+                  </div>
+                </header>
+                <ol className="divide-y divide-border">
+                  {(all ? lane.items : lane.items.slice(0, LANE)).map((item) =>
+                    row(item, max)
+                  )}
                 </ol>
                 {!searching && lane.items.length > LANE ? (
                   <button

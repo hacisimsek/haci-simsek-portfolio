@@ -91,6 +91,29 @@ describe('radar parsers', () => {
     });
   });
 
+  it('gives every item an icon and the sources that have one a picture', () => {
+    const [repo] = parseGithub(github);
+    expect(repo.icon).toBe('https://avatars.githubusercontent.com/acme?s=64');
+    expect(repo.image).toBe(
+      'https://opengraph.githubassets.com/1/acme/agent-kit'
+    );
+    expect(parseHf(hf)[0].image).toBe(
+      'https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.00001.png'
+    );
+    const [post, bare] = parseDevto(devto);
+    expect(post.image).toBe('https://media2.dev.to/cover.png');
+    expect(post.icon).toBe('https://media2.dev.to/carol.png');
+    // No cover or avatar: the site's own icon instead.
+    expect(bare.image).toBeUndefined();
+    expect(bare.icon).toBe(
+      'https://www.google.com/s2/favicons?domain=dev.to&sz=64'
+    );
+    expect(parseHn(hn)[0].icon).toBe(
+      'https://www.google.com/s2/favicons?domain=example.com&sz=64'
+    );
+    expect(parseSimon(simon)[0].icon).toContain('domain=simonwillison.net');
+  });
+
   it('rejects payloads that do not match the source shape', () => {
     expect(() => parseHn({ hits: [{ title: 1 }] })).toThrow();
   });
