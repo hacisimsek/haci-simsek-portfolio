@@ -144,8 +144,8 @@ describe('skills', () => {
 describe('profile', () => {
   it('leads with the CV title and keeps the Sisal title as the role', () => {
     expect(profile.title).toEqual({
-      en: 'Java Backend Developer',
-      tr: 'Java Backend Geliştirici',
+      en: 'Backend Engineer',
+      tr: 'Backend Mühendisi',
     });
     expect(profile.role.en).toBe('Software Development Senior Specialist');
     // The headline leads with the systems work, not the stack.
