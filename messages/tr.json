@@ -216,6 +216,12 @@
       "paper": "Makaleler",
       "post": "Yazılar"
     },
+    "lanes": {
+      "repo": "Bu hafta açılanlar, yıldıza göre",
+      "news": "Hacker News’te yapay zekâ, puana göre",
+      "paper": "Hugging Face günlük makaleleri, oya göre",
+      "post": "DEV, Lobsters ve Simon Willison"
+    },
     "sortTop": "Öne çıkan",
     "sortNewest": "En yeni",
     "stars": "{count} yıldız",
