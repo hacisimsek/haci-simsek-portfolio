@@ -6,6 +6,22 @@
     "public_reactions_count": 230,
     "comments_count": 31,
     "published_at": "2026-10-30T15:00:00Z",
-    "user": { "name": "Carol" }
+    "user": {
+      "name": "Carol",
+      "profile_image_90": "https://media2.dev.to/carol.png"
+    },
+    "cover_image": "https://media2.dev.to/cover.png"
+  },
+  {
+    "id": 2,
+    "title": "Notes from a small model eval",
+    "url": "https://dev.to/dan/small-evals",
+    "public_reactions_count": 40,
+    "comments_count": 3,
+    "published_at": "2026-10-29T10:00:00Z",
+    "cover_image": null,
+    "user": {
+      "name": "Dan"
+    }
   }
 ]

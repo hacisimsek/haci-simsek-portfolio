@@ -216,6 +216,12 @@
       "paper": "Papers",
       "post": "Posts"
     },
+    "lanes": {
+      "repo": "Created this week, by stars",
+      "news": "AI on Hacker News, by points",
+      "paper": "Hugging Face daily papers, by upvotes",
+      "post": "DEV, Lobsters and Simon Willison"
+    },
     "sortTop": "Top",
     "sortNewest": "Newest",
     "stars": "{count} stars",

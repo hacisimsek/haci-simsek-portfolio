@@ -28,10 +28,20 @@ export interface RadarItem {
   /** Where people talk about it, when that differs from the link. */
   discussion?: string;
   by?: string;
+  /** A small square mark: the author's avatar or the linked site's icon. */
+  icon: string;
+  /** A wide picture, for the sources that have one. */
+  image?: string;
 }
 
 const https = z.url({ protocol: /^https$/ });
 const iso = (value: string) => new Date(value).toISOString();
+// The site's own icon; next/image fetches it server side, so visitors never
+// ask Google themselves.
+const siteIcon = (url: string) =>
+  `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=64`;
+const httpsOr = (value: string | null | undefined) =>
+  https.safeParse(value).success ? value! : undefined;
 const days = (n: number) => Date.now() - n * 86_400_000;
 
 const githubSchema = z.object({
@@ -59,6 +69,8 @@ export function parseGithub(payload: unknown): RadarItem[] {
     rank,
     stars: repo.stargazers_count,
     language: repo.language,
+    icon: `https://avatars.githubusercontent.com/${repo.full_name.split('/')[0]}?s=64`,
+    image: `https://opengraph.githubassets.com/1/${repo.full_name}`,
   }));
 }
 
@@ -82,13 +94,14 @@ export function parseHn(payload: unknown): RadarItem[] {
     .hits.sort((a, b) => b.points - a.points)
     .map((story, rank) => {
       const thread = `https://news.ycombinator.com/item?id=${story.objectID}`;
+      const url = https.safeParse(story.url).success ? story.url! : thread;
       return {
         id: `hn:${story.objectID}`,
         source: 'hn',
         kind: 'news',
         title: story.title,
         // Ask HN and text posts have no link of their own.
-        url: https.safeParse(story.url).success ? story.url! : thread,
+        url,
         summary: '',
         publishedAt: iso(story.created_at),
         rank,
@@ -96,6 +109,7 @@ export function parseHn(payload: unknown): RadarItem[] {
         comments: story.num_comments ?? 0,
         discussion: thread,
         by: story.author,
+        icon: siteIcon(url),
       };
     });
 }
@@ -127,6 +141,8 @@ export function parseHf(payload: unknown): RadarItem[] {
       rank,
       points: paper.upvotes,
       comments: numComments ?? 0,
+      icon: siteIcon('https://huggingface.co'),
+      image: `https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/${paper.id}.png`,
     }));
 }
 
@@ -138,7 +154,11 @@ const devtoSchema = z.array(
     public_reactions_count: z.number(),
     comments_count: z.number(),
     published_at: z.string(),
-    user: z.object({ name: z.string() }),
+    cover_image: z.string().nullable().optional(),
+    user: z.object({
+      name: z.string(),
+      profile_image_90: z.string().optional(),
+    }),
   })
 );
 
@@ -155,6 +175,8 @@ export function parseDevto(payload: unknown): RadarItem[] {
     points: post.public_reactions_count,
     comments: post.comments_count,
     by: post.user.name,
+    icon: httpsOr(post.user.profile_image_90) ?? siteIcon(post.url),
+    image: httpsOr(post.cover_image),
   }));
 }
 
@@ -176,20 +198,24 @@ export function parseLobsters(payload: unknown): RadarItem[] {
   return lobstersSchema
     .parse(payload)
     .slice(0, 15)
-    .map((story, rank) => ({
-      id: `lobsters:${story.short_id}`,
-      source: 'lobsters',
-      kind: 'post',
-      title: story.title,
-      url: https.safeParse(story.url).success ? story.url : story.comments_url,
-      summary: '',
-      publishedAt: iso(story.created_at),
-      rank,
-      points: story.score,
-      comments: story.comment_count,
-      discussion: story.comments_url,
-      by: story.submitter_user,
-    }));
+    .map((story, rank) => {
+      const url = httpsOr(story.url) ?? story.comments_url;
+      return {
+        id: `lobsters:${story.short_id}`,
+        source: 'lobsters' as const,
+        kind: 'post' as const,
+        title: story.title,
+        url,
+        summary: '',
+        publishedAt: iso(story.created_at),
+        rank,
+        points: story.score,
+        comments: story.comment_count,
+        discussion: story.comments_url,
+        by: story.submitter_user,
+        icon: siteIcon(url),
+      };
+    });
 }
 
 const atom = new XMLParser({
@@ -228,6 +254,7 @@ export function parseSimon(xml: string): RadarItem[] {
       publishedAt: iso(entry.published),
       rank,
       by: 'Simon Willison',
+      icon: siteIcon(entry.link[0].href),
     }));
 }
 

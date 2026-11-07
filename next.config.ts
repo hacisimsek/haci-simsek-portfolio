@@ -28,6 +28,25 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
+    // The radar's avatars, site icons and cover pictures (lib/feeds/radar.ts).
+    // Objects, not new URL(): a URL pattern also pins an empty query string.
+    remotePatterns: [
+      { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
+      { protocol: 'https', hostname: 'opengraph.githubassets.com' },
+      {
+        protocol: 'https',
+        hostname: 'cdn-thumbnails.huggingface.co',
+        pathname: '/social-thumbnails/papers/**',
+      },
+      { protocol: 'https', hostname: 'media2.dev.to' },
+      {
+        protocol: 'https',
+        hostname: 'www.google.com',
+        pathname: '/s2/favicons',
+      },
+    ],
+    // Radar pictures rarely change; a week keeps the optimizer's work low.
+    minimumCacheTTL: 604800,
   },
   // Some clients still ask for /favicon.ico; hand them the generated icon.
   async rewrites() {
