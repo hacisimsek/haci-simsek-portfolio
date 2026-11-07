@@ -31,18 +31,36 @@ export default function RadarRow({
   const msg = useTranslations('Radar');
   const score = item.stars ?? item.points;
   const share = score && max ? score / max : 0;
+  const paper = item.kind === 'paper' ? item.image : undefined;
 
   return (
-    <li className="spotlight grid grid-cols-[1.5rem_minmax(0,1fr)_auto] gap-x-3 py-3.5">
+    <li className="spotlight grid grid-cols-[auto_minmax(0,1fr)_auto] gap-x-3 py-3.5">
       {/* Avatar or site icon, so the eye can tell rows apart; the title
-          beside it carries the meaning. */}
-      <Image
-        src={item.icon}
-        alt=""
-        width={24}
-        height={24}
-        className="mt-0.5 h-6 w-6 rounded-md bg-foreground/5 ring-1 ring-border"
-      />
+          beside it carries the meaning. Papers all share one site icon, so
+          they show their own first page instead. */}
+      {paper ? (
+        <div className="relative mt-0.5 h-10 w-14 overflow-hidden rounded-md bg-foreground/5 ring-1 ring-border sm:h-12 sm:w-20">
+          <Image
+            src={paper}
+            alt=""
+            fill
+            sizes="5rem"
+            // Paper pages are white; dimmed like the picks in the dark theme.
+            className="object-cover object-top dark:brightness-[0.72]"
+            onError={(event) => {
+              event.currentTarget.hidden = true;
+            }}
+          />
+        </div>
+      ) : (
+        <Image
+          src={item.icon}
+          alt=""
+          width={24}
+          height={24}
+          className="mt-0.5 h-6 w-6 rounded-md bg-foreground/5 ring-1 ring-border"
+        />
+      )}
       <div className="min-w-0">
         <h3 lang="en" className="text-base leading-snug font-medium">
           <a
