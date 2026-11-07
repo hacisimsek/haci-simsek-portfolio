@@ -72,10 +72,11 @@ test('project rows fade their colour on hover', async ({ page }) => {
   const row = page
     .getByRole('region', { name: 'Featured projects' })
     .getByRole('link', { name: /^NotifyHub/ });
-  const property = await row.evaluate(
-    (el) => getComputedStyle(el).transitionProperty
-  );
-  expect(property).toMatch(/color|all/);
+  // Polled: while the theme settles after hydration, next-themes briefly
+  // turns every transition off.
+  await expect
+    .poll(() => row.evaluate((el) => getComputedStyle(el).transitionProperty))
+    .toMatch(/color|all/);
 });
 
 test.describe('on a phone', () => {
