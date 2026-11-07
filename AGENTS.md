@@ -70,3 +70,12 @@ Before opening or merging a PR, prefer running the checks that match the change:
 ## Notes For Future Changes
 
 - Keep UI/content changes separate from dependency or GitHub configuration changes when practical
+
+## Dependencies
+
+Updates are managed locally; Dependabot version updates are off.
+
+- `npm outdated` lists what is behind
+- Update in small groups on a `chore/` branch (for example Next + React together, Tailwind together, lint + format together), then run the Validation checks above
+- Hold these back until the code is ready for them: `react` and `react-dom` below 19.4, `typescript` below 6.1, `eslint` below 10, `@types/node` below 25
+- `npm audit --omit=dev --audit-level=high` before each release
