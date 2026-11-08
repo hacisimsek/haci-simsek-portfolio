@@ -1,6 +1,7 @@
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import RadarBrowser from '@/components/radar/radar-browser';
+import RadarRow from '@/components/radar/radar-row';
 import type { RadarItem } from '@/lib/feeds/radar';
 import { renderWithIntl as render } from './render';
 
@@ -43,5 +44,31 @@ describe('RadarBrowser', () => {
     expect(bar('dev-top')).toBe('100%');
     expect(bar('dev-half')).toBe('50%');
     expect(bar('lobsters-top')).toBe('100%');
+  });
+});
+
+describe('RadarRow', () => {
+  // Google has no icon for some small sites; show where the item came from.
+  it("falls back to the source's own icon when the site has none", () => {
+    render(
+      <ul>
+        <RadarRow
+          item={{
+            ...post('obscure', 'lobsters', 5),
+            icon: 'https://www.google.com/s2/favicons?domain=obscure.example&sz=64',
+          }}
+          date="Nov 7"
+          count={String}
+          max={5}
+          fresh={false}
+        />
+      </ul>
+    );
+    const icon = screen
+      .getByRole('link', { name: 'obscure' })
+      .closest('li')!
+      .querySelector('img')!;
+    fireEvent.error(icon);
+    expect(decodeURIComponent(icon.src)).toContain('domain=lobste.rs');
   });
 });

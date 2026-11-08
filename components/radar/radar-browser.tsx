@@ -7,7 +7,7 @@ import { useState, useSyncExternalStore } from 'react';
 import EmptyResults from '@/components/collections/empty-results';
 import type { RadarItem, RadarKind, RadarPick } from '@/lib/feeds/radar';
 import { cn } from '@/lib/utils';
-import RadarRow from './radar-row';
+import RadarRow, { RadarIcon } from './radar-row';
 
 type Sort = 'top' | 'newest';
 const KINDS: RadarKind[] = ['repo', 'news', 'paper', 'post'];
@@ -146,11 +146,9 @@ export default function RadarBrowser({
                 {/* The picture when the source has one; otherwise, and if it
                     fails to load, the site icon on a quiet tile. */}
                 <div className="relative -mx-4 -mt-4 mb-4 aspect-[2/1] overflow-hidden border-b border-border/60 bg-foreground/5">
-                  <Image
-                    src={item.icon}
-                    alt=""
-                    width={40}
-                    height={40}
+                  <RadarIcon
+                    item={item}
+                    size={40}
                     className="absolute inset-0 m-auto h-10 w-10 rounded-lg"
                   />
                   {item.image ? (
