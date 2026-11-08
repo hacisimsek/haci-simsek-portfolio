@@ -1,9 +1,46 @@
 import { MessageSquare } from 'lucide-react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Fragment } from 'react';
-import type { RadarItem } from '@/lib/feeds/radar';
+import { Fragment, useState } from 'react';
+import type { RadarItem, RadarSource } from '@/lib/feeds/radar';
 import { SEPARATOR } from '@/lib/utils';
+
+// Each source's home, whose icon stands in when the linked site has none.
+const SOURCE_SITES: Record<RadarSource, string> = {
+  github: 'github.com',
+  hn: 'news.ycombinator.com',
+  hf: 'huggingface.co',
+  devto: 'dev.to',
+  lobsters: 'lobste.rs',
+  simon: 'simonwillison.net',
+};
+
+// The item's avatar or site icon, or its source's icon if that fails.
+export function RadarIcon({
+  item,
+  size,
+  className,
+}: {
+  item: RadarItem;
+  size: number;
+  className: string;
+}) {
+  const [src, setSrc] = useState(item.icon);
+  return (
+    <Image
+      src={src}
+      alt=""
+      width={size}
+      height={size}
+      className={className}
+      onError={() =>
+        setSrc(
+          `https://www.google.com/s2/favicons?domain=${SOURCE_SITES[item.source]}&sz=64`
+        )
+      }
+    />
+  );
+}
 
 // One radar item as a leaderboard row: icon, title and one quiet line on the
 // left, the score in its own right-aligned column, and a thin bar under the
@@ -53,11 +90,9 @@ export default function RadarRow({
           />
         </div>
       ) : (
-        <Image
-          src={item.icon}
-          alt=""
-          width={24}
-          height={24}
+        <RadarIcon
+          item={item}
+          size={24}
           className="mt-0.5 h-6 w-6 rounded-md bg-foreground/5 ring-1 ring-border"
         />
       )}
