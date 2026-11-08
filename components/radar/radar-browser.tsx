@@ -265,10 +265,15 @@ export default function RadarBrowser({
           {lanes.map((lane) => {
             const all = searching || open.includes(lane.kind);
             const Icon = LANE_ICONS[lane.kind];
-            const max = Math.max(
-              0,
-              ...lane.items.map((item) => item.stars ?? item.points ?? 0)
-            );
+            // Per source: Posts mixes DEV reactions with Lobsters votes.
+            const best = new Map<string, number>();
+            for (const item of lane.items) {
+              const score = item.stars ?? item.points ?? 0;
+              best.set(
+                item.source,
+                Math.max(best.get(item.source) ?? 0, score)
+              );
+            }
             return (
               <section
                 key={lane.kind}
@@ -296,7 +301,7 @@ export default function RadarBrowser({
                 </header>
                 <ol className="divide-y divide-border">
                   {(all ? lane.items : lane.items.slice(0, LANE)).map((item) =>
-                    row(item, max)
+                    row(item, best.get(item.source) ?? 0)
                   )}
                 </ol>
                 {!searching && lane.items.length > LANE ? (
