@@ -7,8 +7,8 @@ describe('featured projects', () => {
   it('feature five repos, the flagship first', () => {
     expect(featuredProjects.map((project) => project.name)).toEqual([
       'ecommerce-microservices',
-      'gateway-bench',
       'notifyhub',
+      'gateway-bench',
       'strangler-fig-pattern',
       'circuit-breaker-pattern',
     ]);

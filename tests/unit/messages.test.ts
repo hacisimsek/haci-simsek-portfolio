@@ -59,3 +59,11 @@ describe('Turkish metadata', () => {
     }
   });
 });
+
+// Experience reads the same in search results as in the hero: "5+ years".
+describe('years of experience', () => {
+  it('carries the plus in the meta description too', () => {
+    expect(en.Metadata.description).toContain('{years}+ years');
+    expect(tr.Metadata.description).toContain('{years}+ yıl');
+  });
+});

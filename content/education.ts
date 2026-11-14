@@ -20,7 +20,7 @@ export const education: EducationItem[] = [
     school: { en: 'Bahçeşehir University', tr: 'Bahçeşehir Üniversitesi' },
     location: { en: 'Istanbul, Turkey', tr: 'İstanbul, Türkiye' },
     degree: {
-      en: 'BSc, Software Engineering',
+      en: 'Software Engineering',
       tr: 'Yazılım Mühendisliği',
     },
     track: 'minor',
