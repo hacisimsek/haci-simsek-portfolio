@@ -96,7 +96,7 @@
 @utility glass {
   @apply rounded-[calc(var(--radius)+0.35rem)] border;
   border-color: color-mix(in oklab, var(--foreground) 10%, transparent);
-  background-color: color-mix(in oklab, var(--card) 62%, transparent);
+  background-color: color-mix(in oklab, var(--card) 80%, transparent);
   box-shadow:
     inset 0 1px 0 color-mix(in oklab, white 8%, transparent),
     0 20px 60px -36px color-mix(in oklab, var(--foreground) 45%, transparent);
