@@ -60,6 +60,11 @@ describe('buildCommands', () => {
 
   it('copies the email and opens every social link', () => {
     expect(byId('copy-email')?.action).toEqual({ type: 'copy-email' });
+    expect(byId('download-cv')?.action).toEqual({
+      type: 'external',
+      href: '/haci-simsek-cv.pdf',
+    });
+    expect(byId('download-cv')?.keywords).toContain('resume');
     for (const social of socials) {
       expect(byId(`link-${social.id}`)?.action).toEqual({
         type: 'external',

@@ -28,6 +28,7 @@
     "empty": "Sonuç bulunamadı.",
     "copied": "Kopyalandı",
     "copyEmail": "E-postayı kopyala",
+    "downloadCv": "CV’yi indir",
     "groups": {
       "navigate": "Gezinme",
       "preferences": "Tercihler",
@@ -69,6 +70,7 @@
   "Career": {
     "title": "Çalıştığım yerler",
     "copy": "Telekom stajından kurumsal web uygulamalarına, oradan Sisal’in regülasyona tabi oyun platformuna; işim giderek backend’e kaydı: servisler, mesajlaşma, sürümler ve production.",
+    "cv": "CV’yi indir (İngilizce, PDF)",
     "promoted": "Terfi",
     "more": "Neler yaptım",
     "kind": {

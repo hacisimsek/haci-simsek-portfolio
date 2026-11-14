@@ -69,6 +69,8 @@ export interface Profile {
   location: L10n;
   city: L10n;
   email: string;
+  /** The CV PDF under public/, in English. */
+  cv: string;
   careerStart: YearMonth;
   expertise: L10n<string[]>;
   environment: L10n;

@@ -33,6 +33,7 @@ export const profile: Profile = {
   },
   city: { en: 'Istanbul', tr: 'İstanbul' },
   email: 'hacisimsek23@gmail.com',
+  cv: '/haci-simsek-cv.pdf',
   careerStart: '2021-06',
   expertise: {
     en: [
