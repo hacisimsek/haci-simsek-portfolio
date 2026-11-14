@@ -28,6 +28,7 @@
     "empty": "No results.",
     "copied": "Copied",
     "copyEmail": "Copy email",
+    "downloadCv": "Download CV",
     "groups": {
       "navigate": "Navigate",
       "preferences": "Preferences",
@@ -69,6 +70,7 @@
   "Career": {
     "title": "Where I've worked",
     "copy": "From a telecom internship through enterprise web apps to Sisal’s regulated gaming platform, my work has moved steadily into the backend: services, messaging, releases and production.",
+    "cv": "Download CV (PDF)",
     "promoted": "Promoted",
     "more": "What I did",
     "kind": {

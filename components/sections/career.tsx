@@ -1,6 +1,6 @@
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Download } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
-import { experience, t } from '@/content';
+import { experience, profile, t } from '@/content';
 import { formatPeriod } from '@/lib/dates';
 import { groupRoles } from '@/lib/group-roles';
 import { RichText } from '@/lib/rich-text';
@@ -19,7 +19,20 @@ export default function Career() {
         <h2 id="career-title" className="section-title">
           {msg('title')}
         </h2>
-        <p className="section-copy">{msg('copy')}</p>
+        <div>
+          <p className="section-copy">{msg('copy')}</p>
+          <a
+            href={profile.cv}
+            download
+            className="group mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-medium hover:text-accent"
+          >
+            <Download
+              aria-hidden
+              className="h-4 w-4 transition group-hover:translate-y-0.5"
+            />
+            {msg('cv')}
+          </a>
+        </div>
       </div>
 
       <TimelineTrack>

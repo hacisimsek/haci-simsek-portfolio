@@ -1,4 +1,4 @@
-import type { Locale, Social } from '@/content';
+import { profile, type Locale, type Social } from '@/content';
 import { fold } from '@/lib/fold';
 
 export type CommandAction =
@@ -103,6 +103,12 @@ export function buildCommands({
           'email',
           'mail',
         ]),
+        item(
+          'download-cv',
+          t('downloadCv'),
+          { type: 'external', href: profile.cv },
+          ['cv', 'resume', 'pdf']
+        ),
       ],
     },
     {
