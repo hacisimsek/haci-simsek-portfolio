@@ -46,7 +46,7 @@ describe('ContactForm', () => {
     render(<ContactForm />);
 
     await fill(user);
-    const button = screen.getByRole('button', { name: 'Send Message' });
+    const button = screen.getByRole('button', { name: 'Send message' });
     await user.click(button);
     await user.click(button);
 
@@ -74,7 +74,7 @@ describe('ContactForm', () => {
     render(<ContactForm />);
 
     await fill(user);
-    await user.click(screen.getByRole('button', { name: 'Send Message' }));
+    await user.click(screen.getByRole('button', { name: 'Send message' }));
 
     const alert = await screen.findByRole('alert');
     expect(alert).toHaveTextContent(/could not be sent/);
@@ -97,7 +97,7 @@ describe('ContactForm', () => {
 
     await fill(user);
     await user.type(trap, 'spam.example');
-    await user.click(screen.getByRole('button', { name: 'Send Message' }));
+    await user.click(screen.getByRole('button', { name: 'Send message' }));
 
     expect(
       await screen.findByRole('status', { name: /Thanks/ }, { timeout: 4000 })
@@ -131,7 +131,7 @@ describe('ContactForm', () => {
     );
 
     await fill(user);
-    await user.click(screen.getByRole('button', { name: 'Send Message' }));
+    await user.click(screen.getByRole('button', { name: 'Send message' }));
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
     const [, init] = fetchMock.mock.calls[0] as unknown as [
       string,
@@ -148,7 +148,7 @@ describe('ContactForm', () => {
     const user = userEvent.setup();
     render(<ContactForm />);
     await fill(user);
-    await user.click(screen.getByRole('button', { name: 'Send Message' }));
+    await user.click(screen.getByRole('button', { name: 'Send message' }));
     const alert = await screen.findByRole('alert');
     expect(alert.querySelector('a[href^="mailto:"]')).not.toBeNull();
   });

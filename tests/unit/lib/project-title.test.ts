@@ -18,6 +18,13 @@ describe('projectTitle', () => {
     ['we-are-sisal', 'We are Sisal'],
     ['api-gateway-pattern', 'API gateway pattern'],
     ['springboot-microservice-app', 'Spring Boot microservice app'],
+    ['spring-boot', 'Spring Boot'],
+    ['llm', 'LLM'],
+    ['https', 'HTTPS'],
+    ['http-methods', 'HTTP methods'],
+    ['ai-agent', 'AI agent'],
+    ['artificial-intelligence', 'Artificial intelligence'],
+    ['cap-theorem', 'CAP theorem'],
   ])('turns %s into "%s"', (slug, title) => {
     expect(projectTitle(slug)).toBe(title);
   });
