@@ -1,11 +1,13 @@
-import { screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
-import SystemStory from '@/components/story/system-story';
+import { act, screen, within } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import SystemDiagram from '@/components/sections/system-diagram';
+import HeroStory from '@/components/story/hero-story';
+import StoryStage from '@/components/story/story-stage';
+import SystemStory from '@/components/story/system-story';
 import { renderWithIntl as render } from '../render';
 
 describe('SystemStory', () => {
-  it('reads as a heading and four steps, with the panel left to sight', () => {
+  it('reads as a heading and four steps, with the picture left to sight', () => {
     const { container } = render(<SystemStory />);
     const section = screen.getByRole('region', {
       name: 'Designed for the day something breaks.',
@@ -13,20 +15,18 @@ describe('SystemStory', () => {
     expect(within(section).getAllByRole('heading', { level: 3 })).toHaveLength(
       4
     );
-    // The Kafka panel pictures the steps; screen readers get the steps.
-    const panel = container.querySelector('div.font-mono[aria-hidden="true"]');
-    expect(panel).toHaveTextContent('orders');
+    expect(container.querySelectorAll('[data-story-step]')).toHaveLength(4);
+    // The drawing pictures the steps; screen readers get the steps.
+    expect(container.querySelector('svg[data-diagram]')).toHaveAttribute(
+      'aria-hidden'
+    );
   });
 
-  it('shows the finished state where it does not scroll', () => {
+  it('pictures the finished story where it does not scroll', () => {
     const { container } = render(<SystemStory />);
-    // jsdom matches no media query, so this is the phone and reduced-motion
-    // layout: every event written, the failure and the undo in their colours.
-    expect(screen.getByRole('region')).toHaveAttribute('data-step', 'still');
-    expect(container.querySelector('[data-event="1049"]')).toHaveClass(
-      'border-destructive'
+    expect(container.querySelector('svg[data-diagram]')).toHaveClass(
+      'system-finished'
     );
-    expect(screen.getByText(/stock\.released/)).toHaveClass('text-primary');
   });
 
   it('is translated', () => {
@@ -48,13 +48,46 @@ describe('SystemDiagram', () => {
     const { container } = render(<SystemDiagram />);
     expect(container.querySelector('svg')).toHaveAttribute('aria-hidden');
   });
+
+  it('adds one layer per story step', () => {
+    const { container } = render(<SystemDiagram />);
+    expect(
+      [...container.querySelectorAll('[data-at]')].map((layer) =>
+        layer.getAttribute('data-at')
+      )
+    ).toEqual(['0', '1', '2', '3']);
+  });
+
+  // Accent is the forward flow, red the failure, purple the undo.
+  it('keeps the colour rule: failure red, compensation purple', () => {
+    const { container } = render(<SystemDiagram />);
+    const failure = container.querySelector('[data-at="2"]')!;
+    expect(
+      within(failure as HTMLElement).getByText('circuit open')
+    ).toHaveClass('fill-destructive');
+    expect(
+      within(failure as HTMLElement).getByText(/stock\.released/)
+    ).toHaveClass('fill-primary');
+    expect(
+      container.querySelector('[data-at="1"] text')!.getAttribute('class')
+    ).toContain('fill-accent');
+  });
 });
 
-describe('SystemStory and reduced motion', () => {
-  // The CSS pin follows prefers-reduced-motion live; so must the scroll logic.
-  it('drops to the still layout when reduced motion turns on', async () => {
-    const { act } = await import('@testing-library/react');
-    const { vi } = await import('vitest');
+describe('HeroStory', () => {
+  it('shares one stage between the hero and the story', () => {
+    const { container } = render(<HeroStory />);
+    const stage = container.querySelector('.hero-story')!;
+    expect(stage.querySelector('#top')).not.toBeNull();
+    expect(stage.querySelector('#story')).not.toBeNull();
+    // The hero's drawing and the story's finished picture.
+    expect(stage.querySelectorAll('svg[data-diagram]')).toHaveLength(2);
+  });
+});
+
+describe('StoryStage and reduced motion', () => {
+  // The CSS follows prefers-reduced-motion live; so must the scroll logic.
+  it('drops to the still layout when reduced motion turns on', () => {
     let reduce = false;
     const listeners = new Set<() => void>();
     const original = window.matchMedia;
@@ -69,14 +102,16 @@ describe('SystemStory and reduced motion', () => {
       dispatchEvent: () => true,
     })) as unknown as typeof window.matchMedia;
     try {
-      render(<SystemStory />);
-      expect(screen.getByRole('region')).not.toHaveAttribute(
-        'data-step',
-        'still'
+      const { container } = render(
+        <StoryStage>
+          <p>stage</p>
+        </StoryStage>
       );
+      const stage = container.firstElementChild as HTMLElement;
+      expect(stage.dataset.step).not.toBe('still');
       reduce = true;
       act(() => listeners.forEach((fn) => fn()));
-      expect(screen.getByRole('region')).toHaveAttribute('data-step', 'still');
+      expect(stage.dataset.step).toBe('still');
     } finally {
       window.matchMedia = original;
     }

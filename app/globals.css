@@ -383,25 +383,129 @@ section[id] {
   }
 }
 
-/* The system story scrolls only where STORY_MEDIA matches and motion is
-   welcome; everywhere else it is a plain section in its finished state.
-   Kept in step with lib/story.ts by tests/unit/story-media-sync.test.ts. */
-@media (min-width: 64rem) and (min-height: 45rem) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  /* The stage's top padding clears the sticky header; pull the section up
-     by the page's section gap so the hero does not sit far above it. */
-  .system-story {
-    height: 340svh;
-    margin-top: -5rem;
+/* The diagram's story layers (components/sections/system-diagram.tsx). Hidden
+   by default, all shown in the story's finished picture. */
+.system-overlay {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.system-event {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.system-bar {
+  transform: scaleX(0);
+  transform-box: fill-box;
+  transform-origin: left;
+  transition: transform 0.6s ease-out;
+}
+
+.system-kafka {
+  transition: opacity 0.4s ease-out;
+}
+
+.system-finished .system-overlay,
+.system-finished .system-event {
+  opacity: 1;
+}
+
+.system-finished .system-bar {
+  transform: none;
+}
+
+.system-finished .system-kafka,
+.system-finished .system-pulses {
+  opacity: 0;
+}
+
+/* Hero and story share a grid from lg up: the name with the plain diagram
+   beside it, then the story with its finished picture across both columns. */
+@media (min-width: 64rem) {
+  .hero-story > .hero {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
   }
 
-  .system-story-stage {
+  .hero-story > .system-story {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+/* Where STORY_MEDIA matches and motion is welcome, the diagram stays in place
+   beside the name while the name and then the story's steps scroll past, and
+   each reached step (data-step, from StoryStage) lights its layer.
+   Kept in step with lib/story.ts by tests/unit/story-media-sync.test.ts. */
+@media (min-width: 64rem) and (min-height: 45rem) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero-story {
+    row-gap: 0;
+    --diagram-height: min(28rem, 58svh);
+  }
+
+  .hero-story > .hero {
+    min-height: calc(100svh - 8rem);
+  }
+
+  .hero-story-diagram {
+    grid-row: 1 / span 2;
+    align-self: start;
     position: sticky;
-    top: 0;
-    height: 100svh;
-    /* Centred in the space under the sticky header. */
-    justify-content: center;
-    padding-top: 6rem;
-    padding-bottom: 1.5rem;
+    /* Centred in the space under the sticky header, where the hero shows it. */
+    top: calc(50svh - var(--diagram-height) / 2 + 2rem);
+    height: var(--diagram-height);
+  }
+
+  .hero-story > .system-story {
+    grid-column: 1;
+    padding-top: 12svh;
+    padding-bottom: 45svh;
+  }
+
+  .system-story-body {
+    display: block;
+  }
+
+  .system-story-picture {
+    display: none;
+  }
+
+  /* Each step holds the screen long enough to be read. */
+  .system-story [data-story-step]:not(:last-child) {
+    margin-bottom: 32svh;
+  }
+
+  .hero-story[data-step='0'] [data-story-step='0'],
+  .hero-story[data-step='1'] [data-story-step='1'],
+  .hero-story[data-step='2'] [data-story-step='2'],
+  .hero-story[data-step='3'] [data-story-step='3'] {
+    border-color: var(--color-accent);
+  }
+
+  /* Layers stay lit once reached, so the last step shows all four ideas. */
+  .hero-story:not([data-step='hero']) .system-pulses,
+  .hero-story:not([data-step='hero']) .system-kafka {
+    opacity: 0;
+  }
+
+  .hero-story:is(
+      [data-step='0'],
+      [data-step='1'],
+      [data-step='2'],
+      [data-step='3']
+    )
+    :is([data-at='0'], [data-at='0'] .system-event),
+  .hero-story:is([data-step='1'], [data-step='2'], [data-step='3'])
+    [data-at='1'],
+  .hero-story:is([data-step='2'], [data-step='3']) [data-at='2'],
+  .hero-story[data-step='3'] [data-at='3'] {
+    opacity: 1;
+  }
+
+  .hero-story[data-step='3'] .system-bar {
+    transform: none;
   }
 }
 

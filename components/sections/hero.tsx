@@ -6,7 +6,6 @@ import { profile, t } from '@/content';
 import { Link } from '@/i18n/navigation';
 import { careerYears } from '@/lib/dates';
 import { splitGraphemes } from '@/lib/split-text';
-import SystemDiagram from './system-diagram';
 
 export default function Hero() {
   const msg = useTranslations('Hero');
@@ -24,10 +23,9 @@ export default function Hero() {
   });
 
   return (
-    <section
-      id="top"
-      className="relative grid gap-8 pt-4 pb-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:pt-8"
-    >
+    // The architecture beside the name is drawn by HeroStory, which shares
+    // it with the story below.
+    <section id="top" className="hero relative min-w-0 pt-4 pb-4 lg:pt-8">
       <div className="relative min-w-0">
         <h1 className="max-w-5xl page-title">
           <span className="sr-only">{profile.name}. </span>
@@ -92,7 +90,6 @@ export default function Hero() {
           </p>
         </div>
       </div>
-      <SystemDiagram className="hidden w-full lg:block" />
     </section>
   );
 }

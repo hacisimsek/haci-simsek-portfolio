@@ -254,10 +254,7 @@
   "SystemStory": {
     "title": "Designed for the day something breaks.",
     "copy": "Event-driven services on Kafka and RabbitMQ: how I design them to keep their promises when parts of the system fail.",
-    "label": "A Kafka topic with idempotent consumers, a saga and a trace",
     "topic": "topic",
-    "group": "consumer group",
-    "redelivered": "redelivered",
     "skipped": "key seen, skipped",
     "circuit": "circuit open",
     "compensation": "stock.released (saga)",

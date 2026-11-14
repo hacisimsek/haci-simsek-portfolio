@@ -254,10 +254,7 @@
   "SystemStory": {
     "title": "Bir şeylerin bozulacağı gün için tasarlandı.",
     "copy": "Kafka ve RabbitMQ üzerinde event-driven servisler: sistemin bir parçası çöktüğünde bile sözünü tutmaları için onları nasıl tasarlıyorum.",
-    "label": "Idempotent consumer’lar, saga ve trace ile bir Kafka topic’i",
     "topic": "topic",
-    "group": "consumer group",
-    "redelivered": "tekrar geldi",
     "skipped": "anahtar tanındı, atlandı",
     "circuit": "circuit açık",
     "compensation": "stock.released (saga)",
