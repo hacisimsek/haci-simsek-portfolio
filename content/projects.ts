@@ -12,6 +12,13 @@ export const featuredProjects: FeaturedProject[] = [
     },
   },
   {
+    name: 'gateway-bench',
+    summary: {
+      en: 'The same API gateway built twice, in Rust (axum) and Java 25 (Spring Cloud Gateway on virtual threads), and load-tested on the same 2 CPUs: Rust carried 20k requests a second, Java about 4.6k.',
+      tr: 'Aynı API gateway iki kez yazıldı, Rust (axum) ve Java 25 ile (sanal thread’lerde Spring Cloud Gateway), ve aynı 2 CPU üzerinde yük testi yapıldı: Rust saniyede 20 bin isteği taşıdı, Java yaklaşık 4,6 bin.',
+    },
+  },
+  {
     name: 'notifyhub',
     summary: {
       en: 'Reminders fire through Kafka, delivery runs on RabbitMQ with retries and a dead-letter queue, and a React dashboard tracks every attempt.',
@@ -46,10 +53,6 @@ export const hiddenRepos = [
 // The other repos' lines, each restating the README (or, where there is none,
 // the GitHub description) in plain words; the GitHub text is not shown.
 export const repoSummaries: Record<string, L10n> = {
-  'gateway-bench': {
-    en: 'The same API gateway in Rust (axum) and Java 25 (Spring Cloud Gateway on virtual threads), with JWT, Redis rate limiting and tracing, load-tested on the same 2 CPUs.',
-    tr: 'Aynı API gateway Rust (axum) ve Java 25 ile (sanal thread’lerde Spring Cloud Gateway); JWT, Redis rate limiting ve tracing ile, aynı 2 CPU üzerinde yük testi yapıldı.',
-  },
   'bff-application': {
     en: 'The Backend for Frontend pattern in a Spring Boot microservices project.',
     tr: 'Spring Boot mikroservis projesinde Backend for Frontend deseni.',
