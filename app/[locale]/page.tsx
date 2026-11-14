@@ -5,10 +5,9 @@ import Education from '@/components/Education';
 import About from '@/components/sections/about';
 import Career from '@/components/sections/career';
 import FeaturedProjects from '@/components/sections/featured-projects';
-import Hero from '@/components/sections/hero';
+import HeroStory from '@/components/story/hero-story';
 import LatestWriting from '@/components/sections/latest-writing';
 import Skills from '@/components/sections/skills';
-import SystemStory from '@/components/story/system-story';
 import { featuredProjects } from '@/content';
 import { routing } from '@/i18n/routing';
 import { selectFeatured } from '@/lib/featured';
@@ -37,8 +36,7 @@ export default async function Home({
 
   return (
     <div className="space-y-16 pb-6 sm:space-y-24">
-      <Hero />
-      <SystemStory />
+      <HeroStory />
       <About />
       <FeaturedProjects
         repos={

@@ -1,17 +1,28 @@
 import type { Page } from '@playwright/test';
 import { expect, test, waitForHydration } from './fixtures';
 
-// Scrolls so the story's track is at progress p (0 = pinned, 1 = released).
-async function scrollToProgress(page: Page, p: number) {
-  await page.evaluate((p) => {
-    const track = document.querySelector('#story')!;
-    const top = track.getBoundingClientRect().top + window.scrollY;
-    const range = track.clientHeight - window.innerHeight;
-    window.scrollTo({ top: top + p * range, behavior: 'instant' });
-  }, p);
+const stage = (page: Page) => page.locator('.hero-story');
+const story = (page: Page) => page.locator('#story');
+const diagram = (page: Page) => page.locator('.hero-story-diagram');
+
+// Scrolls so the given story step sits at 40% of the viewport, past the line
+// that marks it reached; -1 is the top of the page.
+async function scrollToStep(page: Page, step: number) {
+  await page.evaluate((step) => {
+    if (step < 0) return window.scrollTo({ top: 0, behavior: 'instant' });
+    const el = document.querySelector(`[data-story-step="${step}"]`)!;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({
+      top: top - window.innerHeight * 0.4,
+      behavior: 'instant',
+    });
+  }, step);
 }
 
-const story = (page: Page) => page.locator('#story');
+const layerOpacity = (page: Page, at: number) =>
+  diagram(page)
+    .locator(`[data-at="${at}"]`)
+    .evaluate((el) => Number(getComputedStyle(el).opacity));
 
 test.describe('on a desktop with motion', () => {
   test.use({ reducedMotion: 'no-preference' });
@@ -25,43 +36,43 @@ test.describe('on a desktop with motion', () => {
     await waitForHydration(page);
   });
 
-  test('pins the stage and walks the four steps as the page scrolls', async ({
+  test('keeps the hero diagram in place and walks the four steps', async ({
     page,
   }) => {
-    const panel = story(page).locator('div.font-mono[aria-hidden="true"]');
-    const tops: number[] = [];
-    for (const [p, step] of [
-      [0.3, '0'],
-      [0.45, '1'],
-      [0.62, '2'],
-      [0.95, '3'],
-    ] as const) {
-      await scrollToProgress(page, p);
-      await expect(story(page)).toHaveAttribute('data-step', step);
-      tops.push((await panel.boundingBox())!.y);
+    await expect(stage(page)).toHaveAttribute('data-step', 'hero');
+    const tops = [(await diagram(page).boundingBox())!.y];
+    for (const step of [0, 1, 2, 3]) {
+      await scrollToStep(page, step);
+      await expect(stage(page)).toHaveAttribute('data-step', String(step));
+      tops.push((await diagram(page).boundingBox())!.y);
     }
-    // Sticky: the stage stays put while the page scrolls past.
+    // Sticky from the first screen: the drawing beside the name is the one
+    // the steps light up.
     expect(Math.max(...tops) - Math.min(...tops)).toBeLessThan(2);
   });
 
-  test('marks the failure red and the compensation purple, never the reverse', async ({
+  test('lights each layer once its step is reached, and keeps it', async ({
     page,
   }) => {
-    const failed = story(page).locator('[data-event="1049"]');
-    await scrollToProgress(page, 0.45);
-    await expect(failed).not.toHaveClass(/bg-destructive/);
-    await scrollToProgress(page, 0.66);
-    await expect(failed).toHaveClass(/bg-destructive/);
-    await expect(story(page).getByText(/stock\.released/)).toHaveClass(
-      /text-primary/
-    );
+    await expect.poll(() => layerOpacity(page, 0)).toBe(0);
+    await scrollToStep(page, 1);
+    await expect.poll(() => layerOpacity(page, 1)).toBe(1);
+    await expect.poll(() => layerOpacity(page, 0)).toBe(1);
+    // The failure is not shown before its step.
+    expect(await layerOpacity(page, 2)).toBe(0);
+    await scrollToStep(page, 3);
+    for (const at of [0, 1, 2, 3]) {
+      await expect.poll(() => layerOpacity(page, at)).toBe(1);
+    }
   });
 
   test('scrolls back the way it came', async ({ page }) => {
-    await scrollToProgress(page, 0.95);
-    await expect(story(page)).toHaveAttribute('data-step', '3');
-    await scrollToProgress(page, 0.3);
-    await expect(story(page)).toHaveAttribute('data-step', '0');
+    await scrollToStep(page, 3);
+    await expect(stage(page)).toHaveAttribute('data-step', '3');
+    await scrollToStep(page, 0);
+    await expect(stage(page)).toHaveAttribute('data-step', '0');
+    await scrollToStep(page, -1);
+    await expect(stage(page)).toHaveAttribute('data-step', 'hero');
   });
 });
 
@@ -75,17 +86,37 @@ test.describe('everywhere else', () => {
     );
     await page.goto('/');
     await waitForHydration(page);
-    await expect(story(page)).toHaveAttribute('data-step', 'still');
+    await expect(stage(page)).toHaveAttribute('data-step', 'still');
     const box = (await story(page).boundingBox())!;
     const viewport = page.viewportSize()!;
     // Not a tall scroll track: about as tall as its content.
     expect(box.height).toBeLessThan(viewport.height * 2.2);
     await expect(story(page).getByRole('heading', { level: 3 })).toHaveCount(4);
+    // Below sm the picture is left out; the steps carry the meaning.
+    if (testInfo.project.name === 'mobile') return;
+    const picture = story(page).locator('svg[data-diagram]');
+    await expect(picture).toBeVisible();
+    for (const at of [0, 1, 2, 3]) {
+      await expect(picture.locator(`[data-at="${at}"]`)).toHaveCSS(
+        'opacity',
+        '1'
+      );
+    }
   });
 });
 
-test('reads the same in Turkish', async ({ page }) => {
+test('reads the same in Turkish', async ({ page }, testInfo) => {
   await page.goto('/tr');
+  // The longer Turkish label still starts right of the topic's lanes (x 393).
+  // Phones show no drawing.
+  const labelLeft =
+    testInfo.project.name === 'mobile'
+      ? 399
+      : await page
+          .locator('svg[data-diagram] [data-at="1"] text')
+          .first()
+          .evaluate((el) => (el as SVGTextElement).getBBox().x);
+  expect(labelLeft).toBeGreaterThan(398);
   await expect(
     story(page).getByRole('heading', { level: 2 })
   ).toHaveAccessibleName('Bir şeylerin bozulacağı gün için tasarlandı.');
