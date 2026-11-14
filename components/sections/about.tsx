@@ -42,14 +42,15 @@ export default function About() {
       </div>
 
       {/* The photo is a wide travel shot; zoom in on the person so the face
-          reads at portrait size. */}
-      <div className="aspect-4/5 w-full max-w-sm overflow-hidden rounded-[1.4rem] lg:max-w-none">
+          reads at portrait size. Phones get a small square above the text
+          instead of a full screen of photo. */}
+      <div className="order-first size-24 overflow-hidden rounded-2xl sm:order-none sm:aspect-4/5 sm:size-auto sm:w-full sm:max-w-sm sm:rounded-[1.4rem] lg:max-w-none">
         <Image
           src={portrait}
           alt={profile.name}
           placeholder="blur"
-          sizes="(min-width: 1024px) 640px, 200vw"
-          className="h-full w-full origin-[50%_95%] scale-200 object-cover"
+          sizes="(min-width: 1024px) 640px, (min-width: 640px) 48rem, 12rem"
+          className="h-full w-full origin-[50%_95%] scale-200 object-cover max-sm:origin-[50%_65%] max-sm:scale-300"
         />
       </div>
     </section>

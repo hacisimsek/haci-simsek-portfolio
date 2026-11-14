@@ -278,5 +278,9 @@
         "body": "Her adım aynı trace’i taşır; production’daki sorular tahminle değil, veriyle yanıtlanır."
       }
     }
+  },
+  "Fold": {
+    "more": "{count} tane daha göster",
+    "less": "Daha az göster"
   }
 }
