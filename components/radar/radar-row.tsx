@@ -102,14 +102,18 @@ export default function RadarRow({
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="line-clamp-2 break-words transition-colors hover:text-accent"
+            // The padding makes the title a 44px target on phones without
+            // moving the row; the clamp sits on the text inside.
+            className="-my-[11px] block py-[11px] transition-colors hover:text-accent md:my-0 md:py-0"
           >
-            {fresh ? (
-              <span className="mr-1.5 inline-block h-1.5 w-1.5 -translate-y-0.5 rounded-full bg-accent">
-                <span className="sr-only">{msg('new')}: </span>
-              </span>
-            ) : null}
-            {item.title}
+            <span className="line-clamp-2 break-words">
+              {fresh ? (
+                <span className="mr-1.5 inline-block h-1.5 w-1.5 -translate-y-0.5 rounded-full bg-accent">
+                  <span className="sr-only">{msg('new')}: </span>
+                </span>
+              ) : null}
+              {item.title}
+            </span>
           </a>
         </h3>
         {item.summary ? (

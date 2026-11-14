@@ -24,7 +24,7 @@ export default function NotFoundTerminal() {
       <Button
         type="button"
         variant="outline"
-        className="mt-4 rounded-full border-white/20 bg-transparent font-sans text-terminal-foreground hover:bg-white/10"
+        className="mt-4 rounded-full border-white/20 bg-transparent font-sans text-terminal-foreground hover:bg-white/10 max-md:h-11"
         onClick={openTerminal}
       >
         <SquareTerminal aria-hidden className="mr-2 h-4 w-4" />

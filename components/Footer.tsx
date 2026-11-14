@@ -71,7 +71,7 @@ export default function Footer() {
               href={`${REPO}/commit/${sha}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-mono hover:text-foreground"
+              className="-my-3.5 inline-flex items-center gap-1.5 py-3.5 font-mono hover:text-foreground"
             >
               <GitCommitHorizontal aria-hidden className="h-3.5 w-3.5" />
               {msg('build', { sha: sha.slice(0, 7) })}

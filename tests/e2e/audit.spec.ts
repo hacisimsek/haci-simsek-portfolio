@@ -196,6 +196,29 @@ test.describe('phone primary actions', () => {
   });
 });
 
+test.describe('phone secondary actions', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('the 404 terminal button and radar titles are 44px tall', async ({
+    page,
+  }) => {
+    const height = (locator: import('@playwright/test').Locator) =>
+      locator.evaluate((el) => el.getBoundingClientRect().height);
+    await page.goto('/nope');
+    expect(
+      await height(page.getByRole('button', { name: 'Open terminal' }))
+    ).toBeGreaterThanOrEqual(44);
+    await page.goto('/radar');
+    const titles = page.locator('ol h3 a');
+    await expect(titles.first()).toBeVisible();
+    for (const h of await titles.evaluateAll((els) =>
+      els.map((el) => el.getBoundingClientRect().height)
+    )) {
+      expect(h).toBeGreaterThanOrEqual(44);
+    }
+  });
+});
+
 test.describe('collapsed phone menu', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
