@@ -21,3 +21,23 @@ test('skills fold on phones and open with one button', async ({ page }) => {
     skills.getByRole('button', { name: 'Show less' })
   ).toHaveAttribute('aria-expanded', 'true');
 });
+
+test('about keeps its first paragraph on phones and folds the rest', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const about = page.locator('#about');
+  const later = about.getByText(/Bahçeşehir University/);
+  const button = about.getByRole('button', { name: 'Read more' });
+
+  if ((page.viewportSize()?.width ?? 0) >= 768) {
+    await expect(later).toBeVisible();
+    await expect(button).toBeHidden();
+    return;
+  }
+
+  await expect(about.getByText(/Spring Boot microservices/)).toBeVisible();
+  await expect(later).toBeHidden();
+  await button.click();
+  await expect(later).toBeVisible();
+});

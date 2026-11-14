@@ -30,6 +30,15 @@ describe('Fold', () => {
     );
   });
 
+  it('uses a given label instead of the count', () => {
+    render(
+      <Fold hidden={2} more="Read more">
+        <p>x</p>
+      </Fold>
+    );
+    expect(screen.getByRole('button', { name: 'Read more' })).toBeVisible();
+  });
+
   it('adds no button when nothing is folded', () => {
     render(
       <Fold hidden={0}>

@@ -12,11 +12,14 @@ import { cn } from '@/lib/utils';
 // is gone.
 export default function Fold({
   hidden,
+  more,
   className,
   children,
 }: {
   /** How many items are folded, for the button's label. */
   hidden: number;
+  /** A label for the closed button when a count would read oddly. */
+  more?: string;
   className?: string;
   children: ReactNode;
 }) {
@@ -35,7 +38,7 @@ export default function Fold({
           onClick={() => setOpen(!open)}
           className="mt-2 inline-flex min-h-11 items-center text-sm font-medium text-foreground hover:text-accent md:hidden"
         >
-          {open ? msg('less') : msg('more', { count: hidden })}
+          {open ? msg('less') : (more ?? msg('more', { count: hidden }))}
         </button>
       ) : null}
     </div>
