@@ -4,7 +4,8 @@ import { experience, t } from '@/content';
 import { formatPeriod } from '@/lib/dates';
 import { groupRoles } from '@/lib/group-roles';
 import { RichText } from '@/lib/rich-text';
-import { SEPARATOR } from '@/lib/utils';
+import Fold from '@/components/ui/fold';
+import { cn, SEPARATOR } from '@/lib/utils';
 import TimelineTrack from './timeline-track';
 
 export default function Career() {
@@ -90,13 +91,23 @@ export default function Career() {
                         </p>
                       ) : null}
 
-                      <p className="mt-4 text-[0.9375rem] leading-7 text-muted-foreground">
+                      {/* Phones keep earlier roles' summaries inside "What I
+                          did" with their bullets. */}
+                      <p
+                        className={cn(
+                          'mt-4 text-[0.9375rem] leading-7 text-muted-foreground',
+                          role.end !== null && 'max-md:hidden'
+                        )}
+                      >
                         {t(role.summary, locale)}
                       </p>
 
                       {/* Only the current role is open; earlier ones fold. */}
                       {role.end === null ? (
-                        <Highlights items={t(role.highlights, locale)} />
+                        <Highlights
+                          items={t(role.highlights, locale)}
+                          visible={PHONE_HIGHLIGHTS}
+                        />
                       ) : (
                         <details className="group/more mt-3">
                           <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-sm font-medium text-foreground hover:text-accent [&::-webkit-details-marker]:hidden">
@@ -110,6 +121,9 @@ export default function Career() {
                               {t(role.title, locale)}
                             </span>
                           </summary>
+                          <p className="mt-4 text-[0.9375rem] leading-7 text-muted-foreground md:hidden">
+                            {t(role.summary, locale)}
+                          </p>
                           <Highlights items={t(role.highlights, locale)} />
                         </details>
                       )}
@@ -125,17 +139,31 @@ export default function Career() {
   );
 }
 
-function Highlights({ items }: { items: string[] }) {
+// On phones the current role opens with its first few bullets.
+const PHONE_HIGHLIGHTS = 3;
+
+function Highlights({
+  items,
+  visible = items.length,
+}: {
+  items: string[];
+  visible?: number;
+}) {
   return (
-    <ul className="mt-4 space-y-2">
-      {items.map((bullet) => (
-        <li
-          key={bullet}
-          className="relative pl-5 text-[0.9375rem] leading-7 text-muted-foreground before:absolute before:top-3 before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-accent"
-        >
-          <RichText text={bullet} />
-        </li>
-      ))}
-    </ul>
+    <Fold hidden={items.length - visible}>
+      <ul className="mt-4 space-y-2">
+        {items.map((bullet, index) => (
+          <li
+            key={bullet}
+            className={cn(
+              'relative pl-5 text-[0.9375rem] leading-7 text-muted-foreground before:absolute before:top-3 before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-accent',
+              index >= visible && 'max-md:group-data-[open=false]/fold:hidden'
+            )}
+          >
+            <RichText text={bullet} />
+          </li>
+        ))}
+      </ul>
+    </Fold>
   );
 }

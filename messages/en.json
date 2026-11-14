@@ -278,5 +278,9 @@
         "body": "Every hop carries the same trace, so production questions get answers, not guesses."
       }
     }
+  },
+  "Fold": {
+    "more": "Show {count} more",
+    "less": "Show less"
   }
 }
