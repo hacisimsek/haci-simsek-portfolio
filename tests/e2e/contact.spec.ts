@@ -47,7 +47,7 @@ test('shows a retry message when Formspree fails', async ({ page }) => {
 test('the error state has no accessibility violations', async ({ page }) => {
   await page.goto('/contact');
   await waitForHydration(page);
-  await page.getByRole('button', { name: 'Send Message' }).click();
+  await page.getByRole('button', { name: 'Send message' }).click();
   await expect(page.getByLabel('Name')).toHaveAttribute('aria-invalid', 'true');
 
   const { violations } = await new AxeBuilder({ page })

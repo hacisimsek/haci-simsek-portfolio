@@ -2,11 +2,16 @@
 // words typed in lowercase stay lowercase (sentence case), and words the
 // author capitalised, as in CamelCase names, keep their capitals.
 const SPELLING: Record<string, string> = {
+  ai: 'AI',
   api: 'API',
   bdd: 'BDD',
   bff: 'BFF',
+  cap: 'CAP',
   ecommerce: 'E-commerce',
+  http: 'HTTP',
+  https: 'HTTPS',
   ios: 'iOS',
+  llm: 'LLM',
   notifyhub: 'NotifyHub',
   sisal: 'Sisal',
   springboot: 'Spring Boot',
@@ -27,6 +32,9 @@ function words(slug: string): string[] {
 }
 
 export function projectTitle(slug: string): string {
+  // Whole names split across words, such as spring-boot.
+  const whole = SPELLING[slug.toLowerCase().replace(/[-_\s]+/g, '')];
+  if (whole) return whole;
   const [first, ...rest] = words(slug).map(
     (word) => SPELLING[word.toLowerCase()] ?? word
   );

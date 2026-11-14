@@ -191,7 +191,7 @@ test.describe('phone primary actions', () => {
     expect(await size(cta)).toBeGreaterThanOrEqual(44);
     await page.goto('/contact');
     expect(
-      await size(page.getByRole('button', { name: 'Send Message' }))
+      await size(page.getByRole('button', { name: 'Send message' }))
     ).toBeGreaterThanOrEqual(44);
   });
 });
