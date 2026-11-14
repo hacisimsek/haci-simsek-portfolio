@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest';
-import { featuredProjects } from '@/content';
+import { featuredProjects, hiddenRepos, repoSummaries } from '@/content';
+import { authoredSummary } from '@/lib/featured';
 
 describe('featured projects', () => {
   it('feature four repos, the flagship first', () => {
@@ -28,6 +29,29 @@ describe('featured projects', () => {
     )!;
     expect(summary.en).toMatch(/choreographed saga over Kafka/);
     expect(summary.tr).toMatch(/koreografi tabanlı bir saga/);
+  });
+});
+
+describe('other repositories', () => {
+  it('leave out this site, mixed collections and early exercises', () => {
+    expect(hiddenRepos).toEqual([
+      'haci-simsek-portfolio',
+      'Java-Spring',
+      'SwiftAndIOSApplications',
+      'LoadBalancerWithJava',
+    ]);
+  });
+
+  it('carry an authored line in both languages instead of GitHub text', () => {
+    for (const [name, summary] of Object.entries(repoSummaries)) {
+      for (const text of [summary.en, summary.tr]) {
+        expect(text.trim().length, name).toBeGreaterThan(20);
+        expect(text, name).not.toMatch(/^I |designed for scalab/i);
+      }
+    }
+    expect(authoredSummary('gateway-bench', 'tr')).toBe(
+      repoSummaries['gateway-bench'].tr
+    );
   });
 });
 

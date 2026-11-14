@@ -17,7 +17,7 @@ export default function ProjectRow({
   label?: string;
 }) {
   const locale = useLocale();
-  // Featured repos carry an authored line; others keep GitHub's description.
+  // Authored lines where written; otherwise GitHub's description.
   const summary = authoredSummary(repo.name, locale) ?? repo.description;
   const meta = repo.language;
 

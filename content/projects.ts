@@ -1,4 +1,4 @@
-import type { FeaturedProject } from './types';
+import type { FeaturedProject, L10n } from './types';
 
 // Shown first on the home page, in this order. Each line restates the repo's
 // README in plain words; the GitHub descriptions are not shown for these.
@@ -33,3 +33,49 @@ export const featuredProjects: FeaturedProject[] = [
     },
   },
 ];
+
+// Left off the projects page: this site, a mixed collection, and early
+// exercises that no longer say much about the work.
+export const hiddenRepos = [
+  'haci-simsek-portfolio',
+  'Java-Spring',
+  'SwiftAndIOSApplications',
+  'LoadBalancerWithJava',
+];
+
+// The other repos' lines, each restating the README (or, where there is none,
+// the GitHub description) in plain words; the GitHub text is not shown.
+export const repoSummaries: Record<string, L10n> = {
+  'gateway-bench': {
+    en: 'The same API gateway in Rust (axum) and Java 25 (Spring Cloud Gateway on virtual threads), with JWT, Redis rate limiting and tracing, load-tested on the same 2 CPUs.',
+    tr: 'Aynı API gateway Rust (axum) ve Java 25 ile (sanal thread’lerde Spring Cloud Gateway); JWT, Redis rate limiting ve tracing ile, aynı 2 CPU üzerinde yük testi yapıldı.',
+  },
+  'bff-application': {
+    en: 'The Backend for Frontend pattern in a Spring Boot microservices project.',
+    tr: 'Spring Boot mikroservis projesinde Backend for Frontend deseni.',
+  },
+  'url-shortener-service': {
+    en: 'A Spring Boot service that turns long URLs into short links and redirects them.',
+    tr: 'Uzun URL’leri kısa bağlantılara çeviren ve yönlendiren bir Spring Boot servisi.',
+  },
+  'restaurant-reservation-system': {
+    en: 'Table booking on Spring Boot and PostgreSQL: reservations with email confirmations, table management, an admin dashboard and Spring Security.',
+    tr: 'Spring Boot ve PostgreSQL ile masa rezervasyonu: e-posta onaylı rezervasyonlar, masa yönetimi, yönetim paneli ve Spring Security.',
+  },
+  'springboot-microservice-app': {
+    en: 'A full-stack e-commerce app on Spring Boot.',
+    tr: 'Spring Boot üzerinde full-stack bir e-ticaret uygulaması.',
+  },
+  'task-management-app': {
+    en: 'A task manager with a Spring Boot backend and a React client, run with Docker Compose.',
+    tr: 'Spring Boot backend ve React arayüzlü, Docker Compose ile çalışan bir görev yöneticisi.',
+  },
+  'real-time-chat-app': {
+    en: 'A chat on Java WebSockets with a React client.',
+    tr: 'Java WebSocket üzerinde, React arayüzlü bir sohbet uygulaması.',
+  },
+  'timeless-talks': {
+    en: 'A React chat with historical figures, answered by generative AI.',
+    tr: 'Tarihî kişilerle sohbet edilen, cevapları üretken yapay zekâdan gelen bir React uygulaması.',
+  },
+};

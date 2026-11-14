@@ -1,5 +1,6 @@
 import 'server-only';
 import { z } from 'zod';
+import { hiddenRepos } from '@/content';
 
 export const PROJECTS_REVALIDATE = 3600;
 
@@ -32,6 +33,7 @@ export function selectRepos(payload: unknown): Repo[] {
         !repo.fork &&
         !repo.archived &&
         repo.name !== PROFILE_REPO &&
+        !hiddenRepos.includes(repo.name) &&
         repo.description?.trim()
     )
     .map((repo) => ({

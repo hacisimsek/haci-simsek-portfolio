@@ -1,5 +1,6 @@
 import {
   featuredProjects,
+  repoSummaries,
   t,
   type FeaturedProject,
   type Locale,
@@ -49,11 +50,14 @@ export function selectArticles(
   return [...picked, ...rest].slice(0, count);
 }
 
-const authored = new Map(
-  featuredProjects.map((project) => [project.name, project.summary])
-);
+const authored = new Map([
+  ...featuredProjects.map(
+    (project) => [project.name, project.summary] as const
+  ),
+  ...Object.entries(repoSummaries),
+]);
 
-/** The authored line a featured repo shows instead of its GitHub description. */
+/** The authored line a repo shows instead of its GitHub description. */
 export function authoredSummary(name: string, locale: Locale) {
   const summary = authored.get(name);
   return summary ? t(summary, locale) : undefined;
