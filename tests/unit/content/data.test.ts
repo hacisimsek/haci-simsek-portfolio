@@ -242,3 +242,12 @@ describe('Turkish translations', () => {
     }
   });
 });
+
+// A minor is not a second degree.
+describe('education labels', () => {
+  it('does not call the software engineering minor a BSc', async () => {
+    const { education } = await import('@/content');
+    const minor = education.find((entry) => entry.track === 'minor')!;
+    expect(minor.degree.en).toBe('Software Engineering');
+  });
+});

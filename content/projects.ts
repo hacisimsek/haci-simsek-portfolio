@@ -12,17 +12,17 @@ export const featuredProjects: FeaturedProject[] = [
     },
   },
   {
-    name: 'gateway-bench',
-    summary: {
-      en: 'The same API gateway built twice, in Rust (axum) and Java 25 (Spring Cloud Gateway on virtual threads), and load-tested on the same 2 CPUs: Rust carried 20k requests a second, Java about 4.6k.',
-      tr: 'Aynı API gateway iki kez yazıldı, Rust (axum) ve Java 25 ile (sanal thread’lerde Spring Cloud Gateway), ve aynı 2 CPU üzerinde yük testi yapıldı: Rust saniyede 20 bin isteği taşıdı, Java yaklaşık 4,6 bin.',
-    },
-  },
-  {
     name: 'notifyhub',
     summary: {
       en: 'Reminders fire through Kafka, delivery runs on RabbitMQ with retries and a dead-letter queue, and a React dashboard tracks every attempt.',
       tr: 'Hatırlatmalar Kafka ile tetikleniyor, teslimat RabbitMQ üzerinde yeniden deneme ve dead-letter kuyruğuyla çalışıyor, React paneli her denemeyi izliyor.',
+    },
+  },
+  {
+    name: 'gateway-bench',
+    summary: {
+      en: 'The same API gateway built twice, in Rust (axum) and Java 25 (Spring Cloud Gateway on virtual threads), and load-tested on the same 2 CPUs: Rust carried 20k requests a second, Java about 4.6k.',
+      tr: 'Aynı API gateway iki kez yazıldı, Rust (axum) ve Java 25 ile (sanal thread’lerde Spring Cloud Gateway), ve aynı 2 CPU üzerinde yük testi yapıldı: Rust saniyede 20 bin isteği taşıdı, Java yaklaşık 4,6 bin.',
     },
   },
   {
