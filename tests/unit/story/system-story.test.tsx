@@ -24,9 +24,14 @@ describe('SystemStory', () => {
 
   it('pictures the finished story where it does not scroll', () => {
     const { container } = render(<SystemStory />);
-    expect(container.querySelector('svg[data-diagram]')).toHaveClass(
-      'system-finished'
-    );
+    const pictures = container.querySelectorAll('svg[data-diagram]');
+    for (const picture of pictures)
+      expect(picture).toHaveClass('system-finished');
+    // Phones get the bus and the services only.
+    expect([...pictures].map((svg) => svg.getAttribute('viewBox'))).toEqual([
+      '330 64 230 254',
+      '0 62 560 382',
+    ]);
   });
 
   it('is translated', () => {
@@ -92,8 +97,8 @@ describe('HeroStory', () => {
     const stage = container.querySelector('.hero-story')!;
     expect(stage.querySelector('#top')).not.toBeNull();
     expect(stage.querySelector('#story')).not.toBeNull();
-    // The hero's drawing and the story's finished picture.
-    expect(stage.querySelectorAll('svg[data-diagram]')).toHaveLength(2);
+    // The hero's drawing and the story's finished picture, whole and cropped.
+    expect(stage.querySelectorAll('svg[data-diagram]')).toHaveLength(3);
   });
 });
 

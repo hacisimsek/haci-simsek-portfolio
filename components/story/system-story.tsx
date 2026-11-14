@@ -48,9 +48,15 @@ export default function SystemStory() {
           ))}
         </ol>
 
-        {/* The steps carry the meaning; the drawing is their picture. */}
-        <div className="system-story-picture hidden sm:block">
-          <SystemDiagram finished className="w-full" />
+        {/* The steps carry the meaning; the drawing is their picture. Phones
+            get its right half, first, at a size they can read. */}
+        <div className="system-story-picture max-sm:order-first">
+          <SystemDiagram
+            finished
+            cropped
+            className="mx-auto w-full max-w-sm sm:hidden"
+          />
+          <SystemDiagram finished className="hidden w-full sm:block" />
         </div>
       </div>
     </section>
