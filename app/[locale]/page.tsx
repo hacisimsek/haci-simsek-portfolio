@@ -8,9 +8,9 @@ import FeaturedProjects from '@/components/sections/featured-projects';
 import HeroStory from '@/components/story/hero-story';
 import LatestWriting from '@/components/sections/latest-writing';
 import Skills from '@/components/sections/skills';
-import { featuredProjects } from '@/content';
+import { featuredArticles, featuredProjects } from '@/content';
 import { routing } from '@/i18n/routing';
-import { selectFeatured } from '@/lib/featured';
+import { selectArticles, selectFeatured } from '@/lib/featured';
 import { getRepos } from '@/lib/feeds/github';
 import { loadFeed } from '@/lib/feeds/load';
 import { getArticles } from '@/lib/feeds/medium';
@@ -56,7 +56,17 @@ export default async function Home({
       <Career />
       <Skills />
       <Education />
-      <LatestWriting articles={articles.ok ? articles.data.slice(0, 3) : []} />
+      <LatestWriting
+        articles={
+          articles.ok
+            ? selectArticles(
+                articles.data,
+                featuredArticles,
+                featuredArticles.length
+              )
+            : []
+        }
+      />
     </div>
   );
 }
