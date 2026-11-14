@@ -221,7 +221,7 @@ export default function RadarBrowser({
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={msg('search')}
-            className="h-10 w-full rounded-full border border-border/70 bg-background/60 pr-4 pl-10 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="h-11 w-full rounded-full border border-border/70 bg-background/60 pr-4 pl-10 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring md:h-10"
           />
         </label>
         <div className="flex items-center gap-4">

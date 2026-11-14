@@ -19,21 +19,23 @@ const NODES = [
   { x: 500, y: 290, label: 'shipping' },
 ];
 
+// Node boxes are W wide, room for "inventory" at the drawing's type size.
+const W = 80;
 const EDGES = [
-  'M70 200 H118',
-  'M182 200 H236',
+  'M80 200 H110',
+  'M190 200 H230',
   'M270 222 V296',
-  'M304 200 H385',
+  'M310 200 H385',
   'M385 110 V290',
-  'M385 110 H466',
-  'M385 200 H466',
-  'M385 290 H466',
+  'M385 110 H460',
+  'M385 200 H460',
+  'M385 290 H460',
 ];
 const BUS = 4;
 
 // Ends at the payment node's edge, where the pulse fades instead of
 // parking on the label.
-const ROUTE = 'M74 200 H270 H385 V110 H466';
+const ROUTE = 'M84 200 H270 H385 V110 H460';
 
 // Events written to the three partitions, as [lane x, y].
 const EVENTS = [
@@ -59,6 +61,9 @@ const TRACK = { x: 150, width: 390 };
 // The redelivered event and the order whose payment fails.
 const DUPLICATE = 1045;
 const FAILED = 1049;
+
+// A label a line per clause: 'a, b' -> ['a,', 'b'].
+const clauses = (text: string) => text.split(/(?<=,) /);
 
 export default function SystemDiagram({
   className,
@@ -93,10 +98,10 @@ export default function SystemDiagram({
 
   return (
     <svg
-      viewBox="0 0 560 440"
+      viewBox="0 62 560 382"
       aria-hidden
       data-diagram
-      className={`font-mono text-[12px] ${finished ? 'system-finished' : ''} ${className ?? ''}`}
+      className={`font-mono text-[13px] ${finished ? 'system-finished' : ''} ${className ?? ''}`}
     >
       <text
         x="385"
@@ -124,7 +129,7 @@ export default function SystemDiagram({
           {msg('topic')} orders
         </text>
         <path
-          d="M182 200 H236 M304 200 H385"
+          d="M190 200 H230 M310 200 H385"
           fill="none"
           strokeWidth={2}
           className="stroke-accent"
@@ -157,9 +162,9 @@ export default function SystemDiagram({
           style={{ animationDelay: `${0.2 + index * 0.07}s` }}
         >
           <rect
-            x={node.x - 34}
+            x={node.x - W / 2}
             y={node.y - 18}
-            width="68"
+            width={W}
             height="36"
             rx="10"
             className="fill-card stroke-muted-foreground/40"
@@ -178,9 +183,9 @@ export default function SystemDiagram({
       {/* 02 Safe to deliver twice: an event comes again and is skipped. */}
       <g className="system-overlay" data-at="1">
         <rect
-          x="471"
+          x="465"
           y="187"
-          width="68"
+          width={W}
           height="36"
           rx="10"
           fill="none"
@@ -188,9 +193,9 @@ export default function SystemDiagram({
           className="stroke-accent/50"
         />
         <rect
-          x="466"
+          x="460"
           y="182"
-          width="68"
+          width={W}
           height="36"
           rx="10"
           fill="none"
@@ -198,22 +203,24 @@ export default function SystemDiagram({
           strokeDasharray="4 3"
           className="stroke-accent"
         />
-        {/* Two lines from just right of the lanes, so a longer
-            translation never runs across them. */}
-        <text x="404" y="240" className="fill-accent text-[10px]">
+        {/* From just right of the lanes, a line per clause, so a longer
+            translation never runs across them or off the drawing. */}
+        <text x="404" y="240" className="fill-accent text-[12px]">
           <tspan x="404">#{DUPLICATE}</tspan>
-          <tspan x="404" dy="12">
-            {msg('skipped')}
-          </tspan>
+          {clauses(msg('skipped')).map((line) => (
+            <tspan key={line} x="404" dy="13">
+              {line}
+            </tspan>
+          ))}
         </text>
       </g>
 
       {/* 03 Failure has a plan: payment fails, the saga gives the stock back. */}
       <g className="system-overlay" data-at="2">
         <rect
-          x="466"
+          x="460"
           y="92"
-          width="68"
+          width={W}
           height="36"
           rx="10"
           strokeWidth={2}
@@ -223,36 +230,41 @@ export default function SystemDiagram({
           x="500"
           y="80"
           textAnchor="middle"
-          className="fill-destructive text-[10px]"
+          className="fill-destructive text-[12px]"
         >
           {msg('circuit')}
         </text>
         <path
-          d="M466 122 H401 V194 H466"
+          d="M460 122 H401 V194 H460"
           fill="none"
           strokeWidth={1.5}
           strokeDasharray="4 3"
           className="stroke-primary"
         />
-        <text x="405" y="162" className="fill-primary text-[10px]">
-          ← {msg('compensation')}
+        <text x="405" y="155" className="fill-primary text-[12px]">
+          {/* The event, then "(saga)" under it. */}
+          {`← ${msg('compensation')}`.split(/ (?=\()/).map((line, index) => (
+            <tspan key={line} x="405" dy={index ? 13 : 0}>
+              {line}
+            </tspan>
+          ))}
         </text>
       </g>
 
       {/* 04 One trace, end to end. */}
       <g className="system-overlay" data-at="3">
-        <text x="40" y="364" className="fill-muted-foreground text-[10px]">
+        <text x="40" y="362" className="fill-muted-foreground text-[12px]">
           {msg('trace')} #{FAILED}
           {SEPARATOR}184 ms
         </text>
         {SPANS.map((span, index) => {
-          const y = 378 + index * 13;
+          const y = 372 + index * 15;
           return (
             <g key={span.name}>
               <text
                 x="40"
-                y={y + 5}
-                className="fill-muted-foreground text-[10px]"
+                y={y + 6}
+                className="fill-muted-foreground text-[12px]"
               >
                 {span.name}
               </text>

@@ -49,6 +49,16 @@ describe('SystemDiagram', () => {
     expect(container.querySelector('svg')).toHaveAttribute('aria-hidden');
   });
 
+  // Long labels break into lines rather than run off the drawing.
+  it('breaks the redelivery label into a line per clause', () => {
+    const { container } = render(<SystemDiagram />, { locale: 'tr' });
+    expect(
+      [...container.querySelectorAll('[data-at="1"] tspan')].map(
+        (line) => line.textContent
+      )
+    ).toEqual(['#1045', 'anahtar tanındı,', 'atlandı']);
+  });
+
   it('adds one layer per story step', () => {
     const { container } = render(<SystemDiagram />);
     expect(
@@ -66,7 +76,9 @@ describe('SystemDiagram', () => {
       within(failure as HTMLElement).getByText('circuit open')
     ).toHaveClass('fill-destructive');
     expect(
-      within(failure as HTMLElement).getByText(/stock\.released/)
+      within(failure as HTMLElement)
+        .getByText(/stock\.released/)
+        .closest('text')
     ).toHaveClass('fill-primary');
     expect(
       container.querySelector('[data-at="1"] text')!.getAttribute('class')

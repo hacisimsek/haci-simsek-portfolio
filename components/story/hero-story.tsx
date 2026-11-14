@@ -10,7 +10,7 @@ import StoryStage from './story-stage';
 // the finished one with its steps.
 export default function HeroStory() {
   return (
-    <StoryStage className="hero-story flex flex-col gap-16 sm:gap-24 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-x-8">
+    <StoryStage className="hero-story flex flex-col gap-16 sm:gap-24 lg:grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.15fr)] lg:gap-x-8">
       <Hero />
       <div
         aria-hidden
