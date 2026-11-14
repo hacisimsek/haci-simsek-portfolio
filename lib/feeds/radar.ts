@@ -57,21 +57,37 @@ const githubSchema = z.object({
   ),
 });
 
+// The radar shows under the owner's name, so repositories built to get around
+// paid plans or identity checks stay off it.
+// shortcut: a keyword list misses renamed tools; add words as they turn up.
+const UNWANTED =
+  /zero.?cost|sheerid|keygen|jailbreak|bypass|crack(ed|er)?(?![a-z])|license.?key|free.?(pro|premium|plus|trial)/i;
+// Chinese, Japanese and Korean scripts; the pages are English and Turkish.
+const CJK = /[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af]/;
+
 export function parseGithub(payload: unknown): RadarItem[] {
-  return githubSchema.parse(payload).items.map((repo, rank) => ({
-    id: `github:${repo.full_name}`,
-    source: 'github',
-    kind: 'repo',
-    title: repo.full_name,
-    url: repo.html_url,
-    summary: repo.description?.trim() ?? '',
-    publishedAt: iso(repo.created_at),
-    rank,
-    stars: repo.stargazers_count,
-    language: repo.language,
-    icon: `https://avatars.githubusercontent.com/${repo.full_name.split('/')[0]}?s=64`,
-    image: `https://opengraph.githubassets.com/1/${repo.full_name}`,
-  }));
+  return githubSchema
+    .parse(payload)
+    .items.filter(
+      (repo) => !UNWANTED.test(`${repo.full_name} ${repo.description ?? ''}`)
+    )
+    .map((repo, rank) => ({
+      id: `github:${repo.full_name}`,
+      source: 'github',
+      kind: 'repo',
+      title: repo.full_name,
+      url: repo.html_url,
+      summary:
+        repo.description && !CJK.test(repo.description)
+          ? repo.description.trim()
+          : '',
+      publishedAt: iso(repo.created_at),
+      rank,
+      stars: repo.stargazers_count,
+      language: repo.language,
+      icon: `https://avatars.githubusercontent.com/${repo.full_name.split('/')[0]}?s=64`,
+      image: `https://opengraph.githubassets.com/1/${repo.full_name}`,
+    }));
 }
 
 const hnSchema = z.object({

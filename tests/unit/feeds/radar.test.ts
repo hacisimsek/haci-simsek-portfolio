@@ -169,3 +169,42 @@ describe('getRadar', () => {
     );
   });
 });
+
+describe('parseGithub filtering', () => {
+  const repo = (full_name: string, description: string | null = null) => ({
+    full_name,
+    html_url: `https://github.com/${full_name}`,
+    description,
+    language: null,
+    stargazers_count: 100,
+    created_at: '2026-11-01T00:00:00Z',
+  });
+
+  // The radar shows under the owner's name; tools for getting around paid
+  // plans or identity checks must not appear there.
+  it('drops repositories built to get around paywalls or verification', () => {
+    const items = parseGithub({
+      items: [
+        repo('worldonlyu/Google_AI_Pro_2Year_ZeroCost_Auto'),
+        repo('JenkinWoo/sheeridVerify'),
+        repo('someone/tool', 'Free Pro account generator, bypass the trial'),
+        repo('acme/agent-kit', 'A small toolkit for building LLM agents'),
+        repo('acme/cheatsheet', 'Kafka cheat sheet'),
+      ],
+    });
+    expect(items.map((item) => item.title)).toEqual([
+      'acme/agent-kit',
+      'acme/cheatsheet',
+    ]);
+    expect(items.map((item) => item.rank)).toEqual([0, 1]);
+  });
+
+  it('hides descriptions the English and Turkish pages cannot read', () => {
+    const [item] = parseGithub({
+      items: [
+        repo('KKKKhazix/agent-autoloop', '让你的命令行 Agent 在后台自己接活'),
+      ],
+    });
+    expect(item.summary).toBe('');
+  });
+});
