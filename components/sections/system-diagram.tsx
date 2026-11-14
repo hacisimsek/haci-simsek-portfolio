@@ -68,10 +68,14 @@ const clauses = (text: string) => text.split(/(?<=,) /);
 export default function SystemDiagram({
   className,
   finished = false,
+  cropped = false,
 }: {
   className?: string;
   /** Every layer shown: the story's still picture. */
   finished?: boolean;
+  /** Only the bus and the services, where the story happens: big enough to
+      read on a phone. */
+  cropped?: boolean;
 }) {
   const msg = useTranslations('SystemStory');
   const pulse = (r: number, tone: string) => (
@@ -98,7 +102,7 @@ export default function SystemDiagram({
 
   return (
     <svg
-      viewBox="0 62 560 382"
+      viewBox={cropped ? '330 64 230 254' : '0 62 560 382'}
       aria-hidden
       data-diagram
       className={`font-mono text-[13px] ${finished ? 'system-finished' : ''} ${className ?? ''}`}

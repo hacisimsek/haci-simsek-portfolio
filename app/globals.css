@@ -420,11 +420,11 @@ section[id] {
   opacity: 0;
 }
 
-/* Hero and story share a grid from lg up: the name with the plain diagram
-   beside it, then the story with its finished picture across both columns. */
+/* Hero and story share a grid from lg up: the name, then the story with its
+   finished picture across both columns. */
 @media (min-width: 64rem) {
   .hero-story > .hero {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 1;
     align-self: center;
   }
@@ -446,10 +446,12 @@ section[id] {
   }
 
   .hero-story > .hero {
+    grid-column: 1;
     min-height: calc(100svh - 8rem);
   }
 
   .hero-story-diagram {
+    display: block;
     grid-row: 1 / span 2;
     align-self: start;
     position: sticky;

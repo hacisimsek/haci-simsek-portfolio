@@ -92,10 +92,17 @@ test.describe('everywhere else', () => {
     // Not a tall scroll track: about as tall as its content.
     expect(box.height).toBeLessThan(viewport.height * 2.2);
     await expect(story(page).getByRole('heading', { level: 3 })).toHaveCount(4);
-    // Below sm the picture is left out; the steps carry the meaning.
-    if (testInfo.project.name === 'mobile') return;
-    const picture = story(page).locator('svg[data-diagram]');
-    await expect(picture).toBeVisible();
+    // The drawing shows once: finished, with the steps, not beside the name.
+    await expect(diagram(page)).toBeHidden();
+    const picture = story(page)
+      .locator('svg[data-diagram]')
+      .filter({ visible: true });
+    await expect(picture).toHaveCount(1);
+    // Phones get the cropped picture, at a size they can read.
+    if (testInfo.project.name === 'mobile') {
+      const width = (await picture.boundingBox())!.width;
+      expect(width / 230).toBeGreaterThan(1.2);
+    }
     for (const at of [0, 1, 2, 3]) {
       await expect(picture.locator(`[data-at="${at}"]`)).toHaveCSS(
         'opacity',
@@ -105,17 +112,16 @@ test.describe('everywhere else', () => {
   });
 });
 
-test('reads the same in Turkish', async ({ page }, testInfo) => {
+test('reads the same in Turkish', async ({ page }) => {
   await page.goto('/tr');
+  await waitForHydration(page);
   // The longer Turkish label still starts right of the topic's lanes (x 393).
-  // Phones show no drawing.
-  const labelLeft =
-    testInfo.project.name === 'mobile'
-      ? 399
-      : await page
-          .locator('svg[data-diagram] [data-at="1"] text')
-          .first()
-          .evaluate((el) => (el as SVGTextElement).getBBox().x);
+  const labelLeft = await page
+    .locator('svg[data-diagram]')
+    .filter({ visible: true })
+    .first()
+    .locator('[data-at="1"] text')
+    .evaluate((el) => (el as SVGTextElement).getBBox().x);
   expect(labelLeft).toBeGreaterThan(398);
   await expect(
     story(page).getByRole('heading', { level: 2 })
