@@ -32,7 +32,7 @@ test('home features fixture projects and articles', async ({ page }) => {
     projects.getByRole('link', { name: /All projects/ })
   ).toHaveAttribute('href', '/projects');
 
-  const writing = page.getByRole('region', { name: 'Latest writing' });
+  const writing = page.getByRole('region', { name: 'Writing' });
   await expect(
     writing.getByRole('link', { name: /Saga Pattern/ })
   ).toBeVisible();
@@ -133,7 +133,7 @@ test('articles are typographic rows without stock thumbnails', async ({
   page,
 }) => {
   for (const [path, scope] of [
-    ['/', page.getByRole('region', { name: 'Latest writing' })],
+    ['/', page.getByRole('region', { name: 'Writing' })],
     ['/articles', page.locator('main ol')],
   ] as const) {
     await page.goto(path);

@@ -1,17 +1,12 @@
 import { ArrowRight } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import ArticleRow from '@/components/articles/article-row';
 import { Link } from '@/i18n/navigation';
 import type { Article } from '@/lib/feeds/medium';
 
 export default function LatestWriting({ articles }: { articles: Article[] }) {
   const msg = useTranslations('Home');
-  const locale = useLocale();
   if (articles.length === 0) return null;
-  const date = new Intl.DateTimeFormat(locale, {
-    dateStyle: 'medium',
-    timeZone: 'Europe/Istanbul',
-  });
 
   return (
     <section aria-labelledby="latest-writing">
@@ -35,11 +30,7 @@ export default function LatestWriting({ articles }: { articles: Article[] }) {
 
       <ol className="divide-y divide-border/70 border-y border-border/70">
         {articles.map((article) => (
-          <ArticleRow
-            key={article.url}
-            article={article}
-            date={date.format(new Date(article.publishedAt))}
-          />
+          <ArticleRow key={article.url} article={article} />
         ))}
       </ol>
     </section>

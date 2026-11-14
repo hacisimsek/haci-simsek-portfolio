@@ -13,7 +13,8 @@ export default function ArticleRow({
   detailed = false,
 }: {
   article: Article;
-  date: string;
+  /** Left off on the home page, where it would only say how long ago. */
+  date?: string;
   heading?: 'h2' | 'h3';
   /** Adds the topics, for the full article list. Medium's excerpts are
    *  truncated and repeat the title, so they are not shown. */
@@ -30,7 +31,12 @@ export default function ArticleRow({
         href={article.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="group spotlight grid gap-x-8 gap-y-2 py-6 transition-colors sm:grid-cols-[9rem_minmax(0,1fr)_auto]"
+        className={cn(
+          'group spotlight grid gap-x-8 gap-y-2 py-6 transition-colors',
+          date
+            ? 'sm:grid-cols-[9rem_minmax(0,1fr)_auto]'
+            : 'sm:grid-cols-[minmax(0,1fr)_auto]'
+        )}
       >
         <div className="min-w-0">
           <Heading
@@ -48,12 +54,14 @@ export default function ArticleRow({
             </p>
           ) : null}
         </div>
-        <time
-          dateTime={article.publishedAt}
-          className="order-first text-sm text-muted-foreground sm:pt-1"
-        >
-          {date}
-        </time>
+        {date ? (
+          <time
+            dateTime={article.publishedAt}
+            className="order-first text-sm text-muted-foreground sm:pt-1"
+          >
+            {date}
+          </time>
+        ) : null}
         <ArrowUpRight
           aria-hidden
           className="hidden h-4 w-4 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground sm:mt-1.5 sm:block"
