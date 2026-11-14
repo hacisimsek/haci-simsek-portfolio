@@ -17,6 +17,19 @@ describe('selectRepos', () => {
     ]);
   });
 
+  it('leaves out the hidden repos', () => {
+    const hidden = {
+      ...repos[0],
+      name: 'Java-Spring',
+      fork: false,
+      archived: false,
+      description: 'A collection.',
+    };
+    expect(selectRepos([...repos, hidden]).map((r) => r.name)).not.toContain(
+      'Java-Spring'
+    );
+  });
+
   it('maps the fields the page renders', () => {
     expect(selectRepos(repos).at(-1)).toEqual({
       name: 'url-shortener-service',
