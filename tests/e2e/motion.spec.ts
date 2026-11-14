@@ -24,6 +24,8 @@ test.describe('with reduced motion', () => {
 
   test('Lenis is off and content is visible', async ({ page }) => {
     await page.goto('/');
+    // The server always renders without Lenis; check after hydration.
+    await waitForHydration(page);
     await expect(page.locator('html')).not.toHaveClass(/\blenis\b/);
     expect(
       await page
@@ -48,6 +50,29 @@ test.describe('smooth scrolling side effects', () => {
     await page.waitForTimeout(500);
 
     expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(1000);
+  });
+
+  test('the page does not scroll behind the open terminal', async ({
+    page,
+  }) => {
+    await page.goto('/');
+    await page.waitForFunction(() =>
+      document.documentElement.classList.contains('lenis')
+    );
+    await waitForHydration(page);
+    await page.keyboard.press('Control+k');
+    await expect(page.getByRole('combobox')).toBeFocused();
+    await page.keyboard.type('terminal');
+    await page.keyboard.press('Enter');
+    await expect(
+      page.getByRole('textbox', { name: /Command|Komut/ })
+    ).toBeFocused();
+
+    await page.mouse.move(20, 400);
+    await page.mouse.wheel(0, 1200);
+    await page.waitForTimeout(600);
+
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
   });
 
   test('the page does not scroll behind the open palette', async ({ page }) => {
@@ -94,6 +119,8 @@ test.describe('career timeline', () => {
 
     test('the line is drawn in full', async ({ page }) => {
       await page.goto('/');
+      // The server renders it full; check what the client effect leaves.
+      await waitForHydration(page);
       expect(await fillScale(page)).toBe(1);
     });
   });

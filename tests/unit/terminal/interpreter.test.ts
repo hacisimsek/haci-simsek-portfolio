@@ -126,3 +126,17 @@ describe('polish', () => {
     expect(links.every((l) => l.href!.startsWith(`${github}/`))).toBe(true);
   });
 });
+
+describe('unknown commands', () => {
+  // The handler table is a plain object; inherited names are not commands.
+  // Names are lowercased first, so these are the inherited keys that match.
+  it.each(['constructor', 'Constructor', '__proto__'])(
+    'answers "%s" with command not found',
+    (name) => {
+      const result = run(name, ctx('en'));
+      expect(result.lines).toHaveLength(1);
+      expect(result.lines[0].text).toContain(name);
+      expect(result.effect).toBeUndefined();
+    }
+  );
+});

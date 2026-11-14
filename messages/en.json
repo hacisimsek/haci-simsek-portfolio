@@ -225,9 +225,9 @@
     },
     "sortTop": "Top",
     "sortNewest": "Newest",
-    "stars": "{count} stars",
-    "points": "{count} points",
-    "comments": "{count} comments",
+    "stars": "{count, plural, one {# star} other {# stars}}",
+    "points": "{count, plural, one {# point} other {# points}}",
+    "comments": "{count, plural, one {# comment} other {# comments}}",
     "discuss": "Discussion",
     "unavailable": "Couldn’t reach {sources} just now; showing the rest.",
     "errorTitle": "The radar couldn’t load right now.",
@@ -243,12 +243,13 @@
     "updated": "Updated {time}",
     "picks": "Worth a look",
     "sort": "Order",
-    "perDay": "{count} stars a day",
+    "perDay": "{count, plural, one {# star a day} other {# stars a day}}",
     "perDayShort": "★ {count}/day",
     "showAll": "Show all {count}",
     "showLess": "Show fewer",
     "new": "New",
-    "newSince": "{count, plural, one {# new item} other {# new items}} since your last visit"
+    "newSince": "{count, plural, one {# new item} other {# new items}} since your last visit",
+    "pointsShort": "{n, plural, one {{count} point} other {{count} points}}"
   },
   "SystemStory": {
     "title": "Designed for the day something breaks.",

@@ -38,6 +38,8 @@ export default async function Radar({
     hour: '2-digit',
     minute: '2-digit',
     timeZone: 'Europe/Istanbul',
+    // Visitors elsewhere would read Istanbul's clock as their own.
+    timeZoneName: 'short',
   }).format(now);
   const names = new Intl.ListFormat(locale, { type: 'conjunction' }).format(
     failed.map((source) => msg(`sources.${source}`))

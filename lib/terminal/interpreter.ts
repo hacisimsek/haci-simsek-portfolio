@@ -126,7 +126,9 @@ export const COMMANDS = Object.keys(handlers).sort();
 export function run(input: string, ctx: Context): Result {
   const [name = '', ...args] = input.trim().split(/\s+/).filter(Boolean);
   if (!name) return { lines: [] };
-  const handler = handlers[name.toLowerCase()];
+  const key = name.toLowerCase();
+  // Own keys only: "constructor" and friends are not commands.
+  const handler = Object.hasOwn(handlers, key) ? handlers[key] : undefined;
   if (!handler) {
     return { lines: [error(ctx.t('notFound', { command: name }))] };
   }

@@ -1,14 +1,14 @@
 'use client';
 
-import { useLenis } from 'lenis/react';
 import { useTranslations } from 'next-intl';
-import { Suspense, lazy, useEffect, useRef, type RefObject } from 'react';
+import { Suspense, lazy, useRef, type RefObject } from 'react';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useLenisPause } from '@/hooks/use-lenis-pause';
 
 const CommandMenu = lazy(() => import('./command-menu'));
 
@@ -22,14 +22,9 @@ export default function CommandDialog({
   returnFocusTo: RefObject<HTMLButtonElement | null>;
 }) {
   const t = useTranslations('Command');
-  const lenis = useLenis();
   const afterClose = useRef<(() => void) | undefined>(undefined);
 
-  // Lenis ignores the dialog's scroll lock, so pause it while open.
-  useEffect(() => {
-    if (open) lenis?.stop();
-    else lenis?.start();
-  }, [open, lenis]);
+  useLenisPause(open);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

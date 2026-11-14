@@ -235,6 +235,8 @@ export function parseLobsters(payload: unknown): RadarItem[] {
 }
 
 const atom = new XMLParser({
+  // Keep titles such as "2025" as text.
+  parseTagValue: false,
   ignoreAttributes: false,
   attributeNamePrefix: '',
   processEntities: false,

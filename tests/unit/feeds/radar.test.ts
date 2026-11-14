@@ -208,3 +208,12 @@ describe('parseGithub filtering', () => {
     expect(item.summary).toBe('');
   });
 });
+
+describe('parseSimon titles', () => {
+  // A post titled only with a number must stay a string, not drop the feed.
+  it('keeps numeric titles as text', () => {
+    const feed = `<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom"><entry><title>2025</title><link href="https://simonwillison.net/2025/Dec/31/" rel="alternate"/><published>2025-12-31T10:00:00+00:00</published><summary type="html">A year.</summary></entry></feed>`;
+    const [entry] = parseSimon(feed);
+    expect(entry.title).toBe('2025');
+  });
+});

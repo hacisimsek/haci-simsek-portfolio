@@ -72,3 +72,34 @@ describe('RadarRow', () => {
     expect(decodeURIComponent(icon.src)).toContain('domain=lobste.rs');
   });
 });
+
+describe('RadarRow counts', () => {
+  // Screen readers hear these; the visible text is only the number.
+  it('says "1 point" and "1 comment" in the singular', () => {
+    render(
+      <ul>
+        <RadarRow
+          item={{
+            ...post('one', 'lobsters', 1),
+            comments: 1,
+            discussion: 'https://lobste.rs/s/one',
+          }}
+          date="Nov 7"
+          count={String}
+          max={1}
+          fresh={false}
+        />
+      </ul>
+    );
+    expect(screen.getByText('1 point')).toBeInTheDocument();
+    expect(screen.getByText(/1 comment$/)).toBeInTheDocument();
+  });
+});
+
+describe('RadarBrowser picks', () => {
+  it('says "1 point" on a pick with one point', () => {
+    const item = post('lonely', 'lobsters', 1);
+    render(<RadarBrowser items={[item]} picks={[{ item, signal: 1 }]} />);
+    expect(screen.queryByText('1 points')).toBeNull();
+  });
+});

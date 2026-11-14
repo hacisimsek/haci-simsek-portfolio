@@ -1,9 +1,9 @@
 'use client';
 
-import { useReducedMotion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import ScrubHeadline from '@/components/story/scrub-headline';
+import { usePrefersReducedMotion } from '@/hooks/use-prefers-reduced-motion';
 import { useStoryEnabled } from '@/hooks/use-story-enabled';
 import { cn, SEPARATOR } from '@/lib/utils';
 
@@ -40,7 +40,8 @@ export default function SystemStory() {
   const msg = useTranslations('SystemStory');
   const ref = useRef<HTMLElement>(null);
   const wide = useStoryEnabled();
-  const reduce = useReducedMotion();
+  // Follows the setting live, like the CSS pin (motion's hook reads it once).
+  const reduce = usePrefersReducedMotion();
   const scrolling = wide && !reduce;
   // Scroll progress through the track, 0 when it pins and 1 when it lets
   // go. A plain rAF-throttled listener, not motion's useScroll: that one

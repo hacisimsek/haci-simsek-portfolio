@@ -30,8 +30,11 @@ describe('messages', () => {
   });
 
   it('use the same placeholders in both languages', () => {
+    // Argument names, whether plain {count} or ICU {count, plural, ...}.
     const placeholders = (text: string) =>
-      (text.match(/\{\w+\}/g) ?? []).sort();
+      [
+        ...new Set([...text.matchAll(/\{(\w+)(?=[,}])/g)].map((m) => m[1])),
+      ].sort();
     const flatTr = flatten(tr);
     for (const [key, text] of Object.entries(flatten(en))) {
       expect(placeholders(flatTr[key] ?? ''), key).toEqual(placeholders(text));

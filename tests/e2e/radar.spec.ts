@@ -45,3 +45,16 @@ test('the radar is in the menu and in Turkish', async ({ page }) => {
     'Yapay zekâda ve GitHub’da yükselenler'
   );
 });
+
+// The time is Istanbul's; say so, or visitors elsewhere misread it.
+test('the update time names its time zone', async ({ page }) => {
+  for (const [path, label] of [
+    ['/radar', /Updated \d{2}:\d{2}( [AP]M)? GMT\+3/],
+    ['/tr/radar', /Güncellendi: \d{2}:\d{2} GMT\+3/],
+  ] as const) {
+    await page.goto(path);
+    await expect(
+      page.locator('header').filter({ has: page.locator('h1') })
+    ).toContainText(label);
+  }
+});

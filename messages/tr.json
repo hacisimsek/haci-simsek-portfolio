@@ -248,7 +248,8 @@
     "showAll": "Tümünü göster ({count})",
     "showLess": "Daha az göster",
     "new": "Yeni",
-    "newSince": "Son ziyaretinden beri {count, plural, one {# yeni öğe} other {# yeni öğe}}"
+    "newSince": "Son ziyaretinden beri {count, plural, one {# yeni öğe} other {# yeni öğe}}",
+    "pointsShort": "{n, plural, other {{count} puan}}"
   },
   "SystemStory": {
     "title": "Bir şeylerin bozulacağı gün için tasarlandı.",
