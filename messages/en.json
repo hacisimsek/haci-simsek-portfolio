@@ -63,7 +63,8 @@
     "paletteHint": "Press <kbd>⌘K</kbd> or <kbd>Ctrl K</kbd> to jump anywhere"
   },
   "About": {
-    "title": "Building at Sisal, travelling when I can"
+    "title": "Building at Sisal, travelling when I can",
+    "more": "Read more"
   },
   "Career": {
     "title": "Where I've worked",

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import portrait from '@/assets/images/portrait.jpg';
+import Fold from '@/components/ui/fold';
 import { profile, t } from '@/content';
 import { careerYears } from '@/lib/dates';
 
@@ -24,14 +25,17 @@ export default function About() {
         <p className="mt-5 text-base leading-8 text-foreground">
           {t(profile.intro, locale).replace('{years}', years)}
         </p>
-        {t(profile.bio, locale).map((paragraph) => (
-          <p
-            key={paragraph}
-            className="mt-4 text-base leading-8 text-muted-foreground"
-          >
-            {paragraph}
-          </p>
-        ))}
+        {/* Phones open with the intro; the rest of the story folds. */}
+        <Fold hidden={t(profile.bio, locale).length} more={msg('more')}>
+          {t(profile.bio, locale).map((paragraph) => (
+            <p
+              key={paragraph}
+              className="mt-4 text-base leading-8 text-muted-foreground max-md:group-data-[open=false]/fold:hidden"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </Fold>
         <ul className="mt-8 flex flex-wrap gap-2">
           {t(profile.expertise, locale).map((item) => (
             <li key={item} className="meta-chip">

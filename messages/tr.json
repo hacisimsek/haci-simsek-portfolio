@@ -63,7 +63,8 @@
     "paletteHint": "Her yere atlamak için <kbd>⌘K</kbd> veya <kbd>Ctrl K</kbd>"
   },
   "About": {
-    "title": "Sisal’de geliştiriyorum, fırsat buldukça geziyorum"
+    "title": "Sisal’de geliştiriyorum, fırsat buldukça geziyorum",
+    "more": "Devamını oku"
   },
   "Career": {
     "title": "Çalıştığım yerler",
