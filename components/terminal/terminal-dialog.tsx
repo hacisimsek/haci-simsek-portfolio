@@ -15,6 +15,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useLenisPause } from '@/hooks/use-lenis-pause';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { focusMainAfterNavigation } from '@/lib/focus-main';
 import { down, emptyHistory, push, up } from '@/lib/terminal/history';
@@ -54,6 +55,8 @@ export default function TerminalDialog({
   const exitTimer = useRef<number | undefined>(undefined);
 
   useEffect(() => () => window.clearTimeout(exitTimer.current), []);
+
+  useLenisPause(open);
 
   useEffect(() => {
     const node = log.current;

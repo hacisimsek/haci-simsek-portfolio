@@ -179,7 +179,10 @@ export default function RadarBrowser({
                         </span>
                       </>
                     ) : (
-                      msg('points', { count: count.format(signal) })
+                      msg('pointsShort', {
+                        n: signal,
+                        count: count.format(signal),
+                      })
                     )}
                   </span>
                 </p>

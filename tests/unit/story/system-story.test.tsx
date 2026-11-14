@@ -49,3 +49,36 @@ describe('SystemDiagram', () => {
     expect(container.querySelector('svg')).toHaveAttribute('aria-hidden');
   });
 });
+
+describe('SystemStory and reduced motion', () => {
+  // The CSS pin follows prefers-reduced-motion live; so must the scroll logic.
+  it('drops to the still layout when reduced motion turns on', async () => {
+    const { act } = await import('@testing-library/react');
+    const { vi } = await import('vitest');
+    let reduce = false;
+    const listeners = new Set<() => void>();
+    const original = window.matchMedia;
+    window.matchMedia = vi.fn((query: string) => ({
+      matches: query.includes('reduce') ? reduce : true,
+      media: query,
+      onchange: null,
+      addEventListener: (_: string, fn: () => void) => listeners.add(fn),
+      removeEventListener: (_: string, fn: () => void) => listeners.delete(fn),
+      addListener: (fn: () => void) => listeners.add(fn),
+      removeListener: (fn: () => void) => listeners.delete(fn),
+      dispatchEvent: () => true,
+    })) as unknown as typeof window.matchMedia;
+    try {
+      render(<SystemStory />);
+      expect(screen.getByRole('region')).not.toHaveAttribute(
+        'data-step',
+        'still'
+      );
+      reduce = true;
+      act(() => listeners.forEach((fn) => fn()));
+      expect(screen.getByRole('region')).toHaveAttribute('data-step', 'still');
+    } finally {
+      window.matchMedia = original;
+    }
+  });
+});
