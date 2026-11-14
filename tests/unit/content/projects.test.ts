@@ -4,9 +4,10 @@ import { featuredProjects, hiddenRepos, repoSummaries } from '@/content';
 import { authoredSummary } from '@/lib/featured';
 
 describe('featured projects', () => {
-  it('feature four repos, the flagship first', () => {
+  it('feature five repos, the flagship first', () => {
     expect(featuredProjects.map((project) => project.name)).toEqual([
       'ecommerce-microservices',
+      'gateway-bench',
       'notifyhub',
       'strangler-fig-pattern',
       'circuit-breaker-pattern',
@@ -21,6 +22,14 @@ describe('featured projects', () => {
         expect(text, project.name).not.toMatch(/ACID|planned|orchestrat/i);
       }
     }
+  });
+
+  it('gives the gateway benchmark its measured result', () => {
+    const { summary } = featuredProjects.find(
+      (project) => project.name === 'gateway-bench'
+    )!;
+    expect(summary.en).toMatch(/20k requests a second.*4\.6k/);
+    expect(summary.tr).toMatch(/saniyede 20 bin.*4,6 bin/);
   });
 
   it('calls the flagship saga choreographed in both languages', () => {
@@ -49,8 +58,8 @@ describe('other repositories', () => {
         expect(text, name).not.toMatch(/^I |designed for scalab/i);
       }
     }
-    expect(authoredSummary('gateway-bench', 'tr')).toBe(
-      repoSummaries['gateway-bench'].tr
+    expect(authoredSummary('url-shortener-service', 'tr')).toBe(
+      repoSummaries['url-shortener-service'].tr
     );
   });
 });
