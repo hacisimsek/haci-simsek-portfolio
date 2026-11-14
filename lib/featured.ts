@@ -5,6 +5,7 @@ import {
   type Locale,
 } from '@/content';
 import type { Repo } from '@/lib/feeds/github';
+import type { Article } from '@/lib/feeds/medium';
 
 export type FeaturedRepo = Repo & { flagship: boolean };
 
@@ -30,6 +31,22 @@ export function selectFeatured(
     .sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
     .map((repo) => ({ ...repo, flagship: false }));
   return [...picked, ...rest].slice(0, limit);
+}
+
+/** Picked posts first, in their order, matched by Medium post id; the newest
+    others fill any gap up to the count. */
+export function selectArticles(
+  articles: Article[],
+  ids: string[],
+  count: number
+): Article[] {
+  const id = (article: Article) =>
+    new URL(article.url).pathname.split('-').at(-1);
+  const picked = ids.flatMap((pick) => articles.filter((a) => id(a) === pick));
+  const rest = articles
+    .filter((article) => !picked.includes(article))
+    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+  return [...picked, ...rest].slice(0, count);
 }
 
 const authored = new Map(
