@@ -12,6 +12,21 @@ describe('securityHeaders', () => {
       'X-Frame-Options': 'DENY',
       'Permissions-Policy':
         'camera=(), microphone=(), geolocation=(), browsing-topics=()',
+      'Content-Security-Policy': expect.any(String),
     });
+  });
+
+  it('limits scripts, frames and form posts to the site and Formspree', () => {
+    const csp = securityHeaders.find(
+      (h) => h.key === 'Content-Security-Policy'
+    )!.value;
+    expect(csp).toContain("default-src 'self'");
+    expect(csp).toContain("object-src 'none'");
+    expect(csp).toContain("frame-ancestors 'none'");
+    expect(csp).toContain("base-uri 'self'");
+    expect(csp).toContain("form-action 'self' https://formspree.io");
+    expect(csp).toContain("connect-src 'self' https://formspree.io");
+    // Production never allows eval.
+    expect(csp).not.toContain('unsafe-eval');
   });
 });
