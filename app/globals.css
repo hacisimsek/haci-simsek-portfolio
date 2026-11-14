@@ -442,7 +442,7 @@ section[id] {
 @media (min-width: 64rem) and (min-height: 45rem) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .hero-story {
     row-gap: 0;
-    --diagram-height: min(28rem, 58svh);
+    --diagram-height: min(30rem, 62svh);
   }
 
   .hero-story > .hero {
@@ -474,7 +474,7 @@ section[id] {
 
   /* Each step holds the screen long enough to be read. */
   .system-story [data-story-step]:not(:last-child) {
-    margin-bottom: 32svh;
+    margin-bottom: 20svh;
   }
 
   .hero-story[data-step='0'] [data-story-step='0'],

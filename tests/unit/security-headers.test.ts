@@ -10,8 +10,7 @@ describe('securityHeaders', () => {
       'X-Content-Type-Options': 'nosniff',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
       'X-Frame-Options': 'DENY',
-      'Permissions-Policy':
-        'camera=(), microphone=(), geolocation=(), browsing-topics=()',
+      'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
       'Content-Security-Policy': expect.any(String),
     });
   });
