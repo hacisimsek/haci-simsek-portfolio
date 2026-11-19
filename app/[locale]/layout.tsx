@@ -67,6 +67,10 @@ export async function generateMetadata({
   };
 }
 
+// Only en and tr: any other first segment (a probe like /manifest.json skips
+// the locale proxy and lands here) is a 404 before anything renders.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
