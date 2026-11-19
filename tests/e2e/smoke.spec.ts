@@ -25,6 +25,24 @@ test('unknown routes return 404', async ({ page }) => {
   await expect(page.locator('#closing-title')).toBeHidden();
 });
 
+// Paths with a dot or an opengraph-image skip the locale proxy and reach
+// [locale] with no real locale; they must 404, not error.
+test('unknown files and image routes at the root return 404', async ({
+  request,
+}) => {
+  for (const path of [
+    '/manifest.json',
+    '/foo.json',
+    '/a.b',
+    '/opengraph-image',
+  ]) {
+    expect((await request.get(path)).status(), path).toBe(404);
+  }
+  // The real ones still work.
+  expect((await request.get('/manifest.webmanifest')).status()).toBe(200);
+  expect((await request.get('/en/opengraph-image/card')).status()).toBe(200);
+});
+
 test('projects and articles render the feeds from the fixture server', async ({
   page,
 }) => {
