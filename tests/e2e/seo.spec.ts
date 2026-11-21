@@ -191,3 +191,15 @@ test('Open Graph image alt text follows the language', async ({ page }) => {
   expect(alts[1]).toBe('Hacı Şimşek · Backend Mühendisi');
   expect(alts[2]).toBe(alts[1]);
 });
+
+// Google Search Console checks this tag on the home page.
+test('the home page carries the Search Console verification', async ({
+  page,
+}) => {
+  for (const path of ['/', '/tr']) {
+    await page.goto(path);
+    await expect(
+      page.locator('meta[name="google-site-verification"]')
+    ).toHaveAttribute('content', 'mQiLuqSFiJjyiprCC_AfI3oFqqYj_voZl-SSrcvMjqs');
+  }
+});
