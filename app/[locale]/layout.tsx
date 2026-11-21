@@ -64,6 +64,8 @@ export async function generateMetadata({
       template: `%s | ${profile.name}`,
     },
     ...(await pageMetadata(locale, '/')),
+    // Google Search Console ownership; public by design.
+    verification: { google: 'mQiLuqSFiJjyiprCC_AfI3oFqqYj_voZl-SSrcvMjqs' },
   };
 }
 
